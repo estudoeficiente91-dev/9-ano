@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramática: Elementos de Coesão e Subordinação Substantiva - 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-button.active { background-color: #0369a1; color: white; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s; }
+        .accordion-button.open + .accordion-content { max-height: 2000px; }
+        .quiz-option:disabled { cursor: not-allowed; opacity: 0.7; }
+        .correct-answer { background-color: #10b981 !important; color: white !important; border-color: #059669 !important; }
+        .wrong-answer { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+        .content-text { font-size: 1rem; line-height: 1.6; }
+        .gram-example { background: #f3f4f6; border-radius: 4px; padding: 6px 10px; margin: 0.5rem 0; font-family: 'Courier New', Courier, monospace; }
+    </style>
+</head>
+<body class="bg-stone-100 text-slate-800">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
+                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">
+                    ⬅ Voltar para o Início
+                </a>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Gramática: Coesão e Subordinação Substantiva</h1>
+            <p class="text-slate-600 mt-2">Estude os principais elementos de coesão e subordinação substantiva para o 9º ano!</p>
+        </header>
+
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Aprender</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Praticar</button>
+        </nav>
+
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-700">O que são Elementos de Coesão?</h2>
+                    <div id="accordion-container" class="space-y-3"></div>
+                    <div class="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+                        <h3 class="font-bold text-lg text-sky-800">💡 Dicas Importantes</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-700 content-text">
+                            <li>Elementos de coesão são palavras ou expressões que ligam ideias, frases e parágrafos, dando unidade ao texto.</li>
+                            <li>Subordinação substantiva ocorre quando uma oração exerce função de substantivo (sujeito, objeto, etc.) em relação à principal.</li>
+                            <li>Dominar esses temas ajuda a escrever textos mais claros e bem organizados!</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="practice-section" class="hidden">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700">Teste seus conhecimentos!</h2>
+                    <p class="mb-6 content-text">Responda as questões e, se errar, tente novamente ao final!</p>
+                    <div id="quiz-container">
+                        <p id="question-progress" class="text-center font-semibold text-slate-600 mb-4"></p>
+                        <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 text-center">
+                            <p id="question-text" class="text-xl content-text"></p>
+                        </div>
+                        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6"></div>
+                        <div id="feedback-container" class="mt-4 p-4 rounded-lg text-center hidden">
+                            <p id="feedback-text" class="font-semibold"></p>
+                            <p id="feedback-explanation" class="text-sm mt-1"></p>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button id="next-question-btn" class="hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Próxima</button>
+                        </div>
+                    </div>
+                    <div id="score-container" class="hidden text-center py-8">
+                        <h3 class="text-2xl font-bold text-sky-800">Quiz Finalizado!</h3>
+                        <p id="score-text" class="text-lg mt-2"></p>
+                        <div id="score-visual" class="w-full bg-stone-200 rounded-full h-4 my-4 overflow-hidden">
+                            <div id="score-bar" class="bg-emerald-500 h-4 rounded-full transition-all duration-500"></div>
+                        </div>
+                        <button id="restart-quiz-btn" class="mt-6 py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Tentar Novamente</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="mt-10 text-slate-400 text-sm text-center">
+        Para alunos do <strong>9º ano</strong> &middot; Desenvolvido para facilitar seus estudos!
+        <div class="mt-6">
+            <button onclick="printQuestions()" class="px-6 py-2 bg-sky-700 text-white font-semibold rounded-lg shadow hover:bg-sky-800 transition-colors">
+                🖨️ Imprimir questões em PDF
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const learnSection = document.getElementById('learn-section');
+            const practiceSection = document.getElementById('practice-section');
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const accordionContainer = document.getElementById('accordion-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreContainer = document.getElementById('score-container');
+            const questionProgress = document.getElementById('question-progress');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackExplanation = document.getElementById('feedback-explanation');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const scoreTextElement = document.getElementById('score-text');
+            const scoreBar = document.getElementById('score-bar');
+
+            const learnData = [
+                {
+                    title: '1. O que são elementos de coesão?',
+                    content: 'São palavras ou expressões que ligam frases e parágrafos, tornando o texto mais claro e organizado. Exemplos: pronomes, conjunções, advérbios, elipses.<br><span class="gram-example">Maria foi ao mercado. <b>Lá</b> encontrou Ana.</span>'
+                },
+                {
+                    title: '2. Tipos de elementos de coesão',
+                    content: '<b>a) Referenciais:</b> Pronomes que retomam ou antecipam termos.<br><span class="gram-example">João saiu cedo. <b>Ele</b> estava com pressa.</span><br><b>b) Conectores:</b> Conjunções e locuções que ligam orações.<br><span class="gram-example">Estudou muito, <b>por isso</b> passou.</span>'
+                },
+                {
+                    title: '3. O que é subordinação substantiva?',
+                    content: 'É quando uma oração exerce função de substantivo (sujeito, objeto, etc.) em relação à oração principal.<br><span class="gram-example"><b>É importante que você estude.</b> (oração subordinada substantiva subjetiva)</span>'
+                },
+                {
+                    title: '4. Tipos de orações subordinadas substantivas',
+                    content: '<b>Subjetiva:</b> exerce função de sujeito.<br><span class="gram-example">É necessário <b>que todos participem</b>.</span><br><b>Objetiva direta:</b> exerce função de objeto direto.<br><span class="gram-example">Desejo <b>que você venha</b>.</span><br><b>Objetiva indireta:</b> exerce função de objeto indireto.<br><span class="gram-example">Preciso de <b>que me ajudem</b>.</span><br><b>Completiva nominal:</b> completa o sentido de um nome.<br><span class="gram-example">Tenho esperança <b>de que tudo dará certo</b>.</span><br><b>Predicativa:</b> exerce função de predicativo.<br><span class="gram-example">O problema é <b>que não estudamos</b>.</span><br><b>Apositiva:</b> explica um termo anterior.<br><span class="gram-example">Só quero uma coisa: <b>que você seja feliz</b>.</span>'
+                },
+                {
+                    title: '5. Dicas para identificar coesão e subordinação',
+                    content: 'Procure palavras que retomam ideias anteriores (pronomes, advérbios) e conjunções que introduzem orações subordinadas (que, se, como, etc.).<br>Observe a função da oração na frase: se pode ser substituída por "isso", provavelmente é uma oração subordinada substantiva.'
+                }
+            ];
+
+            const quizData = [
+                {
+                    question: "Assinale o elemento de coesão presente na frase: <br><span class='gram-example'>Pedro comprou um livro. <b>Ele</b> leu tudo em um dia.</span>",
+                    answer: "Ele",
+                    options: ["Pedro", "um livro", "Ele", "tudo"],
+                    explanation: "O pronome 'Ele' retoma Pedro, estabelecendo coesão referencial."
+                },
+                {
+                    question: "Qual é o tipo de oração subordinada em: <br><span class='gram-example'>É necessário <b>que todos participem</b>.</span>",
+                    answer: "Subjetiva",
+                    options: ["Objetiva direta", "Subjetiva", "Completiva nominal", "Apositiva"],
+                    explanation: "A oração exerce função de sujeito da principal."
+                },
+                {
+                    question: "Assinale a alternativa que apresenta um conector de coesão:",
+                    answer: "por isso",
+                    options: ["por isso", "livro", "Pedro", "feliz"],
+                    explanation: "'Por isso' liga ideias, funcionando como conector."
+                },
+                {
+                    question: "Em: <span class='gram-example'>Tenho esperança <b>de que tudo dará certo</b>.</span> A oração subordinada é:",
+                    answer: "Completiva nominal",
+                    options: ["Apositiva", "Completiva nominal", "Subjetiva", "Objetiva direta"],
+                    explanation: "Completa o sentido do nome 'esperança'."
+                },
+                {
+                    question: "Qual oração subordinada pode ser substituída por 'isso'?",
+                    answer: "Substantiva",
+                    options: ["Adjetiva", "Adverbial", "Substantiva", "Coordenada"],
+                    explanation: "Orações subordinadas substantivas podem ser substituídas por 'isso'."
+                },
+                {
+                    question: "Assinale a frase com coesão referencial:",
+                    answer: "Maria saiu. Ela estava cansada.",
+                    options: [
+                        "Maria saiu. Ela estava cansada.",
+                        "Maria saiu. Estava cansada.",
+                        "Maria saiu. Muito cansada.",
+                        "Maria saiu. Cansada."
+                    ],
+                    explanation: "O pronome 'Ela' retoma Maria, criando coesão referencial."
+                },
+                {
+                    question: "Em: <span class='gram-example'>Desejo <b>que você venha</b>.</span> A oração subordinada é:",
+                    answer: "Objetiva direta",
+                    options: ["Objetiva direta", "Subjetiva", "Predicativa", "Apositiva"],
+                    explanation: "Exerce função de objeto direto do verbo 'desejo'."
+                },
+                {
+                    question: "Assinale o exemplo de oração subordinada substantiva predicativa:",
+                    answer: "O importante é que você tente.",
+                    options: [
+                        "O importante é que você tente.",
+                        "Desejo que você tente.",
+                        "Tenho esperança de que você tente.",
+                        "É necessário que você tente."
+                    ],
+                    explanation: "A oração exerce função de predicativo do sujeito."
+                },
+                {
+                    question: "Qual elemento de coesão está presente em: <span class='gram-example'>Fui ao cinema. <b>Lá</b> encontrei meus amigos.</span>",
+                    answer: "Lá",
+                    options: ["Fui", "cinema", "Lá", "amigos"],
+                    explanation: "'Lá' retoma o lugar citado anteriormente, estabelecendo coesão."
+                },
+                {
+                    question: "Em: <span class='gram-example'>Só quero uma coisa: <b>que você seja feliz</b>.</span> A oração subordinada é:",
+                    answer: "Apositiva",
+                    options: ["Apositiva", "Completiva nominal", "Subjetiva", "Objetiva direta"],
+                    explanation: "Explica o termo 'uma coisa', funcionando como aposto."
+                },
+                {
+                    question: "Assinale a alternativa que apresenta coesão por elipse:",
+                    answer: "João gosta de futebol. (Ele) Vai jogar amanhã.",
+                    options: [
+                        "João gosta de futebol. (Ele) Vai jogar amanhã.",
+                        "João gosta de futebol. Ele vai jogar amanhã.",
+                        "João gosta de futebol. Amanhã.",
+                        "João gosta de futebol. Jogar amanhã."
+                    ],
+                    explanation: "O sujeito 'ele' está subentendido, caracterizando elipse."
+                },
+                {
+                    question: "Em: <span class='gram-example'>Preciso de <b>que me ajudem</b>.</span> A oração subordinada é:",
+                    answer: "Objetiva indireta",
+                    options: ["Objetiva direta", "Objetiva indireta", "Completiva nominal", "Apositiva"],
+                    explanation: "Exerce função de objeto indireto do verbo 'precisar'."
+                },
+                {
+                    question: "Assinale o exemplo de coesão por substituição:",
+                    answer: "Comprei um carro novo. O veículo é azul.",
+                    options: [
+                        "Comprei um carro novo. O veículo é azul.",
+                        "Comprei um carro novo. Azul.",
+                        "Comprei um carro novo. Ele.",
+                        "Comprei um carro novo. Carro azul."
+                    ],
+                    explanation: "'O veículo' substitui 'carro', criando coesão por substituição."
+                },
+                {
+                    question: "Qual conjunção introduz oração subordinada substantiva?",
+                    answer: "que",
+                    options: ["mas", "porque", "que", "quando"],
+                    explanation: "A conjunção 'que' é a mais comum para introduzir orações subordinadas substantivas."
+                },
+                {
+                    question: "Em: <span class='gram-example'>O problema é <b>que não estudamos</b>.</span> A oração subordinada é:",
+                    answer: "Predicativa",
+                    options: ["Predicativa", "Subjetiva", "Objetiva direta", "Apositiva"],
+                    explanation: "Exerce função de predicativo do sujeito."
+                },
+                {
+                    question: "Assinale a frase com coesão sequencial:",
+                    answer: "Primeiro acordou, depois tomou café.",
+                    options: [
+                        "Primeiro acordou, depois tomou café.",
+                        "Acordou. Café.",
+                        "Acordou e café.",
+                        "Primeiro acordou. Café depois."
+                    ],
+                    explanation: "O uso de 'primeiro' e 'depois' estabelece sequência de ideias."
+                },
+                {
+                    question: "Em: <span class='gram-example'>É bom <b>que você leia</b>.</span> A oração subordinada é:",
+                    answer: "Subjetiva",
+                    options: ["Subjetiva", "Objetiva direta", "Completiva nominal", "Apositiva"],
+                    explanation: "Exerce função de sujeito da oração principal."
+                },
+                {
+                    question: "Assinale a alternativa que apresenta coesão por repetição:",
+                    answer: "O cachorro latiu. O cachorro correu.",
+                    options: [
+                        "O cachorro latiu. O cachorro correu.",
+                        "O cachorro latiu. Ele correu.",
+                        "O cachorro latiu. Correu.",
+                        "O cachorro latiu. Animal correu."
+                    ],
+                    explanation: "A repetição de 'O cachorro' cria coesão, embora não seja a forma mais elegante."
+                },
+                {
+                    question: "Em: <span class='gram-example'>Tenho certeza <b>de que vai chover</b>.</span> A oração subordinada é:",
+                    answer: "Completiva nominal",
+                    options: ["Completiva nominal", "Apositiva", "Subjetiva", "Objetiva direta"],
+                    explanation: "Completa o sentido do nome 'certeza'."
+                },
+                {
+                    question: "Assinale o exemplo de oração subordinada substantiva objetiva direta:",
+                    answer: "Quero que você estude.",
+                    options: [
+                        "Quero que você estude.",
+                        "É importante que você estude.",
+                        "Tenho esperança de que você estude.",
+                        "O importante é que você estude."
+                    ],
+                    explanation: "A oração exerce função de objeto direto do verbo 'querer'."
+                }
+            ];
+
+            let score = 0;
+            let quizQueue = [];
+
+            function switchView(view) {
+                if (view === 'learn') {
+                    learnSection.classList.remove('hidden');
+                    practiceSection.classList.add('hidden');
+                    btnLearn.classList.add('active');
+                    btnPractice.classList.remove('active');
+                } else {
+                    learnSection.classList.add('hidden');
+                    practiceSection.classList.remove('hidden');
+                    btnLearn.classList.remove('active');
+                    btnPractice.classList.add('active');
+                    startQuiz();
+                }
+            }
+
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+
+            function createAccordion() {
+                accordionContainer.innerHTML = '';
+                learnData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-stone-200 rounded-lg';
+                    div.innerHTML = `
+                        <button class="accordion-button w-full p-4 text-left font-semibold text-lg flex justify-between items-center hover:bg-stone-50 transition-colors">
+                            <span>${item.title}</span>
+                            <span class="transform transition-transform duration-300 text-sky-600">&#9662;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t border-stone-200 text-slate-700 prose max-w-none content-text">
+                                ${item.content}
+                            </div>
+                        </div>
+                    `;
+                    accordionContainer.appendChild(div);
+                });
+
+                document.querySelectorAll('.accordion-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const icon = button.querySelector('span:last-child');
+                        const isOpen = button.classList.toggle('open');
+                        icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                        if (isOpen) {
+                            document.querySelectorAll('.accordion-button.open').forEach(openButton => {
+                                if (openButton !== button) {
+                                    openButton.classList.remove('open');
+                                    openButton.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function startQuiz() {
+                score = 0;
+                quizQueue = shuffleArray([...quizData]);
+                quizContainer.classList.remove('hidden');
+                scoreContainer.classList.add('hidden');
+                showQuestion();
+            }
+
+            function showQuestion() {
+                feedbackContainer.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                if (quizQueue.length === 0) {
+                    showScore();
+                    return;
+                }
+                const questionData = quizQueue[0];
+                questionProgress.textContent = `Questão ${score + 1} de ${quizData.length}`;
+                questionText.innerHTML = questionData.question;
+                optionsContainer.innerHTML = '';
+                let currentOptions = shuffleArray([...questionData.options]);
+                currentOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option;
+                    button.className = "quiz-option w-full p-3 border-2 border-stone-300 rounded-lg hover:bg-stone-200 transition-colors";
+                    button.addEventListener('click', () => selectAnswer(option, questionData.answer, questionData.explanation));
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            function selectAnswer(selectedOption, correctAnswer, explanation) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                let isCorrect = selectedOption === correctAnswer;
+                if (isCorrect) {
+                    score++;
+                    feedbackText.textContent = '🎉 Correto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-emerald-100 border border-emerald-200 text-emerald-800';
+                } else {
+                    feedbackText.textContent = '🤔 Incorreto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 border-red-200 text-red-800';
+                }
+                feedbackExplanation.innerHTML = `<strong>Explicação:</strong> ${explanation}`;
+                feedbackContainer.classList.remove('hidden');
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.innerHTML === correctAnswer) {
+                        button.classList.add('correct-answer');
+                    } else if (button.innerHTML === selectedOption && !isCorrect) {
+                        button.classList.add('wrong-answer');
+                    }
+                });
+                nextQuestionBtn.classList.remove('hidden');
+            }
+
+            nextQuestionBtn.addEventListener('click', () => {
+                if (quizQueue.length === 0) {
+                    showScore();
+                    return;
+                }
+                const questionData = quizQueue.shift();
+                const lastAnswerCorrect = feedbackText.textContent.includes('Correto');
+                if (!lastAnswerCorrect) {
+                    quizQueue.push(questionData); // Se errou, manda para o final da fila
+                }
+                showQuestion();
+            });
+
+            function showScore() {
+                quizContainer.classList.add('hidden');
+                scoreContainer.classList.remove('hidden');
+                scoreTextElement.textContent = `Você acertou ${score} de ${quizData.length} questões!`;
+                const percentage = (quizData.length > 0) ? (score / quizData.length) * 100 : 0;
+                scoreBar.style.width = `${percentage}%`;
+            }
+
+            restartQuizBtn.addEventListener('click', startQuiz);
+
+            createAccordion();
+            switchView('learn');
+        });
+
+        function printQuestions() {
+            let html = `<h2>Questões de Gramática: Coesão e Subordinação</h2><ol>`;
+            quizData.forEach((q, i) => {
+                html += `<li style="margin-bottom:16px;">
+                    <div>${q.question.replace(/<[^>]+>/g, '')}</div>
+                    <div><strong>Opções:</strong> ${q.options.join(', ')}</div>
+                </li>`;
+            });
+            html += `</ol>`;
+            const win = window.open('', '', 'width=800,height=900');
+            win.document.write(`
+                <html>
+                <head>
+                    <title>Questões de Gramática</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        h2 { color: #0369a1; }
+                        li { margin-bottom: 18px; }
+                    </style>
+                </head>
+                <body>${html}</body>
+                </html>
+            `);
+            win.document.close();
+        }   win.print();
+    </script>
+</body>cript>
+</html>
+</html>

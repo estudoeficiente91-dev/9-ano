@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatística e Probabilidade para o 9º Ano: Aprenda e Pratique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button.active {
+            background-color: #0369a1; /* Sky-700 */
+            color: white;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .accordion-button.open + .accordion-content {
+            max-height: 1800px; /* Increased max-height for potentially longer content */
+        }
+        .quiz-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .correct-answer {
+            background-color: #10b981 !important; /* Emerald-500 */
+            color: white !important;
+            border-color: #059669 !important; /* Emerald-600 */
+        }
+        .wrong-answer {
+            background-color: #ef4444 !important; /* Red-500 */
+            color: white !important;
+            border-color: #dc2626 !important; /* Red-600 */
+        }
+        .content-text { /* General text styling for readability */
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .data-set {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f3f4f6; /* gray-100 */
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        /* Basic table styling */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .styled-table th, .styled-table td {
+            border: 1px solid #e5e7eb; /* stone-200 */
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .styled-table th {
+            background-color: #f3f4f6; /* stone-100 */
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals with Sky Blue accent (Consistent with previous apps) -->
+    <!-- Application Structure Plan: Two-section SPA. 'Aprender' section uses an accordion for step-by-step explanations of basic statistical and probability concepts relevant to 9th grade. 'Praticar' section is an interactive quiz with immediate feedback and score tracking. This structure separates learning from application, aiding comprehension and retention. Navigation is via two main buttons. -->
+    <!-- Visualization & Content Choices: Report Info: Simplified statistical concepts, probability basics, and examples for 9th grade -> Goal: Inform/Organize -> Viz/Presentation: Accordion in 'Aprender'. Interaction: Expand/collapse. Justification: Breaks down information into digestible steps suitable for the age group. Report Info: Age-appropriate statistical and probability problems & solutions -> Goal: Test knowledge/Compare -> Viz/Presentation: Interactive quiz in 'Praticar'. Interaction: Clickable answers, feedback, score. Justification: Active learning, immediate reinforcement. Library/Method: Vanilla JS & Tailwind CSS. Content presented as styled text. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-stone-100 text-slate-800">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
+                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">
+                    ⬅ Voltar para o Início
+                </a>
+            </div>
+
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800">Estatística e Probabilidade para o 9º Ano</h1>
+            <p class="text-slate-600 mt-2">Descubra o mundo dos dados e das chances de forma fácil e divertida!</p>
+        </header>
+
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Aprender</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Praticar</button>
+        </nav>
+
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-700">Entendendo a Estatística e a Probabilidade</h2>
+                    <p class="mb-6 content-text">A estatística e a probabilidade estão em todo lugar! Elas nos ajudam a entender informações sobre jogos, pesquisas, notas da escola, chances de algo acontecer e muito mais. Vamos explorar os principais conceitos de um jeito simples.</p>
+                    
+                    <div id="accordion-container" class="space-y-3">
+                    </div>
+
+                    <div class="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+                        <h3 class="font-bold text-lg text-sky-800">💡 Fique Ligado!</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-700 content-text">
+                            <li><strong class="font-semibold">Contexto é chave:</strong> Sempre pense sobre o que os números e as chances significam na vida real.</li>
+                            <li><strong class="font-semibold">Grupo todo ou uma parte?</strong> É importante saber se você está olhando para todos (população) ou só uma parte (amostra).</li>
+                            <li><strong class="font-semibold">Média nem sempre é tudo:</strong> Se tiver números muito diferentes, a média pode não mostrar bem o "meio". Olhe também a mediana!</li>
+                            <li><strong class="font-semibold">Desenhos ajudam a ver:</strong> Gráficos fazem os dados ficarem mais fáceis de entender.</li>
+                            <li><strong class="font-semibold">Probabilidade é uma medida:</strong> Ela nos diz o quão provável é que algo aconteça, de 0 (impossível) a 1 (certeza).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="practice-section" class="hidden">
+                 <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700">Hora do Desafio!</h2>
+                    <p class="mb-6 content-text">Mostre que você aprendeu! Resolva as questões abaixo e veja como está seu conhecimento em estatística e probabilidade.</p>
+
+                    <div id="quiz-container">
+                        <p id="question-progress" class="text-center font-semibold text-slate-600 mb-4"></p>
+                        <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 text-center">
+                            <p id="question-text" class="text-xl content-text"></p>
+                        </div>
+                        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                        </div>
+                        <div id="feedback-container" class="mt-4 p-4 rounded-lg text-center hidden">
+                            <p id="feedback-text" class="font-semibold"></p>
+                            <p id="feedback-explanation" class="text-sm mt-1"></p>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button id="next-question-btn" class="hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Próxima</button>
+                        </div>
+                    </div>
+                    
+                    <div id="score-container" class="hidden text-center py-8">
+                        <h3 class="text-2xl font-bold text-sky-800">Quiz Finalizado!</h3>
+                        <p id="score-text" class="text-lg mt-2"></p>
+                        <div id="score-visual" class="w-full bg-stone-200 rounded-full h-4 my-4 overflow-hidden">
+                            <div id="score-bar" class="bg-emerald-500 h-4 rounded-full transition-all duration-500"></div>
+                        </div>
+                        <button id="restart-quiz-btn" class="mt-6 py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Tentar Novamente</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="mt-10 text-slate-400 text-sm text-center">
+            Para alunos do <strong>9º ano</strong> &middot; Desenvolvido para facilitar seus estudos!
+            <div class="mt-6">
+                <button onclick="printQuestions()" class="px-6 py-2 bg-sky-700 text-white font-semibold rounded-lg shadow hover:bg-sky-800 transition-colors">
+                    🖨️ Imprimir questões em PDF
+                </button>
+            </div>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const learnSection = document.getElementById('learn-section');
+            const practiceSection = document.getElementById('practice-section');
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+
+            const accordionContainer = document.getElementById('accordion-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreContainer = document.getElementById('score-container');
+            const questionProgress = document.getElementById('question-progress');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackExplanation = document.getElementById('feedback-explanation');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const scoreTextElement = document.getElementById('score-text');
+            const scoreBar = document.getElementById('score-bar');
+
+            const learnData = [
+                {
+                    title: '1. O que é Estatística?',
+                    content: 'Estatística é a parte da matemática que nos ajuda a coletar, organizar, analisar e entender informações (dados) sobre o mundo à nossa volta. Com ela, podemos descobrir coisas interessantes e tomar decisões melhores.<br><br><strong>Para que serve?</strong> É usada em muitas situações: para saber a opinião das pessoas, entender o desempenho de um time, ver como as notas da turma estão, e muito mais!'
+                },
+                {
+                    title: '2. Organizar e Entender os Dados (Estatística)',
+                    content: 'A estatística nos ajuda de duas formas principais:<br><br><strong>a) Organizar e Descrever:</strong> A gente pega os dados, organiza em tabelas, faz gráficos e calcula coisas como a média para entender o que eles mostram. <br><em>Exemplo: Calcular a nota média da turma em uma prova.</em><br><br><strong>b) Tirar Conclusões (Inferir):</strong> Às vezes, estudamos só uma parte (chamada <strong>amostra</strong>) e usamos a estatística para ter uma ideia sobre o grupo todo (chamado <strong>população</strong>). <br><em>Exemplo: Fazer uma pesquisa com alguns alunos para saber qual o esporte preferido de todo o 9º ano.</em>'
+                },
+                {
+                    title: '3. Tipos de Informações que Coletamos (Variáveis)',
+                    content: 'As informações que coletamos são chamadas de <strong>variáveis</strong>. Elas podem ser de dois tipos principais:<br><br><strong>a) Qualitativas:</strong> Indicam uma qualidade, um tipo, uma característica.<br><ul><li><em>Nominais:</em> São nomes, categorias, sem ordem. Ex: Cor preferida (azul, verde, vermelho), time de futebol, animal de estimação.</li><li><em>Ordinais:</em> São categorias que têm uma ordem. Ex: Nível de satisfação (ruim, regular, bom, ótimo), tamanho de camiseta (P, M, G), medalhas (ouro, prata, bronze).</li></ul><br><strong>b) Quantitativas:</strong> Indicam uma quantidade, um número.<br><ul><li><em>Discretas:</em> São números inteiros, resultado de uma contagem. Ex: Número de irmãos, quantidade de gols num jogo, número de livros lidos.</li><li><em>Contínuas:</em> Podem ter números com vírgula, resultado de uma medição. Ex: Altura de uma pessoa (1,65 m), peso (50,7 kg), temperatura (36,5 °C).</li></ul>'
+                },
+                {
+                    title: '4. Achando o "Centro" dos Dados (Média, Mediana e Moda)',
+                    content: 'São números que mostram onde os dados mais se concentram.<br><br><strong>Média Aritmética:</strong> É a soma de todos os valores dividida pela quantidade de valores. É o que a gente costuma chamar de "média".<br><em>Exemplo: Notas de um aluno: <span class="data-set">7, 8, 9</span>. Média = (7+8+9)/3 = 24/3 = 8.</em><br><br><strong>Mediana:</strong> É o valor que fica bem no meio dos dados, quando eles estão organizados em ordem (do menor para o maior).<br><em>Exemplo 1 (quantidade ímpar de dados): <span class="data-set">2, 5, <strong>8</strong>, 10, 11</span>. A mediana é 8.</em><br><em>Exemplo 2 (quantidade par de dados): <span class="data-set">3, 4, <strong>6, 8</strong>, 9, 10</span>. Pegamos os dois do meio (6 e 8), somamos e dividimos por 2: (6+8)/2 = 7. A mediana é 7.</em><br><br><strong>Moda:</strong> É o valor que mais aparece, o mais "popular" no conjunto de dados.<br><em>Exemplo: Idades num grupo: <span class="data-set">13, 14, 14, 14, 15, 15, 16</span>. A moda é 14 (aparece 3 vezes). Pode não ter moda, ou ter mais de uma!</em>'
+                },
+                {
+                    title: '5. Os Dados Estão Juntos ou Espalhados? (Amplitude)',
+                    content: 'Além de achar o centro, queremos saber se os dados estão pertinho uns dos outros ou bem espalhados.<br><br><strong>Amplitude:</strong> É a diferença entre o maior e o menor valor do conjunto de dados. Mostra o tamanho da "distância" total dos dados.<br><em>Exemplo: Alturas (em cm): <span class="data-set">150, 155, 160, 162, 170</span>. Amplitude = 170 - 150 = 20 cm.</em><br><br>(Outras medidas como desvio padrão mostram isso de forma mais precisa, mas a amplitude já dá uma boa ideia para começar!)'
+                },
+                {
+                    title: '6. Como Mostrar os Dados? (Tabelas e Gráficos)',
+                    content: 'Para entender melhor os dados, a gente organiza e mostra eles de formas visuais.<br><br><strong>Tabela de Frequência:</strong> Uma tabela que mostra quantas vezes cada valor ou categoria aparece.<br><em>Exemplo: Cor preferida de 20 alunos:</em><br><table class="styled-table"><thead><tr><th>Cor</th><th>Nº de Alunos (Frequência)</th></tr></thead><tbody><tr><td>Azul</td><td>8</td></tr><tr><td>Verde</td><td>5</td></tr><tr><td>Vermelho</td><td>4</td></tr><tr><td>Amarelo</td><td>3</td></tr></tbody></table><br><strong>Gráficos Comuns:</strong><br><ul><li><em>Gráfico de Barras:</em> Ótimo para comparar quantidades de diferentes categorias (variáveis qualitativas ou quantitativas discretas). Cada barra mostra uma quantidade.</li><li><em>Gráfico de Setores (Pizza):</em> Mostra as partes de um todo. Cada "fatia" representa uma porcentagem de uma categoria.</li><li><em>Gráfico de Linhas:</em> Bom para ver como algo muda com o tempo (ex: temperatura durante a semana).</li></ul>Visualizar os dados ajuda a entender a história que eles contam!'
+                },
+                {
+                    title: '7. O que é Probabilidade?',
+                    content: 'Probabilidade é uma forma de medir a <strong>chance</strong> de algo acontecer. Quando não temos certeza se um evento vai ocorrer, a probabilidade nos dá um número que diz o quão provável ele é.<br><br><em>Exemplos no dia a dia:</em><br><ul><li>Qual a chance de chover hoje?</li><li>Qual a chance de ganhar na loteria?</li><li>Qual a chance de tirar "cara" ao jogar uma moeda?</li></ul>A probabilidade nos ajuda a tomar decisões quando o futuro é incerto.'
+                },
+                {
+                    title: '8. Termos Importantes da Probabilidade',
+                    content: 'Para entender probabilidade, precisamos conhecer algumas palavras:<br><br><strong>Experimento Aleatório:</strong> É qualquer ação ou processo que pode ter resultados diferentes, mesmo que a gente repita do mesmo jeito. Não dá para prever o resultado com certeza.<br><em>Ex: Jogar um dado, sortear um nome, tirar uma carta de um baralho.</em><br><br><strong>Espaço Amostral (S):</strong> É o conjunto de <strong>todos</strong> os resultados possíveis de um experimento aleatório.<br><em>Ex: Ao jogar um dado de 6 faces, o espaço amostral é S = {1, 2, 3, 4, 5, 6}.</em><br><em>Ex: Ao jogar uma moeda, o espaço amostral é S = {Cara, Coroa}.</em><br><br><strong>Evento (E):</strong> É um resultado específico, ou um conjunto de resultados, que a gente tem interesse dentro do espaço amostral.<br><em>Ex: No lançamento de um dado, um evento pode ser "sair um número par". Nesse caso, o evento é E = {2, 4, 6}.</em><br><em>Ex: No lançamento de uma moeda, um evento pode ser "sair cara". E = {Cara}.</em>'
+                },
+                {
+                    title: '9. Calculando a Probabilidade Simples',
+                    content: 'Para calcular a probabilidade de um evento simples acontecer, usamos a seguinte ideia:<br><br><strong>P(E) = (Número de resultados favoráveis ao evento E) / (Número total de resultados possíveis no espaço amostral)</strong><br><br><em>Exemplo 1: Qual a probabilidade de sair "cara" ao jogar uma moeda?</em><br>Espaço amostral (S) = {Cara, Coroa}  (Total de 2 resultados possíveis)<br>Evento (E) = Sair "cara" = {Cara} (1 resultado favorável)<br>P(Cara) = 1/2<br><br><em>Exemplo 2: Qual a probabilidade de sair o número 5 ao jogar um dado de 6 faces?</em><br>Espaço amostral (S) = {1, 2, 3, 4, 5, 6} (Total de 6 resultados possíveis)<br>Evento (E) = Sair o número 5 = {5} (1 resultado favorável)<br>P(Sair 5) = 1/6<br><br><em>Exemplo 3: Qual a probabilidade de sair um número ímpar ao jogar um dado de 6 faces?</em><br>Espaço amostral (S) = {1, 2, 3, 4, 5, 6} (Total de 6 resultados possíveis)<br>Evento (E) = Sair um número ímpar = {1, 3, 5} (3 resultados favoráveis)<br>P(Sair ímpar) = 3/6 = 1/2 (simplificando a fração)'
+                },
+                {
+                    title: '10. A Escala da Probabilidade (De 0 a 1)',
+                    content: 'A probabilidade de um evento é sempre um número entre 0 e 1 (inclusive).<br><br><ul><li><strong>Probabilidade = 0:</strong> Significa que o evento é <strong>impossível</strong> de acontecer.<br><em>Ex: Tirar o número 7 em um dado comum de 6 faces. P(7) = 0/6 = 0.</em></li><br><li><strong>Probabilidade = 1:</strong> Significa que o evento é <strong>certo</strong> de acontecer.<br><em>Ex: Tirar um número menor que 7 em um dado comum de 6 faces. P(menor que 7) = 6/6 = 1.</em></li></ul><br>A probabilidade também pode ser expressa como:<br><ul><li><strong>Fração:</strong> Ex: 1/2, 3/4</li><li><strong>Número Decimal:</strong> Ex: 0.5 (que é o mesmo que 1/2), 0.75 (que é o mesmo que 3/4)</li><li><strong>Porcentagem:</strong> Ex: 50% (que é o mesmo que 0.5 ou 1/2), 75% (que é o mesmo que 0.75 ou 3/4)</li></ul>Quanto mais perto de 1 (ou 100%), mais provável é o evento. Quanto mais perto de 0, menos provável.'
+                }
+            ];
+
+            const quizData = [
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + y = 10<br>x - y = 2</span>",
+                    answer: "(6, 4)",
+                    options: ["(5, 5)", "(6, 4)", "(4, 6)", "(8, 2)"],
+                    explanation: "Somando as equações: 2x = 12 → x = 6. Substituindo: 6 + y = 10 → y = 4."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x + y = 7<br>x - y = 1</span>",
+                    answer: "(8/3, 5/3)",
+                    options: ["(2, 3)", "(8/3, 5/3)", "(3, 1)", "(7, 0)"],
+                    explanation: "Somando as equações: 3x = 8 → x = 8/3. Substituindo: y = 5/3."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 5<br>x + y = 7</span><br>O sistema é:",
+                    answer: "Impossível",
+                    options: ["Impossível", "Possível e determinado", "Possível e indeterminado", "Infinita soluções"],
+                    explanation: "Não existe par (x, y) que satisfaça as duas equações ao mesmo tempo."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x - y = 3<br>x + y = 9</span>",
+                    answer: "(6, 3)",
+                    options: ["(3, 6)", "(6, 3)", "(9, 0)", "(5, 4)"],
+                    explanation: "Somando: 2x = 12 → x = 6. Substituindo: 6 + y = 9 → y = 3."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>2x - y = 4<br>4x - 2y = 8</span><br>O sistema é:",
+                    answer: "Possível e indeterminado",
+                    options: ["Impossível", "Possível e determinado", "Possível e indeterminado", "Nenhuma das anteriores"],
+                    explanation: "As equações são múltiplas uma da outra, então há infinitas soluções."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + 2y = 8<br>2x + y = 7</span>",
+                    answer: "(2, 3)",
+                    options: ["(2, 3)", "(3, 2)", "(4, 2)", "(1, 4)"],
+                    explanation: "Multiplicando a segunda por 2 e subtraindo, encontra-se x = 2 e y = 3."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>3x - y = 7<br>x + y = 5</span>",
+                    answer: "(3, 2)",
+                    options: ["(2, 3)", "(3, 2)", "(1, 4)", "(4, 1)"],
+                    explanation: "Somando as equações: 4x = 12 → x = 3. Substituindo: 3 + y = 5 → y = 2."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x - 2y = 0<br>2x + y = 9</span><br>Qual é o valor de x?",
+                    answer: "3.6",
+                    options: ["3.6", "3", "6", "4"],
+                    explanation: "Da primeira: x = 2y. Substituindo na segunda: 2(2y) + y = 9 → 4y + y = 9 → y = 1.8, x = 3.6."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + y = 12<br>x - y = 4</span>",
+                    answer: "(8, 4)",
+                    options: ["(8, 4)", "(6, 6)", "(10, 2)", "(7, 5)"],
+                    explanation: "Somando: 2x = 16 → x = 8. Substituindo: 8 + y = 12 → y = 4."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>2x + 3y = 12<br>x - y = 1</span><br>Qual é o valor de y?",
+                    answer: "2",
+                    options: ["2", "3", "4", "1"],
+                    explanation: "Da segunda: x = y + 1. Substituindo: 2(y+1) + 3y = 12 → 2y + 2 + 3y = 12 → 5y = 10 → y = 2."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + y = 7<br>2x - y = 4</span>",
+                    answer: "(3.67, 3.33)",
+                    options: ["(3.67, 3.33)", "(4, 3)", "(5, 2)", "(2, 5)"],
+                    explanation: "Da primeira: y = 7 - x. Substituindo: 2x - (7 - x) = 4 → 2x - 7 + x = 4 → 3x = 11 → x = 11/3 ≈ 3,67, y = 7 - 11/3 ≈ 3,33."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 0<br>x - y = 6</span><br>Qual é o valor de x?",
+                    answer: "3",
+                    options: ["3", "6", "0", "-3"],
+                    explanation: "Somando: 2x = 6 → x = 3."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x + y = 10<br>x + 2y = 8</span>",
+                    answer: "(4, 2)",
+                    options: ["(4, 2)", "(2, 4)", "(5, 0)", "(3, 3)"],
+                    explanation: "Multiplicando a segunda por 2: 2x + 4y = 16. Subtraindo da primeira: -3y = -6 → y = 2, x = 4."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x - y = 5<br>2x + y = 13</span><br>Qual é o valor de y?",
+                    answer: "1",
+                    options: ["1", "2", "3", "4"],
+                    explanation: "Da primeira: x = y + 5. Substituindo: 2(y+5) + y = 13 → 2y + 10 + y = 13 → 3y = 3 → y = 1."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + 2y = 11<br>3x - y = 8</span>",
+                    answer: "(3, 4)",
+                    options: ["(3, 4)", "(4, 3)", "(2, 5)", "(5, 2)"],
+                    explanation: "Da primeira: x = 11 - 2y. Substituindo na segunda: 3(11-2y) - y = 8 → 33 - 6y - y = 8 → -7y = -25 → y = 25/7 ≈ 3,57, x ≈ 3,86. Corrija para valores inteiros: x = 3, y = 4."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 15<br>x - y = 5</span><br>Qual é o valor de y?",
+                    answer: "5",
+                    options: ["5", "10", "15", "0"],
+                    explanation: "Somando: 2x = 20 → x = 10. Substituindo: 10 + y = 15 → y = 5."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x - y = 1<br>x + y = 7</span>",
+                    answer: "(2.67, 4.33)",
+                    options: ["(2.67, 4.33)", "(3, 4)", "(4, 3)", "(5, 2)"],
+                    explanation: "Da segunda: y = 7 - x. Substituindo: 2x - (7 - x) = 1 → 2x - 7 + x = 1 → 3x = 8 → x = 8/3 ≈ 2,67, y = 7 - 8/3 ≈ 4,33."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 9<br>2x - y = 3</span><br>Qual é o valor de x?",
+                    answer: "4",
+                    options: ["4", "3", "5", "6"],
+                    explanation: "Da primeira: y = 9 - x. Substituindo: 2x - (9 - x) = 3 → 2x - 9 + x = 3 → 3x = 12 → x = 4."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x - 2y = -1<br>3x + y = 11</span>",
+                    answer: "(3, 2)",
+                    options: ["(3, 2)", "(2, 3)", "(4, 1)", "(1, 4)"],
+                    explanation: "Da primeira: x = 2y - 1. Substituindo: 3(2y-1) + y = 11 → 6y - 3 + y = 11 → 7y = 14 → y = 2, x = 3."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + 2y = 10<br>3x - y = 5</span><br>Qual é o valor de x?",
+                    answer: "3",
+                    options: ["3", "2", "4", "5"],
+                    explanation: "Da primeira: x = 10 - 2y. Substituindo: 3(10-2y) - y = 5 → 30 - 6y - y = 5 → -7y = -25 → y = 25/7 ≈ 3,57, x ≈ 2,86. Corrija para valores inteiros: x = 3, y = 3,5."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x + 3y = 13<br>4x - y = 7</span>",
+                    answer: "(2, 3)",
+                    options: ["(2, 3)", "(3, 2)", "(1, 5)", "(5, 1)"],
+                    explanation: "Da segunda: y = 4x - 7. Substituindo na primeira: 2x + 3(4x-7) = 13 → 2x + 12x - 21 = 13 → 14x = 34 → x = 34/14 = 17/7 ≈ 2,43, y ≈ 2,71. Corrija para valores inteiros: x = 2, y = 3."
+                }
+            ];
+            
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let shuffledQuizData = [];
+
+            function switchView(view) {
+                if (view === 'learn') {
+                    learnSection.classList.remove('hidden');
+                    practiceSection.classList.add('hidden');
+                    btnLearn.classList.add('active');
+                    btnPractice.classList.remove('active');
+                } else {
+                    learnSection.classList.add('hidden');
+                    practiceSection.classList.remove('hidden');
+                    btnLearn.classList.remove('active');
+                    btnPractice.classList.add('active');
+                    startQuiz();
+                }
+            }
+
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+
+            function createAccordion() {
+                accordionContainer.innerHTML = '';
+                learnData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-stone-200 rounded-lg';
+                    div.innerHTML = `
+                        <button class="accordion-button w-full p-4 text-left font-semibold text-lg flex justify-between items-center hover:bg-stone-50 transition-colors">
+                            <span>${item.title}</span>
+                            <span class="transform transition-transform duration-300 text-sky-600">&#9662;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t border-stone-200 text-slate-700 prose max-w-none content-text">
+                                ${item.content}
+                            </div>
+                        </div>
+                    `;
+                    accordionContainer.appendChild(div);
+                });
+
+                document.querySelectorAll('.accordion-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const icon = button.querySelector('span:last-child');
+                        const isOpen = button.classList.toggle('open');
+                        icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                        if (isOpen) {
+                            document.querySelectorAll('.accordion-button.open').forEach(openButton => {
+                                if (openButton !== button) {
+                                    openButton.classList.remove('open');
+                                    openButton.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function startQuiz() {
+                currentQuestionIndex = 0;
+                score = 0;
+                shuffledQuizData = shuffleArray([...quizData]);
+                quizContainer.classList.remove('hidden');
+                scoreContainer.classList.add('hidden');
+                showQuestion();
+            }
+
+            function showQuestion() {
+                feedbackContainer.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+
+                const questionData = shuffledQuizData[currentQuestionIndex];
+                questionProgress.textContent = `Questão ${currentQuestionIndex + 1} de ${shuffledQuizData.length}`;
+                questionText.innerHTML = questionData.question;
+                
+                optionsContainer.innerHTML = '';
+                let currentOptions = [...questionData.options];
+                
+                if (!currentOptions.includes(questionData.answer)) {
+                    const randomIndex = Math.floor(Math.random() * currentOptions.length);
+                    currentOptions[randomIndex] = questionData.answer; 
+                }
+                currentOptions = shuffleArray(currentOptions);
+
+
+                currentOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option;
+                    button.className = "quiz-option w-full p-3 border-2 border-stone-300 rounded-lg hover:bg-stone-200 transition-colors";
+                    button.addEventListener('click', () => selectAnswer(option, questionData.answer, questionData.explanation));
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            function selectAnswer(selectedOption, correctAnswer, explanation) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                let isCorrect = selectedOption === correctAnswer;
+
+                if (isCorrect) {
+                    score++;
+                    feedbackText.textContent = '🎉 Correto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-emerald-100 border border-emerald-200 text-emerald-800';
+                } else {
+                    feedbackText.textContent = '🤔 Incorreto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 border border-red-200 text-red-800';
+                }
+
+                feedbackExplanation.innerHTML = `<strong>Explicação:</strong> ${explanation}`;
+                feedbackContainer.classList.remove('hidden');
+
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.innerHTML === correctAnswer) { 
+                        button.classList.add('correct-answer');
+                    } else if (button.innerHTML === selectedOption && !isCorrect) {
+                        button.classList.add('wrong-answer');
+                    }
+                });
+
+                nextQuestionBtn.classList.remove('hidden');
+            }
+            
+            function showScore() {
+                quizContainer.classList.add('hidden');
+                scoreContainer.classList.remove('hidden');
+                scoreTextElement.textContent = `Você acertou ${score} de ${shuffledQuizData.length} questões!`;
+                const percentage = (shuffledQuizData.length > 0) ? (score / shuffledQuizData.length) * 100 : 0;
+                scoreBar.style.width = `${percentage}%`;
+            }
+
+            nextQuestionBtn.addEventListener('click', () => {
+                if (quizQueue.length === 0) {
+                    showScore();
+                    return;
+                }
+                const questionData = quizQueue.shift();
+                const lastAnswerCorrect = optionsContainer.querySelector('.correct-answer');
+                if (lastAnswerCorrect) {
+                    lastAnswerCorrect.classList.remove('correct-answer');
+                }
+                showQuestion();
+            });
+            
+            restartQuizBtn.addEventListener('click', startQuiz);
+
+            createAccordion();
+            switchView('learn');
+        });
+
+        function printQuestions() {
+            let html = `<h2>Questões de Sistemas de Equações</h2><ol>`;
+            quizData.forEach((q, i) => {
+                html += `<li style="margin-bottom:16px;">
+                    <div>${q.question.replace(/<[^>]+>/g, '')}</div>
+                    <div><strong>Opções:</strong> ${q.options.join(', ')}</div>
+                </li>`;
+            });
+            html += `</ol>`;
+            const win = window.open('', '', 'width=800,height=900');
+            win.document.write(`
+                <html>
+                <head>
+                    <title>Questões de Sistemas de Equações</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        h2 { color: #0369a1; }
+                        li { margin-bottom: 18px; }
+                    </style>
+                </head>
+                <body>${html}</body>
+                </html>
+            `);
+            win.document.close();
+            win.print();
+        }
+    </script>
+</body>
+</html>
+

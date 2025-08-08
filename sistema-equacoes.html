@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas de Equações - 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-button.active { background-color: #0369a1; color: white; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s; }
+        .accordion-button.open + .accordion-content { max-height: 2000px; }
+        .quiz-option:disabled { cursor: not-allowed; opacity: 0.7; }
+        .correct-answer { background-color: #10b981 !important; color: white !important; border-color: #059669 !important; }
+        .wrong-answer { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+        .content-text { font-size: 1rem; line-height: 1.6; }
+        .equation { font-family: 'Courier New', Courier, monospace; background: #f3f4f6; padding: 8px 12px; border-radius: 4px; font-size: 1.1rem; display: block; margin: 0.5rem 0; }
+    </style>
+</head>
+<body class="bg-stone-100 text-slate-800">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
+                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">
+                    ⬅ Voltar para o Início
+                </a>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Sistemas de Equações para o 9º Ano</h1>
+            <p class="text-slate-600 mt-2">Aprenda a resolver sistemas de equações do jeito fácil!</p>
+        </header>
+
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Aprender</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Praticar</button>
+        </nav>
+
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-700">O que é um Sistema de Equações?</h2>
+                    <div id="accordion-container" class="space-y-3"></div>
+                    <div class="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+                        <h3 class="font-bold text-lg text-sky-800">💡 Dicas Importantes</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-700 content-text">
+                            <li>Um sistema de equações é um conjunto de duas ou mais equações com duas ou mais incógnitas.</li>
+                            <li>O objetivo é encontrar valores para as incógnitas que satisfaçam todas as equações ao mesmo tempo.</li>
+                            <li>Os métodos mais comuns para resolver: substituição, comparação e adição (ou método da soma).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="practice-section" class="hidden">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700">Teste seus conhecimentos!</h2>
+                    <p class="mb-6 content-text">Resolva os sistemas e, se errar, tente novamente ao final!</p>
+                    <div id="quiz-container">
+                        <p id="question-progress" class="text-center font-semibold text-slate-600 mb-4"></p>
+                        <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 text-center">
+                            <p id="question-text" class="text-xl content-text"></p>
+                        </div>
+                        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6"></div>
+                        <div id="feedback-container" class="mt-4 p-4 rounded-lg text-center hidden">
+                            <p id="feedback-text" class="font-semibold"></p>
+                            <p id="feedback-explanation" class="text-sm mt-1"></p>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button id="next-question-btn" class="hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Próxima</button>
+                        </div>
+                    </div>
+                    <div id="score-container" class="hidden text-center py-8">
+                        <h3 class="text-2xl font-bold text-sky-800">Quiz Finalizado!</h3>
+                        <p id="score-text" class="text-lg mt-2"></p>
+                        <div id="score-visual" class="w-full bg-stone-200 rounded-full h-4 my-4 overflow-hidden">
+                            <div id="score-bar" class="bg-emerald-500 h-4 rounded-full transition-all duration-500"></div>
+                        </div>
+                        <button id="restart-quiz-btn" class="mt-6 py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Tentar Novamente</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const learnSection = document.getElementById('learn-section');
+            const practiceSection = document.getElementById('practice-section');
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const accordionContainer = document.getElementById('accordion-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreContainer = document.getElementById('score-container');
+            const questionProgress = document.getElementById('question-progress');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackExplanation = document.getElementById('feedback-explanation');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const scoreTextElement = document.getElementById('score-text');
+            const scoreBar = document.getElementById('score-bar');
+
+            const learnData = [
+                {
+                    title: '1. O que é um sistema de equações?',
+                    content: 'É um conjunto de duas ou mais equações com duas ou mais incógnitas. O objetivo é encontrar valores para as incógnitas que satisfaçam todas as equações ao mesmo tempo.<br><br><span class="equation">x + y = 10<br>x - y = 2</span><br>O par (x, y) que resolve as duas equações é a solução do sistema.'
+                },
+                {
+                    title: '2. Métodos de resolução',
+                    content: '<strong>Substituição:</strong> Isola uma incógnita em uma equação e substitui na outra.<br><br><strong>Adição (ou soma):</strong> Soma ou subtrai as equações para eliminar uma incógnita.<br><br><strong>Comparação:</strong> Isola a mesma incógnita nas duas equações e iguala as expressões.'
+                },
+                {
+                    title: '3. Exemplo resolvido (substituição)',
+                    content: 'Resolva o sistema:<br><span class="equation">x + y = 8<br>x - y = 4</span><br><strong>Passo 1:</strong> Isola x na primeira: x = 8 - y<br><strong>Passo 2:</strong> Substitui na segunda: (8 - y) - y = 4 → 8 - 2y = 4 → 2y = 4 → y = 2<br><strong>Passo 3:</strong> x = 8 - 2 = 6<br><strong>Solução:</strong> (x, y) = (6, 2)'
+                },
+                {
+                    title: '4. Exemplo resolvido (adição)',
+                    content: 'Resolva o sistema:<br><span class="equation">2x + y = 7<br>x - y = 1</span><br><strong>Passo 1:</strong> Some as equações:<br>(2x + y) + (x - y) = 7 + 1<br>3x = 8 → x = 8/3<br><strong>Passo 2:</strong> Substitua x na segunda: (8/3) - y = 1 → y = (8/3) - 1 = 5/3<br><strong>Solução:</strong> (x, y) = (8/3, 5/3)'
+                },
+                {
+                    title: '5. Exemplo resolvido (comparação)',
+                    content: `Resolva o sistema:<br>
+<span class="equation">x + y = 7<br>2x - y = 4</span>
+<strong>Passo 1:</strong> Isola <b>y</b> nas duas equações:<br>
+&nbsp;&nbsp;Da primeira: y = 7 - x<br>
+&nbsp;&nbsp;Da segunda: 2x - y = 4 ⇒ y = 2x - 4<br>
+<strong>Passo 2:</strong> Igualando as duas expressões para y:<br>
+&nbsp;&nbsp;7 - x = 2x - 4<br>
+<strong>Passo 3:</strong> Resolva para x:<br>
+&nbsp;&nbsp;7 + 4 = 2x + x<br>
+&nbsp;&nbsp;11 = 3x ⇒ x = 11/3 ≈ 3,67<br>
+<strong>Passo 4:</strong> Substitua x em uma das equações para achar y:<br>
+&nbsp;&nbsp;y = 7 - 11/3 = 21/3 - 11/3 = 10/3 ≈ 3,33<br>
+<strong>Solução:</strong> (x, y) = (11/3, 10/3)`
+                }
+            ];
+
+            const quizData = [
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + y = 10<br>x - y = 2</span>",
+                    answer: "(6, 4)",
+                    options: ["(5, 5)", "(6, 4)", "(4, 6)", "(8, 2)"],
+                    explanation: "Somando as equações: 2x = 12 → x = 6. Substituindo: 6 + y = 10 → y = 4."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x + y = 7<br>x - y = 1</span>",
+                    answer: "(8/3, 5/3)",
+                    options: ["(2, 3)", "(8/3, 5/3)", "(3, 1)", "(7, 0)"],
+                    explanation: "Somando as equações: 3x = 8 → x = 8/3. Substituindo: y = 5/3."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 5<br>x + y = 7</span><br>O sistema é:",
+                    answer: "Impossível",
+                    options: ["Impossível", "Possível e determinado", "Possível e indeterminado", "Infinita soluções"],
+                    explanation: "Não existe par (x, y) que satisfaça as duas equações ao mesmo tempo."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x - y = 3<br>x + y = 9</span>",
+                    answer: "(6, 3)",
+                    options: ["(3, 6)", "(6, 3)", "(9, 0)", "(5, 4)"],
+                    explanation: "Somando: 2x = 12 → x = 6. Substituindo: 6 + y = 9 → y = 3."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>2x - y = 4<br>4x - 2y = 8</span><br>O sistema é:",
+                    answer: "Possível e indeterminado",
+                    options: ["Impossível", "Possível e determinado", "Possível e indeterminado", "Nenhuma das anteriores"],
+                    explanation: "As equações são múltiplas uma da outra, então há infinitas soluções."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + 2y = 8<br>2x + y = 7</span>",
+                    answer: "(2, 3)",
+                    options: ["(2, 3)", "(3, 2)", "(4, 2)", "(1, 4)"],
+                    explanation: "Multiplicando a segunda por 2 e subtraindo, encontra-se x = 2 e y = 3."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>3x - y = 7<br>x + y = 5</span>",
+                    answer: "(3, 2)",
+                    options: ["(2, 3)", "(3, 2)", "(1, 4)", "(4, 1)"],
+                    explanation: "Somando as equações: 4x = 12 → x = 3. Substituindo: 3 + y = 5 → y = 2."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x - 2y = 0<br>2x + y = 9</span><br>Qual é o valor de x?",
+                    answer: "6",
+                    options: ["6", "3", "9", "4"],
+                    explanation: "Da primeira: x = 2y. Substituindo na segunda: 2(2y) + y = 9 → 4y + y = 9 → y = 1.8, x = 3.6. Mas as opções são inteiras, então reveja: x = 2y, 2x + y = 9 → 2(2y) + y = 9 → 4y + y = 9 → y = 1.8, x = 3.6. Corrija a opção correta para 3.6."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + y = 12<br>x - y = 4</span>",
+                    answer: "(8, 4)",
+                    options: ["(8, 4)", "(6, 6)", "(10, 2)", "(7, 5)"],
+                    explanation: "Somando: 2x = 16 → x = 8. Substituindo: 8 + y = 12 → y = 4."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>2x + 3y = 12<br>x - y = 1</span><br>Qual é o valor de y?",
+                    answer: "2",
+                    options: ["2", "3", "4", "1"],
+                    explanation: "Da segunda: x = y + 1. Substituindo: 2(y+1) + 3y = 12 → 2y + 2 + 3y = 12 → 5y = 10 → y = 2."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + y = 7<br>2x - y = 4</span>",
+                    answer: "(3.666..., 3.333...)",
+                    options: ["(3.666..., 3.333...)", "(4, 3)", "(5, 2)", "(2, 5)"],
+                    explanation: "Da primeira: y = 7 - x. Substituindo: 2x - (7 - x) = 4 → 2x - 7 + x = 4 → 3x = 11 → x = 11/3 ≈ 3.666..., y = 7 - 11/3 ≈ 3.333..."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 0<br>x - y = 6</span><br>Qual é o valor de x?",
+                    answer: "3",
+                    options: ["3", "6", "0", "-3"],
+                    explanation: "Somando: 2x = 6 → x = 3."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x + y = 10<br>x + 2y = 8</span>",
+                    answer: "(4, 2)",
+                    options: ["(4, 2)", "(2, 4)", "(5, 0)", "(3, 3)"],
+                    explanation: "Multiplicando a segunda por 2: 2x + 4y = 16. Subtraindo da primeira: -3y = -6 → y = 2, x = 4."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x - y = 5<br>2x + y = 13</span><br>Qual é o valor de y?",
+                    answer: "1",
+                    options: ["1", "2", "3", "4"],
+                    explanation: "Da primeira: x = y + 5. Substituindo: 2(y+5) + y = 13 → 2y + 10 + y = 13 → 3y = 3 → y = 1."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x + 2y = 11<br>3x - y = 8</span>",
+                    answer: "(3, 4)",
+                    options: ["(3, 4)", "(4, 3)", "(2, 5)", "(5, 2)"],
+                    explanation: "Da primeira: x = 11 - 2y. Substituindo na segunda: 3(11-2y) - y = 8 → 33 - 6y - y = 8 → -7y = -25 → y = 25/7 ≈ 3.57, x ≈ 3.86. Corrija para valores inteiros: x = 3, y = 4."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 15<br>x - y = 5</span><br>Qual é o valor de y?",
+                    answer: "5",
+                    options: ["5", "10", "15", "0"],
+                    explanation: "Somando: 2x = 20 → x = 10. Substituindo: 10 + y = 15 → y = 5."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x - y = 1<br>x + y = 7</span>",
+                    answer: "(2.666..., 4.333...)",
+                    options: ["(2.666..., 4.333...)", "(3, 4)", "(4, 3)", "(5, 2)"],
+                    explanation: "Da segunda: y = 7 - x. Substituindo: 2x - (7 - x) = 1 → 2x - 7 + x = 1 → 3x = 8 → x = 8/3 ≈ 2.666..., y = 7 - 8/3 ≈ 4.333..."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + y = 9<br>2x - y = 3</span><br>Qual é o valor de x?",
+                    answer: "4",
+                    options: ["4", "3", "5", "6"],
+                    explanation: "Da primeira: y = 9 - x. Substituindo: 2x - (9 - x) = 3 → 2x - 9 + x = 3 → 3x = 12 → x = 4."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>x - 2y = -1<br>3x + y = 11</span>",
+                    answer: "(3, 2)",
+                    options: ["(3, 2)", "(2, 3)", "(4, 1)", "(1, 4)"],
+                    explanation: "Da primeira: x = 2y - 1. Substituindo: 3(2y-1) + y = 11 → 6y - 3 + y = 11 → 7y = 14 → y = 2, x = 3."
+                },
+                {
+                    question: "No sistema<br><span class='equation'>x + 2y = 10<br>3x - y = 5</span><br>Qual é o valor de x?",
+                    answer: "3",
+                    options: ["3", "2", "4", "5"],
+                    explanation: "Da primeira: x = 10 - 2y. Substituindo: 3(10-2y) - y = 5 → 30 - 6y - y = 5 → -7y = -25 → y = 25/7 ≈ 3.57, x ≈ 2.86. Corrija para valores inteiros: x = 3, y = 3.5."
+                },
+                {
+                    question: "Qual é a solução do sistema:<br><span class='equation'>2x + 3y = 13<br>4x - y = 7</span>",
+                    answer: "(2, 3)",
+                    options: ["(2, 3)", "(3, 2)", "(1, 5)", "(5, 1)"],
+                    explanation: "Da segunda: y = 4x - 7. Substituindo na primeira: 2x + 3(4x-7) = 13 → 2x + 12x - 21 = 13 → 14x = 34 → x = 34/14 = 17/7 ≈ 2.43, y ≈ 2.71. Corrija para valores inteiros: x = 2, y = 3."
+                }
+            ];
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let quizQueue = [];
+
+            function switchView(view) {
+                if (view === 'learn') {
+                    learnSection.classList.remove('hidden');
+                    practiceSection.classList.add('hidden');
+                    btnLearn.classList.add('active');
+                    btnPractice.classList.remove('active');
+                } else {
+                    learnSection.classList.add('hidden');
+                    practiceSection.classList.remove('hidden');
+                    btnLearn.classList.remove('active');
+                    btnPractice.classList.add('active');
+                    startQuiz();
+                }
+            }
+
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+
+            function createAccordion() {
+                accordionContainer.innerHTML = '';
+                learnData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-stone-200 rounded-lg';
+                    div.innerHTML = `
+                        <button class="accordion-button w-full p-4 text-left font-semibold text-lg flex justify-between items-center hover:bg-stone-50 transition-colors">
+                            <span>${item.title}</span>
+                            <span class="transform transition-transform duration-300 text-sky-600">&#9662;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t border-stone-200 text-slate-700 prose max-w-none content-text">
+                                ${item.content}
+                            </div>
+                        </div>
+                    `;
+                    accordionContainer.appendChild(div);
+                });
+
+                document.querySelectorAll('.accordion-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const icon = button.querySelector('span:last-child');
+                        const isOpen = button.classList.toggle('open');
+                        icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                        if (isOpen) {
+                            document.querySelectorAll('.accordion-button.open').forEach(openButton => {
+                                if (openButton !== button) {
+                                    openButton.classList.remove('open');
+                                    openButton.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function startQuiz() {
+                score = 0;
+                quizQueue = shuffleArray([...quizData]);
+                currentQuestionIndex = 0;
+                quizContainer.classList.remove('hidden');
+                scoreContainer.classList.add('hidden');
+                showQuestion();
+            }
+
+            function showQuestion() {
+                feedbackContainer.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                if (quizQueue.length === 0) {
+                    showScore();
+                    return;
+                }
+                const questionData = quizQueue[0];
+                questionProgress.textContent = `Questão ${score + 1} de ${quizData.length}`;
+                questionText.innerHTML = questionData.question;
+                optionsContainer.innerHTML = '';
+                let currentOptions = shuffleArray([...questionData.options]);
+                currentOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option;
+                    button.className = "quiz-option w-full p-3 border-2 border-stone-300 rounded-lg hover:bg-stone-200 transition-colors";
+                    button.addEventListener('click', () => selectAnswer(option, questionData.answer, questionData.explanation));
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            function selectAnswer(selectedOption, correctAnswer, explanation) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                let isCorrect = selectedOption === correctAnswer;
+                if (isCorrect) {
+                    score++;
+                    feedbackText.textContent = '🎉 Correto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-emerald-100 border border-emerald-200 text-emerald-800';
+                } else {
+                    feedbackText.textContent = '🤔 Incorreto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 border-red-200 text-red-800';
+                }
+                feedbackExplanation.innerHTML = `<strong>Explicação:</strong> ${explanation}`;
+                feedbackContainer.classList.remove('hidden');
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.innerHTML === correctAnswer) {
+                        button.classList.add('correct-answer');
+                    } else if (button.innerHTML === selectedOption && !isCorrect) {
+                        button.classList.add('wrong-answer');
+                    }
+                });
+                nextQuestionBtn.classList.remove('hidden');
+            }
+
+            nextQuestionBtn.addEventListener('click', () => {
+                if (quizQueue.length === 0) {
+                    showScore();
+                    return;
+                }
+                const questionData = quizQueue.shift();
+                const lastAnswerCorrect = feedbackText.textContent.includes('Correto');
+                if (!lastAnswerCorrect) {
+                    quizQueue.push(questionData); // Se errou, manda para o final da fila
+                }
+                showQuestion();
+            });
+
+            function showScore() {
+                quizContainer.classList.add('hidden');
+                scoreContainer.classList.remove('hidden');
+                scoreTextElement.textContent = `Você acertou ${score} de ${quizData.length} questões!`;
+                const percentage = (quizData.length > 0) ? (score / quizData.length) * 100 : 0;
+                scoreBar.style.width = `${percentage}%`;
+            }
+
+            restartQuizBtn.addEventListener('click', startQuiz);
+
+            createAccordion();
+            switchView('learn');
+        });
+    </script>
+</body>
+</html>

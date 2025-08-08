@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reações Químicas para o 9º Ano: Aprenda e Pratique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button.active {
+            background-color: #0369a1; /* Sky-700 */
+            color: white;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .accordion-button.open + .accordion-content {
+            max-height: 2000px; /* Increased max-height for potentially longer content */
+        }
+        .quiz-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .correct-answer {
+            background-color: #10b981 !important; /* Emerald-500 */
+            color: white !important;
+            border-color: #059669 !important; /* Emerald-600 */
+        }
+        .wrong-answer {
+            background-color: #ef4444 !important; /* Red-500 */
+            color: white !important;
+            border-color: #dc2626 !important; /* Red-600 */
+        }
+        .content-text { /* General text styling for readability */
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .chemical-equation {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f3f4f6; /* gray-100 */
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            display: block;
+            overflow-x: auto; /* For long equations on small screens */
+        }
+         .reaction-arrow {
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals with Sky Blue accent (Consistent with previous apps) -->
+    <!-- Application Structure Plan: Two-section SPA. 'Aprender' section uses an accordion for step-by-step explanations of basic chemical reaction concepts relevant to 9th grade (definitions, evidence, equations, Lavoisier's Law, balancing, types). 'Praticar' section is an interactive quiz with immediate feedback and score tracking. This structure separates learning from application, aiding comprehension and retention. Navigation is via two main buttons. -->
+    <!-- Visualization & Content Choices: Report Info: Simplified chemical reaction concepts and examples for 9th grade -> Goal: Inform/Organize -> Viz/Presentation: Accordion in 'Aprender'. Interaction: Expand/collapse. Justification: Breaks down information into digestible steps suitable for the age group. Report Info: Age-appropriate chemical reaction problems & solutions -> Goal: Test knowledge/Compare -> Viz/Presentation: Interactive quiz in 'Praticar'. Interaction: Clickable answers, feedback, score. Justification: Active learning, immediate reinforcement. Library/Method: Vanilla JS & Tailwind CSS. Content presented as styled text. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-stone-100 text-slate-800">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
+                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">
+                    ⬅ Voltar para o Início
+                </a>
+            </div>
+
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800">Reações Químicas para o 9º Ano</h1>
+            <p class="text-slate-600 mt-2">Descubra como as substâncias se transformam!</p>
+        </header>
+
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Aprender</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Praticar</button>
+        </nav>
+
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-700">O Mundo das Transformações Químicas</h2>
+                    <p class="mb-6 content-text">Você já viu um prego enferrujar, um bolo crescer no forno ou um comprimido efervescente borbulhar na água? Tudo isso são exemplos de <strong>reações químicas</strong>! Elas acontecem o tempo todo ao nosso redor e dentro de nós. Vamos aprender mais sobre elas.</p>
+                    
+                    <div id="accordion-container" class="space-y-3">
+                    </div>
+
+                    <div class="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+                        <h3 class="font-bold text-lg text-sky-800">💡 Fique de Olho!</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-700 content-text">
+                            <li><strong class="font-semibold">Transformação:</strong> Em uma reação química, as substâncias iniciais se transformam em novas substâncias.</li>
+                            <li><strong class="font-semibold">Sinais:</strong> Mudança de cor, liberação de gás (bolhas), formação de um sólido, aparecimento de luz ou calor são pistas de que uma reação ocorreu.</li>
+                            <li><strong class="font-semibold">Conservação:</strong> A massa total se conserva! A quantidade de matéria antes e depois da reação é a mesma (Lei de Lavoisier).</li>
+                            <li><strong class="font-semibold">Receita Química:</strong> As equações químicas são como receitas, mostrando o que reage e o que se forma.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="practice-section" class="hidden">
+                 <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700">Teste Seus Conhecimentos!</h2>
+                    <p class="mb-6 content-text">Agora é hora de ver o que você aprendeu sobre as transformações da matéria. Resolva as questões e arrase!</p>
+
+                    <div id="quiz-container">
+                        <p id="question-progress" class="text-center font-semibold text-slate-600 mb-4"></p>
+                        <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 text-center">
+                            <p id="question-text" class="text-xl content-text"></p>
+                        </div>
+                        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                        </div>
+                        <div id="feedback-container" class="mt-4 p-4 rounded-lg text-center hidden">
+                            <p id="feedback-text" class="font-semibold"></p>
+                            <p id="feedback-explanation" class="text-sm mt-1"></p>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button id="next-question-btn" class="hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Próxima</button>
+                        </div>
+                    </div>
+                    
+                    <div id="score-container" class="hidden text-center py-8">
+                        <h3 class="text-2xl font-bold text-sky-800">Quiz Finalizado!</h3>
+                        <p id="score-text" class="text-lg mt-2"></p>
+                        <div id="score-visual" class="w-full bg-stone-200 rounded-full h-4 my-4 overflow-hidden">
+                            <div id="score-bar" class="bg-emerald-500 h-4 rounded-full transition-all duration-500"></div>
+                        </div>
+                        <button id="restart-quiz-btn" class="mt-6 py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Tentar Novamente</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const learnSection = document.getElementById('learn-section');
+            const practiceSection = document.getElementById('practice-section');
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+
+            const accordionContainer = document.getElementById('accordion-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreContainer = document.getElementById('score-container');
+            const questionProgress = document.getElementById('question-progress');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackExplanation = document.getElementById('feedback-explanation');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const scoreTextElement = document.getElementById('score-text');
+            const scoreBar = document.getElementById('score-bar');
+
+            const learnData = [
+                {
+                    title: '1. O que é uma Reação Química?',
+                    content: 'Uma reação química é um processo em que uma ou mais substâncias (chamadas <strong>reagentes</strong>) se transformam em uma ou mais novas substâncias (chamadas <strong>produtos</strong>). Durante uma reação, as ligações entre os átomos dos reagentes são quebradas e novas ligações são formadas, originando os produtos com propriedades diferentes das iniciais.<br><br><em>Pense numa receita de bolo: os ingredientes (farinha, ovos, açúcar) são os reagentes. Depois de misturar e assar (a reação), você tem o bolo (o produto), que é bem diferente dos ingredientes sozinhos!</em>'
+                },
+                {
+                    title: '2. Sinais de que uma Reação Química Aconteceu',
+                    content: 'Como saber se uma reação química está ocorrendo? Alguns sinais visíveis podem indicar uma transformação:<br><ul><li><strong>Mudança de cor:</strong> Um prego de ferro enferrujando fica avermelhado.</li><li><strong>Liberação de gás:</strong> Um comprimido efervescente na água solta bolhas (gás).</li><li><strong>Formação de um sólido (precipitado):</strong> Ao misturar dois líquidos transparentes, pode surgir um sólido que se deposita no fundo.</li><li><strong>Liberação de luz ou calor:</strong> A queima de uma vela produz luz e calor.</li><li><strong>Mudança de cheiro:</strong> Alimentos estragando mudam de cheiro devido a reações.</li></ul>Nem sempre todos esses sinais aparecem juntos, mas a presença de um ou mais deles é uma forte evidência de reação química.'
+                },
+                {
+                    title: '3. Representando Reações: Equações Químicas',
+                    content: 'Os químicos usam uma linguagem especial para descrever as reações: as <strong>equações químicas</strong>. Elas mostram:<br><ul><li><strong>Reagentes:</strong> As substâncias que reagem (ficam do lado esquerdo da seta).</li><li><strong>Produtos:</strong> As substâncias que são formadas (ficam do lado direito da seta).</li><li><strong>Seta (<span class="reaction-arrow">&rarr;</span>):</strong> Indica o sentido da transformação ("reage para formar").</li></ul><br><em>Exemplo: A queima do carvão (carbono, C) com o oxigênio (O₂) do ar forma gás carbônico (CO₂).</em><br><span class="chemical-equation">C + O₂ <span class="reaction-arrow">&rarr;</span> CO₂</span><br>(Reagentes: C e O₂ | Produto: CO₂)'
+                },
+                {
+                    title: '4. A Lei de Lavoisier: Nada se Perde, Nada se Cria, Tudo se Transforma!',
+                    content: 'Antoine Lavoisier, um cientista muito importante, descobriu uma lei fundamental das reações químicas: a <strong>Lei da Conservação da Massa</strong>.<br><br>Essa lei diz que, em uma reação química feita em um sistema fechado (onde nada entra nem sai), a <strong>massa total dos reagentes é igual à massa total dos produtos</strong>.<br><br><em>Isso significa que os átomos não desaparecem nem surgem do nada durante uma reação. Eles apenas se rearranjam para formar novas substâncias. Se você "pesar" tudo antes e tudo depois, a balança marcará o mesmo valor!</em><br><br><em>Exemplo: Se 12g de carbono reagem completamente com 32g de oxigênio, formarão 12g + 32g = 44g de gás carbônico.</em>'
+                },
+                {
+                    title: '5. Balanceando as Equações Químicas',
+                    content: 'Para que uma equação química respeite a Lei de Lavoisier, ela precisa estar <strong>balanceada</strong>. Isso significa que o número de átomos de cada elemento deve ser o mesmo nos reagentes e nos produtos.<br><br>Usamos números na frente das fórmulas das substâncias (chamados <strong>coeficientes estequiométricos</strong>) para acertar essa contagem.<br><br><em>Exemplo: Formação da água (H₂O) a partir de hidrogênio (H₂) e oxigênio (O₂).</em><br>Equação não balanceada: <span class="chemical-equation">H₂ + O₂ <span class="reaction-arrow">&rarr;</span> H₂O</span><br>(Aqui temos 2 átomos de O nos reagentes e só 1 no produto. Não está balanceado!)<br><br>Equação balanceada: <span class="chemical-equation"><strong>2</strong>H₂ + O₂ <span class="reaction-arrow">&rarr;</span> <strong>2</strong>H₂O</span><br>Agora temos:<br>Reagentes: 2 x 2 = 4 átomos de H; 2 átomos de O.<br>Produtos: 2 x 2 = 4 átomos de H; 2 x 1 = 2 átomos de O.<br>Tudo igual! A equação está balanceada.'
+                },
+                {
+                    title: '6. Tipos Comuns de Reações Químicas',
+                    content: 'Existem muitos tipos de reações, mas algumas são bem comuns:<br><br><strong>a) Reação de Síntese (ou Adição):</strong> Duas ou mais substâncias simples se juntam para formar uma única substância mais complexa.<br><em>Formato geral: A + B <span class="reaction-arrow">&rarr;</span> AB</em><br><em>Ex: <span class="chemical-equation">2Mg + O₂ <span class="reaction-arrow">&rarr;</span> 2MgO</span> (Magnésio + Oxigênio <span class="reaction-arrow">&rarr;</span> Óxido de magnésio)</em><br><br><strong>b) Reação de Decomposição (ou Análise):</strong> Uma única substância complexa se quebra em duas ou mais substâncias mais simples.<br><em>Formato geral: AB <span class="reaction-arrow">&rarr;</span> A + B</em><br><em>Ex: <span class="chemical-equation">2H₂O₂ <span class="reaction-arrow">&rarr;</span> 2H₂O + O₂</span> (Água oxigenada <span class="reaction-arrow">&rarr;</span> Água + Gás oxigênio)</em><br><br><strong>c) Reação de Simples Troca (ou Deslocamento):</strong> Uma substância simples reage com uma substância composta, "deslocando" um dos elementos da composta.<br><em>Formato geral: A + BC <span class="reaction-arrow">&rarr;</span> AC + B  (se A for mais reativo que B)</em><br><em>Ex: <span class="chemical-equation">Zn + CuSO₄ <span class="reaction-arrow">&rarr;</span> ZnSO₄ + Cu</span> (Zinco + Sulfato de cobre <span class="reaction-arrow">&rarr;</span> Sulfato de zinco + Cobre)</em><br><br><strong>d) Reação de Dupla Troca:</strong> Duas substâncias compostas reagem trocando "parceiros" entre si, formando duas novas substâncias compostas.<br><em>Formato geral: AB + CD <span class="reaction-arrow">&rarr;</span> AD + CB</em><br><em>Ex: <span class="chemical-equation">AgNO₃ + NaCl <span class="reaction-arrow">&rarr;</span> AgCl + NaNO₃</span> (Nitrato de prata + Cloreto de sódio <span class="reaction-arrow">&rarr;</span> Cloreto de prata + Nitrato de sódio) - geralmente forma um precipitado (AgCl).</em>'
+                }
+            ];
+
+            const quizData = [
+                { question: "Em uma reação química, as substâncias iniciais que se transformam são chamadas de:", answer: "Reagentes", options: ["Produtos", "Reagentes", "Catalisadores", "Solventes"], explanation: "Reagentes são as substâncias que existem antes da transformação química." },
+                { question: "Qual destes NÃO é um sinal comum de que uma reação química ocorreu?", answer: "Mudança de estado físico (ex: gelo derretendo)", options: ["Liberação de gás (bolhas)", "Mudança de cor", "Formação de um sólido", "Mudança de estado físico (ex: gelo derretendo)"], explanation: "Mudança de estado físico, como gelo derretendo (sólido para líquido), é uma transformação física, não química. As moléculas continuam as mesmas (H₂O)." },
+                { question: "Na equação <span class='chemical-equation'>Fe + S <span class='reaction-arrow'>&rarr;</span> FeS</span>, o FeS é um:", answer: "Produto", options: ["Reagente", "Produto", "Catalisador", "Elemento simples"], explanation: "O FeS está do lado direito da seta, indicando que foi formado na reação, logo é um produto." },
+                { question: "A Lei de Lavoisier (Conservação da Massa) diz que:", answer: "A massa total dos reagentes é igual à massa total dos produtos.", options: ["A massa dos produtos é sempre maior.", "A massa dos reagentes é sempre maior.", "A massa total dos reagentes é igual à massa total dos produtos.", "A massa pode se perder durante a reação."], explanation: "Lavoisier mostrou que, num sistema fechado, a massa se conserva durante uma reação química." },
+                { question: "Qual o tipo de reação representada por <span class='chemical-equation'>2Na + Cl₂ <span class='reaction-arrow'>&rarr;</span> 2NaCl</span>?", answer: "Síntese (ou Adição)", options: ["Decomposição", "Síntese (ou Adição)", "Simples Troca", "Dupla Troca"], explanation: "Duas substâncias (Na e Cl₂) se unem para formar uma única substância mais complexa (NaCl)." },
+                { question: "A reação <span class='chemical-equation'>CaCO₃ <span class='reaction-arrow'>&rarr;</span> CaO + CO₂</span> é um exemplo de:", answer: "Decomposição (ou Análise)", options: ["Decomposição (ou Análise)", "Síntese", "Simples Troca", "Dupla Troca"], explanation: "Uma substância (CaCO₃) se decompõe em duas mais simples (CaO e CO₂)." },
+                { question: "Para que serve balancear uma equação química?", answer: "Para garantir que o número de átomos de cada elemento seja igual nos dois lados.", options: ["Para deixar a equação mais bonita.", "Para aumentar a velocidade da reação.", "Para garantir que o número de átomos de cada elemento seja igual nos dois lados.", "Para mudar os produtos formados."], explanation: "O balanceamento garante que a Lei de Lavoisier (conservação da massa e dos átomos) seja respeitada." },
+                { question: "Qual das equações abaixo está CORRETAMENTE balanceada para a formação da amônia (NH₃) a partir de N₂ e H₂?", answer: "<span class='chemical-equation'>N₂ + 3H₂ <span class='reaction-arrow'>&rarr;</span> 2NH₃</span>", options: ["<span class='chemical-equation'>N₂ + H₂ <span class='reaction-arrow'>&rarr;</span> NH₃</span>", "<span class='chemical-equation'>N + H₃ <span class='reaction-arrow'>&rarr;</span> NH₃</span>", "<span class='chemical-equation'>N₂ + 3H₂ <span class='reaction-arrow'>&rarr;</span> 2NH₃</span>", "<span class='chemical-equation'>2N₂ + H₂ <span class='reaction-arrow'>&rarr;</span> 2NH₃</span>"], explanation: "Na opção correta, temos 2 átomos de N e 6 átomos de H em ambos os lados da equação." },
+                { question: "A queima de papel é um exemplo de reação que geralmente libera:", answer: "Luz e calor", options: ["Apenas gás", "Apenas um novo sólido", "Luz e calor", "Apenas água"], explanation: "A combustão (queima) do papel é uma reação exotérmica que libera energia na forma de luz e calor." },
+                { question: "Na reação <span class='chemical-equation'>Zn + 2HCl <span class='reaction-arrow'>&rarr;</span> ZnCl₂ + H₂</span>, o que acontece?", answer: "O Zinco desloca o Hidrogênio do HCl.", options: ["O Zinco se decompõe.", "O Cloro se junta com o Zinco e o Hidrogênio.", "O Zinco desloca o Hidrogênio do HCl.", "É uma reação de síntese do H₂."], explanation: "Esta é uma reação de simples troca, onde o Zinco (substância simples) desloca o Hidrogênio da substância composta HCl." }
+            ];
+            
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let shuffledQuizData = [];
+
+            function switchView(view) {
+                if (view === 'learn') {
+                    learnSection.classList.remove('hidden');
+                    practiceSection.classList.add('hidden');
+                    btnLearn.classList.add('active');
+                    btnPractice.classList.remove('active');
+                } else {
+                    learnSection.classList.add('hidden');
+                    practiceSection.classList.remove('hidden');
+                    btnLearn.classList.remove('active');
+                    btnPractice.classList.add('active');
+                    startQuiz();
+                }
+            }
+
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+
+            function createAccordion() {
+                accordionContainer.innerHTML = '';
+                learnData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-stone-200 rounded-lg';
+                    div.innerHTML = `
+                        <button class="accordion-button w-full p-4 text-left font-semibold text-lg flex justify-between items-center hover:bg-stone-50 transition-colors">
+                            <span>${item.title}</span>
+                            <span class="transform transition-transform duration-300 text-sky-600">&#9662;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t border-stone-200 text-slate-700 prose max-w-none content-text">
+                                ${item.content}
+                            </div>
+                        </div>
+                    `;
+                    accordionContainer.appendChild(div);
+                });
+
+                document.querySelectorAll('.accordion-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const icon = button.querySelector('span:last-child');
+                        const isOpen = button.classList.toggle('open');
+                        icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                        if (isOpen) {
+                            document.querySelectorAll('.accordion-button.open').forEach(openButton => {
+                                if (openButton !== button) {
+                                    openButton.classList.remove('open');
+                                    openButton.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function startQuiz() {
+                currentQuestionIndex = 0;
+                score = 0;
+                shuffledQuizData = shuffleArray([...quizData]);
+                quizContainer.classList.remove('hidden');
+                scoreContainer.classList.add('hidden');
+                showQuestion();
+            }
+
+            function showQuestion() {
+                feedbackContainer.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+
+                const questionData = shuffledQuizData[currentQuestionIndex];
+                questionProgress.textContent = `Questão ${currentQuestionIndex + 1} de ${shuffledQuizData.length}`;
+                questionText.innerHTML = questionData.question;
+                
+                optionsContainer.innerHTML = '';
+                let currentOptions = [...questionData.options];
+                
+                if (!currentOptions.find(opt => opt.includes(questionData.answer) || questionData.answer.includes(opt) )) {
+                     // A simple check, might need refinement for complex HTML answers
+                    const randomIndex = Math.floor(Math.random() * currentOptions.length);
+                    currentOptions[randomIndex] = questionData.answer; 
+                }
+                currentOptions = shuffleArray(currentOptions);
+
+
+                currentOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option; // Use innerHTML to render potential HTML in options
+                    button.className = "quiz-option w-full p-3 border-2 border-stone-300 rounded-lg hover:bg-stone-200 transition-colors";
+                    button.addEventListener('click', () => selectAnswer(option, questionData.answer, questionData.explanation));
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            function selectAnswer(selectedOption, correctAnswer, explanation) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                // Normalize HTML content for comparison if needed, or rely on exact match if options are simple text
+                let isCorrect = selectedOption === correctAnswer;
+
+                if (isCorrect) {
+                    score++;
+                    feedbackText.textContent = '🎉 Correto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-emerald-100 border border-emerald-200 text-emerald-800';
+                } else {
+                    feedbackText.textContent = '🤔 Incorreto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 border border-red-200 text-red-800';
+                }
+
+                feedbackExplanation.innerHTML = `<strong>Explicação:</strong> ${explanation}`;
+                feedbackContainer.classList.remove('hidden');
+
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.innerHTML === correctAnswer) { 
+                        button.classList.add('correct-answer');
+                    } else if (button.innerHTML === selectedOption && !isCorrect) {
+                        button.classList.add('wrong-answer');
+                    }
+                });
+
+                nextQuestionBtn.classList.remove('hidden');
+            }
+            
+            function showScore() {
+                quizContainer.classList.add('hidden');
+                scoreContainer.classList.remove('hidden');
+                scoreTextElement.textContent = `Você acertou ${score} de ${shuffledQuizData.length} questões!`;
+                const percentage = (shuffledQuizData.length > 0) ? (score / shuffledQuizData.length) * 100 : 0;
+                scoreBar.style.width = `${percentage}%`;
+            }
+
+            nextQuestionBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < shuffledQuizData.length) {
+                    showQuestion();
+                } else {
+                    showScore();
+                }
+            });
+            
+            restartQuizBtn.addEventListener('click', startQuiz);
+
+            createAccordion();
+            switchView('learn');
+        });
+    </script>
+</body>
+</html>
