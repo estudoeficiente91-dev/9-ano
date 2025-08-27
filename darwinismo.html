@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teorias de Darwin – 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-button.active { background-color: #0369a1; color: white; }
+        .question-btn { transition: background 0.3s, color 0.3s; }
+        .question-btn.correct { background-color: #10b981 !important; color: white !important; }
+        .question-btn.wrong { background-color: #ef4444 !important; color: white !important; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .accordion-button.open + .accordion-content { max-height: 2000px; }
+        .content-text { font-size: 1rem; line-height: 1.6; }
+    </style>
+</head>
+<body class="bg-stone-100 text-slate-800">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
+                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">⬅ Voltar para o Início</a>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Teorias de Darwin</h1>
+            <p class="text-slate-600 mt-2">Descubra os conceitos fundamentais da evolução!</p>
+        </header>
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Aprender</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Praticar</button>
+        </nav>
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-700">Conceitos Fundamentais</h2>
+                    <div id="accordion-container" class="space-y-3"></div>
+                </div>
+            </section>
+            <section id="practice-section" class="hidden">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700">Pratique com 30 Questões!</h2>
+                    <div class="mb-4 flex flex-wrap gap-2 justify-center" id="question-buttons"></div>
+                    <div id="quiz-container"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const learnSection = document.getElementById('learn-section');
+            const practiceSection = document.getElementById('practice-section');
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const accordionContainer = document.getElementById('accordion-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const questionButtons = document.getElementById('question-buttons');
+            const questionProgress = document.createElement('p');
+            questionProgress.id = 'question-progress';
+            questionProgress.className = 'text-center font-semibold text-slate-600 mb-4';
+            const questionText = document.createElement('p');
+            questionText.id = 'question-text';
+            questionText.className = 'text-xl content-text';
+            const optionsContainer = document.createElement('div');
+            optionsContainer.id = 'options-container';
+            optionsContainer.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6';
+            const feedbackContainer = document.createElement('div');
+            feedbackContainer.id = 'feedback-container';
+            feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center hidden';
+            const feedbackText = document.createElement('p');
+            feedbackText.id = 'feedback-text';
+            feedbackText.className = 'font-semibold';
+            const feedbackExplanation = document.createElement('p');
+            feedbackExplanation.id = 'feedback-explanation';
+            feedbackExplanation.className = 'text-sm mt-1';
+            const nextQuestionBtn = document.createElement('button');
+            nextQuestionBtn.id = 'next-question-btn';
+            nextQuestionBtn.className = 'hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors';
+            nextQuestionBtn.textContent = 'Próxima';
+            feedbackContainer.appendChild(feedbackText);
+            feedbackContainer.appendChild(feedbackExplanation);
+            quizContainer.appendChild(questionProgress);
+            quizContainer.appendChild(questionText);
+            quizContainer.appendChild(optionsContainer);
+            quizContainer.appendChild(feedbackContainer);
+            quizContainer.appendChild(nextQuestionBtn);
+
+            const learnData = [
+                { title: '1. Teorias de Darwin', content: 'Charles Darwin propôs que as espécies evoluem ao longo do tempo por meio de processos naturais. Suas ideias revolucionaram a biologia e explicam como ocorre a diversidade dos seres vivos.' },
+                { title: '2. Descendência com Modificação', content: 'Segundo Darwin, todos os seres vivos descendem de ancestrais comuns, mas sofrem modificações ao longo das gerações. Essas mudanças são transmitidas aos descendentes.' },
+                { title: '3. Seleção Natural', content: 'É o processo pelo qual indivíduos com características mais vantajosas sobrevivem e se reproduzem mais. Assim, essas características tornam-se mais comuns na população.' },
+                { title: '4. Seleção Artificial', content: 'É a escolha feita pelo ser humano para selecionar características desejadas em plantas e animais, como ocorre na agricultura e na criação de animais domésticos.' },
+                { title: '5. Hipóteses de Darwin', content: 'Darwin sugeriu que: 1) Existe variação entre os indivíduos; 2) Parte dessa variação é hereditária; 3) Indivíduos mais adaptados têm maior chance de sobreviver e se reproduzir.' },
+                { title: '6. Seleção de Darwin', content: 'Refere-se ao mecanismo pelo qual a natureza "seleciona" os indivíduos mais aptos, favorecendo a sobrevivência dos mais adaptados.' },
+                { title: '7. Ancestral Comum', content: 'Todos os seres vivos compartilham ancestrais em algum ponto da história evolutiva. Isso explica semelhanças entre espécies diferentes.' },
+                { title: '8. Diversidade das Espécies', content: 'A diversidade surge das modificações ao longo do tempo e da seleção natural, levando à formação de novas espécies.' },
+                { title: '9. Tipos de Seleção Natural', content: 'Existem três tipos principais: direcional (favorece um extremo), estabilizadora (favorece o intermediário) e disruptiva (favorece extremos opostos).' },
+                { title: '10. Adaptação', content: 'Adaptação é a característica que aumenta a chance de sobrevivência e reprodução de um organismo em determinado ambiente.' },
+                { title: '11. Lamarckismo x Darwinismo', content: 'Lamarck acreditava que características adquiridas eram herdadas. Darwin mostrou que a herança ocorre por seleção de variações naturais, não por uso ou desuso.' }
+            ];
+
+            const quizData = [
+                { question: "Quem propôs a teoria da seleção natural?", answer: "Charles Darwin", options: ["Charles Darwin", "Gregor Mendel", "Jean Lamarck", "Louis Pasteur"], explanation: "Darwin foi o responsável pela teoria da seleção natural." },
+                { question: "O que significa 'descendência com modificação' segundo Darwin?", answer: "Espécies mudam ao longo das gerações", options: ["Espécies mudam ao longo das gerações", "Espécies permanecem iguais", "Espécies são criadas do nada", "Espécies não se modificam"], explanation: "Darwin defendia que as espécies mudam ao longo do tempo." },
+                { question: "O que é seleção natural?", answer: "Sobrevivência dos mais adaptados", options: ["Sobrevivência dos mais adaptados", "Sobrevivência dos mais fracos", "Sobrevivência dos menos adaptados", "Sobrevivência dos iguais"], explanation: "A seleção natural favorece os mais adaptados." },
+                { question: "O que é seleção artificial?", answer: "Escolha humana de características", options: ["Escolha humana de características", "Processo natural", "Mutação espontânea", "Seleção dos menos adaptados"], explanation: "Seleção artificial é feita pelo ser humano." },
+                { question: "Qual hipótese NÃO foi proposta por Darwin?", answer: "Características adquiridas são herdadas", options: ["Existe variação entre indivíduos", "Características adquiridas são herdadas", "Parte da variação é hereditária", "Indivíduos mais adaptados sobrevivem"], explanation: "A herança de características adquiridas é ideia de Lamarck." },
+                { question: "O que é ancestral comum?", answer: "Origem compartilhada entre espécies", options: ["Origem compartilhada entre espécies", "Espécies sem relação", "Espécies idênticas", "Espécies criadas separadamente"], explanation: "Todas as espécies têm ancestrais comuns." },
+                { question: "A diversidade das espécies é explicada por:", answer: "Modificações e seleção natural", options: ["Modificações e seleção natural", "Criação espontânea", "Ausência de mudanças", "Seleção artificial"], explanation: "Diversidade surge por modificações e seleção natural." },
+                { question: "Qual tipo de seleção natural favorece indivíduos intermediários?", answer: "Estabilizadora", options: ["Direcional", "Estabilizadora", "Disruptiva", "Artificial"], explanation: "Seleção estabilizadora favorece o intermediário." },
+                { question: "O que é adaptação?", answer: "Característica que aumenta sobrevivência", options: ["Característica que aumenta sobrevivência", "Característica que diminui sobrevivência", "Característica sem função", "Característica herdada por uso"], explanation: "Adaptação aumenta a chance de sobrevivência." },
+                { question: "Qual diferença entre Lamarckismo e Darwinismo?", answer: "Lamarck: uso/desuso; Darwin: seleção natural", options: ["Lamarck: uso/desuso; Darwin: seleção natural", "Ambos defendem seleção artificial", "Ambos defendem ancestral comum", "Lamarck: seleção natural; Darwin: uso/desuso"], explanation: "Lamarck defendia uso/desuso, Darwin seleção natural." },
+                { question: "Seleção natural ocorre por:", answer: "Variação e sobrevivência dos mais aptos", options: ["Variação e sobrevivência dos mais aptos", "Mutação artificial", "Criação espontânea", "Ausência de variação"], explanation: "Seleção natural depende de variação e sobrevivência." },
+                { question: "Seleção artificial é comum em:", answer: "Agricultura e criação de animais", options: ["Agricultura e criação de animais", "Ambientes naturais", "Florestas", "Oceanos"], explanation: "Seleção artificial é feita pelo ser humano." },
+                { question: "Darwin observou que:", answer: "Indivíduos variam entre si", options: ["Indivíduos variam entre si", "Todos são iguais", "Não há variação", "Variação não importa"], explanation: "A variação é fundamental para seleção natural." },
+                { question: "Seleção direcional favorece:", answer: "Um extremo da característica", options: ["Um extremo da característica", "O intermediário", "Ambos os extremos", "Nenhum"], explanation: "Direcional favorece um extremo." },
+                { question: "Seleção disruptiva favorece:", answer: "Extremos opostos", options: ["Extremos opostos", "Intermediário", "Nenhum", "Todos"], explanation: "Disruptiva favorece extremos opostos." },
+                { question: "Seleção estabilizadora favorece:", answer: "Intermediário", options: ["Intermediário", "Extremos", "Nenhum", "Todos"], explanation: "Estabilizadora favorece o intermediário." },
+                { question: "Adaptação é resultado de:", answer: "Seleção natural", options: ["Seleção natural", "Seleção artificial", "Mutação espontânea", "Criação espontânea"], explanation: "Adaptação resulta da seleção natural." },
+                { question: "Darwin estudou animais em qual arquipélago?", answer: "Galápagos", options: ["Galápagos", "Havaí", "Canárias", "Malvinas"], explanation: "Darwin estudou animais nas ilhas Galápagos." },
+                { question: "Segundo Darwin, a seleção natural depende de:", answer: "Variação hereditária", options: ["Variação hereditária", "Variação adquirida", "Ausência de variação", "Seleção artificial"], explanation: "A seleção natural depende de variação hereditária." },
+                { question: "Lamarck acreditava que:", answer: "Características adquiridas são herdadas", options: ["Características adquiridas são herdadas", "Seleção natural", "Adaptação por seleção", "Ancestral comum"], explanation: "Lamarck defendia herança de características adquiridas." },
+                { question: "Darwin acreditava que:", answer: "Características herdadas por seleção", options: ["Características herdadas por seleção", "Características adquiridas são herdadas", "Adaptação por uso/desuso", "Seleção artificial"], explanation: "Darwin defendia herança por seleção natural." },
+                { question: "A diversidade das espécies é explicada por:", answer: "Seleção natural e modificação", options: ["Seleção natural e modificação", "Seleção artificial", "Criação espontânea", "Ausência de mudanças"], explanation: "Diversidade surge por seleção natural e modificação." },
+                { question: "O que é ancestral comum?", answer: "Origem compartilhada entre espécies", options: ["Origem compartilhada entre espécies", "Espécies sem relação", "Espécies idênticas", "Espécies criadas separadamente"], explanation: "Todas as espécies têm ancestrais comuns." },
+                { question: "Seleção natural favorece:", answer: "Mais adaptados", options: ["Mais adaptados", "Menos adaptados", "Todos igualmente", "Nenhum"], explanation: "Seleção natural favorece os mais adaptados." },
+                { question: "Seleção artificial é feita por:", answer: "Ser humano", options: ["Ser humano", "Natureza", "Animais", "Plantas"], explanation: "Seleção artificial é feita pelo ser humano." },
+                { question: "Adaptação aumenta:", answer: "Sobrevivência", options: ["Sobrevivência", "Extinção", "Mutação", "Diversidade"], explanation: "Adaptação aumenta a chance de sobrevivência." },
+                { question: "Darwinismo explica:", answer: "Evolução das espécies", options: ["Evolução das espécies", "Criação espontânea", "Seleção artificial", "Ausência de evolução"], explanation: "Darwinismo explica evolução das espécies." },
+                { question: "Lamarckismo explica:", answer: "Herança de características adquiridas", options: ["Herança de características adquiridas", "Seleção natural", "Adaptação por seleção", "Ancestral comum"], explanation: "Lamarckismo explica herança de características adquiridas." },
+                { question: "Seleção natural depende de:", answer: "Variação entre indivíduos", options: ["Variação entre indivíduos", "Ausência de variação", "Seleção artificial", "Criação espontânea"], explanation: "Seleção natural depende de variação entre indivíduos." },
+                { question: "Adaptação é importante para:", answer: "Sobrevivência", options: ["Sobrevivência", "Extinção", "Mutação", "Diversidade"], explanation: "Adaptação é importante para sobrevivência." }
+            ];
+
+            let currentQuestionIndex = 0;
+            let questionOrder = Array.from({length: quizData.length}, (_, i) => i);
+            let questionStatus = Array(quizData.length).fill(null);
+
+            function switchView(view) {
+                if (view === 'learn') {
+                    learnSection.classList.remove('hidden');
+                    practiceSection.classList.add('hidden');
+                    btnLearn.classList.add('active');
+                    btnPractice.classList.remove('active');
+                } else {
+                    learnSection.classList.add('hidden');
+                    practiceSection.classList.remove('hidden');
+                    btnLearn.classList.remove('active');
+                    btnPractice.classList.add('active');
+                    startQuiz();
+                }
+            }
+
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+
+            function createAccordion() {
+                accordionContainer.innerHTML = '';
+                learnData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-stone-200 rounded-lg';
+                    div.innerHTML = `
+                        <button class="accordion-button w-full p-4 text-left font-semibold text-lg flex justify-between items-center hover:bg-stone-50 transition-colors">
+                            <span>${item.title}</span>
+                            <span class="transform transition-transform duration-300 text-sky-600">&#9662;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t border-stone-200 text-slate-700 prose max-w-none content-text">
+                                ${item.content}
+                            </div>
+                        </div>
+                    `;
+                    accordionContainer.appendChild(div);
+                });
+                document.querySelectorAll('.accordion-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const icon = button.querySelector('span:last-child');
+                        const isOpen = button.classList.toggle('open');
+                        icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                        if (isOpen) {
+                            document.querySelectorAll('.accordion-button.open').forEach(openButton => {
+                                if (openButton !== button) {
+                                    openButton.classList.remove('open');
+                                    openButton.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function startQuiz() {
+                currentQuestionIndex = 0;
+                questionOrder = Array.from({length: quizData.length}, (_, i) => i);
+                questionStatus = Array(quizData.length).fill(null);
+                renderQuestionButtons();
+                showQuestion();
+            }
+
+            function renderQuestionButtons() {
+                questionButtons.innerHTML = '';
+                questionOrder.forEach((qIdx, i) => {
+                    const btn = document.createElement('button');
+                    btn.textContent = (i + 1);
+                    btn.className = 'question-btn px-3 py-1 rounded font-bold border border-stone-300';
+                    if (questionStatus[qIdx] === 'correct') btn.classList.add('correct');
+                    if (questionStatus[qIdx] === 'wrong') btn.classList.add('wrong');
+                    btn.addEventListener('click', () => {
+                        currentQuestionIndex = i;
+                        showQuestion();
+                    });
+                    questionButtons.appendChild(btn);
+                });
+            }
+
+            function showQuestion() {
+                feedbackContainer.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                const qIdx = questionOrder[currentQuestionIndex];
+                const questionData = quizData[qIdx];
+                questionProgress.textContent = `Questão ${currentQuestionIndex + 1} de ${questionOrder.length}`;
+                questionText.innerHTML = questionData.question;
+                optionsContainer.innerHTML = '';
+                let currentOptions = [...questionData.options];
+                if (!currentOptions.includes(questionData.answer)) {
+                    const randomIndex = Math.floor(Math.random() * currentOptions.length);
+                    currentOptions[randomIndex] = questionData.answer;
+                }
+                currentOptions = shuffleArray(currentOptions);
+                currentOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option;
+                    button.className = "quiz-option w-full p-3 border-2 border-stone-300 rounded-lg hover:bg-stone-200 transition-colors";
+                    button.addEventListener('click', () => selectAnswer(option, questionData.answer, questionData.explanation));
+                    optionsContainer.appendChild(button);
+                });
+                renderQuestionButtons();
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function selectAnswer(selectedOption, correctAnswer, explanation) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                let isCorrect = selectedOption === correctAnswer;
+                if (isCorrect) {
+                    feedbackText.textContent = '🎉 Correto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-emerald-100 border border-emerald-200 text-emerald-800';
+                    questionStatus[questionOrder[currentQuestionIndex]] = 'correct';
+                } else {
+                    feedbackText.textContent = '🤔 Incorreto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 border border-red-200 text-red-800';
+                    questionStatus[questionOrder[currentQuestionIndex]] = 'wrong';
+                    // Move a questão para o final da fila se errar
+                    const wrongIdx = questionOrder.splice(currentQuestionIndex, 1)[0];
+                    questionOrder.push(wrongIdx);
+                }
+                feedbackExplanation.innerHTML = `<strong>Explicação:</strong> ${explanation}`;
+                feedbackContainer.classList.remove('hidden');
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.innerHTML === correctAnswer) {
+                        button.classList.add('correct-answer');
+                    } else if (button.innerHTML === selectedOption && !isCorrect) {
+                        button.classList.add('wrong-answer');
+                    }
+                });
+                nextQuestionBtn.classList.remove('hidden');
+                renderQuestionButtons();
+            }
+
+            nextQuestionBtn.addEventListener('click', () => {
+                if (currentQuestionIndex < questionOrder.length - 1) {
+                    currentQuestionIndex++;
+                    showQuestion();
+                } else {
+                    questionProgress.textContent = 'Você respondeu todas as questões!';
+                    questionText.innerHTML = 'Parabéns por praticar!';
+                    optionsContainer.innerHTML = '';
+                    nextQuestionBtn.classList.add('hidden');
+                }
+            });
+
+            createAccordion();
+            switchView('learn');
+        });
+    </script>
+</body>
+</html>
