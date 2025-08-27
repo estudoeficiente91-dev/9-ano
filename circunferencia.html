@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circunferência, Área, Perímetro e Arco – 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-button.active { background-color: #0369a1; color: white; }
+        .question-btn { transition: background 0.3s, color 0.3s; }
+        .question-btn.correct { background-color: #10b981 !important; color: white !important; }
+        .question-btn.wrong { background-color: #ef4444 !important; color: white !important; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .accordion-button.open + .accordion-content { max-height: 2000px; }
+        .content-text { font-size: 1rem; line-height: 1.6; }
+        .formula { font-family: 'Courier New', Courier, monospace; background: #f3f4f6; padding: 8px 12px; border-radius: 4px; font-size: 1.1rem; text-align: center; margin: 0.5rem 0; display: block; }
+    </style>
+</head>
+<body class="bg-stone-100 text-slate-800">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
+                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">⬅ Voltar para o Início</a>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Circunferência, Área, Perímetro e Arco</h1>
+            <p class="text-slate-600 mt-2">Estude e pratique os principais conceitos de circunferência!</p>
+        </header>
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Aprender</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Praticar</button>
+        </nav>
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-4 text-sky-700">Conceitos Fundamentais</h2>
+                    <div id="accordion-container" class="space-y-3"></div>
+                </div>
+            </section>
+            <section id="practice-section" class="hidden">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700">Pratique com 30 Questões!</h2>
+                    <div class="mb-4 flex flex-wrap gap-2 justify-center" id="question-buttons"></div>
+                    <div id="quiz-container">
+                        <p id="question-progress" class="text-center font-semibold text-slate-600 mb-4"></p>
+                        <div class="bg-stone-50 p-6 rounded-lg border border-stone-200 text-center">
+                            <p id="question-text" class="text-xl content-text"></p>
+                        </div>
+                        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6"></div>
+                        <div id="feedback-container" class="mt-4 p-4 rounded-lg text-center hidden">
+                            <p id="feedback-text" class="font-semibold"></p>
+                            <p id="feedback-explanation" class="text-sm mt-1"></p>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button id="next-question-btn" class="hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors">Próxima</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const learnSection = document.getElementById('learn-section');
+            const practiceSection = document.getElementById('practice-section');
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const accordionContainer = document.getElementById('accordion-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const questionButtons = document.getElementById('question-buttons');
+            const questionProgress = document.getElementById('question-progress');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackExplanation = document.getElementById('feedback-explanation');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+
+            const learnData = [
+                {
+                    title: '1. O que é Circunferência?',
+                    content: 'Circunferência é o conjunto de todos os pontos de um plano que estão à mesma distância de um ponto fixo chamado <strong>centro</strong>. Essa distância é chamada de <strong>raio</strong>.'
+                },
+                {
+                    title: '2. Perímetro da Circunferência',
+                    content: 'O <strong>perímetro</strong> (ou comprimento) da circunferência é calculado pela fórmula:<br><span class="formula">C = 2πr</span><br>Onde <strong>r</strong> é o raio e π (pi) ≈ 3,14.'
+                },
+                {
+                    title: '3. Área do Círculo',
+                    content: 'A <strong>área</strong> do círculo (região interna da circunferência) é dada por:<br><span class="formula">A = πr²</span><br>Onde <strong>r</strong> é o raio.'
+                },
+                {
+                    title: '4. O que é Arco?',
+                    content: 'Um <strong>arco</strong> é uma parte da circunferência delimitada por dois pontos. O comprimento do arco depende do ângulo central (em graus ou radianos) e do raio.'
+                },
+                {
+                    title: '5. Comprimento do Arco',
+                    content: 'O comprimento de um arco de circunferência é:<br><span class="formula">L = (θ/360) × 2πr</span><br>Onde <strong>θ</strong> é o ângulo central em graus e <strong>r</strong> é o raio.'
+                },
+                {
+                    title: '6. Relação entre Diâmetro e Raio',
+                    content: 'O <strong>diâmetro</strong> é o dobro do raio:<br><span class="formula">d = 2r</span>'
+                },
+                {
+                    title: '7. Exemplos do Cotidiano',
+                    content: 'Rodas, moedas, relógios e pizzas são exemplos de objetos com formato de circunferência.'
+                }
+            ];
+
+            // 30 questões variadas sobre circunferência, área, perímetro e arco
+            const quizData = [
+                { question: "Qual é o nome do ponto central da circunferência?", answer: "Centro", options: ["Raio", "Centro", "Diâmetro", "Arco"], explanation: "O centro é o ponto equidistante de todos os pontos da circunferência." },
+                { question: "O que é raio?", answer: "Distância do centro até a borda", options: ["Metade do diâmetro", "Distância do centro até a borda", "Comprimento do arco", "Área do círculo"], explanation: "Raio é a distância do centro até qualquer ponto da circunferência." },
+                { question: "Qual fórmula calcula o perímetro da circunferência?", answer: "C = 2πr", options: ["A = πr²", "C = 2πr", "C = πd", "L = (θ/360) × 2πr"], explanation: "C = 2πr é a fórmula do perímetro." },
+                { question: "Se o raio é 5 cm, qual o perímetro? (Use π ≈ 3,14)", answer: "31,4 cm", options: ["15,7 cm", "31,4 cm", "78,5 cm", "25 cm"], explanation: "C = 2 × 3,14 × 5 = 31,4 cm." },
+                { question: "Qual fórmula calcula a área do círculo?", answer: "A = πr²", options: ["C = 2πr", "A = πr²", "A = πd²", "L = (θ/360) × 2πr"], explanation: "A = πr² é a fórmula da área." },
+                { question: "Se o raio é 4 cm, qual a área? (Use π ≈ 3,14)", answer: "50,24 cm²", options: ["25,12 cm²", "50,24 cm²", "12,56 cm²", "31,4 cm²"], explanation: "A = 3,14 × 16 = 50,24 cm²." },
+                { question: "O diâmetro é o dobro de qual medida?", answer: "Raio", options: ["Arco", "Raio", "Perímetro", "Área"], explanation: "Diâmetro = 2 × raio." },
+                { question: "Se o diâmetro é 10 cm, qual o raio?", answer: "5 cm", options: ["10 cm", "2 cm", "5 cm", "20 cm"], explanation: "Raio = diâmetro ÷ 2 = 5 cm." },
+                { question: "O que é um arco?", answer: "Parte da circunferência entre dois pontos", options: ["Raio", "Diâmetro", "Parte da circunferência entre dois pontos", "Área"], explanation: "Arco é um segmento da circunferência." },
+                { question: "Qual fórmula calcula o comprimento do arco?", answer: "L = (θ/360) × 2πr", options: ["A = πr²", "C = 2πr", "L = (θ/360) × 2πr", "d = 2r"], explanation: "L = (θ/360) × 2πr é a fórmula do arco." },
+                { question: "Se o raio é 6 cm e o ângulo é 60°, qual o comprimento do arco? (π ≈ 3,14)", answer: "6,28 cm", options: ["18,84 cm", "6,28 cm", "3,14 cm", "12,56 cm"], explanation: "L = (60/360) × 2 × 3,14 × 6 = 6,28 cm." },
+                { question: "Qual unidade é usada para medir área?", answer: "cm²", options: ["cm", "cm²", "cm³", "mm"], explanation: "Área é medida em unidades quadradas, como cm²." },
+                { question: "Qual unidade é usada para medir perímetro?", answer: "cm", options: ["cm²", "cm", "cm³", "mm²"], explanation: "Perímetro é medida linear, como cm." },
+                { question: "Se o raio é 3 cm, qual o diâmetro?", answer: "6 cm", options: ["3 cm", "6 cm", "9 cm", "12 cm"], explanation: "Diâmetro = 2 × raio = 6 cm." },
+                { question: "Se o diâmetro é 8 cm, qual o perímetro? (π ≈ 3,14)", answer: "25,12 cm", options: ["16 cm", "25,12 cm", "12,56 cm", "50,24 cm"], explanation: "C = π × d = 3,14 × 8 = 25,12 cm." },
+                { question: "Qual é a relação entre raio e diâmetro?", answer: "Diâmetro = 2 × raio", options: ["Raio = 2 × diâmetro", "Diâmetro = 2 × raio", "Diâmetro = raio ÷ 2", "Raio = diâmetro ÷ 2"], explanation: "Diâmetro é o dobro do raio." },
+                { question: "Se o raio é 7 cm, qual a área? (π ≈ 3,14)", answer: "153,86 cm²", options: ["49 cm²", "153,86 cm²", "21,98 cm²", "43,96 cm²"], explanation: "A = 3,14 × 49 = 153,86 cm²." },
+                { question: "O que representa π (pi)?", answer: "Razão entre perímetro e diâmetro", options: ["Número fixo", "Razão entre perímetro e diâmetro", "Raio", "Área"], explanation: "π é a razão entre o perímetro e o diâmetro da circunferência." },
+                { question: "Se o raio é 2 cm e o ângulo é 90°, qual o comprimento do arco? (π ≈ 3,14)", answer: "3,14 cm", options: ["6,28 cm", "3,14 cm", "1,57 cm", "12,56 cm"], explanation: "L = (90/360) × 2 × 3,14 × 2 = 3,14 cm." },
+                { question: "Qual é a área de um círculo de raio 10 cm? (π ≈ 3,14)", answer: "314 cm²", options: ["100 cm²", "314 cm²", "31,4 cm²", "62,8 cm²"], explanation: "A = 3,14 × 100 = 314 cm²." },
+                { question: "Se o raio é 1 cm, qual o perímetro? (π ≈ 3,14)", answer: "6,28 cm", options: ["3,14 cm", "6,28 cm", "1 cm", "2 cm"], explanation: "C = 2 × 3,14 × 1 = 6,28 cm." },
+                { question: "Qual é o comprimento de um arco de 180° e raio 4 cm? (π ≈ 3,14)", answer: "12,56 cm", options: ["25,12 cm", "12,56 cm", "6,28 cm", "3,14 cm"], explanation: "L = (180/360) × 2 × 3,14 × 4 = 12,56 cm." },
+                { question: "Se o diâmetro é 12 cm, qual o raio?", answer: "6 cm", options: ["12 cm", "6 cm", "24 cm", "3 cm"], explanation: "Raio = diâmetro ÷ 2 = 6 cm." },
+                { question: "Qual é a área de um círculo de diâmetro 6 cm? (π ≈ 3,14)", answer: "28,26 cm²", options: ["18,84 cm²", "28,26 cm²", "9,42 cm²", "12,56 cm²"], explanation: "Raio = 3 cm, A = 3,14 × 9 = 28,26 cm²." },
+                { question: "Qual é o comprimento de um arco de 45° e raio 8 cm? (π ≈ 3,14)", answer: "6,28 cm", options: ["25,12 cm", "6,28 cm", "12,56 cm", "3,14 cm"], explanation: "L = (45/360) × 2 × 3,14 × 8 = 6,28 cm." },
+                { question: "Se o raio é 9 cm, qual o perímetro? (π ≈ 3,14)", answer: "56,52 cm", options: ["28,26 cm", "56,52 cm", "18,84 cm", "81 cm"], explanation: "C = 2 × 3,14 × 9 = 56,52 cm." },
+                { question: "Qual é a área de um círculo de raio 5 cm? (π ≈ 3,14)", answer: "78,5 cm²", options: ["31,4 cm²", "78,5 cm²", "25 cm²", "50,24 cm²"], explanation: "A = 3,14 × 25 = 78,5 cm²." },
+                { question: "Qual é o comprimento de um arco de 120° e raio 3 cm? (π ≈ 3,14)", answer: "6,28 cm", options: ["3,14 cm", "6,28 cm", "9,42 cm", "12,56 cm"], explanation: "L = (120/360) × 2 × 3,14 × 3 = 6,28 cm." },
+                { question: "Se o diâmetro é 14 cm, qual o perímetro? (π ≈ 3,14)", answer: "43,96 cm", options: ["28 cm", "43,96 cm", "21,98 cm", "153,86 cm"], explanation: "C = π × d = 3,14 × 14 = 43,96 cm." }
+            ];
+
+            let currentQuestionIndex = 0;
+            let questionOrder = Array.from({length: quizData.length}, (_, i) => i);
+            let questionStatus = Array(quizData.length).fill(null); // null, 'correct', 'wrong'
+
+            function switchView(view) {
+                if (view === 'learn') {
+                    learnSection.classList.remove('hidden');
+                    practiceSection.classList.add('hidden');
+                    btnLearn.classList.add('active');
+                    btnPractice.classList.remove('active');
+                } else {
+                    learnSection.classList.add('hidden');
+                    practiceSection.classList.remove('hidden');
+                    btnLearn.classList.remove('active');
+                    btnPractice.classList.add('active');
+                    startQuiz();
+                }
+            }
+
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+
+            function createAccordion() {
+                accordionContainer.innerHTML = '';
+                learnData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-stone-200 rounded-lg';
+                    div.innerHTML = `
+                        <button class="accordion-button w-full p-4 text-left font-semibold text-lg flex justify-between items-center hover:bg-stone-50 transition-colors">
+                            <span>${item.title}</span>
+                            <span class="transform transition-transform duration-300 text-sky-600">&#9662;</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t border-stone-200 text-slate-700 prose max-w-none content-text">
+                                ${item.content}
+                            </div>
+                        </div>
+                    `;
+                    accordionContainer.appendChild(div);
+                });
+                document.querySelectorAll('.accordion-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const icon = button.querySelector('span:last-child');
+                        const isOpen = button.classList.toggle('open');
+                        icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                        if (isOpen) {
+                            document.querySelectorAll('.accordion-button.open').forEach(openButton => {
+                                if (openButton !== button) {
+                                    openButton.classList.remove('open');
+                                    openButton.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            function startQuiz() {
+                currentQuestionIndex = 0;
+                questionOrder = Array.from({length: quizData.length}, (_, i) => i);
+                questionStatus = Array(quizData.length).fill(null);
+                renderQuestionButtons();
+                showQuestion();
+            }
+
+            function renderQuestionButtons() {
+                questionButtons.innerHTML = '';
+                questionOrder.forEach((qIdx, i) => {
+                    const btn = document.createElement('button');
+                    btn.textContent = (i + 1);
+                    btn.className = 'question-btn px-3 py-1 rounded font-bold border border-stone-300';
+                    if (questionStatus[qIdx] === 'correct') btn.classList.add('correct');
+                    if (questionStatus[qIdx] === 'wrong') btn.classList.add('wrong');
+                    btn.addEventListener('click', () => {
+                        currentQuestionIndex = i;
+                        showQuestion();
+                    });
+                    questionButtons.appendChild(btn);
+                });
+            }
+
+            function showQuestion() {
+                feedbackContainer.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                const qIdx = questionOrder[currentQuestionIndex];
+                const questionData = quizData[qIdx];
+                questionProgress.textContent = `Questão ${currentQuestionIndex + 1} de ${questionOrder.length}`;
+                questionText.innerHTML = questionData.question;
+                optionsContainer.innerHTML = '';
+                let currentOptions = [...questionData.options];
+                if (!currentOptions.includes(questionData.answer)) {
+                    const randomIndex = Math.floor(Math.random() * currentOptions.length);
+                    currentOptions[randomIndex] = questionData.answer;
+                }
+                currentOptions = shuffleArray(currentOptions);
+                currentOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option;
+                    button.className = "quiz-option w-full p-3 border-2 border-stone-300 rounded-lg hover:bg-stone-200 transition-colors";
+                    button.addEventListener('click', () => selectAnswer(option, questionData.answer, questionData.explanation));
+                    optionsContainer.appendChild(button);
+                });
+                renderQuestionButtons();
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function selectAnswer(selectedOption, correctAnswer, explanation) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                let isCorrect = selectedOption === correctAnswer;
+                if (isCorrect) {
+                    feedbackText.textContent = '🎉 Correto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-emerald-100 border border-emerald-200 text-emerald-800';
+                    questionStatus[questionOrder[currentQuestionIndex]] = 'correct';
+                } else {
+                    feedbackText.textContent = '🤔 Incorreto!';
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 border border-red-200 text-red-800';
+                    questionStatus[questionOrder[currentQuestionIndex]] = 'wrong';
+                    // Move a questão para o final da fila se errar
+                    const wrongIdx = questionOrder.splice(currentQuestionIndex, 1)[0];
+                    questionOrder.push(wrongIdx);
+                }
+                feedbackExplanation.innerHTML = `<strong>Explicação:</strong> ${explanation}`;
+                feedbackContainer.classList.remove('hidden');
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.innerHTML === correctAnswer) {
+                        button.classList.add('correct-answer');
+                    } else if (button.innerHTML === selectedOption && !isCorrect) {
+                        button.classList.add('wrong-answer');
+                    }
+                });
+                nextQuestionBtn.classList.remove('hidden');
+                renderQuestionButtons();
+            }
+
+            nextQuestionBtn.addEventListener('click', () => {
+                if (currentQuestionIndex < questionOrder.length - 1) {
+                    currentQuestionIndex++;
+                    showQuestion();
+                } else {
+                    // Fim do quiz
+                    questionProgress.textContent = 'Você respondeu todas as questões!';
+                    questionText.innerHTML = 'Parabéns por praticar!';
+                    optionsContainer.innerHTML = '';
+                    nextQuestionBtn.classList.add('hidden');
+                }
+            });
+
+            createAccordion();
+            switchView('learn');
+        });
+    </script>
+</body>
+</html>
