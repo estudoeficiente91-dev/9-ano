@@ -6,25 +6,34 @@
     <title>Estudo: Polígonos, Circunferência e Quadrados — 9º Ano</title>
     <style>
         :root{
-            --bg:#f5f8fb; --card:#ffffff; --accent:#2563eb; --muted:#6b7280; --success:#10b981;
+            --bg:#071023; /* page background */
+            --card:#0b1624; /* card background */
+            --accent:#3b82f6; /* blue */
+            --muted:#97a6bf; /* secondary text */
+            --text:#e6eef8; /* main text */
+            --success:#34d399; /* green */
+            --q-bg:#081426; /* question background */
+            --q-border:rgba(59,130,246,0.18);
+            --answer-bg:#071226;
+            --answer-border:rgba(255,255,255,0.04);
         }
-        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:#0f172a}
-        .wrap{max-width:980px;margin:32px auto;padding:20px}
-        header.site{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-        header.site .title{background:linear-gradient(90deg,#0ea5e9, #2563eb);color:white;padding:18px;border-radius:10px;flex:1}
-        header.site .title h1{margin:0;font-size:1.5rem}
-        header.site .meta{margin-left:16px;color:var(--muted);font-size:0.95rem}
-        .card{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);padding:22px}
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .wrap{max-width:980px;margin:28px auto;padding:18px}
+        header.site{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+        header.site .title{background:linear-gradient(90deg,#0f172a,#0b3b72);color:var(--text);padding:18px;border-radius:10px}
+        header.site .title h1{margin:0;font-size:1.35rem}
+        header.site .meta{margin-top:6px;color:var(--muted);font-size:0.95rem}
+        .card{background:var(--card);border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);padding:22px;border:1px solid rgba(255,255,255,0.02)}
         .topic{margin-bottom:22px}
         .topic h2{color:var(--accent);margin:0 0 10px;font-size:1.15rem}
         .explain{color:var(--muted);line-height:1.6}
         .questions{margin-top:14px;display:grid;grid-template-columns:1fr;gap:12px}
-        .q{background:#f8fafc;border-radius:8px;padding:12px;border-left:4px solid rgba(37,99,235,0.12);display:flex;flex-direction:column}
-        .q strong{color:#0f172a}
+        .q{background:var(--q-bg);border-radius:8px;padding:12px;border-left:4px solid var(--q-border);display:flex;flex-direction:column}
+        .q strong{color:var(--text)}
         .controls{margin-top:10px;display:flex;gap:8px;align-items:center}
-        .btn{background:var(--accent);color:white;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600}
-        .btn[aria-expanded="true"]{background:var(--success)}
-        .answer{margin-top:10px;padding:10px;border-radius:8px;background:#ffffff;border:1px solid #e6eefc;color:#0f172a;display:none}
+    .btn{background:var(--accent);color:var(--text);border:0;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:700}
+    .btn[aria-expanded="true"]{background:var(--success);color:var(--card)}
+        .answer{margin-top:10px;padding:12px;border-radius:8px;background:var(--answer-bg);border:1px solid var(--answer-border);color:var(--text);display:none}
         .answer.show{display:block}
         footer.note{margin-top:16px;color:var(--muted);font-size:0.9rem}
         @media(min-width:700px){.questions{grid-template-columns:1fr 1fr}}
@@ -118,16 +127,16 @@
                 <p class="explain">Circunferência: conjunto de pontos equidistantes do centro. Elementos: centro, raio, diâmetro, corda, arco, setor. Fórmulas: C = 2πr; A = πr²; comprimento do arco: (θ/360)·2πr.</p>
 
                 <div class="questions" aria-label="Questões sobre circunferência">
-                    <div class="q"><div><strong>Questão 11:</strong> Se o raio é 7 cm, qual o comprimento da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C = 2·π·7 = 14π ≈ 43,96 cm</div></div>
-                    <div class="q"><div><strong>Questão 12:</strong> Qual a área de um círculo de raio 5 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A = π·5² = 25π ≈ 78,5 cm²</div></div>
+                    <div class="q"><div><strong>Questão 11:</strong> Se o raio é 7 cm, qual o comprimento da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C = 2·π·7 = 14π ≈ 42 cm (usando π = 3)</div></div>
+                    <div class="q"><div><strong>Questão 12:</strong> Qual a área de um círculo de raio 5 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A = π·5² = 25π ≈ 75 cm² (π = 3)</div></div>
                     <div class="q"><div><strong>Questão 13:</strong> Qual o diâmetro de uma circunferência de raio 8 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Diâmetro = 2·raio = 16 cm</div></div>
-                    <div class="q"><div><strong>Questão 14:</strong> Qual o comprimento de um arco de 90° em uma circunferência de raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (90/360)·2π·4 = 2π ≈ 6,28 cm</div></div>
-                    <div class="q"><div><strong>Questão 15:</strong> Qual a área de um setor circular de 60° e raio 6 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A_setor = (60/360)·π·6² = 6π ≈ 18,85 cm²</div></div>
-                    <div class="q"><div><strong>Questão 16:</strong> Se o comprimento da circunferência é 31,4 cm, qual o raio?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">r = C/(2π) = 31,4/(2·3,14) = 5 cm</div></div>
-                    <div class="q"><div><strong>Questão 17:</strong> Qual o comprimento de um arco de 180° em uma circunferência de raio 3 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (180/360)·2π·3 = 3π ≈ 9,42 cm</div></div>
-                    <div class="q"><div><strong>Questão 18:</strong> Qual a área de um círculo de diâmetro 10 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Raio = 5 cm → A = π·5² = 25π ≈ 78,5 cm²</div></div>
-                    <div class="q"><div><strong>Questão 19:</strong> Se o raio é 2 cm, qual o comprimento de um arco de 45°?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (45/360)·2π·2 = 0,5π ≈ 1,57 cm</div></div>
-                    <div class="q"><div><strong>Questão 20:</strong> Qual a área de um setor circular de 90° e raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A_setor = (90/360)·π·16 = 4π ≈ 12,57 cm²</div></div>
+                    <div class="q"><div><strong>Questão 14:</strong> Qual o comprimento de um arco de 90° em uma circunferência de raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (90/360)·2π·4 = 2π ≈ 6 cm (π = 3)</div></div>
+                    <div class="q"><div><strong>Questão 15:</strong> Qual a área de um setor circular de 60° e raio 6 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A_setor = (60/360)·π·6² = 6π ≈ 18 cm² (π = 3)</div></div>
+                    <div class="q"><div><strong>Questão 16:</strong> Se o comprimento da circunferência é 31,4 cm, qual o raio?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">r = C/(2π) = 31,4/(2·3) ≈ 5,23 cm (usando π = 3)</div></div>
+                    <div class="q"><div><strong>Questão 17:</strong> Qual o comprimento de um arco de 180° em uma circunferência de raio 3 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (180/360)·2π·3 = 3π ≈ 9 cm (π = 3)</div></div>
+                    <div class="q"><div><strong>Questão 18:</strong> Qual a área de um círculo de diâmetro 10 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Raio = 5 cm → A = π·5² = 25π ≈ 75 cm² (π = 3)</div></div>
+                    <div class="q"><div><strong>Questão 19:</strong> Se o raio é 2 cm, qual o comprimento de um arco de 45°?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (45/360)·2π·2 = 0,5π ≈ 1,5 cm (π = 3)</div></div>
+                    <div class="q"><div><strong>Questão 20:</strong> Qual a área de um setor circular de 90° e raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A_setor = (90/360)·π·16 = 4π ≈ 12 cm² (π = 3)</div></div>
                 </div>
             </section>
 
@@ -145,12 +154,12 @@
                     <div class="q"><div><strong>Questão 27:</strong> Qual o perímetro do quadrado inscrito em uma circunferência de raio 5 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">L = 5·√2 ≈ 7,07 cm → Perímetro ≈ 28,28 cm</div></div>
                     <div class="q"><div><strong>Questão 28:</strong> Qual o perímetro do quadrado circunscrito em uma circunferência de raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">L = 2·4 = 8 cm → Perímetro = 32 cm</div></div>
                     <div class="q"><div><strong>Questão 29:</strong> Se o lado do quadrado inscrito é 10 cm, qual o diâmetro da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Diagonal = 10·√2 ≈ 14,14 cm → Diâmetro ≈ 14,14 cm</div></div>
-                    <div class="q"><div><strong>Questão 30:</strong> Se o lado do quadrado circunscrito é 16 cm, qual a área da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Raio = 16 / 2 = 8 cm → Área = π·8² = 64π ≈ 201,06 cm²</div></div>
+                    <div class="q"><div><strong>Questão 30:</strong> Se o lado do quadrado circunscrito é 16 cm, qual a área da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Raio = 16 / 2 = 8 cm → Área = π·8² = 64π ≈ 192 cm² (π = 3)</div></div>
                 </div>
 
             </section>
 
-            <footer class="note">Use π ≈ 3,14 quando solicitado. Revele as respostas para conferir seus cálculos e pratique novamente até dominar.</footer>
+            <footer class="note">Use π = 3 nas aproximações numéricas desta página. Revele as respostas para conferir seus cálculos e pratique novamente até dominar.</footer>
         </div>
     </div>
 
