@@ -15,6 +15,22 @@
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
         .accordion-button.open + .accordion-content { max-height: 2000px; }
         .content-text { font-size: 1rem; line-height: 1.6; }
+        /* Regras para impressão */
+        @page { size: A4 portrait; margin: 20mm; }
+        @media print {
+            html, body { background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            /* cabeçalho/rodapé fixos aplicados em cada página (Chrome/Edge/Firefox recentes) */
+            .print-header { position: fixed; top: 0; left: 0; right: 0; height: 36mm; padding: 6mm 20mm; background: white; border-bottom: 1px solid #ddd }
+            .print-footer { position: fixed; bottom: 0; left: 0; right: 0; height: 18mm; padding: 4mm 20mm; background: white; border-top: 1px solid #ddd; text-align: right }
+            .print-content { margin-top: 46mm; margin-bottom: 28mm }
+            .page-break { page-break-after: always; break-after: page }
+            /* garantir cores de fundo quando possível */
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+        .print-only { display: none; }
     </style>
 </head>
 <body class="bg-stone-100 text-slate-800">
@@ -22,6 +38,10 @@
         <header class="text-center mb-8">
             <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
                 <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">⬅ Voltar para o Início</a>
+            </div>
+            <div class="flex justify-center gap-2 mt-4 no-print">
+                <button id="btn-print-explain" class="px-4 py-2 bg-sky-600 text-white rounded-md shadow-sm hover:bg-sky-700">Imprimir explicações (PDF)</button>
+                <button id="btn-print-questions" class="px-4 py-2 bg-emerald-600 text-white rounded-md shadow-sm hover:bg-emerald-700">Imprimir questões (PDF)</button>
             </div>
             <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Teorias de Darwin</h1>
             <p class="text-slate-600 mt-2">Descubra os conceitos fundamentais da evolução!</p>
@@ -45,6 +65,10 @@
                 </div>
             </section>
         </main>
+        <!-- Conteúdo para impressão (injetado dinamicamente) -->
+        <div id="print-area" class="print-only p-6">
+            <!-- será preenchido via JS -->
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -289,6 +313,66 @@
             createAccordion();
             switchView('learn');
         });
+        
+        // Funções de impressão: preparam o conteúdo em #print-area e chamam window.print()
+        (function(){
+            function makeExplainHtml(learnData){
+                const now = new Date();
+                const dateStr = now.toLocaleDateString();
+                let html = `
+                    <div class="print-header"><strong>Teorias de Darwin</strong><div style="float:right">Data: ${dateStr}</div></div>
+                    <div class="print-content">
+                    <h1>Teorias de Darwin — Explicações</h1>`;
+                learnData.forEach((item,i) => {
+                    html += `<section style="margin-bottom:18px"><h2 style="color:#0f172a">${item.title}</h2><p style="font-size:14px;line-height:1.5;color:#111">${item.content}</p></section>`;
+                    if(i < learnData.length - 1) html += `<div class="page-break"></div>`;
+                });
+                html += `</div><div class="print-footer">Teorias de Darwin — Página <span class="page-number"></span></div>`;
+                return html;
+            }
+
+            function makeQuestionsHtml(quizData){
+                const now = new Date();
+                const dateStr = now.toLocaleDateString();
+                let html = `
+                    <div class="print-header"><strong>Teorias de Darwin</strong><div style="float:right">Data: ${dateStr}</div></div>
+                    <div class="print-content"><h1>Teorias de Darwin — Questões</h1>`;
+                quizData.forEach((q,i) => {
+                    html += `<article style="margin-bottom:6mm"><h2 style="font-size:16px">Questão ${i+1}</h2><p style="font-size:14px;color:#111"><strong>${q.question}</strong></p><ol style="margin-left:16px">`;
+                    q.options.forEach(opt => html += `<li style="margin-bottom:6px">${opt}</li>`);
+                    html += `</ol></article>`;
+                    // uma questão por página
+                    if(i < quizData.length - 1) html += `<div class="page-break"></div>`;
+                });
+                html += `</div><div class="print-footer">Teorias de Darwin — Página <span class="page-number"></span></div>`;
+                return html;
+            }
+
+            document.addEventListener('DOMContentLoaded', function(){
+                const btnPrintExplain = document.getElementById('btn-print-explain');
+                const btnPrintQuestions = document.getElementById('btn-print-questions');
+                const printArea = document.getElementById('print-area');
+                if(!btnPrintExplain || !btnPrintQuestions || !printArea) return;
+
+                btnPrintExplain.addEventListener('click', function(){
+                    printArea.innerHTML = makeExplainHtml(learnData) + `<div style="margin-top:8px;font-size:12px;color:#333">Dica: no diálogo de impressão escolha "Salvar como PDF" e marque impressão de gráficos de fundo se quiser cores.</div>`;
+                    fillPageNumbers();
+                    // breve delay para garantir renderização
+                    setTimeout(() => window.print(), 250);
+                });
+
+                btnPrintQuestions.addEventListener('click', function(){
+                    printArea.innerHTML = makeQuestionsHtml(quizData) + `<div style="margin-top:8px;font-size:12px;color:#333">Dica: no diálogo de impressão escolha "Salvar como PDF" e marque impressão de gráficos de fundo se quiser cores.</div>`;
+                    fillPageNumbers();
+                    setTimeout(() => window.print(), 250);
+                });
+            });
+            
+            function fillPageNumbers(){
+                // Navegadores não fornecem contagem de páginas client-side; colocar placeholder que alguns renderers substituem
+                document.querySelectorAll('.page-number').forEach(el => el.textContent = '—');
+            }
+        })();
     </script>
 </body>
 </html>
