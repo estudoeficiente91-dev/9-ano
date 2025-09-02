@@ -1,388 +1,181 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Estudo de Polígonos, Circunferência e Quadrados</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Estudo: Polígonos, Circunferência e Quadrados — 9º Ano</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f8fb;
-            margin: 0;
-            padding: 0;
+        :root{
+            --bg:#f5f8fb; --card:#ffffff; --accent:#2563eb; --muted:#6b7280; --success:#10b981;
         }
-        header {
-            background: #2d6cdf;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        main {
-            max-width: 1000px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px #ccc;
-            padding: 30px;
-        }
-        h2 {
-            color: #2d6cdf;
-            margin-top: 30px;
-        }
-        .explicacao, .questao {
-            margin-bottom: 25px;
-        }
-        .questao {
-            background: #eaf2ff;
-            border-left: 5px solid #2d6cdf;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        .resolucao {
-            background: #f9f9f9;
-            border-left: 5px solid #4caf50;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none; /* escondida por padrão */
-        }
-        .resolucao.mostrada {
-            display: block;
-        }
-        .btn-revelar {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 6px 10px;
-            background: #2d6cdf;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-        .btn-revelar[aria-expanded="true"] {
-            background: #4caf50;
-        }
-        img {
-            max-width: 100%;
-            display: block;
-            margin: 15px auto;
-        }
-        .topico {
-            margin-bottom: 40px;
-        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:#0f172a}
+        .wrap{max-width:980px;margin:32px auto;padding:20px}
+        header.site{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+        header.site .title{background:linear-gradient(90deg,#0ea5e9, #2563eb);color:white;padding:18px;border-radius:10px;flex:1}
+        header.site .title h1{margin:0;font-size:1.5rem}
+        header.site .meta{margin-left:16px;color:var(--muted);font-size:0.95rem}
+        .card{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.06);padding:22px}
+        .topic{margin-bottom:22px}
+        .topic h2{color:var(--accent);margin:0 0 10px;font-size:1.15rem}
+        .explain{color:var(--muted);line-height:1.6}
+        .questions{margin-top:14px;display:grid;grid-template-columns:1fr;gap:12px}
+        .q{background:#f8fafc;border-radius:8px;padding:12px;border-left:4px solid rgba(37,99,235,0.12);display:flex;flex-direction:column}
+        .q strong{color:#0f172a}
+        .controls{margin-top:10px;display:flex;gap:8px;align-items:center}
+        .btn{background:var(--accent);color:white;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600}
+        .btn[aria-expanded="true"]{background:var(--success)}
+        .answer{margin-top:10px;padding:10px;border-radius:8px;background:#ffffff;border:1px solid #e6eefc;color:#0f172a;display:none}
+        .answer.show{display:block}
+        footer.note{margin-top:16px;color:var(--muted);font-size:0.9rem}
+        @media(min-width:700px){.questions{grid-template-columns:1fr 1fr}}
     </style>
 </head>
 <body>
-    <header>
-        <h1>Estudo para Prova: Polígonos, Circunferência e Quadrados</h1>
-        <p>Matemática - 9º Ano</p>
-    </header>
-    <main>
-        <section class="topico">
-            <h2>1. Polígonos</h2>
-            <div class="explicacao">
-                <p>
-                    <strong>Definição:</strong> Polígonos são figuras geométricas planas formadas por segmentos de reta chamados lados, que se encontram apenas nas extremidades, formando vértices. Os polígonos podem ser classificados de acordo com o número de lados: triângulo (3), quadrilátero (4), pentágono (5), hexágono (6), heptágono (7), octógono (8), etc.<br><br>
-                    <strong>Elementos:</strong> Lados, vértices, ângulos internos e externos, diagonais.<br>
-                    <strong>Fórmulas importantes:</strong><br>
-                    - Soma dos ângulos internos: <em>S = (n - 2) × 180°</em>, onde n é o número de lados.<br>
-                    - Número de diagonais: <em>D = n(n - 3)/2</em>.<br>
-                    <strong>Polígonos regulares:</strong> Todos os lados e ângulos são iguais.<br>
-                    <strong>Exemplo:</strong> Um hexágono regular tem 6 lados iguais e 6 ângulos iguais.
+    <div class="wrap">
+        <header class="site">
+            <div class="title">
+                <h1>Estudo para Prova: Polígonos, Circunferência e Quadrados</h1>
+                <div class="meta">Matemática — 9º Ano</div>
+            </div>
+        </header>
+
+        <div class="card">
+            <section class="topic">
+                <h2>1. Polígonos — definição e fórmulas</h2>
+                <p class="explain">
+                    <strong>Definição:</strong> Polígonos são figuras planas formadas por segmentos de reta (lados) que se encontram formando vértices. Classificam‑se pelo número de lados: triângulo (3), quadrilátero (4), pentágono (5), etc.<br>
+                    <strong>Elementos:</strong> lados, vértices, ângulos internos e externos, diagonais.<br>
+                    <strong>Fórmulas úteis:</strong> Soma dos ângulos internos: <em>S = (n - 2) × 180°</em>. Número de diagonais: <em>D = n(n - 3)/2</em>.
                 </p>
-            </div>
-            <!-- Questões 1 a 10 -->
-            <div class="questao">
-                <strong>Questão 1:</strong> Quantos lados tem um pentágono? Qual a soma dos ângulos internos?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Um pentágono tem 5 lados.<br>
-                    S = (5 - 2) × 180° = 3 × 180° = <strong>540°</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 2:</strong> Quantos diagonais tem um octógono?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    D = 8 × (8 - 3) / 2 = 8 × 5 / 2 = <strong>20 diagonais</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 3:</strong> Qual é o valor de cada ângulo interno de um hexágono regular?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Soma dos ângulos: 720°<br>
-                    Cada ângulo: 720° / 6 = <strong>120°</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 4:</strong> Quantos lados tem um decágono?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Um decágono tem <strong>10 lados</strong>.
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 5:</strong> Qual a soma dos ângulos internos de um quadrilátero?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    S = (4 - 2) × 180° = 2 × 180° = <strong>360°</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 6:</strong> Quantos vértices tem um heptágono?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Um heptágono tem <strong>7 vértices</strong>.
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 7:</strong> Qual é o valor de cada ângulo interno de um octógono regular?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    S = (8 - 2) × 180° = 6 × 180° = 1080°<br>
-                    Cada ângulo: 1080° / 8 = <strong>135°</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 8:</strong> Quantos lados tem um triângulo?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Um triângulo tem <strong>3 lados</strong>.
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 9:</strong> Qual a soma dos ângulos internos de um pentágono?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    S = (5 - 2) × 180° = 3 × 180° = <strong>540°</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 10:</strong> Quantos diagonais tem um hexágono?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    D = 6 × (6 - 3) / 2 = 6 × 3 / 2 = <strong>9 diagonais</strong>
-                </div>
-            </div>
-        </section>
 
-        <section class="topico">
-            <h2>2. Circunferência e Arcos</h2>
-            <div class="explicacao">
-                <p>
-                    <strong>Definição:</strong> Circunferência é o conjunto de pontos do plano que estão a uma mesma distância (raio) de um ponto central (centro).<br>
-                    <strong>Elementos:</strong> Centro, raio, diâmetro, corda, arco, setor circular.<br>
-                    <strong>Fórmulas importantes:</strong><br>
-                    - Comprimento da circunferência: <em>C = 2πr</em><br>
-                    - Área do círculo: <em>A = πr²</em><br>
-                    - Comprimento de um arco: <em>C_arco = (θ/360) × 2πr</em>, onde θ é o ângulo central.<br>
-                    <strong>Arco:</strong> Parte da circunferência entre dois pontos.<br>
-                    <strong>Setor circular:</strong> Região limitada por dois raios e o arco entre eles.
-                </p>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Circle_-_basic_elements.svg/400px-Circle_-_basic_elements.svg.png" alt="Elementos da circunferência">
-            </div>
-            <!-- Questões 11 a 20 -->
-            <div class="questao">
-                <strong>Questão 11:</strong> Se o raio é 7 cm, qual o comprimento da circunferência?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    C = 2 × π × 7 = 14π ≈ <strong>43,96 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 12:</strong> Qual a área de um círculo de raio 5 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    A = π × 5² = 25π ≈ <strong>78,5 cm²</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 13:</strong> Qual o diâmetro de uma circunferência de raio 8 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Diâmetro = 2 × raio = <strong>16 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 14:</strong> Qual o comprimento de um arco de 90° em uma circunferência de raio 4 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    C_arco = (90/360) × 2π × 4 = (1/4) × 8π = <strong>2π ≈ 6,28 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 15:</strong> Qual a área de um setor circular de 60° e raio 6 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    A_setor = (60/360) × π × 6² = (1/6) × π × 36 = 6π ≈ <strong>18,85 cm²</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 16:</strong> Se o comprimento da circunferência é 31,4 cm, qual o raio?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    C = 2πr → r = C / (2π) = 31,4 / (2 × 3,14) = <strong>5 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 17:</strong> Qual o comprimento de um arco de 180° em uma circunferência de raio 3 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    C_arco = (180/360) × 2π × 3 = (1/2) × 6π = <strong>3π ≈ 9,42 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 18:</strong> Qual a área de um círculo de diâmetro 10 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Raio = 10 / 2 = 5 cm<br>
-                    A = π × 5² = 25π ≈ <strong>78,5 cm²</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 19:</strong> Se o raio é 2 cm, qual o comprimento de um arco de 45°?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    C_arco = (45/360) × 2π × 2 = (1/8) × 4π = <strong>0,5π ≈ 1,57 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 20:</strong> Qual a área de um setor circular de 90° e raio 4 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    A_setor = (90/360) × π × 16 = (1/4) × 16π = <strong>4π ≈ 12,57 cm²</strong>
-                </div>
-            </div>
-        </section>
+                <div class="questions" aria-label="Questões sobre polígonos">
+                    <div class="q">
+                        <div><strong>Questão 1:</strong> Quantos lados tem um pentágono? Qual a soma dos ângulos internos?</div>
+                        <div class="controls">
+                            <button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button>
+                        </div>
+                        <div class="answer">Um pentágono tem 5 lados.<br>S = (5 - 2) × 180° = 540°</div>
+                    </div>
 
-        <section class="topico">
-            <h2>3. Quadrado Inscrito e Circunscrito na Circunferência</h2>
-            <div class="explicacao">
-                <p>
-                    <strong>Quadrado inscrito:</strong> Todos os vértices do quadrado estão sobre a circunferência. O lado do quadrado inscrito é igual à diagonal dividida por √2, pois a diagonal do quadrado é igual ao diâmetro da circunferência.<br>
-                    <strong>Quadrado circunscrito:</strong> Todos os lados do quadrado tocam a circunferência. O raio da circunferência é metade do lado do quadrado circunscrito.<br>
-                    <strong>Fórmulas:</strong><br>
-                    - Lado do quadrado inscrito: <em>L = diâmetro / √2 = 2r / √2 = r√2</em><br>
-                    - Raio da circunferência circunscrita: <em>r = L / 2</em><br>
-                    <strong>Aplicações:</strong> Relação entre áreas, perímetros e propriedades geométricas.
-                </p>
-                <img src="https://i.imgur.com/1pQkQwB.png" alt="Quadrado inscrito e circunscrito">
-            </div>
-            <!-- Questões 21 a 30 -->
-            <div class="questao">
-                <strong>Questão 21:</strong> Se o raio da circunferência é 4 cm, qual o lado do quadrado inscrito?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Lado = 4 × √2 ≈ <strong>5,66 cm</strong>
+                    <div class="q">
+                        <div><strong>Questão 2:</strong> Quantos diagonais tem um octógono?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">D = 8 × (8 - 3) / 2 = 20 diagonais</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 3:</strong> Qual é o valor de cada ângulo interno de um hexágono regular?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">Soma: 720° — Cada ângulo = 720° / 6 = 120°</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 4:</strong> Quantos lados tem um decágono?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">Um decágono tem 10 lados.</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 5:</strong> Qual a soma dos ângulos internos de um quadrilátero?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">S = (4 - 2) × 180° = 360°</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 6:</strong> Quantos vértices tem um heptágono?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">Um heptágono tem 7 vértices.</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 7:</strong> Qual é o valor de cada ângulo interno de um octógono regular?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">S = 1080° → Cada ângulo = 1080° / 8 = 135°</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 8:</strong> Quantos lados tem um triângulo?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">Um triângulo tem 3 lados.</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 9:</strong> Qual a soma dos ângulos internos de um pentágono?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">S = 540°</div>
+                    </div>
+
+                    <div class="q">
+                        <div><strong>Questão 10:</strong> Quantos diagonais tem um hexágono?</div>
+                        <div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div>
+                        <div class="answer">D = 6 × (6 - 3) / 2 = 9 diagonais</div>
+                    </div>
                 </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 22:</strong> Se o lado do quadrado circunscrito é 10 cm, qual o raio da circunferência?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Raio = 10 / 2 = <strong>5 cm</strong>
+            </section>
+
+            <section class="topic">
+                <h2>2. Circunferência e Arcos</h2>
+                <p class="explain">Circunferência: conjunto de pontos equidistantes do centro. Elementos: centro, raio, diâmetro, corda, arco, setor. Fórmulas: C = 2πr; A = πr²; comprimento do arco: (θ/360)·2πr.</p>
+
+                <div class="questions" aria-label="Questões sobre circunferência">
+                    <div class="q"><div><strong>Questão 11:</strong> Se o raio é 7 cm, qual o comprimento da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C = 2·π·7 = 14π ≈ 43,96 cm</div></div>
+                    <div class="q"><div><strong>Questão 12:</strong> Qual a área de um círculo de raio 5 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A = π·5² = 25π ≈ 78,5 cm²</div></div>
+                    <div class="q"><div><strong>Questão 13:</strong> Qual o diâmetro de uma circunferência de raio 8 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Diâmetro = 2·raio = 16 cm</div></div>
+                    <div class="q"><div><strong>Questão 14:</strong> Qual o comprimento de um arco de 90° em uma circunferência de raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (90/360)·2π·4 = 2π ≈ 6,28 cm</div></div>
+                    <div class="q"><div><strong>Questão 15:</strong> Qual a área de um setor circular de 60° e raio 6 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A_setor = (60/360)·π·6² = 6π ≈ 18,85 cm²</div></div>
+                    <div class="q"><div><strong>Questão 16:</strong> Se o comprimento da circunferência é 31,4 cm, qual o raio?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">r = C/(2π) = 31,4/(2·3,14) = 5 cm</div></div>
+                    <div class="q"><div><strong>Questão 17:</strong> Qual o comprimento de um arco de 180° em uma circunferência de raio 3 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (180/360)·2π·3 = 3π ≈ 9,42 cm</div></div>
+                    <div class="q"><div><strong>Questão 18:</strong> Qual a área de um círculo de diâmetro 10 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Raio = 5 cm → A = π·5² = 25π ≈ 78,5 cm²</div></div>
+                    <div class="q"><div><strong>Questão 19:</strong> Se o raio é 2 cm, qual o comprimento de um arco de 45°?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">C_arco = (45/360)·2π·2 = 0,5π ≈ 1,57 cm</div></div>
+                    <div class="q"><div><strong>Questão 20:</strong> Qual a área de um setor circular de 90° e raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">A_setor = (90/360)·π·16 = 4π ≈ 12,57 cm²</div></div>
                 </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 23:</strong> Qual a área do quadrado inscrito em uma circunferência de raio 3 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Lado = 3 × √2 ≈ 4,24 cm<br>
-                    Área = (4,24)² ≈ <strong>18 cm²</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 24:</strong> Qual a área do quadrado circunscrito em uma circunferência de raio 6 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Lado = 2 × 6 = 12 cm<br>
-                    Área = 12² = <strong>144 cm²</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 25:</strong> Se o lado do quadrado inscrito é 8 cm, qual o raio da circunferência?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Diagonal = 8 × √2 ≈ 11,31 cm<br>
-                    Raio = diagonal / 2 ≈ 5,66 cm
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 26:</strong> Se o lado do quadrado circunscrito é 14 cm, qual o diâmetro da circunferência?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Diâmetro = lado = <strong>14 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 27:</strong> Qual o perímetro do quadrado inscrito em uma circunferência de raio 5 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Lado = 5 × √2 ≈ 7,07 cm<br>
-                    Perímetro = 4 × 7,07 ≈ <strong>28,28 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 28:</strong> Qual o perímetro do quadrado circunscrito em uma circunferência de raio 4 cm?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Lado = 2 × 4 = 8 cm<br>
-                    Perímetro = 4 × 8 = <strong>32 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 29:</strong> Se o lado do quadrado inscrito é 10 cm, qual o diâmetro da circunferência?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Diagonal = 10 × √2 ≈ 14,14 cm<br>
-                    Diâmetro = diagonal = <strong>14,14 cm</strong>
-                </div>
-            </div>
-            <div class="questao">
-                <strong>Questão 30:</strong> Se o lado do quadrado circunscrito é 16 cm, qual a área da circunferência?
-                <button class="btn-revelar" aria-expanded="false">Mostrar resposta</button>
-                <div class="resolucao">
-                    Raio = 16 / 2 = 8 cm<br>
-                    Área = π × 8² = 64π ≈ <strong>201,06 cm²</strong>
+            </section>
+
+            <section class="topic">
+                <h2>3. Quadrado inscrito e circunscrito</h2>
+                <p class="explain">Quadrado inscrito: vértices sobre a circunferência. Lado L = r·√2. Quadrado circunscrito: lados tangenciam a circunferência; raio = L/2.</p>
+
+                <div class="questions" aria-label="Questões sobre quadrados e circunferência">
+                    <div class="q"><div><strong>Questão 21:</strong> Se o raio da circunferência é 4 cm, qual o lado do quadrado inscrito?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Lado = r·√2 = 4·√2 ≈ 5,66 cm</div></div>
+                    <div class="q"><div><strong>Questão 22:</strong> Se o lado do quadrado circunscrito é 10 cm, qual o raio da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Raio = L / 2 = 10 / 2 = 5 cm</div></div>
+                    <div class="q"><div><strong>Questão 23:</strong> Qual a área do quadrado inscrito em uma circunferência de raio 3 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">L = 3·√2 ≈ 4,24 cm → Área ≈ 18 cm²</div></div>
+                    <div class="q"><div><strong>Questão 24:</strong> Qual a área do quadrado circunscrito em uma circunferência de raio 6 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">L = 2·6 = 12 cm → Área = 144 cm²</div></div>
+                    <div class="q"><div><strong>Questão 25:</strong> Se o lado do quadrado inscrito é 8 cm, qual o raio da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Diagonal = 8·√2 ≈ 11,31 cm → Raio ≈ 5,66 cm</div></div>
+                    <div class="q"><div><strong>Questão 26:</strong> Se o lado do quadrado circunscrito é 14 cm, qual o diâmetro da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Diâmetro = lado = 14 cm</div></div>
+                    <div class="q"><div><strong>Questão 27:</strong> Qual o perímetro do quadrado inscrito em uma circunferência de raio 5 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">L = 5·√2 ≈ 7,07 cm → Perímetro ≈ 28,28 cm</div></div>
+                    <div class="q"><div><strong>Questão 28:</strong> Qual o perímetro do quadrado circunscrito em uma circunferência de raio 4 cm?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">L = 2·4 = 8 cm → Perímetro = 32 cm</div></div>
+                    <div class="q"><div><strong>Questão 29:</strong> Se o lado do quadrado inscrito é 10 cm, qual o diâmetro da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Diagonal = 10·√2 ≈ 14,14 cm → Diâmetro ≈ 14,14 cm</div></div>
+                    <div class="q"><div><strong>Questão 30:</strong> Se o lado do quadrado circunscrito é 16 cm, qual a área da circunferência?</div><div class="controls"><button class="btn btn-reveal" aria-expanded="false">Mostrar resposta</button></div><div class="answer">Raio = 16 / 2 = 8 cm → Área = π·8² = 64π ≈ 201,06 cm²</div></div>
                 </div>
 
-        <script>
-            // script para alternar visibilidade das resoluções
-            (function(){
-                function toggle(btn, target){
-                    var isExpanded = btn.getAttribute('aria-expanded') === 'true';
-                    if(isExpanded){
-                        btn.setAttribute('aria-expanded', 'false');
-                        btn.textContent = 'Mostrar resposta';
-                        target.classList.remove('mostrada');
-                    } else {
-                        btn.setAttribute('aria-expanded', 'true');
-                        btn.textContent = 'Ocultar resposta';
-                        target.classList.add('mostrada');
-                    }
-                }
+            </section>
 
-                document.addEventListener('DOMContentLoaded', function(){
-                    var buttons = Array.prototype.slice.call(document.querySelectorAll('.btn-revelar'));
-                    buttons.forEach(function(btn){
-                        // o alvo é o próximo elemento .resolucao
-                        var target = btn.nextElementSibling;
-                        if(!target || !target.classList.contains('resolucao')) return;
-                        btn.addEventListener('click', function(){ toggle(btn, target); });
-                        // permitir teclado (Enter/Space)
-                        btn.addEventListener('keydown', function(e){
-                            if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
-                                e.preventDefault();
-                                toggle(btn, target);
-                            }
-                        });
+            <footer class="note">Use π ≈ 3,14 quando solicitado. Revele as respostas para conferir seus cálculos e pratique novamente até dominar.</footer>
+        </div>
+    </div>
+
+    <script>
+        // Alterna visibilidade das respostas mantendo acessibilidade
+        (function(){
+            function toggle(btn, answer){
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                btn.textContent = expanded ? 'Mostrar resposta' : 'Ocultar resposta';
+                answer.classList.toggle('show', !expanded);
+            }
+
+            document.addEventListener('DOMContentLoaded', function(){
+                const buttons = document.querySelectorAll('.btn-reveal');
+                buttons.forEach(btn => {
+                    const answer = btn.closest('.q').querySelector('.answer');
+                    if(!answer) return;
+                    btn.addEventListener('click', () => toggle(btn, answer));
+                    btn.addEventListener('keydown', (e) => {
+                        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(btn, answer); }
                     });
                 });
-            })();
-        </script>
-            </div>
-        </section>
-    </main>
+            });
+        })();
+    </script>
 </body>
 </html>
