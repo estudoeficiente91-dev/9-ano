@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porcentagem — 8º Ano (Resumo e Questões)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        :root{
+            --bg: #0b1220;
+            --card: #0f1724;
+            --muted: #94a3b8;
+            --text: #e6eef8;
+            --accent: #60a5fa;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: rgba(255,255,255,0.06);
+            --muted-2: rgba(230,238,248,0.8);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+        .bg-white { background-color: var(--card) !important; color: var(--text) !important; }
+        .text-slate-600 { color: var(--muted) !important; }
+        .text-sky-800 { color: var(--accent) !important; }
+        h1, h2, h3, h4 { color: var(--text); }
+        .tab-button.active { background-color: #064e72 !important; color: white !important; }
+        .question-btn { transition: background 0.25s, color 0.2s; color: var(--text); background: rgba(255,255,255,0.02); border: 1px solid var(--border); }
+        .question-btn.correct { background-color: var(--success) !important; color: #052e1f !important; }
+        .question-btn.wrong { background-color: var(--danger) !important; color: #3b0b0b !important; }
+        .content-text { font-size: 1rem; line-height: 1.6; color: var(--muted-2); }
+        @page { size: A4 portrait; margin: 20mm; }
+        @media print {
+            html, body { background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            .print-header { position: fixed; top: 0; left: 0; right: 0; height: 36mm; padding: 6mm 20mm; background: white; border-bottom: 1px solid #ddd }
+            .print-footer { position: fixed; bottom: 0; left: 0; right: 0; height: 18mm; padding: 4mm 20mm; background: white; border-top: 1px solid #ddd; text-align: right }
+            .print-content { margin-top: 46mm; margin-bottom: 28mm }
+            .page-break { page-break-after: always; break-after: page }
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+        .print-only { display: none; }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.06); --muted-2: rgba(15,23,36,0.85); }
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(96,165,250,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: none; box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); }
+        .btn-warning{ background: linear-gradient(90deg,#f59e0b,#f97316); color:#1a1200; padding:.45rem .9rem; border-radius:10px; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); }
+        .option-btn:hover{ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; }
+        #question-buttons button:hover{ background: rgba(255,255,255,0.03); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4 page-header">
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="btn-ghost inline-block px-6 py-2 font-semibold rounded-lg shadow transition-colors">⬅ Voltar para o Início</a>
+                    <button id="theme-toggle" class="btn-ghost" aria-label="Alternar tema">🌙 Escuro</button>
+                </div>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Porcentagem — 8º Ano</h1>
+            <p class="text-slate-600 mt-2">Resumo e 20 questões para praticar porcentagem.</p>
+        </header>
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Resumo</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Questões</button>
+        </nav>
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-semibold mb-3">Conceitos principais</h2>
+                    <p class="content-text">Porcentagem é uma razão com denominador 100. Para calcular p% de um valor V, multiplicamos V por p/100. Para aumentar ou diminuir um valor em p%, usam-se fatores multiplicativos (1 ± p/100). Interpretação, regra de três e cálculos mentais são habilidades essenciais.</p>
+                    <h3 class="mt-4 font-semibold">Fórmulas rápidas</h3>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>p% de V = V × (p/100)</li>
+                        <li>Valor com aumento de p% = V × (1 + p/100)</li>
+                        <li>Valor com desconto de p% = V × (1 - p/100)</li>
+                        <li>Converter fração para porcentagem: (a/b) × 100%</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="practice-section" class="hidden">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div id="quiz-start">
+                        <p class="text-center font-semibold text-slate-600 mb-4">Clique em uma questão para iniciar ou use os botões de navegação.</p>
+                        <div id="question-buttons" class="grid grid-cols-5 gap-2 mb-4"></div>
+                        <div id="quiz-container" class="p-2"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="print-area" class="print-only p-6"></div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const questionProgress = document.createElement('p');
+        questionProgress.id = 'question-progress';
+        questionProgress.className = 'text-center font-semibold text-slate-600 mb-4';
+        const questionText = document.createElement('p');
+        questionText.id = 'question-text';
+        questionText.className = 'text-xl content-text';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.id = 'options-container';
+        optionsContainer.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6';
+        const feedbackContainer = document.createElement('div');
+        feedbackContainer.id = 'feedback-container';
+        feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center hidden';
+        const feedbackText = document.createElement('p');
+        feedbackText.id = 'feedback-text';
+        feedbackText.className = 'font-semibold';
+        const feedbackExplanation = document.createElement('p');
+        feedbackExplanation.id = 'feedback-explanation';
+        feedbackExplanation.className = 'text-sm mt-1';
+        const nextQuestionBtn = document.createElement('button');
+        nextQuestionBtn.id = 'next-question-btn';
+        nextQuestionBtn.className = 'hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors';
+        nextQuestionBtn.textContent = 'Próxima';
+    const redoQuestionBtn = document.createElement('button');
+    redoQuestionBtn.id = 'redo-question-btn';
+    redoQuestionBtn.className = 'hidden ml-3 py-2 px-4 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition-colors';
+    redoQuestionBtn.textContent = 'Refazer';
+        feedbackContainer.appendChild(feedbackText);
+        feedbackContainer.appendChild(feedbackExplanation);
+    quizContainer.appendChild(questionProgress);
+    quizContainer.appendChild(questionText);
+    quizContainer.appendChild(optionsContainer);
+    quizContainer.appendChild(feedbackContainer);
+    quizContainer.appendChild(nextQuestionBtn);
+    quizContainer.appendChild(redoQuestionBtn);
+
+        const learnData = [
+            { title: 'Resumo', content: 'Fórmulas e exemplos essenciais sobre porcentagem e aplicações em aumentos e descontos.' }
+        ];
+
+        const quizData = [
+            { question: '1. 20% de 150 é:', answer: 'b) 30', options: ['a) 20','b) 30','c) 15','d) 45'], explanation: '150 × 0,2 = 30' },
+            { question: '2. 15% de 200 é:', answer: 'a) 30', options: ['a) 30','b) 25','c) 35','d) 40'], explanation: '200 × 0,15 = 30' },
+            { question: '3. Aumentar 120 em 25% resulta em:', answer: 'd) 150', options: ['a) 140','b) 145','c) 155','d) 150'], explanation: '120 × 1,25 = 150' },
+            { question: '4. Diminuir 80 em 10% resulta em:', answer: 'c) 72', options: ['a) 70','b) 72,5','c) 72','d) 75'], explanation: '80 × 0,9 = 72' },
+            { question: '5. 5% de 1000 é:', answer: 'a) 50', options: ['a) 50','b) 100','c) 10','d) 5'], explanation: '1000 × 0,05 = 50' },
+            { question: '6. Se 30 equivale a 75% de um número, esse número é:', answer: 'b) 40', options: ['a) 20','b) 40','c) 45','d) 35'], explanation: '30 = 0,75 × x → x = 30/0,75 = 40' },
+            { question: '7. Qual é o valor final de R$ 250 com 12% de aumento?', answer: 'c) R$ 280', options: ['a) R$ 275','b) R$ 285','c) R$ 280','d) R$ 300'], explanation: '250 × 1,12 = 280' },
+            { question: '8. Qual o desconto de 20% sobre R$ 150?', answer: 'b) R$ 30', options: ['a) R$ 20','b) R$ 30','c) R$ 15','d) R$ 45'], explanation: '150 × 0,20 = 30' },
+            { question: '9. 250 é quantos por cento de 500?', answer: 'c) 50%', options: ['a) 25%','b) 40%','c) 50%','d) 75%'], explanation: '250/500 = 0,5 = 50%' },
+            { question: '10. Aumentar 60 em 50% resulta em:', answer: 'b) 90', options: ['a) 80','b) 90','c) 70','d) 100'], explanation: '60 × 1,5 = 90' },
+            { question: '11. 18% de 200 é:', answer: 'd) 36', options: ['a) 34','b) 32','c) 30','d) 36'], explanation: '200 × 0,18 = 36' },
+            { question: '12. Reduzir 500 em 40% resulta em:', answer: 'a) 300', options: ['a) 300','b) 350','c) 200','d) 320'], explanation: '500 × 0,6 = 300' },
+            { question: '13. 7% de 300 é aproximadamente:', answer: 'b) 21', options: ['a) 18','b) 21','c) 24','d) 20'], explanation: '300 × 0,07 = 21' },
+            { question: '14. Qual é o percentual de 45 em relação a 180?', answer: 'c) 25%', options: ['a) 20%','b) 30%','c) 25%','d) 15%'], explanation: '45/180 = 0,25 = 25%' },
+            { question: '15. Se um produto custa R$ 120 e tem 15% de desconto, o preço é:', answer: 'd) R$ 102', options: ['a) R$ 108','b) R$ 105','c) R$ 100','d) R$ 102'], explanation: '120 × 0,85 = 102' },
+            { question: '16. 125 é quantos por cento de 250?', answer: 'b) 50%', options: ['a) 25%','b) 50%','c) 60%','d) 40%'], explanation: '125/250 = 0,5 = 50%' },
+            { question: '17. Um valor aumenta de 200 para 260. Qual o aumento percentual?', answer: 'c) 30%', options: ['a) 20%','b) 25%','c) 30%','d) 35%'], explanation: 'Aumento = (260-200)/200 = 0,3 = 30%' },
+            { question: '18. 60 é 15% de qual número?', answer: 'a) 400', options: ['a) 400','b) 360','c) 450','d) 500'], explanation: '60 = 0,15 × x → x = 60/0,15 = 400' },
+            { question: '19. Se um valor diminui 20% e depois aumenta 20%, o resultado volta ao original?', answer: 'b) Não', options: ['a) Sim','b) Não','c) Apenas se for múltiplo de 10','d) Apenas em alguns casos'], explanation: 'Redução e aumento assimétricos: (1-0,2)×(1+0,2)=0,8×1,2=0,96 ≠1' },
+            { question: '20. 14% de 250 é:', answer: 'a) 35', options: ['a) 35','b) 34','c) 30','d) 36'], explanation: '250 × 0,14 = 35' },
+        ];
+
+        let currentQuestionIndex = 0;
+        let questionOrder = Array.from({length: quizData.length}, (_, i) => i);
+        let questionStatus = Array(quizData.length).fill(null);
+
+        function switchView(view){
+            if(view === 'learn'){
+                learnSection.classList.remove('hidden');
+                practiceSection.classList.add('hidden');
+                btnLearn.classList.add('active');
+                btnPractice.classList.remove('active');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnLearn.classList.remove('active');
+                btnPractice.classList.add('active');
+                renderQuestionButtons();
+                showQuestion(0);
+            }
+        }
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML = '';
+            for(let i=0;i<quizData.length;i++){
+                const b = document.createElement('button');
+                b.className = 'question-btn text-sm';
+                b.textContent = (i+1);
+                b.addEventListener('click', ()=>{
+                    showQuestion(i);
+                });
+                if(questionStatus[i] === 'correct') b.classList.add('correct');
+                if(questionStatus[i] === 'wrong') b.classList.add('wrong');
+                questionButtons.appendChild(b);
+            }
+        }
+
+        function showQuestion(index){
+            currentQuestionIndex = index;
+            const q = quizData[index];
+            questionProgress.textContent = `Questão ${index+1} de ${quizData.length}`;
+            questionText.textContent = q.question;
+            optionsContainer.innerHTML = '';
+            feedbackContainer.classList.add('hidden');
+            nextQuestionBtn.classList.add('hidden');
+            q.options.forEach(opt=>{
+                const ob = document.createElement('button');
+                ob.className = 'option-btn';
+                ob.textContent = opt;
+                ob.addEventListener('click', ()=> selectAnswer(ob, q.answer, q.explanation, index));
+                optionsContainer.appendChild(ob);
+            });
+        }
+
+        function selectAnswer(btn, correctAnswer, explanation, index){
+            const chosen = btn.textContent;
+            const isCorrect = chosen.trim() === correctAnswer.trim();
+            feedbackContainer.classList.remove('hidden');
+            if(isCorrect){
+                feedbackText.textContent = 'Correto ✓';
+                feedbackContainer.classList.remove('feedback-wrong');
+                feedbackContainer.classList.add('feedback-correct');
+                questionStatus[index] = 'correct';
+                btn.classList.add('correct');
+                // esconder botão de refazer se estiver visível
+                redoQuestionBtn.classList.add('hidden');
+            } else {
+                feedbackText.textContent = 'Incorreto ✗';
+                feedbackContainer.classList.remove('feedback-correct');
+                feedbackContainer.classList.add('feedback-wrong');
+                questionStatus[index] = 'wrong';
+                btn.classList.add('wrong');
+                // re-enfileira a questão errada no final
+                questionOrder = questionOrder.filter(i=>i!==index);
+                questionOrder.push(index);
+                // mostrar botão "Refazer" para tentar novamente agora
+                redoQuestionBtn.classList.remove('hidden');
+                redoQuestionBtn.classList.add('btn-warning');
+                redoQuestionBtn.onclick = function(){
+                    // resetar estado da questão e trazê-la para a frente da fila
+                    questionStatus[index] = null;
+                    // remover todas ocorrências e colocar no início
+                    questionOrder = [index, ...questionOrder.filter(i=>i!==index)];
+                    renderQuestionButtons();
+                    showQuestion(index);
+                };
+            }
+            feedbackExplanation.textContent = explanation && explanation.trim().length ? explanation : ('Resposta correta: ' + correctAnswer);
+            renderQuestionButtons();
+            nextQuestionBtn.classList.remove('hidden');
+            nextQuestionBtn.classList.add('btn-primary');
+            nextQuestionBtn.onclick = ()=>{
+                const nextPos = questionOrder.indexOf(index)+1;
+                const nextIndex = questionOrder[nextPos] !== undefined ? questionOrder[nextPos] : questionOrder[0];
+                showQuestion(nextIndex);
+            };
+        }
+
+        // impressao
+        (function(){
+            function makeExplainHtml(learnData){
+                const dt = new Date().toLocaleDateString();
+                let html = '<div class="print-header"><strong>Porcentagem — Explicações</strong><div style="float:right">'+dt+'</div></div>';
+                html += '<div class="print-content">';
+                learnData.forEach(s=>{
+                    html += '<h3 style="margin-top:0.6rem">'+s.title+'</h3>';
+                    html += '<p>'+s.content+'</p>';
+                    html += '<div class="page-break"></div>';
+                });
+                html += '</div>';
+                html += '<div class="print-footer">Página <span class="page-num">-</span></div>';
+                return html;
+            }
+            function makeQuestionsHtml(quizData){
+                const dt = new Date().toLocaleDateString();
+                let html = '<div class="print-header"><strong>Porcentagem — Questões</strong><div style="float:right">'+dt+'</div></div>';
+                html += '<div class="print-content">';
+                quizData.forEach((q, idx)=>{
+                    html += '<div style="margin-bottom:10mm">';
+                    html += '<h4 style="margin:0">'+(idx+1)+'. '+q.question+'</h4>';
+                    html += '<ol style="margin-top:6px">';
+                    q.options.forEach(opt=>{
+                        html += '<li>'+opt+'</li>';
+                    });
+                    html += '</ol>';
+                    html += '</div>';
+                    html += '<div class="page-break"></div>';
+                });
+                html += '</div>';
+                html += '<div class="print-footer">Página <span class="page-num">-</span></div>';
+                return html;
+            }
+
+            const btnPrintExplain = document.getElementById('btn-print-explain');
+            if(btnPrintExplain){
+                btnPrintExplain.addEventListener('click', function(){
+                    const area = document.getElementById('print-area');
+                    area.innerHTML = makeExplainHtml(learnData);
+                    setTimeout(()=>{ window.print(); }, 300);
+                });
+            }
+            const btnPrintQuestions = document.getElementById('btn-print-questions');
+            if(btnPrintQuestions){
+                btnPrintQuestions.addEventListener('click', function(){
+                    const area = document.getElementById('print-area');
+                    area.innerHTML = makeQuestionsHtml(quizData);
+                    setTimeout(()=>{ window.print(); }, 300);
+                });
+            }
+
+            window.fillPageNumbers = function(){
+                document.querySelectorAll('.page-num').forEach(el=>el.textContent = '—');
+            };
+        })();
+
+        // alternador de tema claro/escuro
+        (function(){
+            const toggle = document.getElementById('theme-toggle');
+            const root = document.documentElement;
+            function applyTheme(theme){
+                if(theme === 'light'){
+                    root.classList.add('theme-light');
+                    toggle && (toggle.textContent = '☀️ Claro');
+                } else {
+                    root.classList.remove('theme-light');
+                    toggle && (toggle.textContent = '🌙 Escuro');
+                }
+            }
+            const saved = localStorage.getItem('sophia-theme');
+            applyTheme(saved === 'light' ? 'light' : 'dark');
+            if(toggle){
+                toggle.addEventListener('click', ()=>{
+                    const isLight = document.documentElement.classList.toggle('theme-light');
+                    const theme = isLight ? 'light' : 'dark';
+                    localStorage.setItem('sophia-theme', theme);
+                    applyTheme(theme);
+                });
+            }
+        })();
+
+        btnLearn.addEventListener('click', ()=> switchView('learn'));
+        btnPractice.addEventListener('click', ()=> switchView('practice'));
+
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
