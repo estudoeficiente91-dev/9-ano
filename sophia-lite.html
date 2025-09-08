@@ -7,14 +7,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .tab-button.active { background-color: #0369a1; color: white; }
-        .question-btn { transition: background 0.3s, color 0.3s; }
-        .question-btn.correct { background-color: #10b981 !important; color: white !important; }
-        .question-btn.wrong { background-color: #ef4444 !important; color: white !important; }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
-        .accordion-button.open + .accordion-content { max-height: 2000px; }
-        .content-text { font-size: 1rem; line-height: 1.6; }
+        :root{
+            --bg: #0b1220;
+            --card: #0f1724;
+            --muted: #94a3b8;
+            --text: #e6eef8;
+            --accent: #60a5fa;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: rgba(255,255,255,0.06);
+            --muted-2: rgba(230,238,248,0.8);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+        /* cartões e superfícies */
+        .bg-white { background-color: var(--card) !important; color: var(--text) !important; }
+    /* container usa classes utilitárias do Tailwind para largura/padding */
+        /* textos e subtítulos */
+        .text-slate-600 { color: var(--muted) !important; }
+        .text-sky-800 { color: var(--accent) !important; }
+        h1, h2, h3, h4 { color: var(--text); }
+        /* botões e controles */
+        .tab-button.active { background-color: #064e72 !important; color: white !important; }
+        .question-btn { transition: background 0.25s, color 0.2s; color: var(--text); background: rgba(255,255,255,0.02); border: 1px solid var(--border); }
+        .question-btn.correct { background-color: var(--success) !important; color: #052e1f !important; }
+        .question-btn.wrong { background-color: var(--danger) !important; color: #3b0b0b !important; }
+        /* opções */
+        .py-3.px-4.bg-slate-50 { background-color: rgba(255,255,255,0.02) !important; }
+        .border-stone-200 { border-color: rgba(255,255,255,0.04) !important; }
+        .bg-stone-100 { background: transparent !important; }
+        .inline-block.px-6.py-2.bg-stone-400 { background-color: #334155 !important; }
+        .no-print button { color: var(--text); }
+        /* feedback */
+        #feedback-container { border-radius: 8px; }
+
+        .content-text { font-size: 1rem; line-height: 1.6; color: var(--muted-2); }
+
         /* Regras para impressão */
         @page { size: A4 portrait; margin: 20mm; }
         @media print {
