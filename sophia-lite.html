@@ -64,10 +64,7 @@
             <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
                 <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">⬅ Voltar para o Início</a>
             </div>
-            <div class="flex justify-center gap-2 mt-4 no-print">
-                <button id="btn-print-explain" class="px-4 py-2 bg-sky-600 text-white rounded-md shadow-sm hover:bg-sky-700">Imprimir explicações (PDF)</button>
-                <button id="btn-print-questions" class="px-4 py-2 bg-emerald-600 text-white rounded-md shadow-sm hover:bg-emerald-700">Imprimir questões (PDF)</button>
-            </div>
+            <!-- botões de impressão removidos por solicitação -->
             <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Grãos de Paisagens — Resumo e Questões</h1>
             <p class="text-slate-600 mt-2">Resumo do livro e questões de compreensão, análise e interpretação.</p>
         </header>
@@ -340,16 +337,22 @@
                 return html;
             }
 
-            document.getElementById('btn-print-explain').addEventListener('click', function(){
-                const area = document.getElementById('print-area');
-                area.innerHTML = makeExplainHtml(learnData);
-                setTimeout(()=>{ window.print(); }, 300);
-            });
-            document.getElementById('btn-print-questions').addEventListener('click', function(){
-                const area = document.getElementById('print-area');
-                area.innerHTML = makeQuestionsHtml(quizData);
-                setTimeout(()=>{ window.print(); }, 300);
-            });
+            const btnPrintExplain = document.getElementById('btn-print-explain');
+            if(btnPrintExplain){
+                btnPrintExplain.addEventListener('click', function(){
+                    const area = document.getElementById('print-area');
+                    area.innerHTML = makeExplainHtml(learnData);
+                    setTimeout(()=>{ window.print(); }, 300);
+                });
+            }
+            const btnPrintQuestions = document.getElementById('btn-print-questions');
+            if(btnPrintQuestions){
+                btnPrintQuestions.addEventListener('click', function(){
+                    const area = document.getElementById('print-area');
+                    area.innerHTML = makeQuestionsHtml(quizData);
+                    setTimeout(()=>{ window.print(); }, 300);
+                });
+            }
 
             window.fillPageNumbers = function(){
                 // placeholder: navegadores não expõem total de páginas antes da impressão
