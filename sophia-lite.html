@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grãos de Paisagens – Sophia (Resumo e Questões)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-button.active { background-color: #0369a1; color: white; }
+        .question-btn { transition: background 0.3s, color 0.3s; }
+        .question-btn.correct { background-color: #10b981 !important; color: white !important; }
+        .question-btn.wrong { background-color: #ef4444 !important; color: white !important; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .accordion-button.open + .accordion-content { max-height: 2000px; }
+        .content-text { font-size: 1rem; line-height: 1.6; }
+        /* Regras para impressão */
+        @page { size: A4 portrait; margin: 20mm; }
+        @media print {
+            html, body { background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            .print-header { position: fixed; top: 0; left: 0; right: 0; height: 36mm; padding: 6mm 20mm; background: white; border-bottom: 1px solid #ddd }
+            .print-footer { position: fixed; bottom: 0; left: 0; right: 0; height: 18mm; padding: 4mm 20mm; background: white; border-top: 1px solid #ddd; text-align: right }
+            .print-content { margin-top: 46mm; margin-bottom: 28mm }
+            .page-break { page-break-after: always; break-after: page }
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+        .print-only { display: none; }
+    </style>
+</head>
+<body class="bg-stone-100 text-slate-800">
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <header class="text-center mb-8">
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
+                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">⬅ Voltar para o Início</a>
+            </div>
+            <div class="flex justify-center gap-2 mt-4 no-print">
+                <button id="btn-print-explain" class="px-4 py-2 bg-sky-600 text-white rounded-md shadow-sm hover:bg-sky-700">Imprimir explicações (PDF)</button>
+                <button id="btn-print-questions" class="px-4 py-2 bg-emerald-600 text-white rounded-md shadow-sm hover:bg-emerald-700">Imprimir questões (PDF)</button>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Grãos de Paisagens — Resumo e Questões</h1>
+            <p class="text-slate-600 mt-2">Resumo do livro e questões de compreensão, análise e interpretação.</p>
+        </header>
+        <nav class="flex justify-center mb-8 bg-white p-2 rounded-lg shadow-sm">
+            <button id="btn-learn" class="tab-button active flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Resumo</button>
+            <button id="btn-practice" class="tab-button flex-1 sm:flex-none text-center py-2 px-6 font-semibold rounded-md transition-colors duration-300">Questões</button>
+        </nav>
+        <main>
+            <section id="learn-section">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-semibold mb-3">Sobre o livro</h2>
+                    <p class="content-text">"Grãos de Paisagens" narra a trajetória de Joana, uma artesã de Majorlândia que cria garrafinhas com paisagens feitas de areias coloridas das falésias do litoral cearense. A narrativa explora memória, saudade e a relação entre lugar e identidade, mostrando como a arte transforma dor em beleza.</p>
+                    <h3 class="mt-4 font-semibold">Temas principais</h3>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Saudade e memória afetiva</li>
+                        <li>Artesanato como expressão cultural</li>
+                        <li>Relação entre lugar e identidade</li>
+                        <li>Resiliência e criação a partir da ausência</li>
+                    </ul>
+                    <h3 class="mt-4 font-semibold">Estrutura</h3>
+                    <p class="content-text">O texto é dividido em seis partes, cada uma nomeada por uma paisagem, e mistura prosa poética com elementos narrativos, aproximando-se de uma crônica em versos e blocos descritivos.</p>
+                </div>
+            </section>
+            <section id="practice-section" class="hidden">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div id="quiz-start">
+                        <p class="text-center font-semibold text-slate-600 mb-4">Clique em uma questão para iniciar ou use os botões de navegação.</p>
+                        <div id="question-buttons" class="grid grid-cols-5 gap-2 mb-4"></div>
+                        <div id="quiz-container" class="p-2"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="print-area" class="print-only p-6"></div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const questionProgress = document.createElement('p');
+        questionProgress.id = 'question-progress';
+        questionProgress.className = 'text-center font-semibold text-slate-600 mb-4';
+        const questionText = document.createElement('p');
+        questionText.id = 'question-text';
+        questionText.className = 'text-xl content-text';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.id = 'options-container';
+        optionsContainer.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6';
+        const feedbackContainer = document.createElement('div');
+        feedbackContainer.id = 'feedback-container';
+        feedbackContainer.className = 'mt-4 p-4 rounded-lg text-center hidden';
+        const feedbackText = document.createElement('p');
+        feedbackText.id = 'feedback-text';
+        feedbackText.className = 'font-semibold';
+        const feedbackExplanation = document.createElement('p');
+        feedbackExplanation.id = 'feedback-explanation';
+        feedbackExplanation.className = 'text-sm mt-1';
+        const nextQuestionBtn = document.createElement('button');
+        nextQuestionBtn.id = 'next-question-btn';
+        nextQuestionBtn.className = 'hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors';
+        nextQuestionBtn.textContent = 'Próxima';
+        feedbackContainer.appendChild(feedbackText);
+        feedbackContainer.appendChild(feedbackExplanation);
+        quizContainer.appendChild(questionProgress);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextQuestionBtn);
+
+        const learnData = [
+            { title: 'Resumo', content: 'Joana, artesã de Majorlândia, cria garrafinhas de areia que narram memórias e paisagens. O texto explora saudade, pertencimento e a transformação da dor em beleza por meio da arte.' }
+        ];
+
+        const quizData = [
+            // 1-10 Compreensão do enredo
+            { question: '1. Quem é a protagonista da narrativa?', answer: 'b) Joana, uma artesã de Majorlândia', options: ['a) Maria, uma bordadeira de Fortaleza','b) Joana, uma artesã de Majorlândia','c) Ana, uma viajante estrangeira','d) Clara, uma pescadora'], explanation: '' },
+            { question: '2. Qual sentimento motiva Joana a começar seu ofício artístico?', answer: 'c) Saudade de seu filho embarcado', options: ['a) Alegria com a chegada do filho','b) Orgulho pela vila onde vive','c) Saudade de seu filho embarcado','d) Desejo de enriquecer rapidamente'], explanation: '' },
+            { question: '3. O que Joana utiliza para criar suas obras?', answer: 'c) Areias coloridas das falésias', options: ['a) Argila das margens do rio','b) Tintas extraídas de plantas','c) Areias coloridas das falésias','d) Conchas e pedras do mar'], explanation: '' },
+            { question: '4. Onde Joana vive?', answer: 'b) Majorlândia, no litoral cearense', options: ['a) Fortaleza','b) Majorlândia, no litoral cearense','c) Recife','d) Olinda'], explanation: '' },
+            { question: '5. Qual é a relação de Joana com o filho?', answer: 'a) Ele trabalha em um navio e está distante', options: ['a) Ele trabalha em um navio e está distante','b) Ele é pescador local','c) Ele é professor de artes na cidade','d) Ele mora com ela e ajuda no artesanato'], explanation: '' },
+            { question: '6. O que simbolizam as garrafinhas com paisagens?', answer: 'b) Superação da saudade e expressão artística', options: ['a) Apenas lembranças turísticas','b) Superação da saudade e expressão artística','c) Fonte de riqueza e status','d) Registro de mapas da região'], explanation: '' },
+            { question: '7. A narrativa do livro é construída em:', answer: 'd) Crônica autobiográfica', options: ['a) Contos independentes','b) Poema único, em versos rimados','c) Prosa jornalística','d) Crônica autobiográfica'], explanation: '' },
+            { question: '8. Como a história está dividida?', answer: 'a) Em sete capítulos nomeados por paisagens', options: ['a) Em sete capítulos nomeados por paisagens','b) Em seis partes com nomes de familiares','c) Em quatro blocos temáticos','d) Em três atos teatrais'], explanation: '' },
+            { question: '9. O ofício de Joana nasce de:', answer: 'c) Uma descoberta espontânea com as areias', options: ['a) Uma tradição herdada do pai','b) Uma ideia repassada por turistas','c) Uma descoberta espontânea com as areias','d) Um curso de artesanato'], explanation: '' },
+            { question: '10. O que o livro valoriza além da narrativa pessoal?', answer: 'a) A cultura e geografia do Ceará', options: ['a) A cultura e geografia do Ceará','b) A industrialização nordestina','c) A literatura estrangeira','d) O comércio marítimo internacional'], explanation: '' },
+            // 11-20 Estilo e análise literária
+            { question: '11. A linguagem predominante no livro é:', answer: 'b) Poética e rimada', options: ['a) Técnica e científica','b) Poética e rimada','c) Coloquial e humorística','d) Formal acadêmica'], explanation: '' },
+            { question: '12. A obra pode ser classificada como:', answer: 'b) Poesia narrativa infantil/juvenil', options: ['a) Paradidático em prosa científica','b) Poesia narrativa infantil/juvenil','c) Romance histórico','d) Texto jornalístico'], explanation: '' },
+            { question: '13. A função das rimas é:', answer: 'a) Tornar o texto mais memorável e musical', options: ['a) Tornar o texto mais memorável e musical','b) Imitar a fala popular','c) Reforçar a objetividade da narrativa','d) Facilitar a tradução para outros idiomas'], explanation: '' },
+            { question: '14. O nome “Grãos de Paisagens” faz referência a:', answer: 'b) Areias coloridas que formam imagens', options: ['a) Grãos de café que inspiram memórias','b) Areias coloridas que formam imagens','c) Pedrinhas usadas em mosaicos','d) Lembranças fragmentadas da infância'], explanation: '' },
+            { question: '15. A autora, Marília Lovatel, tem formação em:', answer: 'b) Literatura pela UFC', options: ['a) Engenharia Ambiental','b) Literatura pela UFC','c) Arquitetura e Urbanismo','d) Música Popular Brasileira'], explanation: '' },
+            { question: '16. O gênero do livro favorece:', answer: 'b) Reflexão poética e cultural', options: ['a) Leitura rápida sem interpretação profunda','b) Reflexão poética e cultural','c) Relatos técnicos sobre geografia','d) Explicações científicas da arte'], explanation: '' },
+            { question: '17. O eu lírico da obra está próximo de:', answer: 'b) Uma voz poética que acompanha a experiência de Joana', options: ['a) Um narrador em terceira pessoa distanciado','b) Uma voz poética que acompanha a experiência de Joana','c) Um narrador onisciente científico','d) Um cronista neutro'], explanation: '' },
+            { question: '18. A escolha de dividir o poema em seis partes sugere:', answer: 'a) Fragmentação da memória familiar', options: ['a) Fragmentação da memória familiar','b) Estrutura arbitrária sem sentido','c) Representação das estações do ano','d) Homenagem aos seis vizinhos de Joana'], explanation: '' },
+            { question: '19. A cadência dos versos ajuda a:', answer: 'a) Criar ritmo semelhante às ondas do mar', options: ['a) Criar ritmo semelhante às ondas do mar','b) Imprimir objetividade técnica','c) Facilitar a memorização de fórmulas','d) Enfatizar dados estatísticos'], explanation: '' },
+            { question: '20. O texto mistura:', answer: 'a) Ficção poética e referências culturais reais', options: ['a) Ficção poética e referências culturais reais','b) Relatos jornalísticos e denúncias sociais','c) Teoria científica e gráficos','d) Humor popular e provérbios'], explanation: '' },
+            // 21-30 Contexto e interpretação crítica
+            { question: '21. O artesanato de garrafinhas de areia nasceu como:', answer: 'b) Arte de uma jovem lidando com a saudade', options: ['a) Tradição indígena antiga','b) Arte de uma jovem lidando com a saudade','c) Técnica importada da Europa','d) Projeto de governo cultural'], explanation: '' },
+            { question: '22. A inspiração para o livro veio também de:', answer: 'b) Uma dissertação acadêmica que documentou a prática', options: ['a) Um conto popular português','b) Uma dissertação acadêmica que documentou a prática','c) Um filme estrangeiro','d) Uma música folclórica'], explanation: '' },
+            { question: '23. A figura de Joana pode ser vista como símbolo de:', answer: 'b) Resiliência diante da ausência e da saudade', options: ['a) Dependência econômica do turismo','b) Resiliência diante da ausência e da saudade','c) Oposição à modernidade','d) Riqueza material'], explanation: '' },
+            { question: '24. As paisagens engarrafadas representam:', answer: 'c) A possibilidade de transformar dor em beleza', options: ['a) A fixação da natureza em forma de mercadoria','b) A imobilidade social do sertanejo','c) A possibilidade de transformar dor em beleza','d) A destruição ambiental'], explanation: '' },
+            { question: '25. O espaço geográfico da narrativa (falésias, mar, areia) funciona como:', answer: 'b) Personagem simbólico da história', options: ['a) Cenário neutro','b) Personagem simbólico da história','c) Contexto irrelevante','d) Representação urbana'], explanation: '' },
+            { question: '26. A literatura infantil/juvenil aqui assume papel de:', answer: 'b) Educar de forma poética e cultural', options: ['a) Transmitir conhecimentos técnicos','b) Educar de forma poética e cultural','c) Entreter sem reflexões profundas','d) Registrar estatísticas turísticas'], explanation: '' },
+            { question: '27. A saudade em Grãos de Paisagens está ligada a:', answer: 'a) Distância física e afetiva', options: ['a) Distância física e afetiva','b) Perda material','c) Falta de memória','d) Ausência de trabalho'], explanation: '' },
+            { question: '28. O processo criativo de Joana é descrito como:', answer: 'b) Descoberta casual e transformadora', options: ['a) Inteiramente planejado','b) Descoberta casual e transformadora','c) Técnica herdada de gerações','d) Estudo científico rigoroso'], explanation: '' },
+            { question: '29. O livro mostra que o trabalho de Joana contribuiu para:', answer: 'a) A criação de uma arte regional reconhecida', options: ['a) A criação de uma arte regional reconhecida','b) A exploração do petróleo no litoral','c) A perda das tradições locais','d) O abandono de Majorlândia'], explanation: '' },
+            { question: '30. A leitura do livro pode despertar no leitor:', answer: 'b) Empatia e sensibilidade diante da arte e da saudade', options: ['a) Apenas curiosidade geográfica','b) Empatia e sensibilidade diante da arte e da saudade','c) Desinteresse pelo contexto cultural','d) Apenas vontade de visitar Fortaleza'], explanation: '' },
+            // 31-40 extras
+            { question: '31. Quem dá nome a cada uma das seis partes do poema?', answer: 'c) Os turistas que compram as garrafinhas', options: ['a) Os vizinhos da vila','b) Os familiares de Joana','c) Os turistas que compram as garrafinhas','d) Os marinheiros do navio'], explanation: '' },
+            { question: '32. Qual é a principal emoção que acompanha Joana no início da narrativa?', answer: 'c) Saudade', options: ['a) Esperança','b) Raiva','c) Saudade','d) Alegria'], explanation: '' },
+            { question: '33. O filho de Joana foi trabalhar em:', answer: 'a) Um navio', options: ['a) Um navio','b) Uma fazenda','c) Um ateliê de artes','d) Uma escola'], explanation: '' },
+            { question: '34. O que acontece com a tristeza de Joana ao começar o artesanato?', answer: 'b) Transforma-se em arte e memória', options: ['a) Aumenta cada vez mais','b) Transforma-se em arte e memória','c) É esquecida rapidamente','d) Faz com que ela deixe a vila'], explanation: '' },
+            { question: '35. As paisagens criadas por Joana dentro das garrafas representam:', answer: 'b) Imagens idealizadas que misturam memória e natureza', options: ['a) Cópias exatas de mapas geográficos','b) Imagens idealizadas que misturam memória e natureza','c) Retratos de sua família','d) Símbolos religiosos'], explanation: '' },
+            { question: '36. O cenário natural que fornece a matéria-prima para o artesanato de Joana é:', answer: 'a) As falésias de areia colorida', options: ['a) As falésias de areia colorida','b) O sertão árido','c) As serras verdes','d) Os rios da Amazônia'], explanation: '' },
+            { question: '37. A atividade artística de Joana surge como:', answer: 'c) Uma forma de suportar a ausência do filho', options: ['a) Um ofício turístico planejado pelo governo','b) Um passatempo ocasional sem importância','c) Uma forma de suportar a ausência do filho','d) Uma herança de família'], explanation: '' },
+            { question: '38. O livro mostra que o trabalho de Joana contribuiu para:', answer: 'a) A criação de uma arte regional reconhecida', options: ['a) A criação de uma arte regional reconhecida','b) A exploração do petróleo no litoral','c) A perda das tradições locais','d) O abandono de Majorlândia'], explanation: '' },
+            { question: '39. O nome “Joana” na narrativa pode ser entendido como:', answer: 'b) Um símbolo de mulheres nordestinas fortes e criativas', options: ['a) Apenas uma escolha aleatória','b) Um símbolo de mulheres nordestinas fortes e criativas','c) Uma homenagem a escritoras estrangeiras','d) Referência a uma santa católica'], explanation: '' },
+            { question: '40. O desfecho do livro reforça a ideia de que:', answer: 'b) A arte e a memória ajudam a enfrentar a saudade', options: ['a) O sofrimento não pode ser transformado','b) A arte e a memória ajudam a enfrentar a saudade','c) O mar sempre traz de volta quem partiu','d) A riqueza material é a solução para todos os problemas'], explanation: '' },
+        ];
+
+        let currentQuestionIndex = 0;
+        let questionOrder = Array.from({length: quizData.length}, (_, i) => i);
+        let questionStatus = Array(quizData.length).fill(null);
+
+        function switchView(view){
+            if(view === 'learn'){
+                learnSection.classList.remove('hidden');
+                practiceSection.classList.add('hidden');
+                btnLearn.classList.add('active');
+                btnPractice.classList.remove('active');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnLearn.classList.remove('active');
+                btnPractice.classList.add('active');
+                renderQuestionButtons();
+                showQuestion(0);
+            }
+        }
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML = '';
+            for(let i=0;i<quizData.length;i++){
+                const b = document.createElement('button');
+                b.className = 'py-2 px-3 bg-stone-100 rounded-md text-sm border border-stone-200 question-btn';
+                b.textContent = (i+1);
+                b.addEventListener('click', ()=>{
+                    showQuestion(i);
+                });
+                if(questionStatus[i] === 'correct') b.classList.add('correct');
+                if(questionStatus[i] === 'wrong') b.classList.add('wrong');
+                questionButtons.appendChild(b);
+            }
+        }
+
+        function showQuestion(index){
+            currentQuestionIndex = index;
+            const q = quizData[index];
+            questionProgress.textContent = `Questão ${index+1} de ${quizData.length}`;
+            questionText.textContent = q.question;
+            optionsContainer.innerHTML = '';
+            feedbackContainer.classList.add('hidden');
+            nextQuestionBtn.classList.add('hidden');
+            q.options.forEach(opt=>{
+                const ob = document.createElement('button');
+                ob.className = 'py-3 px-4 bg-slate-50 border border-stone-200 rounded-md text-left';
+                ob.textContent = opt;
+                ob.addEventListener('click', ()=> selectAnswer(ob, q.answer, q.explanation, index));
+                optionsContainer.appendChild(ob);
+            });
+        }
+
+        function selectAnswer(btn, correctAnswer, explanation, index){
+            const chosen = btn.textContent;
+            const isCorrect = chosen.trim() === correctAnswer.trim();
+            feedbackContainer.classList.remove('hidden');
+            if(isCorrect){
+                feedbackText.textContent = 'Correto ✓';
+                feedbackContainer.style.background = '#ecfdf5';
+                feedbackContainer.style.border = '1px solid #34d399';
+                questionStatus[index] = 'correct';
+                btn.classList.add('correct');
+            } else {
+                feedbackText.textContent = 'Incorreto ✗';
+                feedbackContainer.style.background = '#fff1f2';
+                feedbackContainer.style.border = '1px solid #f87171';
+                questionStatus[index] = 'wrong';
+                btn.classList.add('wrong');
+                // re-enfileira a questão errada no final
+                questionOrder = questionOrder.filter(i=>i!==index);
+                questionOrder.push(index);
+            }
+            feedbackExplanation.textContent = explanation || '';
+            renderQuestionButtons();
+            nextQuestionBtn.classList.remove('hidden');
+            nextQuestionBtn.onclick = ()=>{
+                // ir para próxima questão na ordem
+                const nextPos = questionOrder.indexOf(index)+1;
+                const nextIndex = questionOrder[nextPos] !== undefined ? questionOrder[nextPos] : questionOrder[0];
+                showQuestion(nextIndex);
+            };
+        }
+
+        // impressao
+        (function(){
+            function makeExplainHtml(learnData){
+                const dt = new Date().toLocaleDateString();
+                let html = '<div class="print-header"><strong>Grãos de Paisagens — Explicações</strong><div style="float:right">'+dt+'</div></div>';
+                html += '<div class="print-content">';
+                learnData.forEach(s=>{
+                    html += '<h3 style="margin-top:0.6rem">'+s.title+'</h3>';
+                    html += '<p>'+s.content+'</p>';
+                    html += '<div class="page-break"></div>';
+                });
+                html += '</div>';
+                html += '<div class="print-footer">Página <span class="page-num">-</span></div>';
+                return html;
+            }
+            function makeQuestionsHtml(quizData){
+                const dt = new Date().toLocaleDateString();
+                let html = '<div class="print-header"><strong>Grãos de Paisagens — Questões</strong><div style="float:right">'+dt+'</div></div>';
+                html += '<div class="print-content">';
+                quizData.forEach((q, idx)=>{
+                    html += '<div style="margin-bottom:10mm">';
+                    html += '<h4 style="margin:0">'+(idx+1)+'. '+q.question+'</h4>';
+                    html += '<ol style="margin-top:6px">';
+                    q.options.forEach(opt=>{
+                        html += '<li>'+opt+'</li>';
+                    });
+                    html += '</ol>';
+                    html += '</div>';
+                    html += '<div class="page-break"></div>';
+                });
+                html += '</div>';
+                html += '<div class="print-footer">Página <span class="page-num">-</span></div>';
+                return html;
+            }
+
+            document.getElementById('btn-print-explain').addEventListener('click', function(){
+                const area = document.getElementById('print-area');
+                area.innerHTML = makeExplainHtml(learnData);
+                setTimeout(()=>{ window.print(); }, 300);
+            });
+            document.getElementById('btn-print-questions').addEventListener('click', function(){
+                const area = document.getElementById('print-area');
+                area.innerHTML = makeQuestionsHtml(quizData);
+                setTimeout(()=>{ window.print(); }, 300);
+            });
+
+            window.fillPageNumbers = function(){
+                // placeholder: navegadores não expõem total de páginas antes da impressão
+                document.querySelectorAll('.page-num').forEach(el=>el.textContent = '—');
+            };
+        })();
+
+        btnLearn.addEventListener('click', ()=> switchView('learn'));
+        btnPractice.addEventListener('click', ()=> switchView('practice'));
+
+        // inicializa
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
