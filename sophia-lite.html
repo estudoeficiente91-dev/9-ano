@@ -108,13 +108,18 @@
         nextQuestionBtn.id = 'next-question-btn';
         nextQuestionBtn.className = 'hidden py-2 px-8 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 transition-colors';
         nextQuestionBtn.textContent = 'Próxima';
+    const redoQuestionBtn = document.createElement('button');
+    redoQuestionBtn.id = 'redo-question-btn';
+    redoQuestionBtn.className = 'hidden ml-3 py-2 px-4 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition-colors';
+    redoQuestionBtn.textContent = 'Refazer';
         feedbackContainer.appendChild(feedbackText);
         feedbackContainer.appendChild(feedbackExplanation);
-        quizContainer.appendChild(questionProgress);
-        quizContainer.appendChild(questionText);
-        quizContainer.appendChild(optionsContainer);
-        quizContainer.appendChild(feedbackContainer);
-        quizContainer.appendChild(nextQuestionBtn);
+    quizContainer.appendChild(questionProgress);
+    quizContainer.appendChild(questionText);
+    quizContainer.appendChild(optionsContainer);
+    quizContainer.appendChild(feedbackContainer);
+    quizContainer.appendChild(nextQuestionBtn);
+    quizContainer.appendChild(redoQuestionBtn);
 
         const learnData = [
             { title: 'Resumo', content: 'Joana, artesã de Majorlândia, cria garrafinhas de areia que narram memórias e paisagens. O texto explora saudade, pertencimento e a transformação da dor em beleza por meio da arte.' }
@@ -229,6 +234,8 @@
                 feedbackContainer.style.border = '1px solid #34d399';
                 questionStatus[index] = 'correct';
                 btn.classList.add('correct');
+                // esconder botão de refazer se estiver visível
+                redoQuestionBtn.classList.add('hidden');
             } else {
                 feedbackText.textContent = 'Incorreto ✗';
                 feedbackContainer.style.background = '#fff1f2';
@@ -238,8 +245,19 @@
                 // re-enfileira a questão errada no final
                 questionOrder = questionOrder.filter(i=>i!==index);
                 questionOrder.push(index);
+                // mostrar botão "Refazer" para tentar novamente agora
+                redoQuestionBtn.classList.remove('hidden');
+                redoQuestionBtn.onclick = function(){
+                    // resetar estado da questão e trazê-la para a frente da fila
+                    questionStatus[index] = null;
+                    // remover todas ocorrências e colocar no início
+                    questionOrder = [index, ...questionOrder.filter(i=>i!==index)];
+                    renderQuestionButtons();
+                    showQuestion(index);
+                };
             }
-            feedbackExplanation.textContent = explanation || '';
+            // mostrar explicação se houver, senão informar a resposta correta
+            feedbackExplanation.textContent = explanation && explanation.trim().length ? explanation : ('Resposta correta: ' + correctAnswer);
             renderQuestionButtons();
             nextQuestionBtn.classList.remove('hidden');
             nextQuestionBtn.onclick = ()=>{
