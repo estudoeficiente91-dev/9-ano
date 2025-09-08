@@ -56,13 +56,29 @@
             * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
         .print-only { display: none; }
+        /* aprimoramentos visuais adicionais */
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(96,165,250,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: none; box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-primary:hover{ transform: translateY(-2px); }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); }
+        .btn-warning{ background: linear-gradient(90deg,#f59e0b,#f97316); color:#1a1200; padding:.45rem .9rem; border-radius:10px; }
+        /* botões de opção */
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); }
+        .option-btn:hover{ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        /* botões de numero das questões */
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; }
+        #question-buttons button:hover{ background: rgba(255,255,255,0.03); }
+        /* feedback */
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; }
     </style>
 </head>
-<body class="bg-stone-100 text-slate-800">
+<body class="antialiased">
     <div class="container mx-auto max-w-4xl p-4 sm:p-8">
         <header class="text-center mb-8">
-            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4">
-                <a href="index.html" class="inline-block px-6 py-2 bg-stone-400 text-white font-semibold rounded-lg shadow hover:bg-stone-500 transition-colors">⬅ Voltar para o Início</a>
+            <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4 page-header">
+                <a href="index.html" class="btn-ghost inline-block px-6 py-2 font-semibold rounded-lg shadow transition-colors">⬅ Voltar para o Início</a>
             </div>
             <!-- botões de impressão removidos por solicitação -->
             <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Grãos de Paisagens — Resumo e Questões</h1>
