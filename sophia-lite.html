@@ -56,6 +56,19 @@
             * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
         .print-only { display: none; }
+        /* temas: variações para claro/escur0 */
+        .theme-light{
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --muted: #475569;
+            --text: #0f1724;
+            --accent: #0284c7;
+            --success: #047857;
+            --danger: #b91c1c;
+            --border: rgba(15,23,42,0.06);
+            --muted-2: rgba(15,23,36,0.85);
+        }
+
         /* aprimoramentos visuais adicionais */
         .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(96,165,250,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
         .card { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); }
@@ -78,7 +91,10 @@
     <div class="container mx-auto max-w-4xl p-4 sm:p-8">
         <header class="text-center mb-8">
             <div class="flex flex-col sm:flex-row gap-2 justify-center mt-4 page-header">
-                <a href="index.html" class="btn-ghost inline-block px-6 py-2 font-semibold rounded-lg shadow transition-colors">⬅ Voltar para o Início</a>
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="btn-ghost inline-block px-6 py-2 font-semibold rounded-lg shadow transition-colors">⬅ Voltar para o Início</a>
+                    <button id="theme-toggle" class="btn-ghost" aria-label="Alternar tema">🌙 Escuro</button>
+                </div>
             </div>
             <!-- botões de impressão removidos por solicitação -->
             <h1 class="text-3xl sm:text-4xl font-bold text-sky-800 mt-4">Grãos de Paisagens — Resumo e Questões</h1>
@@ -246,7 +262,7 @@
             questionButtons.innerHTML = '';
             for(let i=0;i<quizData.length;i++){
                 const b = document.createElement('button');
-                b.className = 'py-2 px-3 bg-stone-100 rounded-md text-sm border border-stone-200 question-btn';
+                b.className = 'question-btn text-sm';
                 b.textContent = (i+1);
                 b.addEventListener('click', ()=>{
                     showQuestion(i);
@@ -267,7 +283,7 @@
             nextQuestionBtn.classList.add('hidden');
             q.options.forEach(opt=>{
                 const ob = document.createElement('button');
-                ob.className = 'py-3 px-4 bg-slate-50 border border-stone-200 rounded-md text-left';
+                ob.className = 'option-btn';
                 ob.textContent = opt;
                 ob.addEventListener('click', ()=> selectAnswer(ob, q.answer, q.explanation, index));
                 optionsContainer.appendChild(ob);
@@ -277,19 +293,19 @@
         function selectAnswer(btn, correctAnswer, explanation, index){
             const chosen = btn.textContent;
             const isCorrect = chosen.trim() === correctAnswer.trim();
-            feedbackContainer.classList.remove('hidden');
+                feedbackContainer.classList.remove('hidden');
             if(isCorrect){
                 feedbackText.textContent = 'Correto ✓';
-                feedbackContainer.style.background = '#ecfdf5';
-                feedbackContainer.style.border = '1px solid #34d399';
+                feedbackContainer.classList.remove('feedback-wrong');
+                feedbackContainer.classList.add('feedback-correct');
                 questionStatus[index] = 'correct';
                 btn.classList.add('correct');
                 // esconder botão de refazer se estiver visível
                 redoQuestionBtn.classList.add('hidden');
             } else {
                 feedbackText.textContent = 'Incorreto ✗';
-                feedbackContainer.style.background = '#fff1f2';
-                feedbackContainer.style.border = '1px solid #f87171';
+                feedbackContainer.classList.remove('feedback-correct');
+                feedbackContainer.classList.add('feedback-wrong');
                 questionStatus[index] = 'wrong';
                 btn.classList.add('wrong');
                 // re-enfileira a questão errada no final
@@ -297,6 +313,7 @@
                 questionOrder.push(index);
                 // mostrar botão "Refazer" para tentar novamente agora
                 redoQuestionBtn.classList.remove('hidden');
+                redoQuestionBtn.classList.add('btn-warning');
                 redoQuestionBtn.onclick = function(){
                     // resetar estado da questão e trazê-la para a frente da fila
                     questionStatus[index] = null;
@@ -310,6 +327,7 @@
             feedbackExplanation.textContent = explanation && explanation.trim().length ? explanation : ('Resposta correta: ' + correctAnswer);
             renderQuestionButtons();
             nextQuestionBtn.classList.remove('hidden');
+            nextQuestionBtn.classList.add('btn-primary');
             nextQuestionBtn.onclick = ()=>{
                 // ir para próxima questão na ordem
                 const nextPos = questionOrder.indexOf(index)+1;
@@ -374,6 +392,32 @@
                 // placeholder: navegadores não expõem total de páginas antes da impressão
                 document.querySelectorAll('.page-num').forEach(el=>el.textContent = '—');
             };
+        })();
+
+        // alternador de tema claro/escuro
+        (function(){
+            const toggle = document.getElementById('theme-toggle');
+            const root = document.documentElement;
+            function applyTheme(theme){
+                if(theme === 'light'){
+                    root.classList.add('theme-light');
+                    toggle && (toggle.textContent = '☀️ Claro');
+                } else {
+                    root.classList.remove('theme-light');
+                    toggle && (toggle.textContent = '🌙 Escuro');
+                }
+            }
+            // ler preferencia salva
+            const saved = localStorage.getItem('sophia-theme');
+            applyTheme(saved === 'light' ? 'light' : 'dark');
+            if(toggle){
+                toggle.addEventListener('click', ()=>{
+                    const isLight = document.documentElement.classList.toggle('theme-light');
+                    const theme = isLight ? 'light' : 'dark';
+                    localStorage.setItem('sophia-theme', theme);
+                    applyTheme(theme);
+                });
+            }
         })();
 
         btnLearn.addEventListener('click', ()=> switchView('learn'));
