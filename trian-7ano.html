@@ -95,7 +95,8 @@
                 <section id="practice-section" class="hidden">
                     <div id="question-buttons" class="mb-4"></div>
                     <div id="quiz-container">
-                        </div>
+                        <!-- elementos injetados por JS -->
+                    </div>
                 </section>
             </div>
         </main>
@@ -251,8 +252,9 @@
             const qObj = quizData[qIdx];
             
             questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
-            let cleaned = String(qObj.q || '').replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim();
-            questionText.innerHTML = `${currentIndex+1}) ${cleaned}`;
+            // CORREÇÃO: A linha abaixo foi alterada para usar o texto original da questão,
+            // que já inclui o número correto, em vez de gerar um novo número.
+            questionText.innerHTML = qObj.q;
             
             optionsContainer.innerHTML='';
             feedbackContainer.innerHTML='';
@@ -352,3 +354,4 @@
     </script>
 </body>
 </html>
+
