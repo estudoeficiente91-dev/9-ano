@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prova CMF – 1º Ano (Resumo e 40 Questões)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; /* page background */
+            --card:#0b1624; /* card background */
+            --accent:#3b82f6; /* blue */
+            --muted:#97a6bf; /* secondary text */
+            --text:#e6eef8; /* main text */
+            --success:#34d399; /* green */
+            --danger:#ef4444; /* red */
+            --border:rgba(255,255,255,0.04);
+            --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        header.site{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: none; box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); }
+        .option-btn:hover{ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.06); --muted-2: rgba(15,23,36,0.85); }
+        @media print{ .no-print{ display:none!important } .print-only{ display:block!important } }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Prova CMF — 1º Ano: Matemática</h1>
+                    <p class="text-sm text-slate-400">Resumo dos tópicos que mais caem + 40 questões para prática (formato estilo prova).</p>
+                </div>
+                <div class="no-print">
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <section id="learn-section">
+                    <h2 class="text-lg font-semibold">Tópicos frequentes</h2>
+                    <ul class="mt-2 text-sm">
+                        <li>1. Álgebra: equações lineares, sistemas, fatoração, produtos notáveis.</li>
+                        <li>2. Funções e gráficos: leitura de gráficos, função afim, variação.</li>
+                        <li>3. Geometria plana: ângulos, triângulos, semelhança, perímetro, área.</li>
+                        <li>4. Geometria analítica básica: distância entre pontos, equação da reta.</li>
+                        <li>5. Trigonometria básica em triângulos retângulos (seno, cosseno, tangente).</li>
+                        <li>6. Aritmética: porcentagem, razão e proporção, MDC, MMC.</li>
+                        <li>7. Probabilidade elementar e combinatória simples.</li>
+                        <li>8. Problemas com grandezas e regra de três.</li>
+                    </ul>
+                    <p class="mt-4 text-sm text-slate-400">Use a aba "Praticar" para responder as questões; temas misturados como em prova real.</p>
+                </section>
+
+                <nav class="mt-6 mb-4 no-print">
+                    <button id="btn-learn" class="btn-ghost">Aprender</button>
+                    <button id="btn-practice" class="btn-primary ml-2">Praticar</button>
+                </nav>
+
+                <section id="practice-section" class="hidden">
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        <!-- elementos injetados por JS -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <div id="print-area" class="print-only p-6" style="display:none"></div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Elements
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const printArea = document.getElementById('print-area');
+
+        // Persist theme
+        (function(){
+            const t = localStorage.getItem('cmf-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+
+        // Quiz data (40 questões)
+        const quizData = [
+            { q: '1) Resolva: 2x + 5 = 17.', options: ['x = 5', 'x = 6', 'x = 11', 'x = -6'], answer: 'x = 6', explanation: 'Subtrai 5: 2x = 12 → x = 6.' },
+            { q: '2) Qual é o MMC entre 6 e 8?', options: ['24', '48', '12', '6'], answer: '24', explanation: 'Múltiplos: 6*4=24 e 8*3=24 → MMC = 24.' },
+            { q: '3) Se f(x)=2x+1, calcule f(3).', options: ['5', '7', '6', '8'], answer: '7', explanation: 'f(3)=2·3+1=7.' },
+            { q: '4) Soma dos ângulos internos de um pentágono (em graus):', options: ['540', '360', '720', '180'], answer: '540', explanation: 'S=(n-2)·180 =3·180=540°.' },
+            { q: '5) Área de um triângulo com base 10 e altura 6:', options: ['30', '60', '40', '16'], answer: '30', explanation: 'A= (b·h)/2 = (10·6)/2 =30.' },
+            { q: '6) Resolva o sistema: x+y=7 e x-y=1.', options: ['x=4,y=3', 'x=3,y=4', 'x=5,y=2', 'x=2,y=5'], answer: 'x=4,y=3', explanation: 'Somando:2x=8→x=4; y=7-4=3.' },
+            { q: '7) Porcentagem: 20% de 250 é:', options: ['50', '25', '40', '60'], answer: '50', explanation: '0.2·250=50.' },
+            { q: '8) Razão: se a:b = 3:4 e a=9, então b =', options: ['12', '6', '13', '4'], answer: '12', explanation: 'Proporção 9/ b =3/4 → b=12.' },
+            { q: '9) Distância entre pontos A(0,0) e B(3,4):', options: ['5', '7', '4', '√13'], answer: '5', explanation: 'Distância = √(3²+4²)=5.' },
+            { q: '10) Perímetro de um quadrado de lado 7:', options: ['28', '49', '14', '21'], answer: '28', explanation: 'P=4·lado=4·7=28.' },
+            { q: '11) Qual é a solução de x² - 5x + 6 = 0?', options: ['x=2 ou 3', 'x=-2 ou -3', 'x=1 ou 6', 'x= -1 ou -6'], answer: 'x=2 ou 3', explanation: 'Fatoriza: (x-2)(x-3)=0.' },
+            { q: '12) Em um triângulo retângulo, se catetos 6 e 8, hipotenusa =', options: ['10', '14', '√100', '√68'], answer: '10', explanation: 'Teorema de Pitágoras: √(6²+8²)=√100=10.' },
+            { q: '13) Média aritmética de 4, 7 e 11:', options: ['7.33', '6', '8', '9'], answer: '7.33', explanation: '(4+7+11)/3 =22/3 ≈7,33.' },
+            { q: '14) Qual é a inclinação (coeficiente angular) da reta que passa por (0,0) e (2,3)?', options: ['3/2', '2/3', '1', '5'], answer: '3/2', explanation: 'm=(3-0)/(2-0)=3/2.' },
+            { q: '15) Se 5 notebooks custam R$ 2.500,00, qual o preço de 1?', options: ['R$500', 'R$250', 'R$600', 'R$200'], answer: 'R$500', explanation: '2500/5=500.' },
+            { q: '16) Probabilidade: ao lançar um dado justo, probabilidade de sair par:', options: ['1/2', '1/3', '1/6', '2/3'], answer: '1/2', explanation: 'Números pares: 2,4,6 → 3/6 =1/2.' },
+            { q: '17) Simplifique: (3x²y)/(6xy) =', options: ['x/2', 'x', '1/2', '3/2x'], answer: 'x/2', explanation: 'Corta 3/6=1/2 e y cancela → x/2.' },
+            { q: '18) Área do círculo de raio 3 (use π ≈ 3):', options: ['27', '28,26', '9π', '18'], answer: '27', explanation: 'A=πr²; com π=3 → 3·9=27.' },
+            { q: '19) Transforme 0,75 em fração:', options: ['3/4', '75/100', '1/4', '7/5'], answer: '3/4', explanation: '0,75=75/100=3/4.' },
+            { q: '20) Equação linear: 3(x-2)=12 → x =', options: ['6', '8', '4', '2'], answer: '6', explanation: '3x-6=12 →3x=18 →x=6.' },
+            { q: '21) Se uma sequência é 2,5,8,11,... qual a razão?', options: ['3', '2', '4', '5'], answer: '3', explanation: 'Diferença entre termos consecutivos =3.' },
+            { q: '22) Produto notável: (a+b)² =', options: ['a²+2ab+b²', 'a²+b²', 'a²-ab+b²', '2a²+2b²'], answer: 'a²+2ab+b²', explanation: 'Fórmula padrão.' },
+            { q: '23) Divisão com resto: 100 dividido por 7, resto é', options: ['2', '3', '1', '4'], answer: '2', explanation: '7·14=98 → resto 2.' },
+            { q: '24) Porcentagem: Aumentar 200 em 15% → novo valor:', options: ['230', '215', '250', '290'], answer: '230', explanation: '200·0.15=30 → 200+30=230.' },
+            { q: '25) Comprimento de arco: em uma circunferência de raio 5, arco de 90° com π=3 → comprimento:', options: ['(1/4)·2πr = (1/4)·2·3·5 = 7.5', '15', '5π', '2.5'], answer: '7.5', explanation: 'Comprimento = (θ/360)·2πr → 90/360·2·3·5 =0.25·30=7.5.' },
+            { q: '26) MDC entre 18 e 24:', options: ['6', '12', '3', '2'], answer: '6', explanation: 'Fatores: 18=2·3²; 24=2³·3 → comum =2·3=6.' },
+            { q: '27) Encontre x: 2^x = 8 → x =', options: ['3', '2', '4', '1'], answer: '3', explanation: '2^3=8.' },
+            { q: '28) Qual o volume de um cubo de aresta 3?', options: ['27', '9', '18', '12'], answer: '27', explanation: 'V=a³=3³=27.' },
+            { q: '29) Se a escala de um mapa é 1:50.000, 2 cm corresponde a quantos metros?', options: ['1.000 m', '100 m', '10.000 m', '50.000 m'], answer: '1.000 m', explanation: '2 cm → 2·50.000 cm =100.000 cm =1000 m.' },
+            { q: '30) Resolva: (x/4) + 3 = 8 → x =', options: ['20', '16', '22', '12'], answer: '20', explanation: 'x/4=5 → x=20.' },
+            { q: '31) Em um triângulo, soma dos ângulos internos = 180°. Se dois ângulos são 50° e 60°, terceiro é:', options: ['70°', '60°', '80°', '50°'], answer: '70°', explanation: '180-110=70°.' },
+            { q: '32) Quantos números pares existem entre 1 e 20 (inclusive)?', options: ['10', '9', '11', '8'], answer: '10', explanation: '2,4,...,20 → 10 números.' },
+            { q: '33) Se o preço é reduzido em 20% e depois em 10%, redução total aproximada é:', options: ['28%', '30%', '20%', '10%'], answer: '28%', explanation: 'Multiplicativo: 0.8·0.9=0.72 → redução 28%.' },
+            { q: '34) Em um baralho de 52 cartas, probabilidade de tirar um ás:', options: ['4/52', '1/13', '1/52', '4/13'], answer: '1/13', explanation: '4 ases em 52 → 4/52 =1/13.' },
+            { q: '35) Encontre a equação da reta que passa por (1,2) com coeficiente angular 3: y =', options: ['3x-1', '3x+1', 'x+1', '2x+3'], answer: '3x-1', explanation: 'y-2=3(x-1) → y=3x-1.' },
+            { q: '36) Se 3/5 de x é 12, então x =', options: ['20', '15', '18', '25'], answer: '20', explanation: '3x/5=12 → x=12·5/3=20.' },
+            { q: '37) Quantos anagramas (permutacoes) tem a palavra "AMO" (sem repetição)?', options: ['6', '3', '9', '2'], answer: '6', explanation: '3! =6.' },
+            { q: '38) Resolva a inequação: x - 4 < 2 → x <', options: ['6', '2', '4', '8'], answer: '6', explanation: 'x < 6.' },
+            { q: '39) Simplifique: (2x)(3x²) =', options: ['6x³', '5x²', '6x²', '6x'], answer: '6x³', explanation: 'Multiplica coeficientes e soma expoentes: 2·3=6, x·x²=x³.' },
+            { q: '40) Um recipiente tem capacidade de 2 litros. Quantos ml são necessários para enchê-lo?', options: ['2000 ml', '20 ml', '200 ml', '2 ml'], answer: '2000 ml', explanation: '1 L = 1000 ml → 2 L = 2000 ml.' },
+        ];
+
+        // State
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+
+        // UI helpers
+        function switchView(view){
+            if(view==='learn'){
+                document.getElementById('practice-section').classList.add('hidden');
+                document.getElementById('learn-section').classList.remove('hidden');
+            } else {
+                document.getElementById('learn-section').classList.add('hidden');
+                document.getElementById('practice-section').classList.remove('hidden');
+                startQuiz();
+            }
+        }
+
+        btnLearn.addEventListener('click', ()=>switchView('learn'));
+        btnPractice.addEventListener('click', ()=>switchView('practice'));
+
+        // Create question buttons
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            questionOrder.forEach((idx,i)=>{
+                const b = document.createElement('button');
+                b.textContent = (i+1);
+                b.onclick = ()=>{ currentIndex = i; showQuestion(); };
+                if(questionStatus[idx]==='correct') b.classList.add('text-green-400');
+                if(questionStatus[idx]==='wrong') b.classList.add('text-red-400');
+                questionButtons.appendChild(b);
+            });
+        }
+
+        // Build quiz view
+        const questionProgress = document.createElement('p');
+        questionProgress.className='text-sm text-slate-400';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const feedbackText = document.createElement('p');
+        const feedbackExplanation = document.createElement('p');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionProgress);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            shuffleArray(questionOrder);
+            currentIndex = 0;
+            questionStatus.fill(null);
+            renderQuestionButtons();
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
+            questionText.innerHTML = qObj.q;
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = false;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            // highlight current button
+            Array.from(questionButtons.children).forEach((btn,i)=>{
+                btn.classList.toggle('bg-slate-800', i===currentIndex);
+            });
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            // disable options
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto!';
+            } else {
+                btn.classList.add('line-through','opacity-70');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: ${correct}.`;
+                if(explanation) feedbackContainer.innerHTML += `<div style="margin-top:8px;font-size:0.95rem;color:var(--muted-2)">${explanation}</div>`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ currentIndex++; showQuestion(); }
+            else{ alert('Fim da sessão. Você pode recomeçar.'); }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            // repetir a questão atual colocando-a no início do restante
+            const cur = questionOrder[currentIndex];
+            questionOrder.splice(currentIndex,1);
+            questionOrder.splice(currentIndex,0,cur);
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        // confetti
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+
+        // inicializa com a guia de prática desativada;
+        renderQuestionButtons();
+
+        // start in learn view
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
