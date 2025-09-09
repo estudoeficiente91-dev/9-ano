@@ -99,6 +99,12 @@
         const quizContainer = document.getElementById('quiz-container');
         const printArea = document.getElementById('print-area');
 
+        // checagem mínima dos elementos necessários
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer){
+            console.error('cmf-1ano: elemento DOM principal não encontrado, abortando inicialização.');
+            return;
+        }
+
         // Persist theme
         (function(){
             const t = localStorage.getItem('cmf-theme') || 'dark';
@@ -265,10 +271,14 @@
         });
 
         redoBtn.addEventListener('click', ()=>{
-            // repetir a questão atual colocando-a no início do restante
+            // repetir a questão atual: remove do lugar atual e coloca no início do restante
             const cur = questionOrder[currentIndex];
+            // remove o item
             questionOrder.splice(currentIndex,1);
+            // coloca no início da fila após a posição atual (para que seja a próxima exibida)
             questionOrder.splice(currentIndex,0,cur);
+            // reset status para null para permitir nova resposta
+            questionStatus[cur] = null;
             showQuestion();
         });
 
