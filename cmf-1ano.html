@@ -26,6 +26,8 @@
         .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); }
         .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); }
         .option-btn:hover{ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+    .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+    .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
         #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
         #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; }
         .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
@@ -235,12 +237,12 @@
             const qIdx = questionOrder[currentIndex];
             const qObj = quizData[qIdx];
             questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
-            // remover possíveis tags iniciais e numeração original embutida (ex.: "12) ...", "12.")
+            // limpar enunciado: remover tags HTML iniciais e qualquer sequência de números/sinais no começo
             let cleaned = String(qObj.q || '');
             // remover tags HTML no início, se houver
             cleaned = cleaned.replace(/^\s*(?:<[^>]+>\s*)*/,'');
-            // remover uma ou mais ocorrências de números iniciais seguidos de ), . ou :
-            cleaned = cleaned.replace(/^\s*(?:\(?\d+\)?[\)\.\:\-]?\s*)+/,'').trim();
+            // remover qualquer sequência inicial de dígitos e sinais (ex.: "18) ", "12. ", "5 - ")
+            cleaned = cleaned.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim();
             // exibir número baseado na ordem atual (para evitar confusão após embaralhar)
             questionText.innerHTML = `${currentIndex+1}) ${cleaned}`;
             optionsContainer.innerHTML='';
@@ -267,17 +269,25 @@
             // disable options
             Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
             if(opt===correct){
-                btn.classList.add('celebrate');
+                btn.classList.add('celebrate','correct');
                 createConfetti();
                 questionStatus[qIdx]='correct';
                 feedbackContainer.className='feedback-correct mt-4';
                 feedbackContainer.textContent = 'Correto!';
+                // marcar também o botão correto (caso seja necessário)
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
             } else {
-                btn.classList.add('line-through','opacity-70');
+                btn.classList.add('line-through','opacity-70','wrong');
                 questionStatus[qIdx]='wrong';
                 feedbackContainer.className='feedback-wrong mt-4';
                 feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: ${correct}.`;
                 if(explanation) feedbackContainer.innerHTML += `<div style="margin-top:8px;font-size:0.95rem;color:var(--muted-2)">${explanation}</div>`;
+                // destacar a resposta correta
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
                 redoBtn.classList.remove('hidden');
             }
             renderQuestionButtons();
