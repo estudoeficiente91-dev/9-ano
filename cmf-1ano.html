@@ -186,15 +186,14 @@
             questionButtons.innerHTML='';
             questionOrder.forEach((idx,i)=>{
                 const b = document.createElement('button');
-                b.textContent = (i + 1); // mostra posição atual (1..N)
+                // mostrar o número original da questão (1..N)
+                b.textContent = (idx + 1);
                 b.setAttribute('data-idx', String(idx));
-                b.setAttribute('data-pos', String(i));
                 b.title = `Ir para a questão ${idx+1}`;
                 b.onclick = ()=>{
-                    const pos = Number(b.getAttribute('data-pos'));
-                    if(!Number.isNaN(pos)){
-                        currentIndex = pos; showQuestion();
-                    }
+                    // localiza a posição atual desta questão na fila embaralhada
+                    const pos = questionOrder.indexOf(idx);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
                 };
                 if(questionStatus[idx]==='correct') b.classList.add('text-green-400');
                 if(questionStatus[idx]==='wrong') b.classList.add('text-red-400');
@@ -236,7 +235,14 @@
             const qIdx = questionOrder[currentIndex];
             const qObj = quizData[qIdx];
             questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
-            questionText.innerHTML = qObj.q;
+            // remover possíveis tags iniciais e numeração original embutida (ex.: "12) ...", "12.")
+            let cleaned = String(qObj.q || '');
+            // remover tags HTML no início, se houver
+            cleaned = cleaned.replace(/^\s*(?:<[^>]+>\s*)*/,'');
+            // remover uma ou mais ocorrências de números iniciais seguidos de ), . ou :
+            cleaned = cleaned.replace(/^\s*(?:\(?\d+\)?[\)\.\:\-]?\s*)+/,'').trim();
+            // exibir número baseado na ordem atual (para evitar confusão após embaralhar)
+            questionText.innerHTML = `${currentIndex+1}) ${cleaned}`;
             optionsContainer.innerHTML='';
             feedbackContainer.innerHTML='';
             redoBtn.classList.add('hidden');
@@ -251,8 +257,9 @@
 
             // highlight current button (compara data-idx com qIdx)
             Array.from(questionButtons.children).forEach((btn)=>{
-                const pos = Number(btn.getAttribute('data-pos'));
-                btn.classList.toggle('bg-slate-800', pos === currentIndex);
+                const idx = Number(btn.getAttribute('data-idx'));
+                const posNow = questionOrder.indexOf(idx);
+                btn.classList.toggle('bg-slate-800', posNow === currentIndex);
             });
         }
 
