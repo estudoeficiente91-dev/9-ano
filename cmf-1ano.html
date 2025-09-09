@@ -23,6 +23,8 @@
         #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
         #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
         #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: transparent; }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: transparent; }
         .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
         .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
         .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
@@ -185,8 +187,8 @@
                     const pos = questionOrder.indexOf(originalIndex);
                     if(pos >= 0){ currentIndex = pos; showQuestion(); }
                 };
-                if(questionStatus[originalIndex]==='correct') b.classList.add('text-green-400');
-                if(questionStatus[originalIndex]==='wrong') b.classList.add('text-red-400');
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
                 
                 const currentQuestionOriginalIndex = questionOrder[currentIndex];
                 if(originalIndex === currentQuestionOriginalIndex) {
@@ -233,8 +235,6 @@
             const qObj = quizData[qIdx];
             
             questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
-            // CORREÇÃO: As duas linhas abaixo foram substituídas para usar o texto original da questão,
-            // que já inclui o número correto, em vez de gerar um novo número.
             questionText.innerHTML = qObj.q;
             
             optionsContainer.innerHTML='';
@@ -332,3 +332,4 @@
     </script>
 </body>
 </html>
+
