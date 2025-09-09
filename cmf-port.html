@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prova CMF – 1º Ano (Português)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.04); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: none; box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: transparent; }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: transparent; }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.06); --muted-2: rgba(15,23,36,0.85); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Prova CMF — 1º Ano: Português</h1>
+                    <p class="text-sm text-slate-400">Resumo dos principais tópicos + 25 questões para prática.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-6">
+                        <div>
+                            <h2 class="text-2xl font-semibold text-[var(--accent)]">I. Compreensão Textual</h2>
+                            <p class="mt-2 text-sm text-slate-300">Habilidade de decodificar e interpretar textos, extraindo informações e compreendendo a intenção do autor.</p>
+                            
+                            <h3 class="text-lg font-semibold mt-4">Tópicos Essenciais:</h3>
+                            <ul class="mt-2 text-sm list-disc list-inside space-y-2">
+                                <li><strong>Textos Multimodais:</strong> Combinam linguagem verbal (palavras) e não verbal (imagens, gráficos, sons). O sentido é construído pela interação de todos os elementos, como em tirinhas, infográficos e anúncios.</li>
+                                <li><strong>Gêneros e Finalidade:</strong> Cada gênero textual (notícia, receita, poema, crônica) tem um objetivo: informar, instruir, emocionar, argumentar. Identificar essa finalidade é o primeiro passo para a compreensão.</li>
+                                <li><strong>Informações Implícitas:</strong> São ideias não ditas diretamente no texto, mas que podem ser subentendidas a partir de pistas, do contexto e do seu conhecimento de mundo.</li>
+                                <li><strong>Tese e Argumentos:</strong> Em textos argumentativos, a <strong>tese</strong> é a ideia principal defendida pelo autor. Os <strong>argumentos</strong> são as justificativas, os fatos e os raciocínios usados para comprovar a tese.</li>
+                                <li><strong>Ironia e Humor:</strong> A <strong>ironia</strong> consiste em dizer o contrário do que se pensa, geralmente com intenção crítica. O <strong>humor</strong> surge da quebra de expectativa, de situações inesperadas ou do uso ambíguo de palavras.</li>
+                                <li><strong>Escolha Lexical:</strong> A seleção de palavras (léxico) nunca é neutra. Escolher entre "lar", "casa" e "barraco" ou entre "político" e "estadista" altera o sentido e revela a posição do autor.</li>
+                            </ul>
+                        </div>
+                        <hr class="border-[var(--border)]">
+                        <div>
+                             <h2 class="text-2xl font-semibold text-[var(--accent)]">II. Análise e Reflexão Linguística</h2>
+                             <p class="mt-2 text-sm">Estudo da estrutura e do funcionamento da língua portuguesa, aplicando conhecimentos gramaticais para entender a construção de sentidos no texto.</p>
+                             <h3 class="text-lg font-semibold mt-4">Tópicos Essenciais:</h3>
+                             <ul class="mt-2 text-sm list-disc list-inside space-y-2">
+                                <li><strong>Denotação e Conotação:</strong> <strong>Denotação</strong> é o sentido literal, do dicionário (ex: "coração" = órgão). <strong>Conotação</strong> é o sentido figurado, associado a emoções e cultura (ex: "meu coração está em festa").</li>
+                                <li><strong>Figuras de Linguagem:</strong> Recursos para tornar a linguagem mais expressiva, como a <strong>metáfora</strong> (comparação implícita), a <strong>comparação</strong> (com conectivo), a <strong>metonímia</strong> (troca de termos) e a <strong>hipérbole</strong> (exagero).</li>
+                                <li><strong>Coesão e Coerência:</strong> A <strong>coesão</strong> é a ligação entre as partes de um texto, feita por pronomes, sinônimos e conectivos (conjunções). A <strong>coerência</strong> é o sentido lógico do texto.</li>
+                                <li><strong>Classes de Palavras:</strong> As 10 classes (substantivo, verbo, adjetivo, etc.) e suas funções na construção das frases.</li>
+                                <li><strong>Sintaxe (Relações no Período):</strong> Estudo das orações <strong>coordenadas</strong> (independentes) e <strong>subordinadas</strong> (dependentes). Os conectivos (e, mas, que, quando) mostram a relação entre elas (adição, oposição, causa).</li>
+                                <li><strong>Vozes Verbais:</strong> <strong>Voz Ativa</strong> (o sujeito pratica a ação: "A turma leu o livro"). <strong>Voz Passiva</strong> (o sujeito sofre a ação: "O livro foi lido pela turma").</li>
+                                <li><strong>Concordância e Regência:</strong> A <strong>concordância</strong> é a harmonia entre termos (sujeito-verbo; substantivo-adjetivo). A <strong>regência</strong> é a relação de dependência, muitas vezes com preposição, entre um verbo/nome e seu complemento (ex: "assistir <strong>ao</strong> filme", "necessidade <strong>de</strong> ajuda").</li>
+                             </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Elements
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-port-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-port-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // Compreensão Textual
+            { q: '1) "Que gentileza a sua chegar duas horas atrasado para a reunião!" A frase expressa:', options: ['Ironia', 'Elogio', 'Dúvida', 'Súplica'], answer: 'Ironia', explanation: 'O autor diz o oposto do que realmente pensa, criticando o atraso.'},
+            { q: '2) Em uma tirinha, o texto diz "Estou bem", mas o personagem aparece chorando. Para entender a mensagem, é preciso analisar:', options: ['A relação entre texto e imagem (multimodalidade)', 'Apenas o texto escrito', 'Apenas a imagem', 'A classe das palavras'], answer: 'A relação entre texto e imagem (multimodalidade)', explanation: 'O sentido completo só é obtido pela combinação do verbal com o não verbal.'},
+            { q: '3) "João morava num casebre no alto do morro." A palavra "casebre" tem uma conotação de:', options: ['Pobreza, simplicidade', 'Riqueza, luxo', 'Modernidade', 'Segurança'], answer: 'Pobreza, simplicidade', explanation: 'A escolha lexical "casebre" sugere uma moradia humilde, diferente de "casa" ou "mansão".'},
+            { q: '4) "Ele não era o melhor aluno da turma, mas seu esforço era notável." Do trecho, pode-se inferir que:', options: ['O esforço pode compensar a falta de talento', 'Ele era um aluno preguiçoso', 'A turma inteira era de gênios', 'Esforço não leva a lugar nenhum'], answer: 'O esforço pode compensar a falta de talento', explanation: 'A frase sugere que, apesar de não ser o mais brilhante, seu empenho era um grande valor. Esta é uma informação implícita.'},
+            { q: '5) A principal finalidade de uma receita culinária é:', options: ['Instruir', 'Narrar', 'Argumentar', 'Descrever'], answer: 'Instruir', explanation: 'Textos instrucionais, como receitas e manuais, têm o objetivo de guiar o leitor a realizar uma tarefa.'},
+            { q: '6) Na frase "Aquele político é uma raposa", a palavra "raposa" está em sentido:', options: ['Conotativo', 'Denotativo', 'Literal', 'Técnico'], answer: 'Conotativo', explanation: '"Raposa" é usada no sentido figurado de "pessoa astuta", e não no sentido literal do animal.'},
+            { q: '7) Qual das alternativas contém uma figura de linguagem (metáfora)?', options: ['"A vida é uma nuvem que voa."', '"O céu está azul."', '"Comprei um quilo de açúcar."', '"Ele chegou cedo."'], answer: '"A vida é uma nuvem que voa."', explanation: 'Há uma comparação implícita entre "vida" e "nuvem", característica da metáfora.'},
+            { q: '8) Tese é:', options: ['A ideia principal defendida no texto.', 'Um exemplo usado para ilustrar algo.', 'A conclusão do texto.', 'Uma pergunta que o texto responde.'], answer: 'A ideia principal defendida no texto.', explanation: 'Tese é a posição central que o autor busca defender com argumentos.'},
+            
+            // Análise Linguística
+            { q: '9) Na frase "Os atletas treinaram muito, PORÉM não venceram o campeonato", o conectivo destacado indica:', options: ['Oposição', 'Conclusão', 'Explicação', 'Adição'], answer: 'Oposição', explanation: '"Porém" é uma conjunção adversativa, que conecta ideias contrárias.'},
+            { q: '10) Qual a forma correta de concordância verbal?', options: ['Faz cinco anos que não o vejo.', 'Fazem cinco anos que não o vejo.', 'Existe muitas pessoas na praça.', 'Houveram muitos acidentes.'], answer: 'Faz cinco anos que não o vejo.', explanation: 'O verbo "fazer" indicando tempo decorrido é impessoal e fica na 3ª pessoa do singular.'},
+            { q: '11) "A casa foi construída pelos pedreiros." Passando para a voz ativa, temos:', options: ['Os pedreiros construíram a casa.', 'A casa se construiu.', 'Construiu-se a casa.', 'Os pedreiros eram construtores.'], answer: 'Os pedreiros construíram a casa.', explanation: 'O sujeito da passiva ("pelos pedreiros") se torna o sujeito da ativa.'},
+            { q: '12) Em "Tenho necessidade ___ aprovação", a regência do nome "necessidade" exige a preposição:', options: ['de', 'a', 'com', 'em'], answer: 'de', explanation: 'Quem tem necessidade, tem necessidade DE algo. A preposição correta é "de".'},
+            { q: '13) Qual verbo exige a preposição "a" em sua regência?', options: ['Assistir (no sentido de ver)', 'Namorar', 'Comer', 'Ajudar'], answer: 'Assistir (no sentido de ver)', explanation: 'No sentido de ver, o correto é "assistir AO filme", "assistir À peça".'},
+            { q: '14) Na frase "O amor materno é sublime", a expressão "materno" é um adjetivo. Qual locução adjetiva correspondente?', options: ['de mãe', 'de mulher', 'de filho', 'de família'], answer: 'de mãe', explanation: '"De mãe" é uma locução adjetiva que equivale ao adjetivo "materno".'},
+            { q: '15) Em "Precisa-se de funcionários", o sujeito da oração é:', options: ['Indeterminado', 'Funcionários', 'Oculto (Eu)', 'Inexistente'], answer: 'Indeterminado', explanation: 'O verbo na 3ª pessoa do singular + a partícula "se" (índice de indeterminação do sujeito) torna o sujeito indeterminado.'},
+            { q: '16) Em "Compramos belas flores", a palavra "belas" é classificada como:', options: ['Adjetivo', 'Substantivo', 'Verbo', 'Advérbio'], answer: 'Adjetivo', explanation: '"Belas" é uma característica (qualidade) do substantivo "flores".'},
+            { q: '17) "O menino, que era muito esperto, resolveu o problema." A oração destacada é:', options: ['Subordinada adjetiva explicativa', 'Coordenada sindética aditiva', 'Principal', 'Subordinada substantiva'], answer: 'Subordinada adjetiva explicativa', explanation: 'A oração, iniciada por "que" e isolada por vírgulas, adiciona uma qualidade ao termo anterior ("menino").'},
+            { q: '18) Qual a forma correta de concordância nominal?', options: ['É necessária paciência.', 'É necessário paciência.', 'Paciência é necessário.', 'Bastante pessoas vieram.'], answer: ['É necessária paciência.'], explanation: 'A expressão "é necessário" varia para concordar com o sujeito se ele vier determinado. No entanto, sem artigo, "paciência" deixa a expressão invariável, mas o correto é "É necessária paciência" quando o sujeito está claro.'},
+            { q: '19) Em "Maria foi à feira. ELA comprou frutas.", o pronome "ELA" serve para:', options: ['Retomar "Maria" (coesão)', 'Iniciar uma nova ideia', 'Dar ênfase', 'Indicar posse'], answer: 'Retomar "Maria" (coesão)', explanation: 'O uso do pronome evita a repetição do substantivo "Maria", garantindo a coesão textual.'},
+            { q: '20) O que é o predicado de uma oração?', options: ['Tudo o que se declara sobre o sujeito.', 'A palavra mais importante da oração.', 'O mesmo que o sujeito.', 'A ação praticada.'], answer: 'Tudo o que se declara sobre o sujeito.', explanation: 'Predicado é a parte da oração que contém o verbo e informa algo sobre o sujeito.'},
+            { q: '21) A palavra "mas" em "Estudou muito, mas não passou" estabelece uma relação de:', options: ['Adversidade', 'Adição', 'Alternância', 'Conclusão'], answer: 'Adversidade', explanation: 'A conjunção "mas" introduz uma ideia contrária à expectativa gerada pela oração anterior.' },
+            { q: '22) "Chegaram os resultados da prova." O sujeito desta oração é:', options: ['os resultados da prova', 'Resultados', 'Oculto', 'Indeterminado'], answer: 'os resultados da prova', explanation: 'Perguntando ao verbo (O que chegou?), a resposta é "os resultados da prova". O sujeito está posposto (depois do verbo).'},
+            { q: '23) A frase "Choveu muito ontem" possui:', options: ['Oração sem sujeito', 'Sujeito oculto', 'Sujeito "muito"', 'Sujeito "ontem"'], answer: 'Oração sem sujeito', explanation: 'Verbos que indicam fenômenos da natureza, como "chover", formam orações sem sujeito.'},
+            { q: '24) Qual das alternativas apresenta um substantivo abstrato?', options: ['Beleza', 'Mesa', 'Menino', 'Flor'], answer: 'Beleza', explanation: 'Substantivos abstratos nomeiam qualidades, sentimentos, estados ou ações, que dependem de outro ser para existir.'},
+            { q: '25) Em "Falaram mal de você", o sujeito é:', options: ['Indeterminado', 'Você', 'Mal', 'Oculto'], answer: 'Indeterminado', explanation: 'O verbo na terceira pessoa do plural, sem um referente claro no texto, indica que o sujeito é indeterminado.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionProgress = document.createElement('p');
+        questionProgress.className='text-sm text-slate-400';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionProgress);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            shuffleArray(questionOrder);
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
+            questionText.innerHTML = qObj.q;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionProgress.textContent = `Quiz finalizado!`;
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
