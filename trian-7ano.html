@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Estudo de Triângulos – Resumo e 30 Questões</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.04); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: none; box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.06); --muted-2: rgba(15,23,36,0.85); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Estudo de Triângulos</h1>
+                    <p class="text-sm text-slate-400">Resumo dos principais conceitos + 30 questões para prática.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-6">
+                        <div>
+                            <h2 class="text-xl font-semibold text-[var(--accent)]">1. Tipos de Triângulos</h2>
+                            <p class="mt-2 text-sm text-slate-300">Triângulos podem ser classificados de duas formas principais: pelos seus lados ou pelos seus ângulos.</p>
+                            <h3 class="text-lg font-semibold mt-4">Classificação quanto aos Lados</h3>
+                            <ul class="mt-2 text-sm list-disc list-inside space-y-1">
+                                <li><strong>Equilátero:</strong> Possui os três lados com medidas iguais. Consequentemente, seus três ângulos também são iguais (60° cada).</li>
+                                <li><strong>Isósceles:</strong> Possui dois lados com medidas iguais. O lado diferente é chamado de base, e os ângulos da base são iguais.</li>
+                                <li><strong>Escaleno:</strong> Possui os três lados com medidas diferentes. Seus três ângulos também são diferentes.</li>
+                            </ul>
+                            <h3 class="text-lg font-semibold mt-4">Classificação quanto aos Ângulos</h3>
+                            <ul class="mt-2 text-sm list-disc list-inside space-y-1">
+                                <li><strong>Retângulo:</strong> Possui um ângulo reto, ou seja, um ângulo de exatamente 90°.</li>
+                                <li><strong>Acutângulo:</strong> Possui os três ângulos agudos, ou seja, todos menores que 90°.</li>
+                                <li><strong>Obtusângulo:</strong> Possui um ângulo obtuso, ou seja, um ângulo maior que 90°.</li>
+                            </ul>
+                        </div>
+                        <hr class="border-[var(--border)]">
+                        <div>
+                             <h2 class="text-xl font-semibold text-[var(--accent)]">2. Soma dos Ângulos Internos</h2>
+                             <p class="mt-2 text-sm">Uma das propriedades mais importantes dos triângulos é que a soma de seus três ângulos internos é sempre igual a <strong>180°</strong>.</p>
+                             <p class="mt-2 p-3 bg-gray-800/20 rounded-lg text-center font-mono">Ângulo A + Ângulo B + Ângulo C = 180°</p>
+                             <p class="mt-2 text-sm">Essa regra é válida para qualquer tipo de triângulo, seja ele retângulo, isósceles, escaleno, etc. Sabendo a medida de dois ângulos, você sempre pode descobrir a do terceiro.</p>
+                        </div>
+                        <hr class="border-[var(--border)]">
+                        <div>
+                             <h2 class="text-xl font-semibold text-[var(--accent)]">3. Condição de Existência</h2>
+                             <p class="mt-2 text-sm">Para que seja possível construir um triângulo com três medidas de lados (a, b, c), uma regra deve ser obedecida: <strong>a medida de qualquer lado deve ser sempre menor que a soma das medidas dos outros dois lados</strong>.</p>
+                             <ul class="mt-2 p-3 bg-gray-800/20 rounded-lg space-y-1 font-mono text-center">
+                                 <li>a &lt; b + c</li>
+                                 <li>b &lt; a + c</li>
+                                 <li>c &lt; a + b</li>
+                             </ul>
+                             <p class="mt-2 text-sm">Se essa condição não for satisfeita para qualquer um dos lados, os segmentos não "fecharão" para formar um triângulo.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('tri-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('tri-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // Tópico 1: Tipos de Triângulos (10 questões)
+            { q: '1) Um triângulo com lados medindo 7cm, 7cm e 10cm é classificado como?', options: ['Isósceles', 'Equilátero', 'Escaleno', 'Retângulo'], answer: 'Isósceles', explanation: 'Possui dois lados iguais (7cm).'},
+            { q: '2) Se um triângulo tem um ângulo de 90°, como ele é classificado?', options: ['Retângulo', 'Acutângulo', 'Obtusângulo', 'Equilátero'], answer: 'Retângulo', explanation: 'A definição de triângulo retângulo é possuir um ângulo reto (90°).'},
+            { q: '3) Um triângulo cujos lados medem 5cm, 6cm e 7cm é um...', options: ['Escaleno', 'Isósceles', 'Equilátero', 'Obtusângulo'], answer: 'Escaleno', explanation: 'Todos os três lados têm medidas diferentes.'},
+            { q: '4) Todos os ângulos internos de um triângulo medem 60°. Qual a sua classificação quanto aos lados?', options: ['Equilátero', 'Isósceles', 'Escaleno', 'Retângulo'], answer: 'Equilátero', explanation: 'Se todos os ângulos são iguais, todos os lados também são iguais.'},
+            { q: '5) Um triângulo possui ângulos de 40°, 50° e 90°. Sua classificação quanto aos ângulos é?', options: ['Retângulo', 'Acutângulo', 'Obtusângulo', 'Escaleno'], answer: 'Retângulo', explanation: 'A presença de um ângulo de 90° o classifica como retângulo.'},
+            { q: '6) Um triângulo com um ângulo medindo 110° é classificado como?', options: ['Obtusângulo', 'Acutângulo', 'Retângulo', 'Isósceles'], answer: 'Obtusângulo', explanation: 'Possui um ângulo obtuso (maior que 90°).'},
+            { q: '7) Qual tipo de triângulo possui dois lados iguais e um diferente?', options: ['Isósceles', 'Equilátero', 'Escaleno', 'Retângulo'], answer: 'Isósceles', explanation: 'É a definição de um triângulo isósceles.'},
+            { q: '8) Um triângulo com ângulos 70°, 60°, 50° é classificado como?', options: ['Acutângulo', 'Obtusângulo', 'Retângulo', 'Equilátero'], answer: 'Acutângulo', explanation: 'Todos os seus ângulos são agudos (menores que 90°).'},
+            { q: '9) Se um triângulo é equilátero, ele também é:', options: ['Acutângulo', 'Retângulo', 'Obtusângulo', 'Escaleno'], answer: 'Acutângulo', explanation: 'Todo triângulo equilátero tem três ângulos de 60°, que são todos agudos.'},
+            { q: '10) Um triângulo isósceles pode ser um triângulo retângulo?', options: ['Sim', 'Não', 'Somente se for equilátero', 'Somente se for escaleno'], answer: 'Sim', explanation: 'Sim, um triângulo com ângulos 90°, 45° e 45° é tanto isósceles quanto retângulo.'},
+            
+            // Tópico 2: Soma dos Ângulos Internos (10 questões)
+            { q: '11) Dois ângulos de um triângulo medem 50° e 70°. Qual a medida do terceiro ângulo?', options: ['60°', '50°', '70°', '180°'], answer: '60°', explanation: '180° - (50° + 70°) = 180° - 120° = 60°.'},
+            { q: '12) Em um triângulo retângulo, um dos ângulos agudos mede 35°. Qual a medida do outro?', options: ['55°', '45°', '65°', '90°'], answer: '55°', explanation: 'Os ângulos agudos somam 90°. Então, 90° - 35° = 55°.'},
+            { q: '13) Os ângulos de um triângulo são x, 2x e 3x. Qual o valor de x?', options: ['30°', '45°', '60°', '90°'], answer: '30°', explanation: 'x + 2x + 3x = 180° → 6x = 180° → x = 30°.'},
+            { q: '14) Um triângulo isósceles tem um ângulo de vértice (o ângulo diferente) medindo 100°. Quais são as medidas dos ângulos da base?', options: ['40° cada', '50° cada', '80° cada', '100° cada'], answer: '40° cada', explanation: '180° - 100° = 80°. Como os ângulos da base são iguais, 80° / 2 = 40°.'},
+            { q: '15) É possível existir um triângulo com dois ângulos de 95°?', options: ['Não', 'Sim', 'Apenas se for isósceles', 'Apenas se for escaleno'], answer: 'Não', explanation: 'A soma de dois ângulos de 95° já é 190°, que ultrapassa o total de 180°.'},
+            { q: '16) Qual é a soma dos ângulos internos de QUALQUER triângulo?', options: ['180°', '360°', '90°', 'Depende do triângulo'], answer: '180°', explanation: 'A soma dos ângulos internos é sempre 180° para qualquer triângulo.'},
+            { q: '17) Em um triângulo, os ângulos medem 45° e 45°. Qual o terceiro ângulo?', options: ['90°', '45°', '60°', '100°'], answer: '90°', explanation: '180° - (45° + 45°) = 180° - 90° = 90°.'},
+            { q: '18) Um dos ângulos da base de um triângulo isósceles mede 55°. Qual a medida do ângulo do vértice?', options: ['70°', '55°', '60°', '110°'], answer: '70°', explanation: 'Os dois ângulos da base somam 55° + 55° = 110°. O ângulo do vértice é 180° - 110° = 70°.'},
+            { q: '19) Um triângulo pode ter dois ângulos obtusos?', options: ['Não', 'Sim', 'Sim, se for grande', 'Sim, se for escaleno'], answer: 'Não', explanation: 'Um ângulo obtuso é > 90°. Dois deles somariam mais de 180°, o que é impossível.'},
+            { q: '20) Se os três ângulos de um triângulo são iguais, qual a medida de cada um?', options: ['60°', '90°', '30°', '45°'], answer: '60°', explanation: '180° dividido por 3 ângulos iguais resulta em 60° cada.'},
+
+            // Tópico 3: Condição de Existência (10 questões)
+            { q: '21) É possível formar um triângulo com lados medindo 5, 8 e 12?', options: ['Sim', 'Não'], answer: 'Sim', explanation: 'Sim, pois 5+8 > 12 (13>12), 5+12 > 8 e 8+12 > 5.'},
+            { q: '22) Quais das seguintes medidas NÃO podem formar um triângulo?', options: ['3, 4, 8', '5, 5, 5', '6, 8, 10', '7, 10, 15'], answer: '3, 4, 8', explanation: 'Não é possível, pois 3 + 4 (que é 7) não é maior que 8.'},
+            { q: '23) Para formar um triângulo com lados 7 e 10, o terceiro lado pode medir...', options: ['5', '3', '17', '2'], answer: '5', explanation: 'O terceiro lado (x) deve ser x < 7+10 (x<17) e x > 10-7 (x>3). 5 está nesse intervalo.'},
+            { q: '24) É possível formar um triângulo com lados medindo 1, 2 e 3?', options: ['Não', 'Sim'], answer: 'Não', explanation: 'Não, pois a soma 1 + 2 = 3, e a regra exige que a soma seja ESTRITAMENTE maior que o terceiro lado.'},
+            { q: '25) Qual é a regra principal para a existência de um triângulo?', options: ['Um lado < soma dos outros dois', 'Um lado > soma dos outros dois', 'Todos os lados iguais', 'Dois lados iguais'], answer: 'Um lado < soma dos outros dois', explanation: 'A medida de qualquer lado deve ser menor que a soma das medidas dos outros dois.'},
+            { q: '26) É possível formar um triângulo com lados medindo 20, 30 e 50?', options: ['Não', 'Sim'], answer: 'Não', explanation: 'Não, porque 20 + 30 = 50. A soma deve ser maior, não igual.'},
+            { q: '27) Se dois lados de um triângulo isósceles medem 9 e 4, qual a medida do terceiro lado?', options: ['9', '4', '13', '5'], answer: '9', explanation: 'Se fosse 4, teríamos lados 4, 4, 9. Mas 4+4=8, que não é > 9. Logo, os lados devem ser 9, 9, 4.'},
+            { q: '28) Quais das seguintes medidas PODEM formar um triângulo?', options: ['10, 12, 15', '1, 5, 7', '2, 8, 11', '4, 4, 9'], answer: '10, 12, 15', explanation: '10+12 > 15. As outras opções falham na condição de existência (1+5<7, 2+8<11, 4+4<9).'},
+            { q: '29) Um triângulo pode ter lados medindo 6cm, 6cm e 13cm?', options: ['Não', 'Sim'], answer: 'Não', explanation: 'A soma dos lados menores (6+6=12) não é maior que o terceiro lado (13).'},
+            { q: '30) Para que um triângulo com lados 5 e 12 exista, o terceiro lado (x) deve estar entre quais valores?', options: ['7 < x < 17', '5 < x < 12', 'x > 17', 'x < 7'], answer: '7 < x < 17', explanation: 'Pela regra, x < 12+5 (x<17) e x > 12-5 (x>7).'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('text-green-400');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('text-red-400');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionProgress = document.createElement('p');
+        questionProgress.className='text-sm text-slate-400';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionProgress);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            shuffleArray(questionOrder);
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
+            let cleaned = String(qObj.q || '').replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim();
+            questionText.innerHTML = `${currentIndex+1}) ${cleaned}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionProgress.textContent = `Quiz finalizado!`;
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
