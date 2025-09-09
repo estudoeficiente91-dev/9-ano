@@ -181,11 +181,21 @@
 
         // Create question buttons
         function renderQuestionButtons(){
+            // cada botão mostra o número original da questão (idx+1)
+            // ao clicar, localizamos a posição atual dessa questão no questionOrder
             questionButtons.innerHTML='';
             questionOrder.forEach((idx,i)=>{
                 const b = document.createElement('button');
-                b.textContent = (i+1);
-                b.onclick = ()=>{ currentIndex = i; showQuestion(); };
+                b.textContent = (i + 1); // mostra posição atual (1..N)
+                b.setAttribute('data-idx', String(idx));
+                b.setAttribute('data-pos', String(i));
+                b.title = `Ir para a questão ${idx+1}`;
+                b.onclick = ()=>{
+                    const pos = Number(b.getAttribute('data-pos'));
+                    if(!Number.isNaN(pos)){
+                        currentIndex = pos; showQuestion();
+                    }
+                };
                 if(questionStatus[idx]==='correct') b.classList.add('text-green-400');
                 if(questionStatus[idx]==='wrong') b.classList.add('text-red-400');
                 questionButtons.appendChild(b);
@@ -239,9 +249,10 @@
                 optionsContainer.appendChild(b);
             });
 
-            // highlight current button
-            Array.from(questionButtons.children).forEach((btn,i)=>{
-                btn.classList.toggle('bg-slate-800', i===currentIndex);
+            // highlight current button (compara data-idx com qIdx)
+            Array.from(questionButtons.children).forEach((btn)=>{
+                const pos = Number(btn.getAttribute('data-pos'));
+                btn.classList.toggle('bg-slate-800', pos === currentIndex);
             });
         }
 
