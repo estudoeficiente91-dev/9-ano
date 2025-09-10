@@ -7,13 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root{
-            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.04); --muted-2: rgba(230,238,248,0.85);
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
         }
         html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
         .container{max-width:980px;margin:28px auto;padding:18px}
         .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
         .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
-        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: none; box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
         .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
         .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
         .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
@@ -23,15 +23,15 @@
         #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
         #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
         #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
-        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: transparent; }
-        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: transparent; }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
         .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
         .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
         .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
         @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
         .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
         @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
-        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.06); --muted-2: rgba(15,23,36,0.85); }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
         .topic-section { margin-bottom: 2rem; }
         .topic-title { font-size: 1.25rem; font-weight: 600; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem; }
         .topic-section p, .topic-section ul { font-size: 0.9rem; color: var(--muted-2); }
@@ -66,127 +66,111 @@
                             <h2 class="topic-title">a) Medidas de Comprimento, Tempo, Massa, Temperatura e Capacidade</h2>
                             <p>São grandezas usadas para quantificar o mundo. As unidades padrão do Sistema Internacional (SI) são: metro (m), segundo (s), quilograma (kg), Kelvin (K) — usamos Celsius (°C) no dia a dia —, e metro cúbico (m³) para volume, mas o litro (L) é comum para capacidade.</p>
                             <div class="example"><strong>Exemplo:</strong> 1 quilômetro (km) = 1000 metros (m). 1 hora = 60 minutos. 1 quilograma (kg) = 1000 gramas (g). 1 litro (L) = 1000 mililitros (mL).</div>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 1-5 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">b) Medidas de Área e Volume</h2>
                             <p><strong>Área</strong> é a medida de uma superfície (bidimensional), geralmente em metros quadrados (m²). <strong>Volume</strong> é a medida do espaço ocupado por um corpo (tridimensional), geralmente em metros cúbicos (m³).</p>
                              <div class="example"><strong>Exemplo:</strong> A área de um campo de futebol de 100m por 50m é 100 * 50 = 5000 m². O volume de uma caixa de 2m x 3m x 1m é 2 * 3 * 1 = 6 m³.</div>
-                             <p class="text-xs text-slate-400 mt-2"><em>(Questões 6-10 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">c) Conversão de Unidades de Medida</h2>
                             <p>Para converter, usamos uma escala (ex: km, hm, dam, m, dm, cm, mm). Para cada "casa" que andamos para a direita, multiplicamos por 10; para a esquerda, dividimos por 10. Para áreas (m²), o fator é 100. Para volumes (m³), o fator é 1000.</p>
                              <div class="example"><strong>Exemplo:</strong> 2,5 km = 2500 m (move a vírgula 3 casas para a direita). 3 m² = 30.000 cm² (move a vírgula 4 casas, pois são 2 "pulos" de 100).</p>
-                             <p class="text-xs text-slate-400 mt-2"><em>(Questões 11-15 na seção de prática)</em></p>
                         </div>
                         
                         <div class="topic-section">
                             <h2 class="topic-title">d) Segmento de Reta, Semirreta, Reta e Mediatriz</h2>
                             <p><strong>Reta:</strong> Infinita nos dois sentidos. <strong>Semirreta:</strong> Tem um ponto de origem e é infinita em um sentido. <strong>Segmento de Reta:</strong> Tem início e fim (delimitado por dois pontos). <strong>Mediatriz:</strong> É uma reta perpendicular a um segmento que passa exatamente no seu ponto médio.</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 16-20 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                              <h2 class="topic-title">e) e f) Posições Relativas entre Ponto, Reta e Retas</h2>
                              <p><strong>Ponto e Reta:</strong> O ponto pode pertencer (estar sobre) ou não pertencer à reta. <strong>Retas (no plano):</strong> Podem ser <strong>paralelas</strong> (nunca se cruzam), <strong>concorrentes</strong> (cruzam-se em um único ponto) ou <strong>coincidentes</strong> (são a mesma reta).</p>
-                             <p class="text-xs text-slate-400 mt-2"><em>(Questões 21-25 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">g) Ângulos</h2>
                             <p>É a região entre duas semirretas de mesma origem. Tipos: <strong>Agudo</strong> (< 90°), <strong>Reto</strong> (= 90°), <strong>Obtuso</strong> (> 90°). <strong>Complementares:</strong> somam 90°. <strong>Suplementares:</strong> somam 180°. <strong>Opostos pelo Vértice (OPV):</strong> são iguais.</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 26-30 na seção de prática)</em></p>
                         </div>
                         
                         <div class="topic-section">
                              <h2 class="topic-title">h) Teorema de Tales</h2>
                              <p>Se um feixe de retas paralelas é cortado por duas retas transversais, os segmentos formados em uma transversal são proporcionais aos segmentos correspondentes na outra.</p>
                              <div class="example">Se uma reta A forma segmentos de 2 e 4, e uma reta B paralela forma segmentos de 3 e x, então 2/4 = 3/x, o que resulta em x = 6.</div>
-                             <p class="text-xs text-slate-400 mt-2"><em>(Questões 31-35 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">i) Teoremas da Bissetriz Interna e Externa</h2>
                             <p><strong>Bissetriz Interna:</strong> A bissetriz de um ângulo interno de um triângulo divide o lado oposto em dois segmentos que são proporcionais aos lados adjacentes a esse ângulo.</p>
                             <p><strong>Bissetriz Externa:</strong> A bissetriz de um ângulo externo faz uma divisão proporcional similar com a reta suporte do lado oposto.</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 36-40 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">j) Semelhança de Triângulos</h2>
                             <p>Dois triângulos são semelhantes se seus ângulos correspondentes são iguais e seus lados correspondentes são proporcionais. Casos de semelhança: AA (Ângulo-Ângulo), LLL (Lado-Lado-Lado), LAL (Lado-Ângulo-Lado).</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 41-45 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">k) Teorema de Pitágoras</h2>
                             <p>Em todo triângulo retângulo, o quadrado da hipotenusa (lado oposto ao ângulo reto) é igual à soma dos quadrados dos catetos.</p>
                             <div class="example"><strong>Fórmula:</strong> a² = b² + c². Se os catetos medem 3 e 4, a hipotenusa mede 5 (pois 3² + 4² = 9 + 16 = 25 = 5²).</div>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 46-50 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                              <h2 class="topic-title">l) Relações Métricas no Triângulo Retângulo</h2>
                              <p>Além de Pitágoras, há outras relações envolvendo a altura (h) relativa à hipotenusa e as projeções dos catetos (m, n): h² = m ⋅ n; a ⋅ h = b ⋅ c; b² = a ⋅ m; c² = a ⋅ n.</p>
-                             <p class="text-xs text-slate-400 mt-2"><em>(Questões 51-55 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">m) Razões Trigonométricas no Triângulo Retângulo</h2>
                             <p>Definem a relação entre os lados e os ângulos agudos de um triângulo retângulo: <strong>Seno (sen)</strong> = Cateto Oposto / Hipotenusa; <strong>Cosseno (cos)</strong> = Cateto Adjacente / Hipotenusa; <strong>Tangente (tan)</strong> = Cateto Oposto / Cateto Adjacente.</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 56-60 na seção de prática)</em></p>
                         </div>
                         
                         <div class="topic-section">
                              <h2 class="topic-title">n) Lei dos Senos e Lei dos Cossenos</h2>
                              <p>Usadas para triângulos quaisquer (não necessariamente retângulos).<br><strong>Lei dos Senos:</strong> a/sen(A) = b/sen(B) = c/sen(C). Usada quando se conhece dois ângulos e um lado, ou dois lados e um ângulo oposto a um deles.<br><strong>Lei dos Cossenos:</strong> a² = b² + c² - 2bc⋅cos(A). Usada quando se conhece dois lados e o ângulo entre eles, ou os três lados.</p>
-                             <p class="text-xs text-slate-400 mt-2"><em>(Questões 61-65 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                              <h2 class="topic-title">o) Polígonos</h2>
                              <p>Figuras planas fechadas formadas por segmentos de reta. Fórmulas importantes para um polígono de 'n' lados: Soma dos Ângulos Internos Sᵢ = (n-2)⋅180°; Número de Diagonais d = n(n-3)/2.</p>
-                             <p class="text-xs text-slate-400 mt-2"><em>(Questões 66-70 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">p) Semelhança de Polígonos</h2>
                             <p>Dois polígonos são semelhantes se têm o mesmo número de lados, ângulos correspondentes iguais e lados correspondentes proporcionais.</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 71-75 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">q) Relações Métricas nos Polígonos Regulares</h2>
                             <p>Em polígonos regulares (lados e ângulos iguais), podemos relacionar o lado (l), o apótema (a - distância do centro ao meio do lado) e o raio (R) da circunferência circunscrita.</p>
                             <div class="example"><strong>Quadrado:</strong> l = R√2; a = R√2/2. <strong>Triângulo Equilátero:</strong> l = R√3; a = R/2.</div>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 76-80 na seção de prática)</em></p>
                         </div>
                         
                         <div class="topic-section">
                             <h2 class="topic-title">r) Circunferência</h2>
                             <p>Conjunto de pontos equidistantes de um ponto central (centro). <strong>Raio (r):</strong> distância do centro à borda. <strong>Diâmetro (d):</strong> 2r. <strong>Comprimento:</strong> C = 2πr.</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 81-85 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">s) Relações Métricas na Circunferência</h2>
                             <p><strong>Relação entre cordas:</strong> Se duas cordas se cruzam em um ponto P, o produto dos segmentos de uma é igual ao produto dos segmentos da outra (PA ⋅ PB = PC ⋅ PD). Existem relações similares para retas secantes e tangentes (potência de ponto).</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 86-90 na seção de prática)</em></p>
                         </div>
 
                         <div class="topic-section">
                             <h2 class="topic-title">t) Perímetro e Área de Figuras Planas</h2>
                             <p><strong>Perímetro:</strong> Soma de todos os lados. <strong>Área:</strong> Medida da superfície. Fórmulas chave: <strong>Retângulo</strong> (A=b⋅h), <strong>Triângulo</strong> (A=(b⋅h)/2), <strong>Trapézio</strong> (A=((B+b)⋅h)/2), <strong>Círculo</strong> (A=πr²).</p>
-                            <p class="text-xs text-slate-400 mt-2"><em>(Questões 91-100 na seção de prática)</em></p>
                         </div>
                         
                     </div>
                 </section>
 
                 <section id="practice-section" class="hidden">
+                    <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Aleatória</button>
+                    </div>
                     <div id="question-buttons" class="mb-4"></div>
                     <div id="quiz-container">
                         </div>
@@ -205,8 +189,9 @@
         const practiceSection = document.getElementById('practice-section');
         const questionButtons = document.getElementById('question-buttons');
         const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
 
-        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer){
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
             console.error('Elementos DOM não encontrados.');
             return;
         }
@@ -364,6 +349,13 @@
         let currentIndex = 0;
         let questionStatus = Array(quizData.length).fill(null);
         let quizStarted = false;
+        let isRandomOrder = true; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
 
         function switchView(view){
             if(view==='learn'){
@@ -411,8 +403,6 @@
             });
         }
 
-        const questionProgress = document.createElement('p');
-        questionProgress.className='text-sm text-slate-400 mb-1';
         const questionTopic = document.createElement('p');
         questionTopic.className='text-sm font-semibold text-[var(--accent)] mb-2';
         const questionText = document.createElement('p');
@@ -433,7 +423,11 @@
         quizContainer.appendChild(redoBtn);
 
         function startQuiz(){
-            shuffleArray(questionOrder);
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
             currentIndex = 0;
             questionStatus.fill(null);
             showQuestion();
@@ -549,5 +543,4 @@
     </script>
 </body>
 </html>
-
 
