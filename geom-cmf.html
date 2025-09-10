@@ -425,7 +425,6 @@
         const redoBtn = document.createElement('button');
         redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
 
-        quizContainer.appendChild(questionProgress);
         quizContainer.appendChild(questionTopic);
         quizContainer.appendChild(questionText);
         quizContainer.appendChild(optionsContainer);
@@ -449,7 +448,6 @@
             const qIdx = questionOrder[currentIndex];
             const qObj = quizData[qIdx];
             
-            questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
             questionTopic.textContent = qObj.topic;
             questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
             
@@ -471,7 +469,6 @@
         function showFinalResults() {
             const correctCount = questionStatus.filter(s => s === 'correct').length;
             const total = quizData.length;
-            questionProgress.textContent = `Quiz finalizado!`;
             questionTopic.textContent = '';
             questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
             optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
@@ -552,4 +549,5 @@
     </script>
 </body>
 </html>
+
 
