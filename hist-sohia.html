@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prova CMF – 1º Ano (História)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Prova CMF — 7º Ano: História</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo sobre a Colonização da América Portuguesa e a Escravidão.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Portugueses na América: Conquista e Colonização</h2>
+                            <h3 class="sub-topic-title">Os Povos que os Portugueses Encontraram</h3>
+                            <p>Antes de 1500, o Brasil não era um vazio. O território era chamado de <span class="highlight">Pindorama</span> ("Terra das Palmeiras") por muitos povos do tronco linguístico Tupi. Milhões de pessoas, divididas em centenas de etnias (como os Tupi, os Jê/Tapuias, os Aruaques e os Caraíbas), viviam aqui. Cada povo tinha sua própria língua, seus costumes, sua religião e sua forma de se organizar. Eles viviam da caça, da pesca, da coleta e de uma agricultura de subsistência, baseada na mandioca.</p>
+                            <p>O <span class="highlight">"contato com o outro"</span> foi um verdadeiro choque de mundos. Os portugueses, com sua cultura europeia e cristã, não compreendiam o modo de vida indígena. Para eles, os nativos eram "selvagens" porque andavam nus, não tinham um rei, não conheciam a propriedade privada e não buscavam acumular riquezas. Essa visão, chamada de <span class="highlight">eurocêntrica</span> (que vê a Europa como o centro e modelo para o mundo), serviu como justificativa para a dominação, a violência e a imposição da cultura e da religião europeias.</p>
+
+                            <h3 class="sub-topic-title">A Conquista e o Início da Colonização</h3>
+                            <p>De 1500 a 1530, no chamado <strong>Período Pré-Colonial</strong>, Portugal não demonstrou grande interesse em ocupar o Brasil. O foco era o lucrativo comércio de especiarias com as Índias. A única atividade econômica aqui era a extração do <span class="highlight">pau-brasil</span>, madeira de cor avermelhada muito valiosa na Europa para tingir tecidos de luxo. A exploração era feita por meio do <span class="highlight">escambo</span>: os indígenas cortavam e empilhavam as toras de madeira na praia e, em troca, recebiam dos portugueses objetos que para eles eram novidade, como espelhos, facas e machados de metal.</p>
+                            <p>A <span class="highlight">colonização de fato</span> só começou a partir de 1530. O motivo principal foi o medo de perder a terra para outros países, principalmente a França, que enviava navios para contrabandear pau-brasil. Para garantir a posse, o rei de Portugal decidiu ocupar a terra. O primeiro sistema foi o das <span class="highlight">Capitanias Hereditárias</span> (1534), que dividiu o litoral em 15 enormes faixas de terra, entregues a nobres portugueses (os donatários). A maioria fracassou pela distância, falta de recursos e ataques indígenas. O fracasso levou à criação do <span class="highlight">Governo-Geral</span> em 1549, um sistema mais centralizado para administrar a colônia.</p>
+                            
+                            <h3 class="sub-topic-title">Escravidão e Resistência Indígena</h3>
+                            <p>Com o início do plantio de cana-de-açúcar, os portugueses precisavam de muita gente para trabalhar. A solução foi forçar os indígenas ao trabalho, ou seja, escravizá-los. Para justificar isso, eles usavam o conceito de <span class="highlight">"guerra justa"</span>: se um grupo indígena atacasse um colono, era "justo" escravizá-lo como prisioneiro. Isso, claro, virou um pretexto para organizar expedições (bandeiras) que caçavam e aprisionavam indígenas.</p>
+                            <p>A resistência foi imensa. Os indígenas lutaram de várias formas: com <span class="highlight">guerras e ataques</span> a vilas, com <span class="highlight">fugas</span> para o interior e, principalmente, com a <span class="highlight">recusa cultural</span>, mantendo suas crenças e costumes vivos. Também fizeram <span class="highlight">alianças</span> com os inimigos dos portugueses, como os franceses e holandeses. Os <span class="highlight">aldeamentos jesuítas</span> eram missões religiosas onde os padres reuniam os indígenas para catequizá-los. Por um lado, os protegiam da escravidão brutal dos colonos, mas, por outro, destruíam sua cultura original, sua língua e sua liberdade.</p>
+                        </div>
+                        
+                        <div class="topic-section">
+                             <h2 class="topic-title">O Nordeste Açucareiro</h2>
+                             <p>A produção de açúcar foi a principal atividade econômica do Brasil por quase dois séculos. O Nordeste, com seu clima quente e úmido e o solo escuro e fértil chamado <span class="highlight">massapé</span>, era o local perfeito. A produção era feita em enormes fazendas chamadas <span class="highlight">engenhos</span>.</p>
+                             <p>A <span class="highlight">sociedade do engenho</span> era extremamente desigual. No topo, com todo o poder, estava o <span class="highlight">senhor de engenho</span>, dono das terras, das instalações e das pessoas escravizadas. Ele vivia na <span class="highlight">Casa-Grande</span>. Abaixo dele, havia poucos trabalhadores livres, como o feitor (capataz que vigiava os escravos) e o mestre-de-açúcar. A base de tudo era formada pelos <span class="highlight">africanos escravizados</span>, que viviam amontoados na <span class="highlight">Senzala</span> e realizavam todo o trabalho pesado, desde o plantio e corte da cana até a produção do açúcar na moenda. Era uma sociedade <span class="highlight">patriarcal</span> (o poder do homem era absoluto sobre a família e os dependentes) e sem mobilidade social.</p>
+                             <p>Os <span class="highlight">Potiguaras</span>, um povo indígena forte do Nordeste, são um grande exemplo de resistência. Eles lutaram ferozmente contra os portugueses e se aliaram aos holandeses quando estes invadiram Pernambuco no século XVII, na esperança de expulsar o inimigo comum.</p>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">As Terras do Atlântico Interligadas pela Escravidão</h2>
+                             <h3 class="sub-topic-title">Trabalho Escravo e o Tráfico Negreiro</h3>
+                            <p>O <strong>trabalho compulsório</strong> foi a base da economia colonial. É importante diferenciar: na <span class="highlight">servidão</span> (comum na Europa feudal), o servo estava preso à terra, mas não era uma propriedade. Já na <span class="highlight">escravidão moderna</span>, que ocorreu nas Américas, a pessoa era coisificada, transformada em uma <span class="highlight">mercadoria</span> que podia ser comprada, vendida, marcada a ferro e torturada. Essa escravidão foi justificada por uma ideologia racista, que afirmava que os negros africanos eram "inferiores".</p>
+                            <p>O <span class="highlight">tráfico negreiro</span> foi o comércio de seres humanos que alimentou esse sistema. Foi um dos negócios mais lucrativos da época. Milhões de homens, mulheres e crianças foram capturados na África e forçados a atravessar o Oceano Atlântico em navios superlotados e em condições terríveis, chamados de <span class="highlight">tumbeiros</span> (tumbas flutuantes), pois cerca de 20% morriam na viagem.</p>
+
+                            <h3 class="sub-topic-title">O Tráfico Transatlântico</h3>
+                            <p>Portugal usou sua experiência em navegação para instalar <span class="highlight">feitorias</span> (postos comerciais fortificados) na costa da África. Ali, eles não entravam para caçar pessoas, mas negociavam com reinos e comerciantes africanos. Em troca de produtos europeus como <span class="highlight">armas de fogo, tecidos, tabaco e aguardente</span>, esses reinos africanos vendiam prisioneiros de suas guerras internas. O tráfico aumentou enormemente a escala da guerra e da violência na África. O Brasil foi o país que mais recebeu africanos escravizados em todo o mundo, com quase 5 milhões de pessoas desembarcando aqui ao longo de 350 anos.</p>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                    <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Aleatória</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-history-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-history-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Povos Originários e Contato', q: '1) Qual era o nome dado ao território do Brasil por muitos povos Tupi antes da chegada dos portugueses?', options: ['Terra de Santa Cruz', 'Brasil', 'Pindorama', 'Vera Cruz'], answer: 'Pindorama', explanation: 'Pindorama, que significa "Terra das Palmeiras", era como muitos povos Tupi se referiam à região.'},
+            { topic: 'Povos Originários e Contato', q: '2) A primeira impressão dos portugueses sobre os indígenas, registrada na carta de Pero Vaz de Caminha, foi de:', options: ['Hostilidade e guerra', 'Riqueza e organização complexa', 'Estranheza e inocência', 'Medo e repulsa'], answer: 'Estranheza e inocência', explanation: 'Caminha descreveu os nativos como "pardos, nus, sem coisa alguma que lhes cobrisse suas vergonhas", ressaltando a diferença cultural e a aparente inocência.'},
+            { topic: 'Povos Originários e Contato', q: '3) O "contato com o outro" entre portugueses e indígenas pode ser melhor descrito como:', options: ['Uma troca cultural pacífica e igualitária', 'Um encontro marcado pela incompreensão e imposição cultural europeia', 'Uma aliança militar imediata contra inimigos comuns', 'Uma relação puramente comercial desde o início'], answer: 'Um encontro marcado pela incompreensão e imposição cultural europeia', explanation: 'O contato foi caracterizado pelo etnocentrismo europeu, que não reconhecia a validade das culturas indígenas.'},
+            { topic: 'Povos Originários e Contato', q: '4) Qual atitude dos portugueses demonstra a visão de superioridade sobre os povos indígenas?', options: ['A prática do escambo', 'A tentativa de catequese forçada', 'A adoção de alimentos nativos, como a mandioca', 'A curiosidade sobre seus costumes'], answer: 'A tentativa de catequese forçada', explanation: 'A imposição de uma nova religião (o catolicismo) partia do princípio de que a crença indígena era inferior ou errada.'},
+            { topic: 'Povos Originários e Contato', q: '5) As terras indígenas hoje são protegidas por lei. Qual a importância dessa atitude?', options: ['Garantir que os indígenas permaneçam isolados', 'Preservar a cultura, o modo de vida e a biodiversidade', 'Transformar as terras em grandes fazendas', 'Incentivar a exploração de minérios'], answer: 'Preservar a cultura, o modo de vida e a biodiversidade', explanation: 'A demarcação de terras é fundamental para a sobrevivência física e cultural dos povos originários.'},
+
+            { topic: 'Conquista e Colonização', q: '6) Qual foi a principal atividade econômica dos portugueses no Brasil durante os primeiros 30 anos (1500-1530)?', options: ['Cultivo de cana-de-açúcar', 'Mineração de ouro', 'Extração de pau-brasil', 'Criação de gado'], answer: 'Extração de pau-brasil', explanation: 'Nesse período, chamado de pré-colonial, o interesse se concentrou na exploração da madeira para tingimento.'},
+            { topic: 'Conquista e Colonização', q: '7) O que era o "escambo" praticado entre portugueses e indígenas?', options: ['A escravização de nativos para o trabalho forçado', 'A catequização dos indígenas pelos jesuítas', 'A troca de trabalho indígena por mercadorias europeias', 'A compra de terras indígenas por portugueses'], answer: 'A troca de trabalho indígena por mercadorias europeias', explanation: 'Os indígenas forneciam o trabalho de extração do pau-brasil em troca de objetos como espelhos e ferramentas.'},
+            { topic: 'Conquista e Colonização', q: '8) O que motivou Portugal a iniciar a colonização efetiva do Brasil a partir de 1530?', options: ['A descoberta de grandes minas de prata no litoral', 'O fim do comércio de especiarias com as Índias', 'A ameaça de invasões estrangeiras, especialmente francesas', 'Um acordo de paz com os povos indígenas'], answer: 'A ameaça de invasões estrangeiras, especialmente francesas', explanation: 'O receio de perder o território para outras potências europeias foi o principal fator para a ocupação.'},
+            { topic: 'Conquista e Colonização', q: '9) O primeiro sistema administrativo implementado por Portugal no Brasil foi o de:', options: ['Governo-Geral', 'Capitanias Hereditárias', 'Vice-Reino', 'Monarquia Dual'], answer: 'Capitanias Hereditárias', explanation: 'O território foi dividido em grandes faixas de terra entregues a donatários para que eles promovessem a ocupação.'},
+            { topic: 'Conquista e Colonização', q: '10) A interação entre portugueses e indígenas foi sempre conflituosa?', options: ['Sim, nunca houve colaboração', 'Não, pois a relação sempre foi pacífica', 'Não, pois existiram alianças de alguns grupos indígenas com os portugueses', 'Sim, pois os portugueses eram tecnologicamente superiores'], answer: 'Não, pois existiram alianças de alguns grupos indígenas com os portugueses', explanation: 'Muitas etnias se aliaram aos colonizadores para combater grupos rivais, o que facilitou a conquista.'},
+
+            { topic: 'Escravidão e Resistência Indígena', q: '11) O que eram as "guerras justas" no contexto da colonização?', options: ['Conflitos entre diferentes etnias indígenas', 'Guerras de independência contra Portugal', 'Pretextos usados pelos colonos para legalizar a escravização indígena', 'Batalhas navais contra piratas franceses'], answer: 'Pretextos usados pelos colonos para legalizar a escravização indígena', explanation: 'A Coroa permitia a escravidão de indígenas que atacassem os colonos, o que servia de justificativa para expedições de captura.'},
+            { topic: 'Escravidão e Resistência Indígena', q: '12) Qual era o principal objetivo dos aldeamentos jesuítas?', options: ['Treinar guerreiros indígenas para lutar ao lado dos portugueses', 'Criar centros comerciais para o escambo', 'Catequizar os indígenas e acostumá-los ao modo de vida europeu', 'Escravizar os indígenas para trabalhar nos engenhos'], answer: 'Catequizar os indígenas e acostumá-los ao modo de vida europeu', explanation: 'Os jesuítas buscavam a conversão religiosa e a "civilização" dos nativos, protegendo-os da escravidão, mas desestruturando sua cultura.'},
+            { topic: 'Escravidão e Resistência Indígena', q: '13) Qual das seguintes opções NÃO é uma forma de resistência indígena à colonização?', options: ['A fuga para o interior do território', 'A formação de alianças militares com os portugueses', 'Ataques armados a vilas e fazendas', 'A aceitação passiva da escravidão e da catequese'], answer: 'A aceitação passiva da escravidão e da catequese', explanation: 'A aceitação passiva não constitui uma forma de resistência; pelo contrário, a história é marcada por lutas e revoltas.'},
+            { topic: 'Escravidão e Resistência Indígena', q: '14) Por que a mão de obra indígena foi gradualmente substituída pela africana?', options: ['Porque os indígenas eram trabalhadores menos eficientes', 'Porque os africanos se adaptaram melhor ao clima', 'Devido à alta mortalidade indígena por doenças e à resistência à escravidão', 'Porque a Igreja Católica proibiu completamente o trabalho indígena'], answer: 'Devido à alta mortalidade indígena por doenças e à resistência à escravidão', explanation: 'A catástrofe demográfica indígena e a forte resistência, somados aos lucros do tráfico negreiro, levaram à substituição.'},
+            { topic: 'Escravidão e Resistência Indígena', q: '15) A Confederação dos Tamoios, no Rio de Janeiro, foi um exemplo de:', options: ['Aldeamento jesuíta bem-sucedido', 'Aliança indígena com os portugueses para explorar pau-brasil', 'Grande revolta e aliança de povos indígenas contra os portugueses', 'Acordo comercial entre indígenas e franceses'], answer: 'Grande revolta e aliança de povos indígenas contra os portugueses', explanation: 'Foi uma das maiores resistências organizadas contra a colonização no século XVI.'},
+
+            { topic: 'Nordeste Açucareiro', q: '16) Qual fator geográfico foi essencial para o sucesso da produção de açúcar no Nordeste brasileiro?', options: ['A presença de muitas montanhas', 'O clima frio e seco', 'O solo de massapé e o clima quente e úmido', 'A proximidade com a Espanha'], answer: 'O solo de massapé e o clima quente e úmido', explanation: 'Essas condições eram ideais para o cultivo da cana-de-açúcar.'},
+            { topic: 'Nordeste Açucareiro', q: '17) A unidade produtiva básica da economia açucareira era:', options: ['A cidade', 'A feitoria', 'O engenho', 'A mina'], answer: 'O engenho', explanation: 'O engenho era a grande propriedade rural que englobava o canavial, a moenda e as moradias.'},
+            { topic: 'Nordeste Açucareiro', q: '18) Como era estruturada a sociedade do engenho?', options: ['Igualitária e democrática', 'Rural, patriarcal e escravista', 'Urbana, comercial e com grande mobilidade social', 'Matriarcal e baseada na caça'], answer: 'Rural, patriarcal e escravista', explanation: 'Era uma sociedade rígida, com o senhor de engenho no topo e os escravizados na base.'},
+            { topic: 'Nordeste Açucareiro', q: '19) Quem formava a base da mão de obra nos engenhos de açúcar do século XVII?', options: ['Trabalhadores assalariados portugueses', 'Indígenas no sistema de escambo', 'Africanos escravizados', 'Jesuítas e religiosos'], answer: 'Africanos escravizados', explanation: 'A produção de açúcar dependia massivamente do trabalho forçado de africanos.'},
+            { topic: 'Nordeste Açucareiro', q: '20) O povo Potiguara, que habitava o litoral do Nordeste, ficou conhecido por:', options: ['Sua rápida e pacífica integração com os portugueses', 'Sua aliança com os holandeses contra Portugal', 'Serem os primeiros a cultivar cana-de-açúcar', 'Fundarem a cidade de Salvador'], answer: 'Sua aliança com os holandeses contra Portugal', explanation: 'Eles resistiram bravamente à dominação portuguesa e se aliaram aos holandeses durante a invasão do Nordeste.'},
+
+            { topic: 'Trabalho Compulsório e Escravidão', q: '21) Qual a principal diferença entre a escravidão moderna e a servidão feudal?', options: ['A servidão era um trabalho livre', 'A escravidão moderna tinha base racial e tratava o indivíduo como mercadoria', 'Na servidão, os trabalhadores recebiam altos salários', 'A escravidão moderna era voluntária'], answer: 'A escravidão moderna tinha base racial e tratava o indivíduo como mercadoria', explanation: 'A escravidão nas Américas foi uma empresa comercial em massa, justificada por critérios raciais, diferentemente da servidão.'},
+            { topic: 'Trabalho Compulsório e Escravidão', q: '22) O que foi o tráfico negreiro?', options: ['O comércio de produtos africanos na Europa', 'O transporte voluntário de africanos para o Brasil', 'O sequestro e transporte forçado de milhões de africanos para serem escravizados nas Américas', 'A troca de especiarias entre Portugal e África'], answer: 'O sequestro e transporte forçado de milhões de africanos para serem escravizados nas Américas', explanation: 'Foi um dos maiores deslocamentos humanos forçados da história, e um negócio altamente lucrativo.'},
+            { topic: 'Trabalho Compulsório e Escravidão', q: '23) Além da escravidão, qual outra forma de trabalho compulsório existiu na América Espanhola?', options: ['O trabalho assalariado', 'A mita e a encomienda', 'O cooperativismo', 'O trabalho autônomo'], answer: 'A mita e a encomienda', explanation: 'Eram sistemas de exploração do trabalho indígena herdados e adaptados dos Incas e Astecas.'},
+            { topic: 'Trabalho Compulsório e Escravidão', q: '24) A escravidão moderna foi fundamental para o desenvolvimento do sistema econômico conhecido como:', options: ['Feudalismo', 'Socialismo', 'Capitalismo Mercantil', 'Comunismo'], answer: 'Capitalismo Mercantil', explanation: 'A acumulação de capitais gerada pela exploração colonial e pelo tráfico negreiro foi um pilar do mercantilismo.'},
+            { topic: 'Trabalho Compulsório e Escravidão', q: '25) A principal justificativa ideológica para a escravidão africana pelos europeus era:', options: ['A superioridade econômica da África', 'A crença na inferioridade racial e cultural dos africanos', 'A necessidade de povoar o continente americano', 'Um acordo diplomático com os reinos africanos'], answer: 'A crença na inferioridade racial e cultural dos africanos', explanation: 'O racismo foi construído para justificar a exploração desumana de milhões de pessoas.'},
+
+            { topic: 'Tráfico Transatlântico', q: '26) Qual país europeu foi o pioneiro e maior responsável pelo tráfico transatlântico de escravizados?', options: ['Inglaterra', 'Espanha', 'França', 'Portugal'], answer: 'Portugal', explanation: 'Devido à sua expansão marítima precoce e ao controle de feitorias na África, Portugal dominou o tráfico por séculos.'},
+            { topic: 'Tráfico Transatlântico', q: '27) O que eram as "feitorias" portuguesas na costa da África?', options: ['Grandes plantações de cana-de-açúcar', 'Missões religiosas para catequizar os africanos', 'Fortes e entrepostos comerciais para o comércio, incluindo o de escravizados', 'Cidades construídas para abrigar colonos portugueses'], answer: 'Fortes e entrepostos comerciais para o comércio, incluindo o de escravizados', explanation: 'As feitorias eram pontos estratégicos para controlar o comércio local e organizar o embarque de mercadorias e pessoas.'},
+            { topic: 'Tráfico Transatlântico', q: '28) Como os traficantes europeus obtinham os escravizados na África?', options: ['Capturando todos eles pessoalmente no interior do continente', 'Através de negociações e alianças com reinos e chefes locais africanos', 'Oferecendo trabalho assalariado para quem quisesse embarcar', 'Apenas resgatando prisioneiros de guerras tribais'], answer: 'Através de negociações e alianças com reinos e chefes locais africanos', explanation: 'O tráfico funcionava como um comércio, onde europeus trocavam produtos por prisioneiros de guerra e outras pessoas capturadas por poderes locais.'},
+            { topic: 'Tráfico Transatlântico', q: '29) Qual produto europeu era frequentemente usado como moeda de troca por escravizados na África?', options: ['Ouro', 'Açúcar', 'Armas de fogo e aguardente', 'Pau-brasil'], answer: 'Armas de fogo e aguardente', explanation: 'Esses produtos fortaleciam o poder militar dos reinos africanos parceiros e alimentavam o ciclo de guerras para captura de mais pessoas.'},
+            { topic: 'Tráfico Transatlântico', q: '30) Os navios que transportavam os africanos escravizados eram conhecidos como "tumbeiros". Por quê?', options: ['Porque eram pintados de preto', 'Devido às altas taxas de mortalidade durante a viagem', 'Porque transportavam tesouros e tumbas de reis africanos', 'Em homenagem ao seu inventor, Capitão Tumbeiro'], answer: 'Devido às altas taxas de mortalidade durante a viagem', explanation: 'As condições eram tão precárias, com superlotação, doenças e falta de higiene, que muitos morriam, tornando os navios verdadeiras "tumbas flutuantes".'},
+
+            { topic: 'Revisão Geral', q: '31) A estrutura produtiva do engenho no Brasil Colônia é melhor definida como:', options: ['Pecuária extensiva', 'Monocultura, latifúndio e trabalho escravo', 'Policultura, minifúndio e trabalho livre', 'Extrativismo vegetal e trabalho indígena'], answer: 'Monocultura, latifúndio e trabalho escravo', explanation: 'Essa tríade (plantation) define a base da economia colonial açucareira.'},
+            { topic: 'Revisão Geral', q: '32) A resistência escrava no Brasil se manifestou de diversas formas, EXCETO:', options: ['A formação de quilombos', 'A prática da capoeira e do sincretismo religioso', 'As revoltas e a violência contra feitores', 'A total submissão e ausência de conflitos'], answer: 'A total submissão e ausência de conflitos', explanation: 'A história da escravidão é também uma história de constante resistência, nunca de submissão total.'},
+            { topic: 'Revisão Geral', q: '33) A transferência da mão de obra indígena para a africana foi um processo:', options: ['Imediato e total logo após 1530', 'Lento, gradual e que variou conforme a região', 'Proibido pela Coroa portuguesa desde o início', 'Exclusivo do Nordeste açucareiro'], answer: 'Lento, gradual e que variou conforme a região', explanation: 'Em muitas regiões, como São Paulo, a escravidão indígena continuou importante por muito mais tempo.'},
+            { topic: 'Revisão Geral', q: '34) O "pacto colonial" estabelecia que a colônia (Brasil) deveria:', options: ['Desenvolver suas próprias manufaturas', 'Comerciar livremente com todos os países', 'Servir como fonte de matéria-prima e mercado consumidor para a metrópole (Portugal)', 'Ter autonomia política e administrativa'], answer: 'Servir como fonte de matéria-prima e mercado consumidor para a metrópole (Portugal)', explanation: 'Essa era a lógica do sistema mercantilista, onde a colônia existia para enriquecer a metrópole.'},
+            { topic: 'Revisão Geral', q: '35) Qual o papel da Igreja Católica no processo de colonização?', options: ['Foi contra a colonização e defendeu a soberania indígena', 'Atuou na justificação da conquista e na catequese dos nativos', 'Financiou a maior parte do tráfico negreiro', 'Manteve-se completamente neutra nos conflitos'], answer: 'Atuou na justificação da conquista e na catequese dos nativos', explanation: 'A expansão da fé católica era uma das justificativas para a expansão marítima e a colonização.'},
+            { topic: 'Revisão Geral', q: '36) A sociedade colonial brasileira era marcada por uma grande:', options: ['Mobilidade social', 'Igualdade racial', 'Rigidez social e hierarquia', 'Democracia rural'], answer: 'Rigidez social e hierarquia', explanation: 'Era uma sociedade estamental, com pouquíssima chance de ascensão social, baseada na posse de terras e na "pureza de sangue".'},
+            { topic: 'Revisão Geral', q: '37) O que significa dizer que a sociedade colonial era "patriarcal"?', options: ['Que as mulheres tinham os mesmos direitos que os homens', 'Que o poder estava concentrado na figura do pai/homem chefe de família', 'Que a sucessão de bens era feita pela linhagem materna', 'Que era uma sociedade governada por padres'], answer: 'Que o poder estava concentrado na figura do pai/homem chefe de família', explanation: 'O patriarcalismo dava ao homem autoridade sobre a esposa, filhos, agregados e escravizados.'},
+            { topic: 'Revisão Geral', q: '38) Qual foi a principal consequência demográfica do contato para os povos indígenas?', options: ['Um grande aumento populacional devido à miscigenação', 'Uma drástica redução populacional devido a doenças e violência', 'A migração em massa para a Europa', 'A manutenção estável de sua população'], answer: 'Uma drástica redução populacional devido a doenças e violência', explanation: 'O choque epidemiológico (doenças como gripe e varíola) e as guerras causaram um verdadeiro genocídio.'},
+            { topic: 'Revisão Geral', q: '39) O comércio triangular no Atlântico interligava quais continentes?', options: ['América, Ásia e Oceania', 'Europa, África e América', 'África, Ásia e Europa', 'América, Europa e Oceania'], answer: 'Europa, África e América', explanation: 'A Europa fornecia manufaturados, a África fornecia mão de obra escravizada, e a América fornecia matéria-prima (açúcar, tabaco, etc.).'},
+            { topic: 'Revisão Geral', q: '40) A longa duração da escravidão no Brasil (mais de 300 anos) deixou como legado:', options: ['Uma sociedade completamente igualitária', 'A resolução de todos os conflitos raciais', 'Profundas desigualdades sociais e racismo estrutural', 'O esquecimento completo da cultura africana'], answer: 'Profundas desigualdades sociais e racismo estrutural', explanation: 'As consequências da escravidão são sentidas até hoje na estrutura social e econômica do Brasil.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = true; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)] mb-2';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionTopic);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionTopic.textContent = qObj.topic;
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionTopic.textContent = '';
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
+
