@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prova de Geografia – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Prova de Geografia — 7º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo sobre as Regiões Nordeste e Sudeste.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Região Nordeste</h2>
+                            <p>O Nordeste é uma região de grandes contrastes naturais e socioeconômicos. Para melhor compreendê-la, o IBGE a dividiu em quatro <span class="highlight">sub-regiões</span>, cada uma com características distintas de clima, vegetação e ocupação humana.</p>
+
+                            <h3 class="sub-topic-title">TEMA 3: Zona da Mata e Agreste</h3>
+                            <p><strong>A Zona da Mata:</strong> É a faixa litorânea oriental, a primeira a ser ocupada pelos portugueses. Possui um <span class="highlight">clima tropical úmido</span> e o fértil solo de <span class="highlight">massapé</span>, ideal para o cultivo da cana-de-açúcar, que dominou sua economia por séculos. Originalmente coberta pela Mata Atlântica, hoje é a sub-região mais urbanizada e populosa, abrigando grandes capitais como Recife e Salvador. A economia atual é diversificada, com indústrias, turismo e agricultura moderna.</p>
+                            <p><strong>O Agreste:</strong> É uma <span class="highlight">área de transição</span> entre a úmida Zona da Mata e o seco Sertão. Apresenta características das duas sub-regiões. O relevo é dominado pelo Planalto da Borborema, que impede a passagem da umidade do oceano para o interior. A principal atividade econômica é a <span class="highlight">policultura de subsistência</span> em pequenas e médias propriedades, abastecendo os mercados da Zona da Mata.</p>
+
+                             <h3 class="sub-topic-title">TEMA 4: Sertão e Meio-Norte</h3>
+                            <p><strong>O Sertão:</strong> É a maior das sub-regiões e a mais conhecida pela seca. O <span class="highlight">clima é o semiárido</span>, com chuvas escassas e irregulares. A vegetação típica é a <span class="highlight">Caatinga</span>, adaptada à falta de água. A vida no sertão é muito dependente do Rio São Francisco, o "Rio da Integração Nacional". A área faz parte do "Polígono das Secas". A economia baseia-se na pecuária extensiva e, em áreas irrigadas pelo São Francisco, na fruticultura.</p>
+                             <p><strong>O Meio-Norte:</strong> É outra <span class="highlight">área de transição</span>, entre o Sertão semiárido e a úmida Floresta Amazônica. Abrange parte do Maranhão e do Piauí. A vegetação característica é a <span class="highlight">Mata dos Cocais</span>, rica em palmeiras como o babaçu e a carnaúba, das quais se extraem óleos e ceras, sustentando a economia extrativista da região.</p>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">Região Sudeste</h2>
+                             <h3 class="sub-topic-title">TEMA 1: Natureza da Região Sudeste</h3>
+                             <p><strong>Aspectos Gerais:</strong> É a região mais populosa e economicamente desenvolvida do Brasil. Seu relevo é predominantemente formado por <span class="highlight">planaltos e serras</span>, como a Serra do Mar e a Serra da Mantiqueira, formando o que se chama de "mares de morros". Sua <span class="highlight">hidrografia</span> é rica, com importantes bacias como a do Paraná (com grande potencial hidrelétrico) e a do São Francisco. O <span class="highlight">clima</span> predominante é o Tropical, com variações como o Tropical de Altitude (mais ameno) nas áreas serranas.</p>
+                            <p>A <span class="highlight">cobertura vegetal</span> original era a exuberante Mata Atlântica, hoje extremamente desmatada devido à urbanização e atividades econômicas. A <span class="highlight">monocultura do café</span> no século XIX foi um dos grandes responsáveis pelo desmatamento e pelo <span class="highlight">esgotamento dos solos</span>, especialmente no Vale do Paraíba.</p>
+
+                            <h3 class="sub-topic-title">TEMA 2: Organização do Espaço</h3>
+                            <p>A <span class="highlight">ocupação do Sudeste</span> se intensificou no século XVIII com a descoberta de ouro em Minas Gerais. No século XIX, a economia cafeeira em São Paulo e Rio de Janeiro impulsionou o <span class="highlight">crescimento econômico</span>, atraindo imigrantes e gerando capital. Esse capital foi investido na <span class="highlight">infraestrutura</span> (ferrovias, portos) e, posteriormente, na industrialização, tornando o Sudeste a região com a maior <span class="highlight">concentração econômica e industrial</span> do país até hoje.</p>
+
+                            <h3 class="sub-topic-title">TEMA 3: Urbanização</h3>
+                            <p>O Sudeste possui a <span class="highlight">maior concentração urbana do Brasil</span>. O êxodo rural e a industrialização levaram ao crescimento acelerado de cidades como São Paulo e Rio de Janeiro. A forte ligação entre essas duas metrópoles e suas regiões metropolitanas forma uma <span class="highlight">macrometrópole</span>, que está em processo de se tornar uma <span class="highlight">megalópole</span> (a junção de duas ou mais metrópoles). Belo Horizonte também possui uma importante Região Metropolitana, com um "colar metropolitano" de cidades ao redor.</p>
+
+                            <h3 class="sub-topic-title">TEMA 4: Atividades Econômicas</h3>
+                            <p>A economia do Sudeste é a mais diversificada do Brasil. O setor de <span class="highlight">comércio e serviços</span> é o mais forte, concentrando bancos, shoppings e empresas de tecnologia. A <span class="highlight">indústria</span> é moderna e variada, incluindo automobilística, siderúrgica e de alta tecnologia. A <span class="highlight">agropecuária</span> também é muito produtiva, com destaque para a cana-de-açúcar, laranja, café e carne bovina. O <span class="highlight">extrativismo mineral</span> em Minas Gerais (minério de ferro) e o petróleo no Rio de Janeiro e Espírito Santo são fundamentais.</p>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                    <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-geo-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-geo-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // Região Nordeste
+            { topic: 'Sub-regiões do Nordeste', q: '1) Qual sub-região nordestina é uma faixa de transição entre a Zona da Mata e o Sertão?', options: ['Meio-Norte', 'Agreste', 'Caatinga', 'Recôncavo Baiano'], answer: 'Agreste', explanation: 'O Agreste é a área de transição, com características tanto da zona úmida litorânea quanto da zona seca do interior.'},
+            { topic: 'Sub-regiões do Nordeste', q: '2) O solo de massapé e o clima tropical úmido são características de qual sub-região?', options: ['Sertão', 'Meio-Norte', 'Zona da Mata', 'Agreste'], answer: 'Zona da Mata', explanation: 'Essas condições foram ideais para o cultivo da cana-de-açúcar, base da economia colonial na Zona da Mata.'},
+            { topic: 'Sub-regiões do Nordeste', q: '3) A vegetação da Caatinga, adaptada a longos períodos de seca, é típica do:', options: ['Agreste', 'Meio-Norte', 'Zona da Mata', 'Sertão'], answer: 'Sertão', explanation: 'O Sertão é dominado pelo clima semiárido, onde a Caatinga se desenvolve.'},
+            { topic: 'Sub-regiões do Nordeste', q: '4) A Mata dos Cocais, rica em babaçu e carnaúba, é a vegetação predominante no:', options: ['Sertão', 'Agreste', 'Meio-Norte', 'Litoral'], answer: 'Meio-Norte', explanation: 'Essa sub-região é uma transição entre o Sertão e a Amazônia, marcada pela Mata dos Cocais.'},
+            { topic: 'Sub-regiões do Nordeste', q: '5) O Planalto da Borborema é uma barreira natural que influencia o clima, tornando o Sertão mais seco. Em qual sub-região ele se localiza principalmente?', options: ['Zona da Mata', 'Agreste', 'Meio-Norte', 'Sertão'], answer: 'Agreste', explanation: 'O Planalto da Borborema está no Agreste e impede que a umidade do oceano chegue ao Sertão.'},
+            { topic: 'Representações Gráficas', q: '6) O que um climograma representa?', options: ['Relevo e hidrografia', 'Densidade demográfica', 'Variação de temperatura e precipitação ao longo do ano', 'Produção agrícola'], answer: 'Variação de temperatura e precipitação ao longo do ano', explanation: 'Um climograma combina um gráfico de linhas (temperatura) e um de colunas (chuva) para mostrar o perfil climático de um lugar.'},
+            { topic: 'Representações Gráficas', q: '7) Em um climograma do Sertão nordestino, o que se espera observar?', options: ['Chuvas bem distribuídas o ano todo', 'Temperaturas baixas e muita chuva', 'Temperaturas elevadas e um longo período de seca', 'Chuvas concentradas no inverno'], answer: 'Temperaturas elevadas e um longo período de seca', explanation: 'O clima semiárido se caracteriza por altas temperaturas e chuvas escassas e concentradas em poucos meses.'},
+            { topic: 'Cultura e Sociedade', q: '8) As feiras agroecológicas, como as do Cariri, são importantes porque:', options: ['Vendem apenas produtos industrializados', 'Promovem a agricultura com agrotóxicos', 'Incentivam a produção de alimentos saudáveis e a agricultura familiar', 'São voltadas apenas para exportação'], answer: 'Incentivam a produção de alimentos saudáveis e a agricultura familiar', explanation: 'Elas fortalecem a economia local e oferecem alimentos sem agrotóxicos, cuidando do meio ambiente.'},
+            { topic: 'Cultura e Sociedade', q: '9) A literatura de cordel, com suas rimas e histórias populares, é uma manifestação cultural típica de qual região?', options: ['Sul', 'Sudeste', 'Nordeste', 'Centro-Oeste'], answer: 'Nordeste', explanation: 'Originada da tradição dos violeiros e repentistas, a literatura de cordel é um patrimônio cultural do Nordeste.'},
+            { topic: 'Sub-regiões do Nordeste', q: '10) Qual é a sub-região mais populosa e industrializada do Nordeste?', options: ['Sertão', 'Agreste', 'Meio-Norte', 'Zona da Mata'], answer: 'Zona da Mata', explanation: 'Por ter sido a primeira a ser ocupada e por abrigar as maiores capitais, a Zona da Mata concentra a maior parte da população e da economia.'},
+
+            // Região Sudeste
+            { topic: 'Natureza do Sudeste', q: '11) O relevo do Sudeste é caracterizado principalmente por:', options: ['Planícies extensas', 'Depressões profundas', 'Planaltos e serras', 'Cordilheiras'], answer: 'Planaltos e serras', explanation: 'A região é marcada por formações como a Serra do Mar e a da Mantiqueira, no que se chama de Planaltos e Serras do Atlântico Leste-Sudeste.'},
+            { topic: 'Natureza do Sudeste', q: '12) A Bacia Hidrográfica do Paraná é de grande importância para o Sudeste por seu potencial:', options: ['Para a pesca', 'Para a navegação de grandes navios', 'Hidrelétrico', 'Turístico de praias'], answer: 'Hidrelétrico', explanation: 'Nela se encontram algumas das maiores usinas hidrelétricas do Brasil, como Itaipu (dividida com o Sul).'},
+            { topic: 'Natureza do Sudeste', q: '13) Qual era a vegetação original que cobria a maior parte da Região Sudeste e que hoje está muito devastada?', options: ['Caatinga', 'Cerrado', 'Mata Atlântica', 'Floresta Amazônica'], answer: 'Mata Atlântica', explanation: 'A Mata Atlântica foi intensamente desmatada para dar lugar a cidades, lavouras de café e indústrias.'},
+            { topic: 'Natureza do Sudeste', q: '14) O esgotamento do solo no Vale do Paraíba, no século XIX, foi causado principalmente pela:', options: ['Mineração de ouro', 'Pecuária intensiva', 'Monocultura do café', 'Construção de cidades'], answer: 'Monocultura do café', explanation: 'O plantio de café em encostas sem técnicas de conservação levou à erosão e ao empobrecimento do solo.'},
+            { topic: 'Natureza do Sudeste', q: '15) As comunidades caiçaras são populações tradicionais que vivem:', options: ['No interior de Minas Gerais', 'No litoral, entre o mar e a serra', 'Nas margens do Rio Tietê', 'No Triângulo Mineiro'], answer: 'No litoral, entre o mar e a serra', explanation: 'Os caiçaras vivem da pesca artesanal, da agricultura de subsistência e do extrativismo, em harmonia com o ecossistema da Mata Atlântica litorânea.'},
+            { topic: 'Ocupação do Espaço', q: '16) Qual atividade econômica foi o grande motor da ocupação do interior do Sudeste no século XVIII?', options: ['O cultivo do café', 'A indústria automobilística', 'A extração de ouro e diamantes em Minas Gerais', 'A extração de pau-brasil'], answer: 'A extração de ouro e diamantes em Minas Gerais', explanation: 'A mineração atraiu um enorme fluxo de pessoas para o interior, levando à fundação de cidades históricas.'},
+            { topic: 'Ocupação do Espaço', q: '17) O capital acumulado com a economia cafeeira no século XIX foi fundamental para impulsionar a ________ no Sudeste.', options: ['Pecuária', 'Industrialização', 'Extração de borracha', 'Plantação de soja'], answer: 'Industrialização', explanation: 'Os lucros do café foram investidos nas primeiras indústrias, ferrovias e bancos, iniciando o processo de industrialização do Brasil.'},
+            { topic: 'Ocupação do Espaço', q: '18) Por que o Sudeste concentra a maior parte da infraestrutura do país?', options: ['Porque tem o maior território', 'Devido ao seu processo histórico de desenvolvimento econômico', 'Porque o relevo é totalmente plano', 'Por uma decisão política recente'], answer: 'Devido ao seu processo histórico de desenvolvimento econômico', explanation: 'Desde o ciclo do café, a região recebeu os maiores investimentos em portos, ferrovias e rodovias para escoar a produção.'},
+            { topic: 'Urbanização', q: '19) O que é uma megalópole?', options: ['Uma cidade com mais de 10 milhões de habitantes', 'A junção de duas ou mais metrópoles ou regiões metropolitanas', 'A capital de um país', 'Uma cidade planejada'], answer: 'A junção de duas ou mais metrópoles ou regiões metropolitanas', explanation: 'É uma grande área urbanizada contínua, como a que está em formação entre o Rio de Janeiro e São Paulo.'},
+            { topic: 'Urbanização', q: '20) A Região Sudeste é a mais urbanizada do Brasil. Uma consequência negativa desse processo é:', options: ['A baixa produção agrícola', 'A falta de mão de obra', 'A formação de favelas e a poluição', 'O isolamento das cidades'], answer: 'A formação de favelas e a poluição', explanation: 'O crescimento urbano rápido e sem planejamento gerou diversos problemas sociais e ambientais.'},
+            
+            // Atividades Econômicas e Temas Atuais
+            { topic: 'Atividades Econômicas', q: '21) Qual setor da economia gera mais empregos e riqueza na Região Sudeste atualmente?', options: ['A indústria', 'A agropecuária', 'O extrativismo mineral', 'O comércio e os serviços'], answer: 'O comércio e os serviços', explanation: 'Como em toda economia moderna, o setor terciário (comércio, bancos, saúde, educação, tecnologia) é o mais representativo.'},
+            { topic: 'Atividades Econômicas', q: '22) O "Quadrilátero Ferrífero" é uma área de intenso extrativismo mineral localizada em:', options: ['São Paulo', 'Rio de Janeiro', 'Espírito Santo', 'Minas Gerais'], answer: 'Minas Gerais', explanation: 'É a principal área de extração de minério de ferro do Brasil, localizada no centro de Minas Gerais.'},
+            { topic: 'Atividades Econômicas', q: '23) A produção de petróleo no Brasil se destaca na Bacia de Campos, que se localiza no litoral do estado de:', options: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Paraná'], answer: 'Rio de Janeiro', explanation: 'A Bacia de Campos, no litoral fluminense, é a maior província petrolífera do país.'},
+            { topic: 'Representações Gráficas', q: '24) Em um mapa de densidade demográfica, as cores mais escuras geralmente indicam:', options: ['Áreas de maior altitude', 'Áreas com vegetação mais densa', 'Áreas mais populosas ou povoadas', 'Áreas com clima mais quente'], answer: 'Áreas mais populosas ou povoadas', explanation: 'Nos mapas temáticos, a gradação de cores é usada para representar a intensidade de um fenômeno. Cor mais forte = maior intensidade.'},
+            { topic: 'Temas Atuais', q: '25) As tragédias ambientais em Mariana (2015) e Brumadinho (2019) foram causadas pelo rompimento de barragens de:', options: ['Água para hidrelétrica', 'Rejeitos de mineração', 'Lixo urbano', 'Produtos químicos'], answer: 'Rejeitos de mineração', explanation: 'Ambos os desastres foram causados pelo colapso de barragens de rejeitos da extração de minério de ferro, gerando enormes custos sociais e ambientais.'},
+            
+            // Revisão Geral - Nordeste
+            { topic: 'Revisão Geral - Nordeste', q: '26) O Rio São Francisco é vital para o Sertão porque:', options: ['Delimita a fronteira com a Zona da Mata', 'É um rio perene que permite a irrigação e a geração de energia', 'Suas águas são salgadas', 'Ele seca completamente durante a estiagem'], answer: 'É um rio perene que permite a irrigação e a geração de energia', explanation: 'Ao contrário da maioria dos rios do Sertão, o São Francisco nunca seca, sendo fundamental para a vida na região.'},
+            { topic: 'Revisão Geral - Nordeste', q: '27) Qual atividade econômica NÃO é característica da Região Nordeste?', options: ['Turismo litorâneo', 'Fruticultura irrigada no Sertão', 'Produção de soja em larga escala como no Centro-Oeste', 'Extração de carnaúba no Meio-Norte'], answer: 'Produção de soja em larga escala como no Centro-Oeste', explanation: 'Embora exista, a produção de soja em larga escala é a principal característica do agronegócio no Cerrado do Centro-Oeste.'},
+            { topic: 'Revisão Geral - Nordeste', q: '28) A policultura praticada no Agreste serve principalmente para:', options: ['Exportação para a Europa', 'Abastecer o mercado interno, especialmente da Zona da Mata', 'Produzir matéria-prima para a indústria de cosméticos', 'Alimentar o gado do Sertão'], answer: 'Abastecer o mercado interno, especialmente da Zona da Mata', explanation: 'O Agreste funciona como um "celeiro", produzindo alimentos para as grandes cidades litorâneas.'},
+            { topic: 'Revisão Geral - Nordeste', q: '29) As quatro sub-regiões do Nordeste são:', options: ['Litoral, Interior, Chapada e Planície', 'Caatinga, Cerrado, Mata e Pampas', 'Zona da Mata, Agreste, Sertão e Meio-Norte', 'Norte, Sul, Leste e Oeste'], answer: 'Zona da Mata, Agreste, Sertão e Meio-Norte', explanation: 'Essa é a divisão oficial que leva em conta as características naturais e de ocupação.'},
+            { topic: 'Revisão Geral - Nordeste', q: '30) A transição entre o clima semiárido e o equatorial úmido ocorre no:', options: ['Agreste', 'Sertão', 'Zona da Mata', 'Meio-Norte'], answer: 'Meio-Norte', explanation: 'O Meio-Norte é a faixa de transição entre o Sertão (semiárido) e a Região Amazônica (equatorial).'},
+
+            // Revisão Geral - Sudeste
+            { topic: 'Revisão Geral - Sudeste', q: '31) A forte concentração industrial no Sudeste está historicamente ligada:', options: ['À proximidade com a Floresta Amazônica', 'Ao capital e infraestrutura gerados pela economia cafeeira', 'À política de incentivos fiscais do governo colonial', 'À descoberta de petróleo no século XVIII'], answer: 'Ao capital e infraestrutura gerados pela economia cafeeira', explanation: 'O café gerou a riqueza e as condições (ferrovias, portos, mão de obra) para o surgimento das indústrias.'},
+            { topic: 'Revisão Geral - Sudeste', q: '32) Qual cidade NÃO faz parte da Região Sudeste?', options: ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Curitiba'], answer: 'Curitiba', explanation: 'Curitiba é a capital do Paraná, estado que pertence à Região Sul.'},
+            { topic: 'Revisão Geral - Sudeste', q: '33) O que são "mares de morros"?', options: ['Uma formação litorânea com muitas ilhas', 'Uma paisagem de relevo com topos arredondados, típica do Sudeste', 'Um tipo de vegetação da Caatinga', 'Grandes áreas de plantação de cana'], answer: 'Uma paisagem de relevo com topos arredondados, típica do Sudeste', explanation: 'É o nome dado ao relevo de morros com formas arredondadas pela erosão, muito comum no domínio da Mata Atlântica.'},
+            { topic: 'Revisão Geral - Sudeste', q: '34) A urbanização acelerada do Sudeste resultou em um fenômeno chamado de conurbação, que é:', options: ['O crescimento de uma cidade na vertical, com muitos prédios', 'A junção da mancha urbana de duas ou mais cidades vizinhas', 'A redução da população de uma cidade', 'A criação de parques e áreas verdes'], answer: 'A junção da mancha urbana de duas ou mais cidades vizinhas', explanation: 'É quando as cidades crescem tanto que suas áreas urbanas se encontram e se unem.'},
+            { topic: 'Revisão Geral - Sudeste', q: '35) O Parque Estadual da Serra do Mar é uma importante unidade de conservação que protege os remanescentes de:', options: ['Cerrado', 'Caatinga', 'Mata Atlântica', 'Pampas'], answer: 'Mata Atlântica', explanation: 'Ele é um dos maiores corredores de biodiversidade preservada da Mata Atlântica no Brasil.'},
+            { topic: 'Revisão Geral - Sudeste', q: '36) O estado do Sudeste que não possui litoral é:', options: ['São Paulo', 'Rio de Janeiro', 'Espírito Santo', 'Minas Gerais'], answer: 'Minas Gerais', explanation: 'Minas Gerais é o único estado da região que não é banhado pelo Oceano Atlântico.'},
+            { topic: 'Revisão Geral - Sudeste', q: '37) A economia do Sudeste pode ser considerada:', options: ['Pouco diversificada e baseada na agricultura', 'Altamente diversificada e industrializada', 'Baseada apenas no extrativismo mineral', 'Focada exclusivamente no turismo'], answer: 'Altamente diversificada e industrializada', explanation: 'A região possui o parque industrial mais completo, a agropecuária mais moderna e o setor de serviços mais forte do país.'},
+            { topic: 'Revisão Geral - Sudeste', q: '38) Qual destes produtos agrícolas NÃO é um destaque da agropecuária do Sudeste?', options: ['Café', 'Laranja', 'Cana-de-açúcar', 'Guaraná'], answer: 'Guaraná', explanation: 'O guaraná é um produto típico da Região Norte, especialmente do estado do Amazonas.'},
+            { topic: 'Revisão Geral - Sudeste', q: '39) "Influenciadores da vida real" se refere a pessoas que:', options: ['Fazem propaganda apenas na internet', 'Usam sua influência para promover ações sociais positivas em suas comunidades', 'São políticos famosos', 'São artistas de televisão'], answer: 'Usam sua influência para promover ações sociais positivas em suas comunidades', explanation: 'São pessoas comuns que se tornam líderes e promovem mudanças positivas no lugar onde vivem, como em projetos sociais em favelas.'},
+            { topic: 'Revisão Geral - Sudeste', q: '40) O "colar metropolitano" de Belo Horizonte é formado por:', options: ['Bairros do centro da cidade', 'Cidades vizinhas que sofrem forte influência da capital', 'Parques e áreas de conservação', 'Um sistema de rodovias'], answer: 'Cidades vizinhas que sofrem forte influência da capital', explanation: 'São municípios que rodeiam a região metropolitana principal e mantêm fortes laços econômicos e sociais com ela.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)] mb-2';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionTopic);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionTopic.textContent = qObj.topic;
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionTopic.textContent = '';
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
+
