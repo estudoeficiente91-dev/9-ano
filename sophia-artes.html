@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prova de Artes – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Prova de Artes — 7º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos sobre o Corpo como Expressão no Teatro.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">UNIDADE 3: O Corpo como Expressão</h2>
+                            <h3 class="sub-topic-title">TEMA 1: Corpo e Gestualidade</h3>
+                            <p>No teatro, o corpo do ator é sua principal ferramenta de trabalho. A <span class="highlight">gestualidade</span> (o uso de gestos, posturas e expressões faciais) é fundamental para comunicar ideias, emoções e intenções, muitas vezes sem a necessidade de palavras. O <span class="highlight">teatro sem palavras</span>, como a mímica e a pantomima, baseia-se inteiramente na capacidade do corpo de contar uma história. O <span class="highlight">cinema mudo</span>, com estrelas como Charlie Chaplin, é um grande exemplo de como a expressão corporal pode ser poderosa e universal.</p>
+                            <p>Para que a cena funcione, a <span class="highlight">construção da visualidade</span> é essencial. Três profissionais são chave:</p>
+                            <ul>
+                                <li><strong>Cenógrafo:</strong> Cria o cenário, o ambiente onde a história acontece.</li>
+                                <li><strong>Figurinista:</strong> Desenvolve as roupas e acessórios dos personagens, ajudando a definir sua personalidade, época e classe social.</li>
+                                <li><strong>Aderecista:</strong> Cuida dos adereços, ou seja, os objetos que os atores usam em cena (uma espada, um copo, uma carta).</li>
+                            </ul>
+                            
+                            <h3 class="sub-topic-title">TEMA 2: A Dramaturgia do Corpo</h3>
+                            <p>A dramaturgia do corpo foca em como o movimento e o gesto podem criar narrativas. Duas formas históricas são muito importantes:</p>
+                            <ul>
+                                <li><strong>Mímica:</strong> É a arte de se expressar através de gestos, sem usar a fala. O mímico usa o corpo para criar objetos, ambientes e emoções imaginárias. É uma arte milenar, mas que foi modernizada por artistas como Marcel Marceau.</li>
+                                <li><strong>Commedia dell'arte:</strong> Foi uma forma de teatro popular que surgiu na Itália no século XV. Era baseada na improvisação e em <span class="highlight">personagens-tipo</span> (máscaras), que eram figuras fixas com características bem definidas, como o Arlequim (esperto e acrobático), o Pantaleão (velho e avarento) e a Colombina (criada esperta).</li>
+                            </ul>
+
+                             <h3 class="sub-topic-title">TEMA 3: A Arte de Fazer Rir</h3>
+                             <p>A <span class="highlight">comédia</span> é um gênero teatral que tem como principal objetivo provocar o riso na plateia. Ela geralmente trata de temas do cotidiano de forma leve e divertida, e costuma ter um final feliz. Existem vários tipos de comédia:</p>
+                             <ul>
+                                 <li><strong>Comédia Satírica:</strong> Usa o humor para fazer uma crítica social ou política. Ela ridiculariza costumes, ideias ou pessoas poderosas para provocar a reflexão.</li>
+                                 <li><strong>Comédia de Costumes:</strong> Retrata e, muitas vezes, critica os hábitos, valores e comportamentos de uma sociedade em uma determinada época.</li>
+                             </ul>
+                             <p>Muitas comédias se baseiam nos <span class="highlight">tipos sociais</span>, que são personagens que representam um grupo da sociedade (o político corrupto, a vizinha fofoqueira, o jovem rebelde), gerando identificação e riso.</p>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-art-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-art-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // TEMA 1: Corpo e gestualidade
+            { topic: 'Corpo e Gestualidade', q: '1) No teatro, qual é a principal ferramenta de expressão do ator?', options: ['O cenário', 'O figurino', 'O corpo', 'A iluminação'], answer: 'O corpo', explanation: 'O corpo, com seus gestos, posturas e expressões, é o principal instrumento do ator para comunicar e criar personagens.'},
+            { topic: 'Corpo e Gestualidade', q: '2) O que é um "teatro sem palavras"?', options: ['Um teatro onde os atores leem o texto em silêncio', 'Uma forma de arte que utiliza exclusivamente a expressão corporal e gestual', 'Um ensaio onde as falas ainda não foram decoradas', 'Um tipo de peça musical sem letra'], answer: 'Uma forma de arte que utiliza exclusivamente a expressão corporal e gestual', explanation: 'É o caso da mímica e da pantomima, que contam histórias apenas com o corpo.'},
+            { topic: 'Corpo e Gestualidade', q: '3) O cinema mudo, com artistas como Charlie Chaplin, dependia muito de qual elemento para ser compreendido pelo público?', options: ['Diálogos bem escritos', 'Efeitos sonoros complexos', 'A expressividade corporal dos atores', 'Cenários coloridos'], answer: 'A expressividade corporal dos atores', explanation: 'Sem o som das falas, toda a emoção e a narrativa dependiam da atuação física e facial dos artistas.'},
+            { topic: 'Construção da Visualidade', q: '4) Quem é o profissional responsável por criar o ambiente onde a peça acontece?', options: ['Figurinista', 'Aderecista', 'Cenógrafo', 'Diretor'], answer: 'Cenógrafo', explanation: 'O cenógrafo projeta e constrói o cenário da peça.'},
+            { topic: 'Construção da Visualidade', q: '5) O profissional que define as roupas e os acessórios que os personagens usam é o:', options: ['Cenógrafo', 'Figurinista', 'Iluminador', 'Maquiador'], answer: 'Figurinista', explanation: 'O figurinista ajuda a contar a história e a definir a personalidade dos personagens através de suas vestimentas.'},
+            { topic: 'Construção da Visualidade', q: '6) Uma espada, um telefone ou um livro que um ator manipula em cena é chamado de:', options: ['Cenário', 'Figurino', 'Adereço', 'Rubrica'], answer: 'Adereço', explanation: 'Adereços são os objetos de cena com os quais os atores interagem.'},
+            { topic: 'Construção da Visualidade', q: '7) Qual a importância da "proposta visual" (cenário, figurino, etc.) em uma peça?', options: ['Nenhuma, o texto é o mais importante', 'Ajuda a criar a atmosfera da história e a caracterizar os personagens', 'Serve apenas para deixar o palco mais bonito', 'Define a duração da peça'], answer: 'Ajuda a criar a atmosfera da história e a caracterizar os personagens', explanation: 'A visualidade é um elemento fundamental da encenação, que complementa e enriquece o texto.'},
+            { topic: 'Corpo e Gestualidade', q: '8) A linguagem corporal é um exemplo de comunicação:', options: ['Verbal', 'Escrita', 'Não verbal', 'Digital'], answer: 'Não verbal', explanation: 'Ela comunica mensagens sem o uso de palavras faladas ou escritas.'},
+            { topic: 'Corpo e Gestualidade', q: '9) Em uma peça de teatro, um ator que anda curvado e com passos lentos provavelmente está representando um personagem:', options: ['Jovem e alegre', 'Idoso ou cansado', 'Rico e poderoso', 'Apressado e ansioso'], answer: 'Idoso ou cansado', explanation: 'A postura corporal é uma forma direta de comunicar características do personagem.'},
+            
+            // TEMA 2: A dramaturgia do corpo
+            { topic: 'Dramaturgia do Corpo', q: '10) A arte de contar histórias usando apenas gestos e expressões faciais, sem o uso da voz, é conhecida como:', options: ['Comédia', 'Tragédia', 'Mímica', 'Sátira'], answer: 'Mímica', explanation: 'A mímica é a base do teatro sem palavras, onde o corpo é o único instrumento narrativo.'},
+            { topic: 'Dramaturgia do Corpo', q: '11) A Commedia dell\'arte é uma forma de teatro que surgiu em qual país?', options: ['França', 'Inglaterra', 'Espanha', 'Itália'], answer: 'Itália', explanation: 'Ela floresceu na Itália a partir do século XV e influenciou o teatro em toda a Europa.'},
+            { topic: 'Dramaturgia do Corpo', q: '12) Qual é a principal característica da Commedia dell\'arte?', options: ['Textos escritos e fixos', 'O uso de improvisação e personagens-tipo', 'Cenários realistas e complexos', 'A ausência de humor'], answer: 'O uso de improvisação e personagens-tipo', explanation: 'Os atores improvisavam as falas a partir de um roteiro básico (canovaccio) e usavam máscaras que representavam personagens fixos.'},
+            { topic: 'Dramaturgia do Corpo', q: '13) Arlequim, Pantaleão e Colombina são exemplos de personagens-tipo de qual gênero teatral?', options: ['Tragédia Grega', 'Teatro do Absurdo', 'Commedia dell\'arte', 'Cinema Mudo'], answer: 'Commedia dell\'arte', explanation: 'Esses são alguns dos personagens (máscaras) mais famosos e recorrentes da Commedia dell\'arte.'},
+            { topic: 'Dramaturgia do Corpo', q: '14) O que eram as "máscaras" na Commedia dell\'arte?', options: ['Um acessório para esconder o rosto dos atores', 'Personagens fixos com características físicas e psicológicas bem definidas', 'Um tipo de maquiagem pesada', 'Um sinônimo para o figurino'], answer: 'Personagens fixos com características físicas e psicológicas bem definidas', explanation: 'Cada máscara representava um tipo social com um comportamento e um jeito de andar e falar específicos.'},
+            { topic: 'Dramaturgia do Corpo', q: '15) A mímica moderna foi muito influenciada por qual artista francês, conhecido por seu personagem "Bip"?', options: ['Charlie Chaplin', 'Molière', 'Marcel Marceau', 'William Shakespeare'], answer: 'Marcel Marceau', explanation: 'Marcel Marceau é considerado o maior mímico do século XX e popularizou a arte no mundo todo.'},
+            { topic: 'Dramaturgia do Corpo', q: '16) A ênfase no corpo e no movimento presente na Commedia dell\'arte influenciou qual outra forma de arte?', options: ['A pintura renascentista', 'A ópera', 'O balé clássico e a dança', 'A escultura'], answer: 'O balé clássico e a dança', explanation: 'A fisicalidade, as acrobacias e os gestos estilizados da Commedia dell\'arte tiveram grande impacto nas artes do movimento.'},
+            
+            // TEMA 3: A arte de fazer rir
+            { topic: 'A Arte de Fazer Rir', q: '17) Qual é o principal objetivo do gênero teatral da comédia?', options: ['Provocar a reflexão filosófica', 'Fazer o público chorar', 'Criticar o governo', 'Provocar o riso'], answer: 'Provocar o riso', explanation: 'A comédia busca, através de diversas técnicas, entreter e divertir a plateia.'},
+            { topic: 'A Arte de Fazer Rir', q: '18) Uma peça que usa o humor para criticar de forma exagerada os políticos e os problemas da sociedade é uma:', options: ['Comédia de costumes', 'Comédia romântica', 'Comédia satírica', 'Tragédia'], answer: 'Comédia satírica', explanation: 'A sátira utiliza o riso como uma arma para expor e criticar os vícios e a corrupção da sociedade.'},
+            { topic: 'A Arte de Fazer Rir', q: '19) O que é uma "comédia de costumes"?', options: ['Uma peça que se passa na zona rural', 'Uma peça que critica os hábitos e comportamentos de uma determinada sociedade', 'Uma peça baseada em fatos históricos', 'Uma peça musical sem falas'], answer: 'Uma peça que critica os hábitos e comportamentos de uma determinada sociedade', explanation: 'Ela expõe, de forma cômica, as convenções sociais, a moral e o dia a dia de um grupo social.'},
+            { topic: 'A Arte de Fazer Rir', q: '20) Personagens como "o avarento", "a fofoqueira" ou "o falso herói" são exemplos de:', options: ['Tipos sociais', 'Protagonistas trágicos', 'Cenógrafos', 'Atores do cinema mudo'], answer: 'Tipos sociais', explanation: 'São figuras que representam comportamentos comuns na sociedade, gerando identificação e humor.'},
+            { topic: 'A Arte de Fazer Rir', q: '21) Martins Pena foi um importante autor brasileiro do século XIX, conhecido por suas:', options: ['Tragédias', 'Poemas visuais', 'Comédias de costumes', 'Peças de mímica'], answer: 'Comédias de costumes', explanation: 'Ele retratou com muito humor a sociedade do Rio de Janeiro em sua época, em peças como "O Juiz de Paz na Roça".'},
+            { topic: 'A Arte de Fazer Rir', q: '22) Qual dos elementos abaixo NÃO é comum em uma comédia?', options: ['Final feliz', 'Situações exageradas e confusas', 'Personagens caricatos', 'Morte trágica do protagonista'], answer: 'Morte trágica do protagonista', explanation: 'O final trágico é uma característica da tragédia, não da comédia, que geralmente termina com a resolução dos conflitos.'},
+            { topic: 'A Arte de Fazer Rir', q: '23) A comédia que incorpora músicas e canções em sua estrutura é chamada de:', options: ['Comédia satírica', 'Comédia de costumes musicada ou musical', 'Pantomima', 'Tragicomédia'], answer: 'Comédia de costumes musicada ou musical', explanation: 'É um subgênero que une o teatro de humor com elementos da música.'},
+
+            // Revisão Geral
+            { topic: 'Revisão Geral', q: '24) A linguagem corporal, como cruzar os braços ou desviar o olhar, pode transmitir mensagens. Isso é estudado pela:', options: ['Cinestesia', 'Gestualidade', 'Comunicação não verbal', 'Todas as alternativas'], answer: 'Todas as alternativas', explanation: 'Todos esses termos se relacionam ao estudo de como o corpo comunica sem palavras.'},
+            { topic: 'Revisão Geral', q: '25) Em qual forma de arte o silêncio é um elemento fundamental da expressão?', options: ['Ópera', 'Cinema mudo', 'Musical', 'Oratória'], answer: 'Cinema mudo', explanation: 'No cinema mudo, a ausência de som falado obrigava a narrativa a se concentrar na imagem e no gesto.'},
+            { topic: 'Revisão Geral', q: '26) O que cenografia, figurino e adereços têm em comum?', options: ['São todos feitos de tecido', 'Compõem a visualidade da peça', 'São responsabilidade do diretor', 'São elementos sonoros'], answer: 'Compõem a visualidade da peça', explanation: 'Juntos, eles criam o mundo visual em que a história acontece.'},
+            { topic: 'Revisão Geral', q: '27) A improvisação era o elemento central de qual forma de teatro?', options: ['Teatro Grego', 'Commedia dell\'arte', 'Teatro Elizabetano', 'Tragédia'], answer: 'Commedia dell\'arte', explanation: 'Os atores tinham liberdade para criar suas falas e ações em cena a partir de um roteiro básico.'},
+            { topic: 'Revisão Geral', q: '28) Um ator que interpreta o mesmo personagem-tipo, como o "soldado fanfarrão", por muitos anos, está seguindo uma tradição inspirada na:', options: ['Commedia dell\'arte', 'Tragédia grega', 'Ópera moderna', 'Performance artística'], answer: 'Commedia dell\'arte', explanation: 'A tradição de atores se especializarem em uma única "máscara" ou personagem-tipo é uma herança direta da Commedia dell\'arte.'},
+            { topic: 'Revisão Geral', q: '29) A principal diferença entre a comédia satírica e a comédia de costumes é que a sátira:', options: ['É sempre mais leve e romântica', 'Tem um tom de crítica social e política mais forte e direto', 'Nunca utiliza personagens-tipo', 'Não tem o objetivo de fazer rir'], answer: 'Tem um tom de crítica social e política mais forte e direto', explanation: 'Enquanto a comédia de costumes observa a sociedade, a sátira a ataca com o objetivo de provocar a reflexão crítica.'},
+            { topic: 'Revisão Geral', q: '30) Qual das seguintes opções descreve melhor a função do figurinista?', options: ['Pintar o fundo do palco', 'Escolher as músicas da peça', 'Vestir o personagem de acordo com sua personalidade e contexto', 'Escrever as falas dos atores'], answer: 'Vestir o personagem de acordo com sua personalidade e contexto', explanation: 'O figurino é uma ferramenta essencial para construir visualmente quem é o personagem.'},
+            { topic: 'Revisão Geral', q: '31) A arte da mímica exige do artista principalmente:', options: ['Uma boa voz', 'Grande capacidade de improviso com palavras', 'Extremo controle e consciência corporal', 'Habilidade para cantar'], answer: 'Extremo controle e consciência corporal', explanation: 'O corpo é o único instrumento do mímico, que precisa de total domínio sobre ele.'},
+            { topic: 'Revisão Geral', q: '32) Se um diretor de teatro pede para o cenógrafo criar um ambiente que pareça pobre e sujo, ele está pensando em:', options: ['Acústica', 'A construção da visualidade', 'Número de atores', 'Orçamento'], answer: 'A construção da visualidade', explanation: 'O cenário é um elemento visual que ajuda a contar a história e a definir o contexto social da cena.'},
+            { topic: 'Revisão Geral', q: '33) Qual o objetivo da atitude "esforçar-se por exatidão e precisão" na arte?', options: ['Fazer tudo de qualquer jeito', 'Garantir que a comunicação da ideia seja clara e eficaz', 'Limitar a criatividade do artista', 'Terminar o trabalho o mais rápido possível'], answer: 'Garantir que a comunicação da ideia seja clara e eficaz', explanation: 'Na arte, precisão significa que cada gesto, palavra ou elemento visual tem uma intenção e contribui para a obra final.'},
+            { topic: 'Revisão Geral', q: '34) O que a comédia e a tragédia têm em comum?', options: ['Ambas terminam com a morte do herói', 'Ambas são gêneros do texto teatral', 'Ambas evitam o uso de personagens-tipo', 'Ambas proíbem o uso de música'], answer: 'Ambas são gêneros do texto teatral', explanation: 'São dois dos gêneros mais antigos e fundamentais da história do teatro.'},
+            { topic: 'Revisão Geral', q: '35) O ator italiano que interpreta o mesmo personagem há 55 anos demonstra:', options: ['Falta de criatividade', 'Uma forte tradição ligada aos personagens-tipo da Commedia dell\'arte', 'Que o teatro não mudou nada em 500 anos', 'Que a comédia não é mais popular'], answer: 'Uma forte tradição ligada aos personagens-tipo da Commedia dell\'arte', explanation: 'Essa prática reflete a tradição dos atores que dedicavam a vida a aperfeiçoar uma única "máscara".'},
+            { topic: 'Revisão Geral', q: '36) Um ator fazendo uma performance em uma praça, interagindo com o público e usando o improviso, se aproxima de qual forma de teatro?', options: ['Tragédia Grega', 'Teatro de rua, com influências da Commedia dell\'arte', 'Ópera', 'Cinema mudo'], answer: 'Teatro de rua, com influências da Commedia dell\'arte', explanation: 'A interação com o público, o improviso e o foco no ator são características marcantes desse tipo de teatro popular.'},
+            { topic: 'Revisão Geral', q: '37) Imaginar, criar e inovar são atitudes essenciais para qual profissional do teatro?', options: ['Apenas para o autor do texto', 'Apenas para o diretor', 'Apenas para os atores', 'Para todos os envolvidos na criação de uma peça'], answer: 'Para todos os envolvidos na criação de uma peça', explanation: 'Desde o autor até o iluminador, todos precisam de criatividade para dar vida à encenação.'},
+            { topic: 'Revisão Geral', q: '38) Qual a principal diferença entre um romance e um texto teatral?', options: ['O romance tem personagens e o texto teatral não', 'O texto teatral é escrito para ser encenado e estruturado em falas', 'O romance não conta uma história', 'O texto teatral não pode ter humor'], answer: 'O texto teatral é escrito para ser encenado e estruturado em falas', explanation: 'A forma (estrutura em diálogos e rubricas) e a finalidade (a encenação) são as principais diferenças.'},
+            { topic: 'Revisão Geral', q: '39) A expressão "dramaturgia do corpo" significa que:', options: ['O corpo é menos importante que o texto', 'O próprio corpo e seus movimentos podem contar uma história', 'Apenas dançarinos podem fazer teatro', 'O teatro deve ser sempre dramático e triste'], answer: 'O próprio corpo e seus movimentos podem contar uma história', explanation: 'É a ideia de que a narrativa pode ser construída fisicamente, através do movimento.'},
+            { topic: 'Revisão Geral', q: '40) A comédia, ao rir dos costumes de uma sociedade, pode ter uma função:', options: ['Apenas de entretenimento', 'Crítica e reflexiva', 'Científica', 'Histórica'], answer: 'Crítica e reflexiva', explanation: 'Muitas vezes, o riso é a melhor forma de fazer o público pensar sobre seus próprios comportamentos e sobre a sociedade em que vive.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)] mb-2';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionTopic);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionTopic.textContent = qObj.topic;
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionTopic.textContent = '';
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
