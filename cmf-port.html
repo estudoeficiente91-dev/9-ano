@@ -7,13 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root{
-            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.04); --muted-2: rgba(230,238,248,0.85);
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
         }
         html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
         .container{max-width:980px;margin:28px auto;padding:18px}
         .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
         .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
-        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: none; box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
         .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
         .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
         .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
@@ -23,15 +23,21 @@
         #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
         #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
         #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
-        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: transparent; }
-        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: transparent; }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
         .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
         .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
         .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
         @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
         .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
         @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
-        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.06); --muted-2: rgba(15,23,36,0.85); }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
     </style>
 </head>
 <body class="antialiased">
@@ -40,7 +46,7 @@
             <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-bold">Prova CMF — 1º Ano: Português</h1>
-                    <p class="text-sm text-slate-400">Resumo dos principais tópicos + 25 questões para prática.</p>
+                    <p class="text-sm text-slate-400">Guia de estudos de Compreensão Textual e Análise Linguística.</p>
                 </div>
                 <div>
                     <button id="theme-toggle" class="btn-ghost">Tema</button>
@@ -56,40 +62,79 @@
                 </nav>
 
                 <section id="learn-section">
-                    <div class="space-y-6">
-                        <div>
-                            <h2 class="text-2xl font-semibold text-[var(--accent)]">I. Compreensão Textual</h2>
-                            <p class="mt-2 text-sm text-slate-300">Habilidade de decodificar e interpretar textos, extraindo informações e compreendendo a intenção do autor.</p>
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Compreensão Textual</h2>
+                            <p>Esta área avalia sua capacidade de ler e entender o que os textos dizem, tanto de forma direta quanto nas entrelinhas.</p>
+
+                            <h3 class="sub-topic-title">a) Textos Multimodais</h3>
+                            <p>Um texto <span class="highlight">multimodal</span> é aquele que usa mais de uma linguagem para construir sentido. Ele mistura palavras (linguagem verbal) com imagens, gráficos, cores, sons, etc. (linguagem não verbal). Ex: charges, tirinhas, infográficos, anúncios publicitários. Interpretar esses textos exige atenção a todos os elementos e como eles se combinam.</p>
+
+                            <h3 class="sub-topic-title">b) Finalidade de Gêneros Textuais</h3>
+                            <p>Cada <span class="highlight">gênero textual</span> tem um propósito. Uma <span class="highlight">notícia</span> quer informar, uma <span class="highlight">receita</span> quer instruir, uma <span class="highlight">propaganda</span> quer convencer, um <span class="highlight">poema</span> quer emocionar. Identificar a finalidade é o primeiro passo para entender o texto.</p>
+
+                            <h3 class="sub-topic-title">c) Informações Implícitas</h3>
+                            <p>São ideias que não estão escritas com todas as letras, mas que podem ser deduzidas a partir de pistas no texto. É a arte de <span class="highlight">"ler nas entrelinhas"</span>. Se alguém diz "Que frio aqui!", a informação implícita pode ser um pedido para fechar a janela.</p>
+
+                            <h3 class="sub-topic-title">d) Comparação de Textos</h3>
+                            <p>Um mesmo tema (ex: um jogo de futebol) pode ser contado de formas diferentes por dois jornais. Um pode focar na vitória de um time, outro na polêmica da arbitragem. Analisar essas diferenças nos ajuda a perceber o <span class="highlight">ponto de vista</span> e a intenção de cada autor.</p>
                             
-                            <h3 class="text-lg font-semibold mt-4">Tópicos Essenciais:</h3>
-                            <ul class="mt-2 text-sm list-disc list-inside space-y-2">
-                                <li><strong>Textos Multimodais:</strong> Combinam linguagem verbal (palavras) e não verbal (imagens, gráficos, sons). O sentido é construído pela interação de todos os elementos, como em tirinhas, infográficos e anúncios.</li>
-                                <li><strong>Gêneros e Finalidade:</strong> Cada gênero textual (notícia, receita, poema, crônica) tem um objetivo: informar, instruir, emocionar, argumentar. Identificar essa finalidade é o primeiro passo para a compreensão.</li>
-                                <li><strong>Informações Implícitas:</strong> São ideias não ditas diretamente no texto, mas que podem ser subentendidas a partir de pistas, do contexto e do seu conhecimento de mundo.</li>
-                                <li><strong>Tese e Argumentos:</strong> Em textos argumentativos, a <strong>tese</strong> é a ideia principal defendida pelo autor. Os <strong>argumentos</strong> são as justificativas, os fatos e os raciocínios usados para comprovar a tese.</li>
-                                <li><strong>Ironia e Humor:</strong> A <strong>ironia</strong> consiste em dizer o contrário do que se pensa, geralmente com intenção crítica. O <strong>humor</strong> surge da quebra de expectativa, de situações inesperadas ou do uso ambíguo de palavras.</li>
-                                <li><strong>Escolha Lexical:</strong> A seleção de palavras (léxico) nunca é neutra. Escolher entre "lar", "casa" e "barraco" ou entre "político" e "estadista" altera o sentido e revela a posição do autor.</li>
-                            </ul>
+                            <h3 class="sub-topic-title">e) Tese e Argumentos</h3>
+                            <p>Em textos de opinião (artigos, resenhas), o autor defende uma ideia principal, chamada de <span class="highlight">tese</span>. Para provar que sua tese é válida, ele usa <span class="highlight">argumentos</span> (exemplos, dados, comparações, citações). Identificar a tese e os argumentos é fundamental para entender o objetivo do texto.</p>
+                            
+                            <h3 class="sub-topic-title">f) Ironia e Humor</h3>
+                            <p>O <span class="highlight">humor</span> pode ser criado por situações inesperadas, quebras de expectativa ou exageros. A <span class="highlight">ironia</span> é um tipo de humor mais fino, que consiste em dizer o contrário do que se pensa, geralmente com um tom de crítica ou deboche.</p>
+
+                            <h3 class="sub-topic-title">g) Escolha Lexical</h3>
+                            <p>A escolha das palavras (léxico) nunca é neutra. Dizer que alguém mora em um <span class="highlight">"barraco"</span>, <span class="highlight">"casa"</span> ou <span class="highlight">"mansão"</span> cria efeitos de sentido completamente diferentes. Analisar a escolha lexical ajuda a perceber o tom do texto e a intenção do autor.</p>
                         </div>
-                        <hr class="border-[var(--border)]">
-                        <div>
-                             <h2 class="text-2xl font-semibold text-[var(--accent)]">II. Análise e Reflexão Linguística</h2>
-                             <p class="mt-2 text-sm">Estudo da estrutura e do funcionamento da língua portuguesa, aplicando conhecimentos gramaticais para entender a construção de sentidos no texto.</p>
-                             <h3 class="text-lg font-semibold mt-4">Tópicos Essenciais:</h3>
-                             <ul class="mt-2 text-sm list-disc list-inside space-y-2">
-                                <li><strong>Denotação e Conotação:</strong> <strong>Denotação</strong> é o sentido literal, do dicionário (ex: "coração" = órgão). <strong>Conotação</strong> é o sentido figurado, associado a emoções e cultura (ex: "meu coração está em festa").</li>
-                                <li><strong>Figuras de Linguagem:</strong> Recursos para tornar a linguagem mais expressiva, como a <strong>metáfora</strong> (comparação implícita), a <strong>comparação</strong> (com conectivo), a <strong>metonímia</strong> (troca de termos) e a <strong>hipérbole</strong> (exagero).</li>
-                                <li><strong>Coesão e Coerência:</strong> A <strong>coesão</strong> é a ligação entre as partes de um texto, feita por pronomes, sinônimos e conectivos (conjunções). A <strong>coerência</strong> é o sentido lógico do texto.</li>
-                                <li><strong>Classes de Palavras:</strong> As 10 classes (substantivo, verbo, adjetivo, etc.) e suas funções na construção das frases.</li>
-                                <li><strong>Sintaxe (Relações no Período):</strong> Estudo das orações <strong>coordenadas</strong> (independentes) e <strong>subordinadas</strong> (dependentes). Os conectivos (e, mas, que, quando) mostram a relação entre elas (adição, oposição, causa).</li>
-                                <li><strong>Vozes Verbais:</strong> <strong>Voz Ativa</strong> (o sujeito pratica a ação: "A turma leu o livro"). <strong>Voz Passiva</strong> (o sujeito sofre a ação: "O livro foi lido pela turma").</li>
-                                <li><strong>Concordância e Regência:</strong> A <strong>concordância</strong> é a harmonia entre termos (sujeito-verbo; substantivo-adjetivo). A <strong>regência</strong> é a relação de dependência, muitas vezes com preposição, entre um verbo/nome e seu complemento (ex: "assistir <strong>ao</strong> filme", "necessidade <strong>de</strong> ajuda").</li>
-                             </ul>
+                        
+                        <div class="topic-section">
+                             <h2 class="topic-title">Análise e Reflexão Linguística</h2>
+                             <p>Aqui, o foco é a estrutura da língua: como as palavras e frases se organizam para criar sentido.</p>
+
+                             <h3 class="sub-topic-title">a) Denotação e Conotação</h3>
+                             <p><span class="highlight">Denotação</span> é o sentido literal, de dicionário, da palavra. Ex: "O <span class="highlight">coração</span> é um órgão vital". <span class="highlight">Conotação</span> é o sentido figurado, subjetivo. Ex: "Você é o meu <span class="highlight">coração</span>".</p>
+
+                             <h3 class="sub-topic-title">b) Figuras de Linguagem</h3>
+                             <p>São recursos que tornam a linguagem mais expressiva. As principais são: <span class="highlight">Metáfora</span> (comparação implícita: "A vida é uma nuvem"), <span class="highlight">Comparação</span> (explícita: "A vida é como uma nuvem"), <span class="highlight">Personificação</span> (dar vida a seres inanimados: "O vento beijava seus cabelos"), <span class="highlight">Hipérbole</span> (exagero: "Morri de rir").</p>
+
+                             <h3 class="sub-topic-title">c) Relações Semânticas (Conectivos)</h3>
+                             <p>São as relações de sentido entre partes de um texto, marcadas por <span class="highlight">conjunções e preposições</span> (marcadores argumentativos). Eles podem indicar causa (porque), consequência (portanto), oposição (mas), adição (e), etc.</p>
+
+                             <h3 class="sub-topic-title">d) Classes de Palavras</h3>
+                             <p>As palavras se dividem em 10 classes (substantivo, adjetivo, verbo, etc.). É importante saber que uma palavra pode <span class="highlight">mudar de classe</span> dependendo do contexto. Ex: "O <span class="highlight">jantar</span> está servido" (o verbo 'jantar' virou um substantivo).</p>
+
+                             <h3 class="sub-topic-title">e) Coordenação e Subordinação</h3>
+                             <p>São as duas formas de ligar orações. Na <span class="highlight">coordenação</span>, as orações são independentes ("Estudei e passei"). Na <span class="highlight">subordinação</span>, uma depende da outra ("Espero que você passe"). A escolha entre uma e outra afeta a argumentação e o ritmo do texto.</p>
+                             
+                             <h3 class="sub-topic-title">f) Vozes Verbais</h3>
+                             <p><span class="highlight">Voz Ativa:</span> o sujeito pratica a ação ("O aluno fez a prova"). <span class="highlight">Voz Passiva:</span> o sujeito sofre a ação ("A prova foi feita pelo aluno"). Mudar a voz do verbo muda o foco da informação.</p>
+                             
+                             <h3 class="sub-topic-title">g) e h) Transformações Sintáticas</h3>
+                             <p>Podemos expressar a mesma ideia com estruturas diferentes. Ex: "amor <span class="highlight">de mãe</span>" (locução adjetiva) = "amor <span class="highlight">materno</span>" (adjetivo). "Dia <span class="highlight">de chuva</span>" (termo substantivo) = "dia <span class="highlight">chuvoso</span>" (termo adjetivo).</p>
+
+                             <h3 class="sub-topic-title">i) Coesão (Pronominalização e Substituição)</h3>
+                             <p>Coesão é a "costura" do texto. Para não repetir palavras, usamos <span class="highlight">pronomes</span> ("João chegou. Ele parecia feliz.") ou <span class="highlight">sinônimos</span> ("O leão é feroz. O rei da selva impõe respeito.").</p>
+
+                             <h3 class="sub-topic-title">j) Regência Verbal e Nominal</h3>
+                             <p>É a relação de dependência entre um verbo (verbal) ou nome (nominal) e seus complementos, geralmente por meio de uma <span class="highlight">preposição</span>. Ex: Quem assiste, assiste <span class="highlight">a</span> alguma coisa ("assistir <span class="highlight">ao</span> filme").</p>
+
+                             <h3 class="sub-topic-title">k) Concordância Verbal e Nominal</h3>
+                             <p><span class="highlight">Concordância verbal:</span> o verbo concorda com o sujeito ("<span class="highlight">Nós</span> estud<span class="highlight">amos</span>"). <span class="highlight">Concordância nominal:</span> o artigo, adjetivo e pronome concordam com o substantivo ("<span class="highlight">As</span> alun<span class="highlight">as</span> estudios<span class="highlight">as</span>").</p>
+
+                             <h3 class="sub-topic-title">l) Termos Sintáticos da Oração</h3>
+                             <p>É a função que cada palavra ou grupo de palavras exerce na oração: <span class="highlight">Sujeito</span> (quem pratica/sofre a ação), <span class="highlight">Predicado</span> (o que se declara sobre o sujeito), <span class="highlight">Objetos</span> (complementos do verbo), <span class="highlight">Adjuntos</span> (termos acessórios que indicam circunstâncias), etc.</p>
                         </div>
+                        
                     </div>
                 </section>
 
                 <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
                     <div id="question-buttons" class="mb-4"></div>
                     <div id="quiz-container">
                         </div>
@@ -100,7 +145,6 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Elements
         const root = document.documentElement;
         const themeToggle = document.getElementById('theme-toggle');
         const btnLearn = document.getElementById('btn-learn');
@@ -109,8 +153,9 @@
         const practiceSection = document.getElementById('practice-section');
         const questionButtons = document.getElementById('question-buttons');
         const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
 
-        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer){
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
             console.error('Elementos DOM não encontrados.');
             return;
         }
@@ -126,39 +171,63 @@
         
         const quizData = [
             // Compreensão Textual
-            { q: '1) "Que gentileza a sua chegar duas horas atrasado para a reunião!" A frase expressa:', options: ['Ironia', 'Elogio', 'Dúvida', 'Súplica'], answer: 'Ironia', explanation: 'O autor diz o oposto do que realmente pensa, criticando o atraso.'},
-            { q: '2) Em uma tirinha, o texto diz "Estou bem", mas o personagem aparece chorando. Para entender a mensagem, é preciso analisar:', options: ['A relação entre texto e imagem (multimodalidade)', 'Apenas o texto escrito', 'Apenas a imagem', 'A classe das palavras'], answer: 'A relação entre texto e imagem (multimodalidade)', explanation: 'O sentido completo só é obtido pela combinação do verbal com o não verbal.'},
-            { q: '3) "João morava num casebre no alto do morro." A palavra "casebre" tem uma conotação de:', options: ['Pobreza, simplicidade', 'Riqueza, luxo', 'Modernidade', 'Segurança'], answer: 'Pobreza, simplicidade', explanation: 'A escolha lexical "casebre" sugere uma moradia humilde, diferente de "casa" ou "mansão".'},
-            { q: '4) "Ele não era o melhor aluno da turma, mas seu esforço era notável." Do trecho, pode-se inferir que:', options: ['O esforço pode compensar a falta de talento', 'Ele era um aluno preguiçoso', 'A turma inteira era de gênios', 'Esforço não leva a lugar nenhum'], answer: 'O esforço pode compensar a falta de talento', explanation: 'A frase sugere que, apesar de não ser o mais brilhante, seu empenho era um grande valor. Esta é uma informação implícita.'},
-            { q: '5) A principal finalidade de uma receita culinária é:', options: ['Instruir', 'Narrar', 'Argumentar', 'Descrever'], answer: 'Instruir', explanation: 'Textos instrucionais, como receitas e manuais, têm o objetivo de guiar o leitor a realizar uma tarefa.'},
-            { q: '6) Na frase "Aquele político é uma raposa", a palavra "raposa" está em sentido:', options: ['Conotativo', 'Denotativo', 'Literal', 'Técnico'], answer: 'Conotativo', explanation: '"Raposa" é usada no sentido figurado de "pessoa astuta", e não no sentido literal do animal.'},
-            { q: '7) Qual das alternativas contém uma figura de linguagem (metáfora)?', options: ['"A vida é uma nuvem que voa."', '"O céu está azul."', '"Comprei um quilo de açúcar."', '"Ele chegou cedo."'], answer: '"A vida é uma nuvem que voa."', explanation: 'Há uma comparação implícita entre "vida" e "nuvem", característica da metáfora.'},
-            { q: '8) Tese é:', options: ['A ideia principal defendida no texto.', 'Um exemplo usado para ilustrar algo.', 'A conclusão do texto.', 'Uma pergunta que o texto responde.'], answer: 'A ideia principal defendida no texto.', explanation: 'Tese é a posição central que o autor busca defender com argumentos.'},
-            
+            { topic: 'Compreensão Textual', q: '1) Uma charge que critica um político usando uma caricatura e um balão de fala é um exemplo de texto:', options: ['Verbal', 'Não verbal', 'Literário', 'Multimodal'], answer: 'Multimodal', explanation: 'Ela combina a linguagem verbal (texto no balão) e a não verbal (imagem, desenho) para construir o sentido.'},
+            { topic: 'Compreensão Textual', q: '2) Qual a principal finalidade de um manual de instruções?', options: ['Entreter', 'Informar', 'Instruir', 'Criticar'], answer: 'Instruir', explanation: 'Seu objetivo é guiar o leitor a realizar uma tarefa passo a passo.'},
+            { topic: 'Compreensão Textual', q: '3) Ao ler: "João entrou em casa encharcado da cabeça aos pés", qual informação está implícita?', options: ['João gosta de água', 'Está chovendo ou ele se molhou', 'João comprou um guarda-chuva', 'A casa de João é grande'], answer: 'Está chovendo ou ele se molhou', explanation: 'O texto não diz que chove, mas o estado de João ("encharcado") nos permite deduzir isso.'},
+            { topic: 'Compreensão Textual', q: '4) Um site de notícias publica: "Time A massacra Time B". Um outro site publica: "Time A vence Time B com placar apertado". A diferença mostra:', options: ['Erro de informação', 'Diferentes pontos de vista', 'Textos multimodais', 'Uso de ironia'], answer: 'Diferentes pontos de vista', explanation: 'Cada veículo escolheu dar um enfoque diferente ao mesmo evento, alterando a percepção do leitor.'},
+            { topic: 'Compreensão Textual', q: '5) Em um artigo de opinião que defende o desmatamento zero, a frase "O desmatamento zero é crucial para o futuro do planeta" representa:', options: ['Um argumento', 'Um exemplo', 'A tese', 'Uma informação implícita'], answer: 'A tese', explanation: 'É a ideia principal que o autor irá defender com argumentos ao longo do texto.'},
+            { topic: 'Compreensão Textual', q: '6) A frase "Nossa, você é tão pontual!" dita a alguém que chegou com duas horas de atraso é um exemplo de:', options: ['Humor', 'Ironia', 'Tese', 'Escolha lexical'], answer: 'Ironia', explanation: 'A ironia consiste em dizer exatamente o contrário do que se quer expressar, geralmente para criticar.'},
+            { topic: 'Compreensão Textual', q: '7) A escolha da palavra "devorou" em vez de "comeu" na frase "Ele devorou o sanduíche" sugere que ele comeu:', options: ['Com nojo', 'Lentamente', 'Com muita fome e rapidez', 'Com educação'], answer: 'Com muita fome e rapidez', explanation: 'A escolha lexical de "devorou" intensifica o sentido da ação, adicionando uma ideia de voracidade.'},
+
             // Análise Linguística
-            { q: '9) Na frase "Os atletas treinaram muito, PORÉM não venceram o campeonato", o conectivo destacado indica:', options: ['Oposição', 'Conclusão', 'Explicação', 'Adição'], answer: 'Oposição', explanation: '"Porém" é uma conjunção adversativa, que conecta ideias contrárias.'},
-            { q: '10) Qual a forma correta de concordância verbal?', options: ['Faz cinco anos que não o vejo.', 'Fazem cinco anos que não o vejo.', 'Existe muitas pessoas na praça.', 'Houveram muitos acidentes.'], answer: 'Faz cinco anos que não o vejo.', explanation: 'O verbo "fazer" indicando tempo decorrido é impessoal e fica na 3ª pessoa do singular.'},
-            { q: '11) "A casa foi construída pelos pedreiros." Passando para a voz ativa, temos:', options: ['Os pedreiros construíram a casa.', 'A casa se construiu.', 'Construiu-se a casa.', 'Os pedreiros eram construtores.'], answer: 'Os pedreiros construíram a casa.', explanation: 'O sujeito da passiva ("pelos pedreiros") se torna o sujeito da ativa.'},
-            { q: '12) Em "Tenho necessidade ___ aprovação", a regência do nome "necessidade" exige a preposição:', options: ['de', 'a', 'com', 'em'], answer: 'de', explanation: 'Quem tem necessidade, tem necessidade DE algo. A preposição correta é "de".'},
-            { q: '13) Qual verbo exige a preposição "a" em sua regência?', options: ['Assistir (no sentido de ver)', 'Namorar', 'Comer', 'Ajudar'], answer: 'Assistir (no sentido de ver)', explanation: 'No sentido de ver, o correto é "assistir AO filme", "assistir À peça".'},
-            { q: '14) Na frase "O amor materno é sublime", a expressão "materno" é um adjetivo. Qual locução adjetiva correspondente?', options: ['de mãe', 'de mulher', 'de filho', 'de família'], answer: 'de mãe', explanation: '"De mãe" é uma locução adjetiva que equivale ao adjetivo "materno".'},
-            { q: '15) Em "Precisa-se de funcionários", o sujeito da oração é:', options: ['Indeterminado', 'Funcionários', 'Oculto (Eu)', 'Inexistente'], answer: 'Indeterminado', explanation: 'O verbo na 3ª pessoa do singular + a partícula "se" (índice de indeterminação do sujeito) torna o sujeito indeterminado.'},
-            { q: '16) Em "Compramos belas flores", a palavra "belas" é classificada como:', options: ['Adjetivo', 'Substantivo', 'Verbo', 'Advérbio'], answer: 'Adjetivo', explanation: '"Belas" é uma característica (qualidade) do substantivo "flores".'},
-            { q: '17) "O menino, que era muito esperto, resolveu o problema." A oração destacada é:', options: ['Subordinada adjetiva explicativa', 'Coordenada sindética aditiva', 'Principal', 'Subordinada substantiva'], answer: 'Subordinada adjetiva explicativa', explanation: 'A oração, iniciada por "que" e isolada por vírgulas, adiciona uma qualidade ao termo anterior ("menino").'},
-            { q: '18) Qual a forma correta de concordância nominal?', options: ['É necessária paciência.', 'É necessário paciência.', 'Paciência é necessário.', 'Bastante pessoas vieram.'], answer: ['É necessária paciência.'], explanation: 'A expressão "é necessário" varia para concordar com o sujeito se ele vier determinado. No entanto, sem artigo, "paciência" deixa a expressão invariável, mas o correto é "É necessária paciência" quando o sujeito está claro.'},
-            { q: '19) Em "Maria foi à feira. ELA comprou frutas.", o pronome "ELA" serve para:', options: ['Retomar "Maria" (coesão)', 'Iniciar uma nova ideia', 'Dar ênfase', 'Indicar posse'], answer: 'Retomar "Maria" (coesão)', explanation: 'O uso do pronome evita a repetição do substantivo "Maria", garantindo a coesão textual.'},
-            { q: '20) O que é o predicado de uma oração?', options: ['Tudo o que se declara sobre o sujeito.', 'A palavra mais importante da oração.', 'O mesmo que o sujeito.', 'A ação praticada.'], answer: 'Tudo o que se declara sobre o sujeito.', explanation: 'Predicado é a parte da oração que contém o verbo e informa algo sobre o sujeito.'},
-            { q: '21) A palavra "mas" em "Estudou muito, mas não passou" estabelece uma relação de:', options: ['Adversidade', 'Adição', 'Alternância', 'Conclusão'], answer: 'Adversidade', explanation: 'A conjunção "mas" introduz uma ideia contrária à expectativa gerada pela oração anterior.' },
-            { q: '22) "Chegaram os resultados da prova." O sujeito desta oração é:', options: ['os resultados da prova', 'Resultados', 'Oculto', 'Indeterminado'], answer: 'os resultados da prova', explanation: 'Perguntando ao verbo (O que chegou?), a resposta é "os resultados da prova". O sujeito está posposto (depois do verbo).'},
-            { q: '23) A frase "Choveu muito ontem" possui:', options: ['Oração sem sujeito', 'Sujeito oculto', 'Sujeito "muito"', 'Sujeito "ontem"'], answer: 'Oração sem sujeito', explanation: 'Verbos que indicam fenômenos da natureza, como "chover", formam orações sem sujeito.'},
-            { q: '24) Qual das alternativas apresenta um substantivo abstrato?', options: ['Beleza', 'Mesa', 'Menino', 'Flor'], answer: 'Beleza', explanation: 'Substantivos abstratos nomeiam qualidades, sentimentos, estados ou ações, que dependem de outro ser para existir.'},
-            { q: '25) Em "Falaram mal de você", o sujeito é:', options: ['Indeterminado', 'Você', 'Mal', 'Oculto'], answer: 'Indeterminado', explanation: 'O verbo na terceira pessoa do plural, sem um referente claro no texto, indica que o sujeito é indeterminado.'}
+            { topic: 'Análise Linguística', q: '8) Na frase "Aquele político é uma raposa", a palavra "raposa" está em sentido:', options: ['Denotativo', 'Literal', 'Conotativo', 'Técnico'], answer: 'Conotativo', explanation: '"Raposa" aqui não se refere ao animal, mas à característica de astúcia associada a ele (sentido figurado).'},
+            { topic: 'Análise Linguística', q: '9) "Seus olhos são duas estrelas brilhantes" é um exemplo de qual figura de linguagem?', options: ['Hipérbole', 'Personificação', 'Metáfora', 'Comparação'], answer: 'Metáfora', explanation: 'É uma comparação implícita, sem o uso de conectivos como "como" ou "tal qual".'},
+            { topic: 'Análise Linguística', q: '10) Na frase "Estudei muito, portanto, mereço uma boa nota", o conectivo "portanto" estabelece uma relação de:', options: ['Oposição', 'Adição', 'Explicação', 'Conclusão'], answer: 'Conclusão', explanation: 'Ele conecta a causa (estudar muito) com sua consequência lógica (merecer a nota).'},
+            { topic: 'Análise Linguística', q: '11) Em "O saber não ocupa espaço", a palavra "saber" (que originalmente é um verbo) está funcionando como:', options: ['Adjetivo', 'Advérbio', 'Substantivo', 'Pronome'], answer: 'Substantivo', explanation: 'O artigo "O" antes de "saber" transforma o verbo em um substantivo (substantivação).'},
+            { topic: 'Análise Linguística', q: '12) "Ele saiu de casa e foi ao mercado." Este período é composto por:', options: ['Subordinação', 'Coordenação', 'Voz passiva', 'Regência nominal'], answer: 'Coordenação', explanation: 'São duas orações independentes ("ele saiu" e "foi ao mercado") ligadas pela conjunção aditiva "e".'},
+            { topic: 'Análise Linguística', q: '13) Qual é a forma na voz passiva da frase "Os alunos leram o livro"?', options: ['O livro leu os alunos', 'Os alunos foram lidos pelo livro', 'O livro foi lido pelos alunos', 'Leram o livro os alunos'], answer: 'O livro foi lido pelos alunos', explanation: 'O objeto ("o livro") torna-se o sujeito da ação, e o sujeito original ("os alunos") vira o agente da passiva.'},
+            { topic: 'Análise Linguística', q: '14) A expressão "atitude de anjo" pode ser substituída, sem mudar o sentido, por:', options: ['Atitude angelical', 'Atitude anja', 'Atitude anjelical', 'Atitude de anjos'], answer: 'Atitude angelical', explanation: 'A locução adjetiva "de anjo" equivale ao adjetivo "angelical".'},
+            { topic: 'Análise Linguística', q: '15) Em "As luzes da cidade brilhavam", a expressão "da cidade" pode ser reescrita como:', options: ['As luzes cidade', 'As luzes citadinas', 'As luzes urbanas', 'As luzes da cidadania'], answer: 'As luzes urbanas', explanation: '"Da cidade" é uma locução adjetiva que pode ser trocada pelo adjetivo correspondente "urbanas".'},
+            { topic: 'Análise Linguística', q: '16) Na frase "O diretor convocou os professores. Ele queria dar um aviso.", o pronome "Ele" serve para:', options: ['Gerar ambiguidade', 'Evitar a repetição da palavra "diretor"', 'Iniciar uma nova ideia', 'Dar ênfase ao diretor'], answer: 'Evitar a repetição da palavra "diretor"', explanation: 'É um mecanismo de coesão por pronominalização, tornando o texto mais fluido.'},
+            { topic: 'Análise Linguística', q: '17) Qual frase apresenta um erro de regência verbal?', options: ['Eu assisti ao jogo ontem.', 'Ele prefere sorvete do que açaí.', 'Obedeça aos seus pais.', 'Lembrei-me do compromisso.'], answer: 'Ele prefere sorvete do que açaí.', explanation: 'O verbo "preferir" rege a preposição "a": "Ele prefere sorvete a açaí".'},
+            { topic: 'Análise Linguística', q: '18) Qual frase apresenta um erro de concordância verbal?', options: ['Fazem dois anos que não o vejo.', 'Havia muitos problemas na cidade.', 'Eu e tu iremos ao cinema.', 'A multidão aplaudiu o artista.'], answer: 'Fazem dois anos que não o vejo.', explanation: 'O verbo "fazer" indicando tempo é impessoal, devendo ficar no singular: "Faz dois anos...".'},
+            { topic: 'Análise Linguística', q: '19) Na oração "A professora entregou o teste para os alunos", qual é o objeto direto?', options: ['A professora', 'o teste', 'para os alunos', 'entregou'], answer: 'o teste', explanation: 'É o complemento do verbo "entregou" que não exige preposição (quem entrega, entrega ALGO).'},
+            { topic: 'Análise Linguística', q: '20) Em "O jovem inteligente passou no concurso", a palavra "inteligente" funciona sintaticamente como:', options: ['Sujeito', 'Objeto direto', 'Adjunto adnominal', 'Predicativo do sujeito'], answer: 'Adjunto adnominal', explanation: 'É um termo que acompanha o substantivo "jovem", caracterizando-o diretamente dentro do sujeito.'},
+
+             // Rodada de Revisão
+            { topic: 'Revisão Geral', q: '21) A frase "Nossos guerreiros lutaram como leões" contém qual figura de linguagem?', options: ['Metáfora', 'Hipérbole', 'Personificação', 'Comparação'], answer: 'Comparação', explanation: 'A presença do conectivo "como" torna a comparação explícita.'},
+            { topic: 'Revisão Geral', q: '22) "Choveu muito, por isso as ruas alagaram". O conectivo "por isso" indica:', options: ['Causa', 'Condição', 'Conclusão/Consequência', 'Oposição'], answer: 'Conclusão/Consequência', explanation: 'Mostra o resultado do fato expresso na primeira oração.'},
+            { topic: 'Revisão Geral', q: '23) A frase "Vende-se casa" está na voz:', options: ['Ativa', 'Passiva sintética', 'Passiva analítica', 'Reflexiva'], answer: 'Passiva sintética', explanation: 'É formada pelo verbo na 3ª pessoa + pronome "se" (partícula apassivadora). Equivale a "Casa é vendida".'},
+            { topic: 'Revisão Geral', q: '24) Qual frase está com a concordância nominal correta?', options: ['É proibido entrada de estranhos.', 'A porta estava meia aberta.', 'Compramos bastantes livros.', 'Ela mesmo consertou o carro.'], answer: 'Compramos bastantes livros.', explanation: '"Bastantes" aqui é um pronome indefinido variável, concordando com "livros". As outras seriam: "É proibida a entrada...", "...meio aberta", "...ela mesma...".'},
+            { topic: 'Revisão Geral', q: '25) Em "Espero que você estude", a segunda oração é subordinada porque:', options: ['É independente da primeira', 'Completa o sentido do verbo "espero"', 'Não tem verbo', 'Começa com "que"'], answer: 'Completa o sentido do verbo "espero"', explanation: 'Ela funciona como objeto direto do verbo "esperar", sendo sintaticamente dependente.'},
+            { topic: 'Revisão Geral', q: '26) Identifique a finalidade do gênero "carta do leitor" em um jornal.', options: ['Vender um produto', 'Contar uma piada', 'Opinar sobre uma matéria publicada', 'Ensinar uma receita'], answer: 'Opinar sobre uma matéria publicada', explanation: 'É um gênero argumentativo que permite a interação do leitor com o veículo de comunicação.'},
+            { topic: 'Revisão Geral', q: '27) "Meu pensamento é um rio subterrâneo." A palavra "rio" está em sentido:', options: ['Conotativo', 'Denotativo', 'Literal', 'Técnico'], answer: 'Conotativo', explanation: 'O pensamento não é um rio de verdade; a palavra é usada de forma figurada para expressar fluidez e profundidade.'},
+            { topic: 'Revisão Geral', q: '28) "Cheguei, sentei, esperei." é um período composto por orações:', options: ['Subordinadas', 'Coordenadas assindéticas', 'Coordenadas sindéticas', 'Sem sujeito'], answer: 'Coordenadas assindéticas', explanation: 'São orações independentes que não estão ligadas por conjunção, apenas por vírgula.'},
+            { topic: 'Revisão Geral', q: '29) Na frase "Tenho necessidade de carinho", a expressão "de carinho" tem função de:', options: ['Objeto direto', 'Complemento nominal', 'Adjunto adnominal', 'Objeto indireto'], answer: 'Complemento nominal', explanation: 'Completa o sentido do substantivo abstrato "necessidade", com auxílio de preposição.'},
+            { topic: 'Revisão Geral', q: '30) A palavra "infelizmente" expressa uma circunstância de modo e pertence à classe dos:', options: ['Adjetivos', 'Substantivos', 'Advérbios', 'Verbos'], answer: 'Advérbios', explanation: 'Advérbios modificam verbos, adjetivos ou outros advérbios, indicando circunstâncias.'},
+            { topic: 'Revisão Geral', q: '31) "As notícias falsas foram espalhadas pelos robôs." O termo "pelos robôs" é:', options: ['Sujeito', 'Objeto direto', 'Agente da passiva', 'Adjunto adverbial'], answer: 'Agente da passiva', explanation: 'Na voz passiva, é o termo que pratica a ação expressa pelo verbo.'},
+            { topic: 'Revisão Geral', q: '32) Em "O Brasil, nosso país, é maravilhoso", o termo "nosso país" funciona como:', options: ['Aposto', 'Vocativo', 'Predicativo', 'Sujeito'], answer: 'Aposto', explanation: 'É um termo que explica ou especifica um outro termo de valor substantivo (neste caso, "Brasil").'},
+            { topic: 'Revisão Geral', q: '33) Qual das frases contém um erro de regência nominal?', options: ['Ele é perito em informática.', 'Tenho aversão por mentiras.', 'Estou apto para o trabalho.', 'Ela é ávida de conhecimento.'], answer: 'Tenho aversão por mentiras.', explanation: 'O nome "aversão" rege a preposição "a". O correto é: "Tenho aversão a mentiras".'},
+            { topic: 'Revisão Geral', q: '34) "O sucesso depende do esforço." O termo "do esforço" é:', options: ['Objeto direto', 'Objeto indireto', 'Sujeito', 'Complemento nominal'], answer: 'Objeto indireto', explanation: 'É o complemento do verbo transitivo indireto "depender", regido pela preposição "de".'},
+            { topic: 'Revisão Geral', q: '35) O humor em uma tirinha geralmente é construído no último quadrinho através de uma:', options: ['Explicação lógica', 'Quebra de expectativa', 'Informação científica', 'Concordância verbal'], answer: 'Quebra de expectativa', explanation: 'A graça surge quando o desfecho da história é diferente do que o leitor estava esperando.'},
+            { topic: 'Revisão Geral', q: '36) Qual das seguintes palavras é usada para evitar a repetição de "a menina" na frase "A menina chegou. ____ estava feliz."?', options: ['Ele', 'Ela', 'Nós', 'Onde'], answer: 'Ela', explanation: 'O pronome pessoal "ela" retoma o substantivo "menina", garantindo a coesão textual.'},
+            { topic: 'Revisão Geral', q: '37) "A vida ensina, mas o tempo cobra." A conjunção "mas" indica:', options: ['Adição', 'Oposição', 'Conclusão', 'Alternância'], answer: 'Oposição', explanation: 'Ela conecta duas ideias contrastantes entre si.'},
+            { topic: 'Revisão Geral', q: '38) Qual o sujeito da oração "Choveu muito em Fortaleza"?', options: ['Fortaleza', 'muito', 'chuva', 'Oração sem sujeito'], answer: 'Oração sem sujeito', explanation: 'Verbos que indicam fenômenos da natureza, como "chover", não possuem sujeito.'},
+            { topic: 'Revisão Geral', q: '39) "Estou morrendo de sede!" é um exemplo de:', options: ['Metáfora', 'Eufemismo', 'Hipérbole', 'Ironia'], answer: 'Hipérbole', explanation: 'É uma figura de linguagem que usa o exagero para dar ênfase à ideia de estar com muita sede.'},
+            { topic: 'Revisão Geral', q: '40) A frase "Garoto, preste atenção!" tem qual função da linguagem como predominante?', options: ['Emotiva', 'Fática', 'Apelativa', 'Referencial'], answer: 'Apelativa', explanation: 'O uso do vocativo ("Garoto") e do verbo no imperativo ("preste") foca no receptor para influenciá-lo.'}
         ];
 
         let questionOrder = quizData.map((_,i)=>i);
         let currentIndex = 0;
         let questionStatus = Array(quizData.length).fill(null);
         let quizStarted = false;
+        let isRandomOrder = false; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
 
         function switchView(view){
             if(view==='learn'){
@@ -206,8 +275,8 @@
             });
         }
 
-        const questionProgress = document.createElement('p');
-        questionProgress.className='text-sm text-slate-400';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)] mb-2';
         const questionText = document.createElement('p');
         questionText.className='text-xl mt-2';
         const optionsContainer = document.createElement('div');
@@ -218,7 +287,7 @@
         const redoBtn = document.createElement('button');
         redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
 
-        quizContainer.appendChild(questionProgress);
+        quizContainer.appendChild(questionTopic);
         quizContainer.appendChild(questionText);
         quizContainer.appendChild(optionsContainer);
         quizContainer.appendChild(feedbackContainer);
@@ -226,7 +295,11 @@
         quizContainer.appendChild(redoBtn);
 
         function startQuiz(){
-            shuffleArray(questionOrder);
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
             currentIndex = 0;
             questionStatus.fill(null);
             showQuestion();
@@ -241,8 +314,8 @@
             const qIdx = questionOrder[currentIndex];
             const qObj = quizData[qIdx];
             
-            questionProgress.textContent = `Questão ${currentIndex+1} de ${quizData.length}`;
-            questionText.innerHTML = qObj.q;
+            questionTopic.textContent = qObj.topic;
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
             
             optionsContainer.innerHTML='';
             feedbackContainer.innerHTML='';
@@ -262,7 +335,7 @@
         function showFinalResults() {
             const correctCount = questionStatus.filter(s => s === 'correct').length;
             const total = quizData.length;
-            questionProgress.textContent = `Quiz finalizado!`;
+            questionTopic.textContent = '';
             questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
             optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
             feedbackContainer.innerHTML = '';
