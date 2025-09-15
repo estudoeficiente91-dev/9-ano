@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prova de Português – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Prova de Português — 7º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos sobre Poesia, Sintaxe e Texto Teatral.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">UNIDADE 5: Imagens na Poesia</h2>
+                            <h3 class="sub-topic-title">Leitura e Gênero em Foco: Poema Visual</h3>
+                            <p>O <span class="highlight">poema visual</span> é um tipo de poesia em que as palavras são organizadas na página para formar uma imagem, um desenho ou uma forma. O objetivo é que o leitor não apenas leia as palavras, mas também "veja" o poema. A forma como o texto é disposto é tão importante quanto o que está escrito. É a união perfeita entre linguagem verbal e não verbal.</p>
+
+                            <h3 class="sub-topic-title">Estudo da Língua: Sujeito e Predicativo</h3>
+                            <ul>
+                                <li><strong>Tipos de Sujeito:</strong> O sujeito é o termo sobre o qual o predicado diz algo.
+                                    <ul>
+                                        <li><span class="highlight">Determinado Simples:</span> Tem apenas um núcleo. Ex: "A <span class="highlight">menina</span> sonha."</li>
+                                        <li><span class="highlight">Determinado Composto:</span> Tem dois ou mais núcleos. Ex: "<span class="highlight">Menina</span> e <span class="highlight">menino</span> sonham."</li>
+                                        <li><span class="highlight">Oculto (Desinencial):</span> Não aparece na oração, mas é identificado pela terminação do verbo. Ex: "Sonhamos com o futuro." (Sujeito: Nós)</li>
+                                        <li><span class="highlight">Indeterminado:</span> Existe, mas não pode ser identificado. Ex: "Roubaram minha caneta." (Quem roubou? Não se sabe).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Oração sem Sujeito:</strong> Ocorre com verbos que indicam fenômenos da natureza (chover, nevar), tempo decorrido (fazer, haver) ou existência (haver). Ex: "<span class="highlight">Choveu</span> muito ontem." ou "<span class="highlight">Havia</span> muitas pessoas na festa."</li>
+                                <li><strong>Verbo de Ligação e Predicativo do Sujeito:</span> O <span class="highlight">verbo de ligação</span> (ser, estar, parecer, ficar, etc.) não indica uma ação, mas liga o sujeito a uma característica. Essa característica é chamada de <span class="highlight">predicativo do sujeito</span>. Ex: "A prova <span class="highlight">estava</span> <span class="highlight">difícil</span>." (estava = VL; difícil = predicativo do sujeito).</li>
+                            </ul>
+
+                             <h3 class="sub-topic-title">Questões da Língua: Plural de Verbos</h3>
+                             <p>Alguns verbos exigem atenção no plural:</p>
+                             <ul>
+                                 <li><strong>Ter e Vir:</strong> No plural, recebem acento circunflexo. Ex: "Ele <span class="highlight">tem</span>", mas "Eles <span class="highlight">têm</span>". "Ele <span class="highlight">vem</span>", mas "Eles <span class="highlight">vêm</span>".</li>
+                                 <li><strong>Crer, Dar, Ler, Ver:</strong> Na 3ª pessoa do plural, dobram o "e". Ex: "Ele <span class="highlight">crê</span>", mas "Eles <span class="highlight">creem</span>". "Que ele <span class="highlight">dê</span>", mas "Que eles <span class="highlight">deem</span>". "Ele <span class="highlight">lê</span>", mas "Eles <span class="highlight">leem</span>". "Ele <span class="highlight">vê</span>", mas "Eles <span class="highlight">veem</span>".</li>
+                             </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                             <h2 class="topic-title">UNIDADE 6: Dilemas em Cena</h2>
+                            <h3 class="sub-topic-title">Leitura e Gênero em Foco: Texto Teatral</h3>
+                             <p>O <span class="highlight">texto teatral</span> (ou dramático) é escrito para ser encenado. Sua estrutura é diferente: ele é organizado em <span class="highlight">atos</span> (grandes divisões da peça) e <span class="highlight">cenas</span> (divisões menores). É composto principalmente por:</p>
+                             <ul>
+                                 <li><strong>Falas:</strong> O que os personagens dizem, indicado pelo nome deles antes da frase.</li>
+                                 <li><strong>Rubricas:</strong> Indicações cênicas que vêm entre parênteses e em itálico. Elas não são ditas, mas orientam os atores sobre gestos, emoções, movimentos ou descrevem o cenário. Ex: <em>(sai pela esquerda, chorando)</em>.</li>
+                             </ul>
+                             
+                            <h3 class="sub-topic-title">Estudo da Língua: Predicado e Transitividade</h3>
+                             <ul>
+                                <li><strong>Tipos de Predicado:</strong> É tudo o que se diz sobre o sujeito.
+                                    <ul>
+                                        <li><span class="highlight">Predicado Verbal:</span> O núcleo é um verbo que indica ação (verbo intransitivo ou transitivo). Ex: "O time <span class="highlight">jogou</span> bem."</li>
+                                        <li><span class="highlight">Predicado Nominal:</span> O núcleo é um nome (predicativo do sujeito) e possui um verbo de ligação. Ex: "O time <span class="highlight">estava confiante</span>."</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Transitividade Verbal:</strong> É a necessidade que um verbo tem de um complemento.
+                                    <ul>
+                                         <li><span class="highlight">Verbo Intransitivo (VI):</span> Tem sentido completo, não precisa de complemento. Ex: "O bebê <span class="highlight">nasceu</span>."</li>
+                                         <li><span class="highlight">Verbo Transitivo Direto (VTD):</span> Precisa de um complemento sem preposição (objeto direto). Ex: "Eu <span class="highlight">comprei</span> <span class="highlight">um livro</span>." (comprou o quê?).</li>
+                                         <li><span class="highlight">Verbo Transitivo Indireto (VTI):</span> Precisa de um complemento com preposição (objeto indireto). Ex: "Eu <span class="highlight">preciso</span> <span class="highlight">de ajuda</span>." (precisa de quê?).</li>
+                                    </ul>
+                                </li>
+                             </ul>
+
+                             <h3 class="sub-topic-title">Questões da Língua: Ortografia</h3>
+                             <p>O uso de certas letras pode gerar dúvidas, mas segue algumas regras:</p>
+                             <ul>
+                                 <li><strong>Ç:</strong> Usado antes de a, o, u e vem de palavras de origem árabe, tupi ou africana (paçoca, açaí). Nunca se usa no início de palavras.</li>
+                                 <li><strong>C:</strong> Usado antes de e, i (cebola, cinema).</li>
+                                 <li><strong>SS:</strong> Usado entre vogais para manter o som de /s/ forte (missão, assar).</li>
+                                  <li><strong>S:</strong> Entre vogais, tem som de /z/ (casa, aviso). No início de palavras, tem som de /s/ (sapo).</li>
+                             </ul>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-port-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-port-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // UNIDADE 5
+            { topic: 'Gênero: Poema Visual', q: '1) Qual é a característica mais marcante de um poema visual?', options: ['A presença de rimas ricas', 'A organização das palavras para formar uma imagem', 'O uso de linguagem formal', 'A ausência de verbos'], answer: 'A organização das palavras para formar uma imagem', explanation: 'No poema visual, a disposição espacial das palavras é fundamental para a construção do sentido.'},
+            { topic: 'Gênero: Poema Visual', q: '2) Ao analisar um poema visual, o leitor deve prestar atenção:', options: ['Apenas ao significado das palavras', 'Apenas à imagem formada', 'Tanto ao texto verbal quanto à sua forma visual', 'Apenas ao título do poema'], answer: 'Tanto ao texto verbal quanto à sua forma visual', explanation: 'A interpretação de um poema visual depende da combinação entre o que está escrito e o que é mostrado.'},
+            { topic: 'Sintaxe: Tipos de Sujeito', q: '3) Na frase "Choveu muito durante a noite", qual é o sujeito da oração?', options: ['muito', 'a noite', 'Oração sem sujeito', 'Eu'], answer: 'Oração sem sujeito', explanation: 'Verbos que expressam fenômenos da natureza, como "chover", formam orações sem sujeito.'},
+            { topic: 'Sintaxe: Tipos de Sujeito', q: '4) "O menino e a sua irmã brincavam no parque." O sujeito desta oração é classificado como:', options: ['Simples', 'Composto', 'Oculto', 'Indeterminado'], answer: 'Composto', explanation: 'O sujeito é composto porque possui dois núcleos: "menino" e "irmã".'},
+            { topic: 'Sintaxe: Tipos de Sujeito', q: '5) Em "Precisamos estudar mais para a prova", o sujeito é:', options: ['Simples', 'Indeterminado', 'Composto', 'Oculto (Nós)'], answer: 'Oculto (Nós)', explanation: 'O sujeito não está explícito, mas pode ser identificado pela desinência "-mos" do verbo "precisamos".'},
+            { topic: 'Sintaxe: Tipos de Sujeito', q: '6) Qual das frases abaixo apresenta sujeito indeterminado?', options: ['Venderam a casa da esquina.', 'A casa da esquina foi vendida.', 'A casa da esquina é bonita.', 'Vende-se a casa da esquina.'], answer: 'Venderam a casa da esquina.', explanation: 'O verbo na 3ª pessoa do plural, sem um referente claro, indetermina o sujeito (não se sabe quem vendeu).'},
+            { topic: 'Sintaxe: Verbo de Ligação', q: '7) Na frase "Meu irmão parece preocupado", a palavra "preocupado" funciona como:', options: ['Objeto direto', 'Sujeito', 'Predicativo do sujeito', 'Verbo de ligação'], answer: 'Predicativo do sujeito', explanation: '"Preocupado" é uma característica atribuída ao sujeito ("Meu irmão") através do verbo de ligação "parece".'},
+            { topic: 'Sintaxe: Verbo de Ligação', q: '8) Qual das alternativas contém um verbo de ligação?', options: ['Ele correu muito.', 'A criança dormiu.', 'Nós estamos felizes.', 'O professor ensinou a matéria.'], answer: 'Nós estamos felizes.', explanation: 'O verbo "estar" está ligando o sujeito "Nós" a sua característica "felizes".'},
+            { topic: 'Questões da Língua', q: '9) Qual a forma correta do verbo "ter" no plural?', options: ['Eles tem muitos livros.', 'Eles têm muitos livros.', 'Eles teem muitos livros.', 'Eles têem muitos livros.'], answer: 'Eles têm muitos livros.', explanation: 'Na 3ª pessoa do plural, o verbo "ter" recebe acento circunflexo (têm).'},
+            { topic: 'Questões da Língua', q: '10) Complete a frase: "Espero que eles ________ uma boa notícia."', options: ['dêem', 'dem', 'deem', 'dão'], answer: 'deem', explanation: 'Os verbos terminados em "-er" e "-ar" que dobram o "e" no plural (crer, ler, ver, dar) perderam o acento após o Novo Acordo Ortográfico.'},
+            { topic: 'Questões da Língua', q: '11) A frase "Todos leem as instruções antes do uso" está:', options: ['Correta', 'Incorreta, o certo é "lêem".', 'Incorreta, o certo é "lem".', 'Incorreta, o certo é "lê".'], answer: 'Correta', explanation: 'A forma da 3ª pessoa do plural do verbo "ler" no presente é "leem", sem acento.'},
+            { topic: 'Questões da Língua', q: '12) Como se escreve o plural de "ele vem"?', options: ['Eles vêm', 'Eles veem', 'Eles vem', 'Eles veêm'], answer: 'Eles vêm', explanation: 'Assim como o verbo "ter", o verbo "vir" recebe acento circunflexo na 3ª pessoa do plural.'},
+
+            // UNIDADE 6
+            { topic: 'Gênero: Texto Teatral', q: '13) Em uma peça de teatro, as instruções para os atores sobre como devem se movimentar ou se expressar são chamadas de:', options: ['Falas', 'Atos', 'Cenas', 'Rubricas'], answer: 'Rubricas', explanation: 'As rubricas são as indicações cênicas, geralmente escritas em itálico e entre parênteses.'},
+            { topic: 'Gênero: Texto Teatral', q: '14) A estrutura de um texto teatral é, normalmente, dividida em:', options: ['Capítulos e parágrafos', 'Estrofes e versos', 'Atos e cenas', 'Tópicos e subtópicos'], answer: 'Atos e cenas', explanation: 'Atos são as grandes partes da peça, e as cenas são as subdivisões dentro de cada ato.'},
+            { topic: 'Gênero: Texto Teatral', q: '15) O principal objetivo de um texto teatral é:', options: ['Ser lido em voz alta', 'Ser encenado', 'Informar o leitor', 'Contar uma história longa'], answer: 'Ser encenado', explanation: 'Diferente de um romance, o texto dramático é escrito pensando na sua representação no palco.'},
+            { topic: 'Sintaxe: Tipos de Predicado', q: '16) "O atleta chegou cansado ao final da corrida." O predicado desta oração é:', options: ['Verbal', 'Nominal', 'Verbo-nominal', 'Oração sem predicado'], answer: 'Verbo-nominal', explanation: 'Possui dois núcleos: um verbo de ação ("chegou") e um predicativo do sujeito ("cansado").'},
+            { topic: 'Sintaxe: Tipos de Predicado', q: '17) Qual frase possui um predicado nominal?', options: ['Os pássaros voam.', 'O dia amanheceu chuvoso.', 'A Terra é azul.', 'Comprei um carro novo.'], answer: 'A Terra é azul.', explanation: 'O verbo "ser" é de ligação e "azul" é um predicativo do sujeito, caracterizando o núcleo do predicado como um nome.'},
+            { topic: 'Sintaxe: Tipos de Predicado', q: '18) "O cachorro latiu durante a noite." O predicado "latiu durante a noite" é classificado como:', options: ['Nominal', 'Verbal', 'Verbo-nominal', 'Inexistente'], answer: 'Verbal', explanation: 'O núcleo do predicado é o verbo de ação "latiu".'},
+            { topic: 'Sintaxe: Transitividade Verbal', q: '19) Na frase "Gosto de chocolate", o verbo "gostar" é:', options: ['Intransitivo', 'Transitivo direto', 'Transitivo indireto', 'De ligação'], answer: 'Transitivo indireto', explanation: 'Quem gosta, gosta "de" alguma coisa. Ele exige um complemento com a preposição "de".'},
+            { topic: 'Sintaxe: Transitividade Verbal', q: '20) Qual dos verbos abaixo é intransitivo na frase em que aparece?', options: ['Ele vendeu o carro.', 'A criança dormiu.', 'Eu preciso de você.', 'O aluno fez a lição.'], answer: 'A criança dormiu.', explanation: 'O verbo "dormir" tem sentido completo e não exige um complemento para a frase fazer sentido.'},
+            { topic: 'Sintaxe: Transitividade Verbal', q: '21) Em "O carteiro entregou a encomenda", o verbo "entregar" é:', options: ['Intransitivo', 'Transitivo direto', 'Transitivo indireto', 'De ligação'], answer: 'Transitivo direto', explanation: 'Quem entrega, entrega "algo". O complemento "a encomenda" (objeto direto) liga-se ao verbo sem preposição.'},
+            { topic: 'Sintaxe: Transitividade Verbal', q: '22) "Assistimos ao filme ontem." O verbo "assistir", no sentido de ver, é:', options: ['Intransitivo', 'Transitivo direto', 'Transitivo indireto', 'De ligação'], answer: 'Transitivo indireto', explanation: 'No sentido de ver ou presenciar, o verbo "assistir" exige a preposição "a".'},
+            { topic: 'Questões da Língua', q: '23) Qual palavra está escrita incorretamente?', options: ['Açúcar', 'Caçula', 'Cansado', 'Paçoca'], answer: 'Caçula', explanation: 'A forma correta é "caçula", com "ç".'},
+            { topic: 'Questões da Língua', q: '24) A palavra "profissão" é escrita com "ss" porque:', options: ['Está no início da palavra', 'Vem depois de consoante', 'Está entre vogais e tem som de /s/ forte', 'É uma palavra de origem indígena'], answer: 'Está entre vogais e tem som de /s/ forte', explanation: 'Para manter o som de /s/ entre duas vogais, usamos o dígrafo "ss".'},
+            { topic: 'Questões da Língua', q: '25) Complete a frase: "O almoço estava uma delícia, mas a sobreme__a estava melhor ainda."', options: ['ss', 's', 'c', 'ç'], answer: 's', explanation: 'A palavra "sobremesa" é escrita com "s".'},
+            
+            // Revisão Geral
+            { topic: 'Revisão Geral', q: '26) "Havia muitos problemas a serem resolvidos." O sujeito da oração é:', options: ['muitos problemas', 'indeterminado', 'oculto', 'oração sem sujeito'], answer: 'oração sem sujeito', explanation: 'O verbo "haver" no sentido de "existir" é impessoal, não tendo sujeito.'},
+            { topic: 'Revisão Geral', q: '27) Em um texto teatral, a fala de um personagem sozinho no palco, expressando seus pensamentos, é um:', options: ['Diálogo', 'Aparte', 'Monólogo', 'Coro'], answer: 'Monólogo', explanation: 'É um discurso que a personagem faz para si mesma ou para a plateia.'},
+            { topic: 'Revisão Geral', q: '28) "Ele anda triste ultimamente." O verbo "andar" nesta frase é:', options: ['Transitivo direto', 'Intransitivo', 'De ligação', 'Transitivo indireto'], answer: 'De ligação', explanation: 'No sentido de "estar", o verbo "andar" funciona como verbo de ligação, conectando o sujeito "Ele" à característica "triste".'},
+            { topic: 'Revisão Geral', q: '29) A frase "Que eles _______ bons exemplos aos mais novos" deve ser completada com:', options: ['dêem', 'deem', 'dem', 'dão'], answer: 'deem', explanation: 'O verbo "dar" no presente do subjuntivo, 3ª pessoa do plural, escreve-se "deem".'},
+            { topic: 'Revisão Geral', q: '30) A peça "Aquele que diz sim e Aquele que diz não", de Brecht, propõe uma reflexão sobre:', options: ['O amor romântico', 'Dilemas entre a obediência e a razão', 'A beleza da natureza', 'A história do teatro'], answer: 'Dilemas entre a obediência e a razão', explanation: 'A peça explora o conflito entre seguir um costume antigo sem questionar e usar a razão para tomar uma nova decisão.'},
+            { topic: 'Revisão Geral', q: '31) Qual o predicado da frase "Os alunos saíram da sala apressados"?', options: ['saíram da sala apressados', 'os alunos', 'apressados', 'saíram'], answer: 'saíram da sala apressados', explanation: 'O predicado é tudo o que se informa sobre o sujeito ("Os alunos").'},
+            { topic: 'Revisão Geral', q: '32) A classificação do predicado da questão anterior ("saíram da sala apressados") é:', options: ['Verbal', 'Nominal', 'Verbo-nominal', 'Inexistente'], answer: 'Verbo-nominal', explanation: 'Tem um verbo de ação (saíram) e um predicativo do sujeito (apressados).'},
+            { topic: 'Revisão Geral', q: '33) Qual a forma correta: "Eles (crêem/creem) em dias melhores"?', options: ['crêem', 'creem'], answer: 'creem', explanation: 'De acordo com o Novo Acordo Ortográfico, o acento circunflexo nos hiatos "ee" e "oo" foi abolido.'},
+            { topic: 'Revisão Geral', q: '34) "O espetáculo agradou ao público." O verbo "agradar", no sentido de "satisfazer", é:', options: ['Transitivo direto', 'Intransitivo', 'Transitivo indireto', 'De ligação'], answer: 'Transitivo indireto', explanation: 'No sentido de contentar ou satisfazer, ele rege a preposição "a".'},
+            { topic: 'Revisão Geral', q: '35) A montagem de uma peça de teatro envolve várias etapas. Qual delas NÃO faz parte do processo?', options: ['Escolha do texto', 'Ensaios com o elenco', 'Criação de cenário e figurino', 'Publicação do texto em um livro'], answer: 'Publicação do texto em um livro', explanation: 'A publicação pode acontecer, mas não é uma etapa essencial para a montagem e apresentação da peça.'},
+            { topic: 'Revisão Geral', q: '36) Em "As crianças parecem sonolentas", o núcleo do predicado é:', options: ['As crianças', 'parecem', 'sonolentas', 'parecem sonolentas'], answer: 'sonolentas', explanation: 'O predicado é nominal ("parecem sonolentas"), e seu núcleo é o nome (o predicativo do sujeito "sonolentas").'},
+            { topic: 'Revisão Geral', q: '37) "Necessita-se de voluntários." O sujeito desta oração é:', options: ['voluntários', 'indeterminado', 'oculto', 'oração sem sujeito'], answer: 'indeterminado', explanation: 'O verbo é transitivo indireto ("de voluntários") e vem acompanhado do pronome "se", que funciona como índice de indeterminação do sujeito.'},
+            { topic: 'Revisão Geral', q: '38) A palavra "cansaço" se escreve com "ç" por ser derivada do verbo:', options: ['Cansar (com s)', 'Cançar (com ç)', 'Cansiar', 'Nenhuma das anteriores'], answer: 'Cansar (com s)', explanation: 'Substantivos derivados de verbos terminados em "-sar" (quando não formam o sufixo -são) podem usar "ç".'},
+            { topic: 'Revisão Geral', q: '39) O que é um esquete humorístico?', options: ['Uma peça de teatro longa e dramática', 'Um poema visual sobre humor', 'Uma cena curta de comédia', 'Um tipo de dança teatral'], answer: 'Uma cena curta de comédia', explanation: 'É uma peça de curta duração, geralmente com foco no humor e em situações cômicas.'},
+            { topic: 'Revisão Geral', q: '40) "Imaginar, criar e inovar" são atitudes importantes para qual tipo de produção textual?', options: ['Notícia de jornal', 'Artigo científico', 'Texto teatral e poema visual', 'Bula de remédio'], answer: 'Texto teatral e poema visual', explanation: 'Ambos os gêneros exigem alta dose de criatividade e inovação na sua concepção.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)] mb-2';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionTopic);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionTopic.textContent = qObj.topic;
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionTopic.textContent = '';
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
