@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prova Saeb – 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Preparação para a Prova Saeb — 9º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos e questões de Língua Portuguesa e Matemática.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Principais Habilidades - Saeb</h2>
+                            <p>O Saeb avalia competências essenciais. Aqui estão os pontos mais importantes para focar nos seus estudos:</p>
+                            
+                            <h3 class="sub-topic-title">Língua Portuguesa</h3>
+                            <ul>
+                                <li><strong>Localizar Informações:</strong> Ser capaz de encontrar dados, datas, nomes e outras informações que estão <span class="highlight">explícitas</span> (escritas claramente) no texto.</li>
+                                <li><strong>Fazer Inferências:</strong> Compreender o que <span class="highlight">não está escrito</span>, mas que o texto sugere. É "ler nas entrelinhas" para deduzir sentimentos, causas ou consequências.</li>
+                                <li><strong>Identificar o Tema e a Finalidade:</strong> Entender qual é o <span class="highlight">assunto principal</span> do texto e para que ele serve (informar, convencer, entreter, instruir).</li>
+                                <li><strong>Analisar Recursos Linguísticos:</strong> Perceber como o uso de <span class="highlight">pontuação, conjunções, ironia ou humor</span> constrói o sentido do texto e a intenção do autor.</li>
+                                <li><strong>Distinguir Fato de Opinião:</strong> Saber diferenciar o que é um <span class="highlight">acontecimento real</span> (fato) do que é um <span class="highlight">julgamento pessoal</span> do autor (opinião).</li>
+                            </ul>
+
+                            <h3 class="sub-topic-title">Matemática</h3>
+                            <ul>
+                                <li><strong>Espaço e Forma:</strong> Reconhecer <span class="highlight">figuras geométricas</span>, suas propriedades, e aplicar conceitos como Teorema de Pitágoras e relações trigonométricas.</li>
+                                <li><strong>Grandezas e Medidas:</strong> Resolver problemas que envolvem o cálculo de <span class="highlight">perímetro, área e volume</span>, além de converter diferentes unidades de medida.</li>
+                                <li><strong>Números e Operações:</strong> Trabalhar com números reais, incluindo <span class="highlight">frações, decimais e porcentagem</span>, e resolver problemas com as quatro operações.</li>
+                                <li><strong>Tratamento da Informação:</strong> Ler e interpretar informações apresentadas em <span class="highlight">tabelas e gráficos</span>, calculando médias e noções de probabilidade.</li>
+                                 <li><strong>Álgebra:</strong> Resolver <span class="highlight">equações e inequações</span> de 1º grau e sistemas de equações, além de compreender a noção de função.</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-saeb-9ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-saeb-9ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Português - Inferência', q: '1) Leia a tirinha. No último quadrinho, a expressão do personagem e sua fala "A gente precisa ter um objetivo na vida..." indicam que ele se sente:', options: ['Realizado', 'Frustrado', 'Indiferente', 'Alegre'], answer: 'Frustrado', explanation: 'A ironia da cena é que, mesmo após atingir o "topo", ele percebe que não há nada lá, o que gera um sentimento de frustração.'},
+            { topic: 'Matemática - Porcentagem', q: '2) Uma loja oferece um desconto de 20% em um produto que custa R$ 80,00. Qual será o valor pago pelo produto?', options: ['R$ 16,00', 'R$ 60,00', 'R$ 64,00', 'R$ 78,00'], answer: 'R$ 64,00', explanation: '20% de R$ 80,00 é R$ 16,00. O valor final é R$ 80,00 - R$ 16,00 = R$ 64,00.'},
+            { topic: 'Português - Tema', q: '3) "A reciclagem do lixo é uma das mais importantes ações para a preservação do meio ambiente. Ao separar plástico, papel e metal, diminuímos a extração de recursos naturais e a poluição." O tema principal do texto é:', options: ['A poluição dos rios', 'A extração de recursos', 'A importância da reciclagem', 'Os tipos de lixo'], answer: 'A importância da reciclagem', explanation: 'Todas as frases do texto convergem para defender a ideia central da importância da reciclagem.'},
+            { topic: 'Matemática - Geometria', q: '4) Um terreno retangular mede 12 metros de largura por 25 metros de comprimento. Qual é a área desse terreno?', options: ['37 m²', '74 m²', '300 m²', '350 m²'], answer: '300 m²', explanation: 'A área de um retângulo é calculada multiplicando-se o comprimento pela largura: 25 m * 12 m = 300 m².'},
+            { topic: 'Português - Fato vs. Opinião', q: '5) Qual das frases abaixo expressa uma opinião?', options: ['O Brasil está localizado na América do Sul.', 'A capital da França é Paris.', 'O novo filme do diretor é o melhor de todos.', 'A água ferve a 100 graus Celsius.'], answer: 'O novo filme do diretor é o melhor de todos.', explanation: 'A palavra "melhor" expressa um julgamento de valor, uma avaliação pessoal, e não um fato que possa ser comprovado.'},
+            { topic: 'Matemática - Equação', q: '6) O triplo de um número, somado com 5, é igual a 23. Que número é esse?', options: ['5', '6', '7', '8'], answer: '6', explanation: 'Montando a equação: 3x + 5 = 23. Subtraindo 5 dos dois lados: 3x = 18. Dividindo por 3: x = 6.'},
+            { topic: 'Português - Finalidade', q: '7) Qual é a finalidade principal de uma receita culinária?', options: ['Contar uma história', 'Instruir o leitor', 'Vender um produto', 'Expressar sentimentos'], answer: 'Instruir o leitor', explanation: 'Uma receita tem como objetivo principal guiar o leitor, passo a passo, na preparação de um prato.'},
+            { topic: 'Matemática - Gráficos', q: '8) Um gráfico de colunas mostra a venda de sorvetes em uma semana: Seg (20), Ter (30), Qua (25), Qui (35), Sex (50). Qual foi a média de sorvetes vendidos por dia?', options: ['25', '30', '32', '35'], answer: '32', explanation: 'Soma-se todos os valores (20+30+25+35+50 = 160) e divide-se pelo número de dias (5). 160 / 5 = 32.'},
+            { topic: 'Português - Linguagem', q: '9) Na frase "A notícia bomba explodiu nas redes sociais", a palavra "bomba" é usada em sentido:', options: ['Denotativo, significando um explosivo.', 'Conotativo, significando algo chocante ou de grande impacto.', 'Literal, pois a notícia era sobre uma bomba.', 'Técnico, referindo-se a um software.'], answer: 'Conotativo, significando algo chocante ou de grande impacto.', explanation: 'A palavra é usada de forma figurada para dar ênfase à repercussão da notícia.'},
+            { topic: 'Matemática - Teorema de Pitágoras', q: '10) Uma escada de 5 metros de comprimento está apoiada em um muro. A base da escada está a 3 metros de distância do muro. Qual a altura que a escada alcança no muro?', options: ['2 metros', '3 metros', '4 metros', '5 metros'], answer: '4 metros', explanation: 'A escada, o muro e o chão formam um triângulo retângulo. A escada é a hipotenusa. 5² = 3² + h² => 25 = 9 + h² => h² = 16 => h = 4 metros.'},
+            { topic: 'Português - Localizar Informação', q: '11) Texto: "A Mata Atlântica, um dos biomas mais ricos do mundo, estende-se por 17 estados brasileiros. Originalmente, cobria mais de 1,3 milhão de km². Hoje, restam apenas cerca de 12% de sua cobertura original." De acordo com o texto, qual porcentagem da Mata Atlântica original ainda existe?', options: ['17%', '1,3%', '100%', '12%'], answer: '12%', explanation: 'Essa informação está explicitamente declarada na última frase do texto.'},
+            { topic: 'Matemática - Frações', q: '12) Em uma classe de 36 alunos, 2/3 foram aprovados. Quantos alunos foram aprovados?', options: ['12', '18', '24', '30'], answer: '24', explanation: 'Para calcular 2/3 de 36, divide-se 36 por 3 (que dá 12) e multiplica-se o resultado por 2 (12 * 2 = 24).'},
+            { topic: 'Português - Argumentação', q: '13) "É preciso investir mais em transporte público, pois assim diminuiríamos os congestionamentos e a poluição." A parte "pois assim diminuiríamos os congestionamentos e a poluição" funciona como:', options: ['Tese', 'Fato', 'Opinião', 'Argumento'], answer: 'Argumento', explanation: 'É a justificativa usada para sustentar a tese (a ideia principal) de que se deve investir em transporte público.'},
+            { topic: 'Matemática - Probabilidade', q: '14) Ao lançar um dado comum de 6 faces, qual a probabilidade de sair um número par?', options: ['1/6', '2/6', '3/6 (ou 1/2)', '4/6'], answer: '3/6 (ou 1/2)', explanation: 'Existem 3 números pares (2, 4, 6) em um total de 6 resultados possíveis. A probabilidade é 3/6, que simplificando é 1/2.'},
+            { topic: 'Português - Variação Linguística', q: '15) A expressão "Tu visse o jogo ontem?" é uma marca de variação linguística:', options: ['Histórica', 'Social', 'Regional', 'Formal'], answer: 'Regional', explanation: 'É uma construção gramatical comum em certas regiões do Brasil, mas que não segue a norma padrão formal.'},
+            { topic: 'Matemática - Sistemas', q: '16) A soma de dois números é 15 e a diferença entre eles é 3. Quais são esses números?', options: ['7 e 8', '6 e 9', '5 e 10', '4 e 11'], answer: '6 e 9', explanation: 'Montando o sistema: x + y = 15 e x - y = 3. Somando as duas equações, temos 2x = 18, logo x = 9. Substituindo, 9 + y = 15, logo y = 6.'},
+            { topic: 'Português - Inferência', q: '17) Ao final de um filme, um personagem olha para o horizonte e diz: "Amanhã, tudo será diferente". O que essa fala sugere?', options: ['Que o tempo vai mudar', 'Que ele está com sono', 'Esperança ou uma grande mudança por vir', 'Que ele vai se mudar de cidade'], answer: 'Esperança ou uma grande mudança por vir', explanation: 'A fala, pelo contexto, tem um sentido figurado, indicando uma virada na vida do personagem, e não uma previsão meteorológica.'},
+            { topic: 'Matemática - Volume', q: '18) Uma caixa d\'água cúbica tem 2 metros de aresta. Qual é a sua capacidade em litros?', options: ['2.000 litros', '4.000 litros', '6.000 litros', '8.000 litros'], answer: '8.000 litros', explanation: 'O volume é 2m * 2m * 2m = 8 m³. Como 1 m³ equivale a 1.000 litros, a capacidade é de 8.000 litros.'},
+            { topic: 'Português - Ironia', q: '19) Um turista visita uma cidade barulhenta e poluída e diz: "Que lugar tranquilo para relaxar!". Ele está sendo:', options: ['Sincero', 'Irônico', 'Descritivo', 'Formal'], answer: 'Irônico', explanation: 'Ele está afirmando o exato oposto da realidade para criticar ou expressar seu descontentamento.'},
+            { topic: 'Matemática - Tabelas', q: '20) Uma tabela mostra o número de faltas de alunos: João (3), Maria (5), Pedro (2), Ana (2). Qual a moda do número de faltas?', options: ['2', '3', '4', '5'], answer: '2', explanation: 'Moda, em estatística, é o valor que aparece com maior frequência. O número 2 aparece duas vezes, mais do que qualquer outro.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)] mb-2';
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionTopic);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionTopic.textContent = qObj.topic;
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionTopic.textContent = '';
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
