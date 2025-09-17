@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Números Racionais – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Matemática — 7º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo sobre Números Racionais.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Números Racionais (ℚ)</h2>
+                            <p>Um número é chamado de <span class="highlight">racional</span> quando pode ser escrito na forma de uma <span class="highlight">fração a/b</span>, onde 'a' e 'b' são números inteiros e 'b' é diferente de zero. O conjunto dos números racionais é representado pela letra ℚ.</p>
+                            <p>Isso inclui:</p>
+                            <ul>
+                                <li><strong>Todos os Números Inteiros (ℤ):</strong> Pois podem ser escritos com denominador 1. Ex: 5 = 5/1; -3 = -3/1.</li>
+                                <li><strong>Todas as Frações:</strong> Positivas ou negativas. Ex: 1/2, -3/4, 5/3.</li>
+                                <li><strong>Todos os Números Decimais Finitos:</strong> Aqueles que têm um fim. Ex: 0,5 = 1/2; -2,75 = -275/100.</li>
+                                <li><strong>Todas as Dízimas Periódicas:</strong> Decimais infinitos que repetem um padrão. Ex: 0,333... = 1/3; 0,121212... = 12/99.</li>
+                            </ul>
+
+                            <h3 class="sub-topic-title">Operações com Números Racionais</h3>
+                            <p><strong>Adição e Subtração:</strong></p>
+                            <ul>
+                                <li><strong>Frações:</strong> Se os denominadores são iguais, some ou subtraia os numeradores. Se forem diferentes, encontre o MMC (Mínimo Múltiplo Comum) para igualá-los e depois opere.</li>
+                                <li><strong>Decimais:</strong> Alinhe vírgula embaixo de vírgula e opere normalmente.</li>
+                            </ul>
+                             <p><strong>Multiplicação:</strong></p>
+                            <ul>
+                                <li><strong>Frações:</strong> Multiplique numerador com numerador e denominador com denominador.</li>
+                                <li><strong>Decimais:</strong> Multiplique como se fossem inteiros e, no final, conte o total de casas decimais para posicionar a vírgula no resultado.</li>
+                            </ul>
+                             <p><strong>Divisão:</strong></p>
+                            <ul>
+                                <li><strong>Frações:</strong> Mantenha a primeira fração e multiplique pelo inverso da segunda.</li>
+                                <li><strong>Decimais:</strong> Iguale o número de casas decimais, corte as vírgulas e divida como se fossem inteiros.</li>
+                            </ul>
+
+                            <h3 class="sub-topic-title">Potenciação e Radiciação</h3>
+                             <p><strong>Potenciação:</strong> Para elevar uma fração a um expoente, eleve o numerador e o denominador a esse expoente. Ex: (2/3)² = 2²/3² = 4/9.</p>
+                             <p><strong>Radiciação:</strong> Para extrair a raiz de uma fração, extraia a raiz do numerador e do denominador. Ex: √(16/25) = √16 / √25 = 4/5.</p>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                        </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-math-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-math-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Conceitos Básicos', difficulty: 'Fácil', q: '1) Qual dos seguintes números NÃO é um número racional?', options: ['5', '3/4', '0,25', '√2 (Raiz de 2)'], answer: '√2 (Raiz de 2)', explanation: 'A raiz quadrada de 2 é um número irracional, pois não pode ser escrita como uma fração de inteiros.'},
+            { topic: 'Conceitos Básicos', difficulty: 'Fácil', q: '2) O número -7 pode ser escrito na forma de fração como:', options: ['-7/0', '-1/7', '-7/1', '7/-1'], answer: '-7/1', explanation: 'Qualquer número inteiro pode ser escrito como uma fração com denominador 1.'},
+            { topic: 'Conceitos Básicos', difficulty: 'Fácil', q: '3) A fração 3/5 é equivalente a qual número decimal?', options: ['0,3', '0,5', '0,6', '3,5'], answer: '0,6', explanation: 'Para converter uma fração em decimal, divide-se o numerador pelo denominador: 3 ÷ 5 = 0,6.'},
+            { topic: 'Conceitos Básicos', difficulty: 'Fácil', q: '4) O número decimal 0,75 pode ser representado pela fração irredutível:', options: ['75/100', '7/5', '3/4', '1/4'], answer: '3/4', explanation: '0,75 é igual a 75/100. Simplificando essa fração por 25, obtemos 3/4.'},
+            { topic: 'Conceitos Básicos', difficulty: 'Fácil', q: '5) O que é uma dízima periódica?', options: ['Um número decimal que termina', 'Um número que não pode ser escrito como fração', 'Um decimal infinito que repete um padrão', 'Um número inteiro negativo'], answer: 'Um decimal infinito que repete um padrão', explanation: 'Por exemplo, 0,666... é uma dízima periódica e é um número racional (2/3).'},
+            { topic: 'Adição e Subtração', difficulty: 'Fácil', q: '6) Qual o resultado da soma 1/5 + 3/5?', options: ['4/10', '4/5', '3/25', '2/5'], answer: '4/5', explanation: 'Com denominadores iguais, somamos os numeradores e mantemos o denominador: 1+3=4. Resultado: 4/5.'},
+            { topic: 'Adição e Subtração', difficulty: 'Médio', q: '7) Calcule o valor de 1/2 + 1/4.', options: ['2/6', '1/8', '3/4', '2/4'], answer: '3/4', explanation: 'O MMC de 2 e 4 é 4. Convertendo as frações: 2/4 + 1/4 = 3/4.'},
+            { topic: 'Adição e Subtração', difficulty: 'Fácil', q: '8) O resultado de 2,5 + 0,75 é:', options: ['2,80', '3,25', '1,75', '10,0'], answer: '3,25', explanation: 'Alinhando as vírgulas: 2,50 + 0,75 = 3,25.'},
+            { topic: 'Adição e Subtração', difficulty: 'Médio', q: '9) Qual o resultado de 5/3 - 1/2?', options: ['4/1', '7/6', '4/6', '10/3'], answer: '7/6', explanation: 'O MMC de 3 e 2 é 6. Convertendo: 10/6 - 3/6 = 7/6.'},
+            { topic: 'Adição e Subtração', difficulty: 'Médio', q: '10) Um termômetro marcava -3,5°C e subiu 5°C. Qual a nova temperatura?', options: ['8,5°C', '2,5°C', '1,5°C', '-8,5°C'], answer: '1,5°C', explanation: 'A operação é -3,5 + 5. O resultado é positivo: 5 - 3,5 = 1,5°C.'},
+            { topic: 'Adição e Subtração', difficulty: 'Médio', q: '11) Calcule: (-1/2) + (-1/3).', options: ['-2/5', '-5/6', '2/5', '5/6'], answer: '-5/6', explanation: 'O MMC é 6. A soma é (-3/6) + (-2/6) = -5/6.'},
+            { topic: 'Adição e Subtração', difficulty: 'Fácil', q: '12) O resultado de 10 - 3,7 é:', options: ['7,3', '6,3', '7,7', '13,7'], answer: '6,3', explanation: 'Podemos pensar em 10,0 - 3,7, que resulta em 6,3.'},
+            { topic: 'Multiplicação e Divisão', difficulty: 'Fácil', q: '13) Qual o resultado de (2/3) x (5/7)?', options: ['10/21', '7/10', '14/15', '10/10'], answer: '10/21', explanation: 'Multiplica-se numerador por numerador (2*5=10) e denominador por denominador (3*7=21).'},
+            { topic: 'Multiplicação e Divisão', difficulty: 'Médio', q: '14) O resultado de 1,5 x 0,4 é:', options: ['6,0', '0,6', '0,06', '60'], answer: '0,6', explanation: '15 x 4 = 60. Como temos duas casas decimais no total (uma em 1,5 e uma em 0,4), o resultado é 0,60 ou 0,6.'},
+            { topic: 'Multiplicação e Divisão', difficulty: 'Médio', q: '15) Calcule o valor de (3/4) ÷ (1/2).', options: ['3/8', '4/6', '3/2', '8/3'], answer: '3/2', explanation: 'Mantemos a primeira fração (3/4) e multiplicamos pelo inverso da segunda (2/1). (3/4) * (2/1) = 6/4, que simplificando é 3/2.'},
+            { topic: 'Multiplicação e Divisão', difficulty: 'Fácil', q: '16) Qual o resultado de (-6) x (+0,5)?', options: ['-3', '3', '-12', '12'], answer: '-3', explanation: 'A multiplicação de sinais diferentes resulta em negativo. 6 x 0,5 é a metade de 6, que é 3. Resultado: -3.'},
+            { topic: 'Multiplicação e Divisão', difficulty: 'Médio', q: '17) Dividir um número por 0,25 é o mesmo que multiplicá-lo por:', options: ['2', '4', '5', '10'], answer: '4', explanation: '0,25 é igual a 1/4. Dividir por 1/4 é o mesmo que multiplicar pelo seu inverso, que é 4/1 ou 4.'},
+            { topic: 'Multiplicação e Divisão', difficulty: 'Médio', q: '18) O resultado de (-10) ÷ (-0,1) é:', options: ['-100', '100', '-1', '1'], answer: '100', explanation: 'A divisão de sinais iguais resulta em positivo. Dividir por 0,1 é o mesmo que multiplicar por 10. 10 * 10 = 100.'},
+            { topic: 'Multiplicação e Divisão', difficulty: 'Médio', q: '19) Metade de 1/3 é:', options: ['1/6', '2/3', '1/5', '1/2'], answer: '1/6', explanation: 'Isso é (1/3) ÷ 2, ou (1/3) x (1/2), que é igual a 1/6.'},
+            { topic: 'Potenciação e Radiciação', difficulty: 'Fácil', q: '20) Qual o valor de (2/5)²?', options: ['4/10', '2/25', '4/25', '4/5'], answer: '4/25', explanation: 'Elevamos o numerador e o denominador ao quadrado: 2² = 4 e 5² = 25.'},
+            { topic: 'Potenciação e Radiciação', difficulty: 'Fácil', q: '21) O resultado de (0,3)² é:', options: ['0,9', '0,09', '9', '0,009'], answer: '0,09', explanation: '3 x 3 = 9. Como temos duas casas decimais no total (0,3 x 0,3), o resultado é 0,09.'},
+            { topic: 'Potenciação e Radiciação', difficulty: 'Fácil', q: '22) Qual a raiz quadrada de 49/81?', options: ['7/8', '4/9', '7/9', '9/7'], answer: '7/9', explanation: 'Calculamos a raiz do numerador (√49 = 7) e do denominador (√81 = 9).'},
+            { topic: 'Potenciação e Radiciação', difficulty: 'Médio', q: '23) O valor de √(0,64) é:', options: ['0,8', '0,08', '8', '0,32'], answer: '0,8', explanation: 'A raiz de 64 é 8. Como no original temos 2 casas decimais, na raiz teremos 1 casa. Resultado: 0,8 (pois 0,8 x 0,8 = 0,64).'},
+            { topic: 'Potenciação e Radiciação', difficulty: 'Fácil', q: '24) Todo número racional (diferente de zero) elevado a um expoente zero é igual a:', options: ['0', '1', 'Ele mesmo', '10'], answer: '1', explanation: 'Essa é uma propriedade fundamental da potenciação.'},
+            { topic: 'Potenciação e Radiciação', difficulty: 'Médio', q: '25) O resultado de (-1/2)³ é:', options: ['-1/8', '1/8', '-3/6', '1/6'], answer: '-1/8', explanation: 'Base negativa elevada a expoente ímpar resulta em negativo. 1³=1 e 2³=8.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Médio', q: '26) Joana gastou 1/4 de seu salário em aluguel e 1/3 em alimentação. Que fração de seu salário ela gastou no total?', options: ['2/7', '1/12', '7/12', '5/12'], answer: '7/12', explanation: 'Somamos as frações: 1/4 + 1/3. O MMC é 12. A soma fica 3/12 + 4/12 = 7/12.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Difícil', q: '27) Se a fração restante da questão anterior foi R$ 500,00, qual era o salário total de Joana?', options: ['R$ 1000,00', 'R$ 1200,00', 'R$ 1500,00', 'R$ 700,00'], answer: 'R$ 1200,00', explanation: 'Se ela gastou 7/12, sobraram 5/12. Se 5/12 do salário é R$ 500, então 1/12 é R$ 100. O total (12/12) é 12 * 100 = R$ 1200,00.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Fácil', q: '28) Um produto custa R$ 60,00. Se ele tiver um aumento de 10%, qual será o novo preço?', options: ['R$ 66,00', 'R$ 61,00', 'R$ 70,00', 'R$ 54,00'], answer: 'R$ 66,00', explanation: '10% de 60 é 6. O novo preço é 60 + 6 = R$ 66,00.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Fácil', q: '29) Uma pizza foi dividida em 8 fatias. Se 3 pessoas comeram 2 fatias cada uma, que fração da pizza sobrou?', options: ['2/8', '6/8', '3/8', '1/8'], answer: '2/8', explanation: 'Foram comidas 3 * 2 = 6 fatias. Sobraram 8 - 6 = 2 fatias, o que corresponde a 2/8 da pizza.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Médio', q: '30) Um carro consome 1 litro de gasolina para percorrer 12,5 km. Quantos litros ele consumirá para percorrer 50 km?', options: ['3 litros', '4 litros', '5 litros', '6 litros'], answer: '4 litros', explanation: 'Basta dividir a distância total pelo consumo por litro: 50 ÷ 12,5 = 4 litros.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Fácil', q: '31) Pedro tinha R$ 40,00. Ele gastou 0,25 dessa quantia. Quanto ele gastou?', options: ['R$ 10,00', 'R$ 25,00', 'R$ 4,00', 'R$ 1,00'], answer: 'R$ 10,00', explanation: '0,25 é o mesmo que 1/4. 1/4 de 40 é 40 ÷ 4 = R$ 10,00.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Fácil', q: '32) Qual é o valor da expressão: 2/3 de 60?', options: ['20', '30', '40', '50'], answer: '40', explanation: '(2/3) * 60 = 120 / 3 = 40.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Médio', q: '33) Uma sala de aula tem 30 alunos, dos quais 40% são meninas. Quantos meninos há na sala?', options: ['12', '15', '18', '20'], answer: '18', explanation: '40% de 30 são 12 meninas. O restante, 60% ou 30-12, são 18 meninos.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Médio', q: '34) Um terreno quadrado tem área de 0,49 m². Qual é a medida de seu lado?', options: ['0,7 m', '0,07 m', '7 m', '0,49 m'], answer: '0,7 m', explanation: 'A medida do lado é a raiz quadrada da área. √0,49 = 0,7 m.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Médio', q: '35) O triplo de (-1/2) somado com 1 é:', options: ['-1/2', '-3/2', '1/2', '-5/2'], answer: '-1/2', explanation: '3 * (-1/2) = -3/2. Agora, -3/2 + 1 = -3/2 + 2/2 = -1/2.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Fácil', q: '36) Um filme tem duração de 2,5 horas. Quantos minutos isso representa?', options: ['125 minutos', '140 minutos', '150 minutos', '160 minutos'], answer: '150 minutos', explanation: '2 horas = 120 minutos. 0,5 hora (meia hora) = 30 minutos. Total: 120 + 30 = 150 minutos.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Médio', q: '37) Coloque em ordem crescente: 0,7; 3/4; 0,707.', options: ['0,7; 3/4; 0,707', '0,707; 3/4; 0,7', '0,7; 0,707; 3/4', '3/4; 0,7; 0,707'], answer: '0,7; 0,707; 3/4', explanation: 'Convertendo para decimal: 3/4 = 0,75. A ordem fica: 0,700; 0,707; 0,750.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Fácil', q: '38) Qual o inverso da fração -5/8?', options: ['5/8', '8/5', '-8/5', '-5/8'], answer: '-8/5', explanation: 'O inverso de uma fração é a troca de posição entre o numerador e o denominador, mantendo o sinal.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Fácil', q: '39) Dividir uma torta de R$ 30,00 igualmente entre 4 amigos resulta em quanto para cada um?', options: ['R$ 7,00', 'R$ 7,25', 'R$ 7,50', 'R$ 8,00'], answer: 'R$ 7,50', explanation: '30 ÷ 4 = 7,5. Cada um pagará R$ 7,50.'},
+            { topic: 'Problemas e Aplicações', difficulty: 'Difícil', q: '40) Qual o valor da expressão (1/2 + 1/3) ÷ 5/6?', options: ['1', '5/6', '6/5', '25/36'], answer: '1', explanation: 'Primeiro a soma: 1/2 + 1/3 = 3/6 + 2/6 = 5/6. Agora a divisão: (5/6) ÷ (5/6) = 1, pois todo número dividido por si mesmo é 1.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4'; nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3'; redoBtn.textContent='Refazer';
+
+        questionInfoContainer.appendChild(questionTopic);
+        questionInfoContainer.appendChild(questionDifficulty);
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            if (currentIndex >= questionOrder.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.disabled = true;
+
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b,opt,qObj.answer,qObj.explanation,qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            questionInfoContainer.classList.add('hidden');
+            questionText.innerHTML = `🎉 Fim do Quiz! 🎉`;
+            optionsContainer.innerHTML = `<p class="text-center text-lg">Você acertou ${correctCount} de ${total} questões.</p>`;
+            feedbackContainer.innerHTML = '';
+            nextBtn.textContent = 'Recomeçar Quiz';
+            nextBtn.disabled = false;
+            nextBtn.onclick = () => {
+                questionInfoContainer.classList.remove('hidden');
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+            redoBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=>b.disabled=true);
+            nextBtn.disabled = false;
+
+            if(opt===correct){
+                btn.classList.add('celebrate','correct');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> Resposta correta: <strong>${correct}</strong>.`;
+                if(explanation) feedbackContainer.innerHTML += `<div class="mt-2 text-sm">${explanation}</div>`;
+                
+                Array.from(optionsContainer.children).forEach(b=>{
+                    if(b.textContent === correct) b.classList.add('correct');
+                });
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
+
