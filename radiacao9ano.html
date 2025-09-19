@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Radiação – 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Ciências — 9º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo sobre Radiação.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Radiação: Energia em Movimento</h2>
+                            <p>Radiação é a propagação de energia de um ponto a outro, seja no vácuo ou em um meio material. Ela pode se manifestar como <span class="highlight">ondas eletromagnéticas</span> (como a luz, raios X, ondas de rádio) ou como <span class="highlight">partículas</span> (como as emitidas por materiais radioativos).</p>
+                            
+                            <h3 class="sub-topic-title">Tipos de Radiação</h3>
+                            <p>A principal forma de classificar a radiação é pela sua energia e capacidade de interagir com a matéria. </p>
+                             <ul>
+                                <li><strong>Radiação Não Ionizante:</strong> É a radiação de baixa energia, incapaz de arrancar elétrons dos átomos. Faz parte do nosso dia a dia. <span class="highlight">Exemplos:</span> luz visível, infravermelho (calor), micro-ondas, ondas de rádio e TV. Geralmente, não apresenta grandes riscos à saúde.</li>
+                                <li><strong>Radiação Ionizante:</strong> É a radiação de alta energia, com força suficiente para <span class="highlight">arrancar elétrons dos átomos</span>. Esse processo, chamado ionização, pode danificar células e o DNA, oferecendo riscos à saúde se a exposição for alta ou prolongada.</li>
+                            </ul>
+
+                            <h3 class="sub-topic-title">Radioatividade: Radiação Ionizante de Partículas</h3>
+                            <p>A radioatividade é um fenômeno natural em que núcleos de átomos instáveis (como o Urânio) se desintegram, liberando energia na forma de partículas ou ondas. Existem três tipos principais:</p>
+                            <ul>
+                                <li><strong>Partícula Alfa (α):</strong> Formada por 2 prótons e 2 nêutrons. É grande e pesada, com baixo poder de penetração. <span class="highlight">Uma folha de papel</span> é suficiente para bloqueá-la.</li>
+                                <li><strong>Partícula Beta (β):</strong> É um elétron emitido pelo núcleo. É mais leve e rápida que a alfa, com maior poder de penetração. Pode ser bloqueada por uma <span class="highlight">placa de madeira ou alumínio</span>.</li>
+                                <li><strong>Radiação Gama (γ):</strong> É uma onda eletromagnética de altíssima energia, sem massa ou carga. Tem um <span class="highlight">altíssimo poder de penetração</span> e só pode ser barrada por materiais densos, como <span class="highlight">grossas placas de chumbo ou concreto</span>.</li>
+                            </ul>
+
+                            <h3 class="sub-topic-title">Aplicações e Riscos</h3>
+                             <p>A radiação tem aplicações muito importantes:</p>
+                             <ul>
+                                <li><strong>Medicina:</strong> Raios X para diagnósticos, radioterapia para tratar o câncer e radioisótopos como marcadores em exames.</li>
+                                <li><strong>Energia:</strong> Usinas nucleares usam a fissão de átomos de Urânio para gerar uma enorme quantidade de eletricidade.</li>
+                                 <li><strong>Indústria:</strong> Esterilização de materiais cirúrgicos e alimentos, datação de fósseis (Carbono-14).</li>
+                             </ul>
+                            <p>O principal risco está na <span class="highlight">radiação ionizante</span>, que, em altas doses, pode causar queimaduras, doenças como o câncer e mutações genéticas. Por isso, a proteção (uso de blindagens de chumbo, controle do tempo de exposição) é fundamental para quem trabalha com materiais radioativos.</p>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-science-9ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-science-9ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Conceitos Básicos', difficulty: 'Fácil', q: '1) O que é radiação?', options: ['Apenas a luz que podemos ver', 'A propagação de energia através de ondas ou partículas', 'Apenas o calor emitido pelo Sol', 'Uma forma de eletricidade estática'], answer: 'A propagação de energia através de ondas ou partículas', explanation: 'Radiação é um termo amplo para energia em trânsito, seja como ondas eletromagnéticas ou como partículas.'},
+            { topic: 'Conceitos Básicos', difficulty: 'Fácil', q: '2) As ondas de rádio, a luz visível e os raios X são exemplos de:', options: ['Partículas radioativas', 'Ondas sonoras', 'Ondas eletromagnéticas', 'Correntes elétricas'], answer: 'Ondas eletromagnéticas', explanation: 'Todas fazem parte do espectro eletromagnético, diferenciando-se pela frequência e energia.'},
+            { topic: 'Tipos de Radiação', difficulty: 'Médio', q: '3) Qual é a principal diferença entre radiação ionizante e não ionizante?', options: ['A velocidade de propagação', 'A capacidade de arrancar elétrons dos átomos', 'A cor que elas apresentam', 'A temperatura que elas geram'], answer: 'A capacidade de arrancar elétrons dos átomos', explanation: 'A radiação ionizante tem energia suficiente para ionizar átomos, o que pode causar danos biológicos.'},
+            { topic: 'Tipos de Radiação', difficulty: 'Fácil', q: '4) Qual das seguintes alternativas contém apenas exemplos de radiação NÃO ionizante?', options: ['Raios X, luz visível, raios gama', 'Ondas de rádio, micro-ondas, infravermelho', 'Partículas alfa, partículas beta, nêutrons', 'Luz ultravioleta, raios X, ondas de rádio'], answer: 'Ondas de rádio, micro-ondas, infravermelho', explanation: 'Essas são radiações de baixa energia, que não têm força para arrancar elétrons dos átomos.'},
+            { topic: 'Tipos de Radiação', difficulty: 'Médio', q: '5) A radiação ultravioleta (UV) emitida pelo Sol, embora majoritariamente não ionizante, pode causar danos à pele porque:', options: ['É muito quente', 'Tem energia suficiente para danificar o DNA das células da pele', 'É visível a olho nu', 'Atravessa o corpo humano'], answer: 'Tem energia suficiente para danificar o DNA das células da pele', explanation: 'A radiação UV está no limite entre ionizante e não ionizante, e sua energia pode quebrar ligações químicas nas células.'},
+            
+            { topic: 'Radioatividade', difficulty: 'Fácil', q: '6) A radioatividade é um fenômeno que ocorre quando:', options: ['Átomos se unem para formar moléculas', 'Núcleos atômicos instáveis se desintegram', 'Elétrons mudam de órbita', 'Materiais são aquecidos a altas temperaturas'], answer: 'Núcleos atômicos instáveis se desintegram', explanation: 'Átomos de elementos como o Urânio liberam energia e partículas para se tornarem mais estáveis.'},
+            { topic: 'Radioatividade', difficulty: 'Médio', q: '7) Qual das emissões radioativas tem o MENOR poder de penetração, podendo ser barrada por uma folha de papel?', options: ['Radiação gama (γ)', 'Partícula beta (β)', 'Raios X', 'Partícula alfa (α)'], answer: 'Partícula alfa (α)', explanation: 'A partícula alfa é a maior e mais pesada, por isso interage facilmente com a matéria e perde sua energia rapidamente.'},
+            { topic: 'Radioatividade', difficulty: 'Médio', q: '8) A partícula beta (β) é, na verdade, um(a):', options: ['Próton', 'Nêutron', 'Elétron', 'Fóton'], answer: 'Elétron', explanation: 'Ela é um elétron emitido a partir da transformação de um nêutron em um próton dentro do núcleo atômico.'},
+            { topic: 'Radioatividade', difficulty: 'Difícil', q: '9) Qual tipo de radiação exige blindagens espessas de chumbo ou concreto para ser detida?', options: ['Partícula alfa (α)', 'Partícula beta (β)', 'Radiação gama (γ)', 'Luz visível'], answer: 'Radiação gama (γ)', explanation: 'Por ser uma onda de altíssima energia e sem massa, a radiação gama é a mais penetrante das três.'},
+            { topic: 'Radioatividade', difficulty: 'Fácil', q: '10) Os três tipos principais de emissão radioativa são:', options: ['Luz, som e calor', 'Alfa, Beta e Gama', 'Prótons, Nêutrons e Elétrons', 'Rádio, TV e Celular'], answer: 'Alfa, Beta e Gama', explanation: 'Essas são as três emissões clássicas estudadas a partir da desintegração de núcleos instáveis.'},
+            
+            { topic: 'Aplicações da Radiação', difficulty: 'Fácil', q: '11) Na medicina, os Raios X são utilizados principalmente para:', options: ['Tratar o câncer', 'Obter imagens de ossos e órgãos internos', 'Esterilizar equipamentos', 'Aquecer os pacientes'], answer: 'Obter imagens de ossos e órgãos internos', explanation: 'Os Raios X atravessam tecidos moles mas são absorvidos pelos ossos, criando uma imagem diagnóstica.'},
+            { topic: 'Aplicações da Radiação', difficulty: 'Médio', q: '12) A radioterapia é um tratamento contra o câncer que utiliza:', options: ['Ondas de rádio para estimular as células', 'Radiação ionizante para destruir as células cancerosas', 'Luz infravermelha para aquecer o tumor', 'Partículas alfa para marcar as células'], answer: 'Radiação ionizante para destruir as células cancerosas', explanation: 'A alta energia da radiação (geralmente gama ou raios X) é focada no tumor para matar as células doentes.'},
+            { topic: 'Aplicações da Radiação', difficulty: 'Médio', q: '13) Como as usinas nucleares geram eletricidade?', options: ['Queimando urânio para girar turbinas', 'Usando a fissão nuclear para aquecer água e gerar vapor que move turbinas', 'Através da fusão de átomos de hidrogênio', 'Convertendo diretamente a radiação em luz'], answer: 'Usando a fissão nuclear para aquecer água e gerar vapor que move turbinas', explanation: 'A quebra (fissão) de núcleos de urânio libera uma quantidade imensa de calor, que é usado para gerar eletricidade de forma convencional.'},
+            { topic: 'Aplicações da Radiação', difficulty: 'Médio', q: '14) O método de datação por Carbono-14 é usado por arqueólogos para:', options: ['Determinar a idade de rochas muito antigas', 'Determinar a idade de fósseis e artefatos orgânicos', 'Encontrar depósitos de carbono', 'Criar cópias de artefatos antigos'], answer: 'Determinar a idade de fósseis e artefatos orgânicos', explanation: 'O Carbono-14 é um isótopo radioativo que decai a uma taxa conhecida, permitindo estimar a idade de materiais que um dia estiveram vivos.'},
+            { topic: 'Aplicações da Radiação', difficulty: 'Fácil', q: '15) A esterilização de alimentos e materiais cirúrgicos com radiação gama é um processo eficaz porque:', options: ['A radiação cozinha o alimento', 'A radiação mata microrganismos como bactérias e fungos', 'A radiação deixa o material colorido', 'A radiação congela o material'], answer: 'A radiação mata microrganismos como bactérias e fungos', explanation: 'A alta energia da radiação gama destrói o material genético dos microrganismos, impedindo sua reprodução.'},
+
+            { topic: 'Riscos e Proteção', difficulty: 'Fácil', q: '16) Qual tipo de radiação apresenta os maiores riscos para a saúde humana?', options: ['Luz visível', 'Ondas de rádio', 'Radiação ionizante', 'Infravermelho'], answer: 'Radiação ionizante', explanation: 'Sua capacidade de alterar átomos e moléculas em nosso corpo a torna potencialmente perigosa.'},
+            { topic: 'Riscos e Proteção', difficulty: 'Médio', q: '17) Por que os profissionais que trabalham com Raios X usam aventais de chumbo?', options: ['Para se protegerem do calor', 'Porque o chumbo é um material leve e confortável', 'Para se protegerem do som da máquina', 'Porque o chumbo é um material denso que bloqueia a radiação ionizante'], answer: 'Porque o chumbo é um material denso que bloqueia a radiação ionizante', explanation: 'O chumbo serve como uma blindagem, absorvendo os raios X e protegendo o corpo do profissional.'},
+            { topic: 'Riscos e Proteção', difficulty: 'Médio', q: '18) Um dos principais riscos da exposição prolongada ou intensa à radiação ionizante é o aumento da chance de desenvolver:', options: ['Gripe', 'Diabetes', 'Câncer', 'Alergias'], answer: 'Câncer', explanation: 'Os danos ao DNA causados pela radiação podem levar a mutações que dão origem a células cancerosas.'},
+            { topic: 'Riscos e Proteção', difficulty: 'Difícil', q: '19) O princípio da proteção radiológica "ALARA" (As Low As Reasonably Achievable) significa que:', options: ['Deve-se usar a menor dose de radiação razoavelmente possível', 'A radiação deve ser usada apenas em alarmes', 'Deve-se evitar totalmente qualquer tipo de radiação', 'A radiação só é perigosa em locais baixos'], answer: 'Deve-se usar a menor dose de radiação razoavelmente possível', explanation: 'É um princípio de segurança que busca minimizar a exposição à radiação, otimizando os procedimentos.'},
+            { topic: 'Riscos e Proteção', difficulty: 'Fácil', q: '20) Qual atitude simples ajuda a nos proteger da radiação ultravioleta do Sol?', options: ['Beber muita água', 'Usar roupas escuras', 'Usar protetor solar', 'Ficar apenas na sombra'], answer: 'Usar protetor solar', explanation: 'O protetor solar cria uma barreira física e química na pele que absorve ou reflete a radiação UV.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '21) Qual das radiações abaixo é uma partícula com carga positiva?', options: ['Gama', 'Beta', 'Alfa', 'Nêutron'], answer: 'Alfa', explanation: 'A partícula alfa é composta por 2 prótons e 2 nêutrons, tendo, portanto, uma carga positiva +2.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '22) Em um acidente nuclear, qual tipo de radiação representa o maior perigo à distância?', options: ['Alfa', 'Beta', 'Gama', 'Todas igualmente'], answer: 'Gama', explanation: 'Devido ao seu altíssimo poder de penetração, a radiação gama pode percorrer grandes distâncias no ar e atravessar paredes, sendo a mais perigosa em caso de exposição externa.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '23) O aparelho de micro-ondas usa qual tipo de radiação para aquecer os alimentos?', options: ['Raios X', 'Gama', 'Micro-ondas', 'Ultravioleta'], answer: 'Micro-ondas', explanation: 'As micro-ondas agitam as moléculas de água nos alimentos, gerando calor por atrito.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '24) Marie Curie, uma pioneira no estudo da radioatividade, descobriu quais elementos químicos?', options: ['Urânio e Tório', 'Hidrogênio e Oxigênio', 'Rádio e Polônio', 'Césio e Iodo'], answer: 'Rádio e Polônio', explanation: 'Seus estudos com esses elementos foram fundamentais para a compreensão da radioatividade, mas também a expuseram a altos níveis de radiação.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '25) A fissão nuclear, processo que ocorre em usinas e bombas atômicas, é a:', options: ['Junção de núcleos atômicos leves', 'Quebra de um núcleo atômico pesado em núcleos menores', 'Emissão de partículas beta', 'Transformação de energia em matéria'], answer: 'Quebra de um núcleo atômico pesado em núcleos menores', explanation: 'Esse processo libera uma quantidade colossal de energia, que é aproveitada nas usinas nucleares.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '26) Qual radiação é uma onda eletromagnética e não uma partícula?', options: ['Alfa', 'Beta', 'Gama', 'Próton'], answer: 'Gama', explanation: 'Alfa e Beta são partículas emitidas do núcleo, enquanto Gama é pura energia na forma de onda eletromagnética.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '27) O controle remoto da sua TV funciona emitindo um sinal de:', options: ['Raios X', 'Infravermelho', 'Ultravioleta', 'Micro-ondas'], answer: 'Infravermelho', explanation: 'É uma forma de radiação não ionizante, invisível aos nossos olhos, que transmite os comandos.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '28) O acidente de Chernobyl (1986) e o de Fukushima (2011) estão relacionados a:', options: ['Usinas hidrelétricas', 'Explosão de bombas atômicas', 'Usinas nucleares', 'Vazamento de gás'], answer: 'Usinas nucleares', explanation: 'Ambos foram graves acidentes em usinas de energia nuclear que liberaram material radioativo no ambiente.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '29) Um material tem uma meia-vida de 10 anos. Se você começar com 100g, quantos gramas restarão após 20 anos?', options: ['50g', '75g', '25g', '0g'], answer: '25g', explanation: 'Meia-vida é o tempo para metade do material decair. Após 10 anos, restarão 50g. Após mais 10 anos (total de 20), restará metade de 50g, ou seja, 25g.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '30) Por que a radiação alfa, apesar de pouco penetrante, é muito perigosa se ingerida ou inalada?', options: ['Porque ela se multiplica no corpo', 'Porque ela causa um grande dano em uma pequena região de células', 'Porque ela reage com o ar dos pulmões', 'Porque ela é muito quente'], answer: 'Porque ela causa um grande dano em uma pequena região de células', explanation: 'Como ela deposita toda a sua energia em uma área pequena, o dano celular localizado é muito intenso se a fonte estiver dentro do corpo.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '31) Qual é a fonte de praticamente toda a energia na Terra, que nos chega por radiação?', options: ['A Lua', 'O centro da Terra', 'As estrelas distantes', 'O Sol'], answer: 'O Sol', explanation: 'O Sol emite um vasto espectro de radiação eletromagnética, incluindo luz e calor, que sustenta a vida no nosso planeta.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '32) Qual item NÃO utiliza radiação ionizante em seu funcionamento?', options: ['Máquina de Raios X', 'Acelerador linear (radioterapia)', 'Forno de micro-ondas', 'Datação por Carbono-14'], answer: 'Forno de micro-ondas', explanation: 'O micro-ondas utiliza radiação não ionizante de baixa energia para aquecer alimentos.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '33) A radiação beta é mais penetrante que a alfa porque:', options: ['É maior e mais pesada', 'Tem carga positiva', 'É menor, mais leve e mais rápida', 'Não tem carga elétrica'], answer: 'É menor, mais leve e mais rápida', explanation: 'Sendo um elétron, a partícula beta interage menos com a matéria e consegue viajar mais longe antes de ser detida.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '34) O processo de usar radiação para ver através de malas em aeroportos utiliza:', options: ['Ondas de rádio', 'Raios X', 'Infravermelho', 'Laser'], answer: 'Raios X', explanation: 'Assim como na medicina, os raios X atravessam materiais de baixa densidade e são absorvidos pelos mais densos, revelando o conteúdo.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '35) O que é a fusão nuclear, processo que ocorre no Sol?', options: ['A quebra de núcleos pesados', 'A união de núcleos leves para formar um mais pesado, liberando energia', 'A evaporação de elementos químicos', 'A emissão de partículas alfa e beta'], answer: 'A união de núcleos leves para formar um mais pesado, liberando energia', explanation: 'No Sol, núcleos de hidrogênio se fundem para formar hélio, liberando a energia que recebemos como luz e calor.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '36) Qual dos materiais abaixo é o mais eficiente para blindagem contra radiação gama?', options: ['Madeira', 'Alumínio', 'Água', 'Chumbo'], answer: 'Chumbo', explanation: 'A alta densidade do chumbo o torna uma excelente barreira para a radiação gama de alta energia.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '37) Quando você se aquece perto de uma fogueira, o calor chega até você principalmente por qual tipo de radiação?', options: ['Raios X', 'Gama', 'Infravermelho', 'Ultravioleta'], answer: 'Infravermelho', explanation: 'A radiação infravermelha é o que percebemos como calor.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '38) Qual o nome do aparelho usado para medir a dose de radiação ionizante recebida por um indivíduo?', options: ['Termômetro', 'Barômetro', 'Dosímetro', 'Acelerômetro'], answer: 'Dosímetro', explanation: 'Profissionais que trabalham com radiação usam dosímetros para monitorar e controlar sua exposição.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '39) O acidente com Césio-137 em Goiânia (1987) foi causado por:', options: ['Vazamento de uma usina nuclear', 'Uma bomba suja', 'Violação de uma cápsula de um aparelho de radioterapia abandonado', 'Um experimento científico que deu errado'], answer: 'Violação de uma cápsula de um aparelho de radioterapia abandonado', explanation: 'O desconhecimento sobre os perigos da fonte radioativa levou à sua manipulação e causou um dos maiores acidentes radiológicos do mundo.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '40) O arco-íris é um fenômeno que mostra a decomposição da luz solar branca nas diferentes cores. Isso demonstra que a luz visível é:', options: ['Uma partícula única', 'Uma forma de radiação ionizante', 'Composta por diferentes frequências de ondas eletromagnéticas', 'Um tipo de radiação beta'], answer: 'Composta por diferentes frequências de ondas eletromagnéticas', explanation: 'Cada cor do arco-íris corresponde a uma diferente frequência (e energia) dentro do espectro da luz visível.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && currentIndex < quizData.length) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            quizContainer.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = 'final-results';
+            finalResultsDiv.className = 'text-center';
+            practiceSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn" class="btn-primary mt-6">Recomeçar Quiz</button>
+            `;
+            
+            document.getElementById('restart-btn').onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
