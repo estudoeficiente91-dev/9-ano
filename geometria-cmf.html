@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Revisão de Matemática – 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .formula { background-color: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; margin-top: 1rem; font-family: 'Courier New', Courier, monospace; text-align: center; font-size: 1.1rem; }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Revisão de Matemática — 9º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo de Geometria e Grandezas.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">a), b), c) Grandezas e Medidas</h2>
+                            <p>Medir é comparar uma grandeza com uma unidade padrão. <span class="highlight">Área</span> é a medida de uma superfície (bidimensional, ex: m²), enquanto <span class="highlight">Volume</span> é a medida do espaço ocupado (tridimensional, ex: m³).</p>
+                            <p>A <span class="highlight">conversão de unidades</span> segue uma lógica de potências de 10. Para comprimento, cada "casa" na escala (km, hm, dam, m, dm, cm, mm) vale 10. Para áreas, vale 100 (10²). Para volumes, vale 1000 (10³).</p>
+                             <h3 class="sub-topic-title">Exemplos de Conversão</h3>
+                            <ul>
+                                <li><strong>Comprimento:</strong> 1,5 km = 1,5 x 1000 = 1500 m.</li>
+                                <li><strong>Área:</strong> 3 m² = 3 x 100 x 100 = 30.000 cm². (Dois saltos na escala).</li>
+                                <li><strong>Volume/Capacidade:</strong> 2 m³ = 2 x 1000 = 2000 dm³. Como 1 dm³ = 1 L, temos 2000 L.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">d), e), f) Reta e Posições Relativas</h2>
+                             <p>Uma <span class="highlight">reta</span> é infinita. Um <span class="highlight">segmento de reta</span> é um pedaço finito da reta, com começo e fim. Uma <span class="highlight">semirreta</span> tem começo, mas não tem fim. A <span class="highlight">mediatriz</span> de um segmento é a reta perpendicular que passa exatamente no seu ponto médio.</p>
+                             <p>Duas retas em um plano podem ser <span class="highlight">paralelas</span> (nunca se cruzam), <span class="highlight">concorrentes</span> (cruzam-se em um ponto) ou <span class="highlight">coincidentes</span> (são a mesma reta).</p>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">g), h), i) Ângulos e Teoremas</h2>
+                             <p><span class="highlight">Ângulos</span> são medidos em graus. Ângulos <span class="highlight">complementares</span> somam 90°, e <span class="highlight">suplementares</span> somam 180°.</p>
+                             <h3 class="sub-topic-title">Teorema de Tales</h3>
+                             <p>Se retas paralelas são cortadas por transversais, os segmentos correspondentes são proporcionais.</p>
+                             <p class="formula">a/b = c/d</p>
+                             <ul>
+                                <li><strong>Exemplo 1:</strong> Se a=2, b=4, c=3, então 2/4 = 3/d -> 2d = 12 -> d=6.</li>
+                                <li><strong>Exemplo 2:</strong> Segmentos de uma transversal são x e 10. Na outra, 5 e 8. Então x/10 = 5/8 -> 8x = 50 -> x=6,25.</li>
+                                <li><strong>Exemplo 3 (Teorema Angular):</strong> Em um triângulo, uma reta paralela a um lado divide os outros dois lados em segmentos proporcionais.</li>
+                             </ul>
+                              <h3 class="sub-topic-title">Teorema da Bissetriz Interna</h3>
+                             <p>A bissetriz de um ângulo interno divide o lado oposto em segmentos proporcionais aos lados adjacentes.</p>
+                             <p class="formula">c/x = b/y</p>
+                              <ul>
+                                <li><strong>Exemplo 1:</strong> Lados b=10, c=8. O lado oposto (12) é dividido em x e y. Temos 8/x = 10/y e x+y=12. Resolvendo o sistema, encontramos os segmentos.</li>
+                                 <li><strong>Exemplo 2:</strong> Lados c=6, b=9. Lado oposto dividido em x=4 e y. Então 6/4 = 9/y -> 6y=36 -> y=6.</li>
+                                 <li><strong>Exemplo 3:</strong> Um triângulo isósceles com base 10. A bissetriz do ângulo do vértice divide a base em dois segmentos de 5.</li>
+                             </ul>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">j), k), l), m) Triângulos</h2>
+                             <p>Dois triângulos são <span class="highlight">semelhantes</span> se seus ângulos são iguais e seus lados correspondentes são proporcionais.</p>
+                             <h3 class="sub-topic-title">Teorema de Pitágoras</h3>
+                             <p>Em um triângulo retângulo, a soma dos quadrados dos catetos é igual ao quadrado da hipotenusa.</p>
+                             <p class="formula">a² = b² + c²</p>
+                             <ul>
+                                <li><strong>Exemplo 1 (Achar hipotenusa):</strong> Catetos b=3, c=4. a² = 3² + 4² = 9 + 16 = 25. a = √25 = 5.</li>
+                                <li><strong>Exemplo 2 (Achar cateto):</strong> Hipotenusa a=13, cateto b=5. 13² = 5² + c² -> 169 = 25 + c² -> c² = 144 -> c=12.</li>
+                                <li><strong>Exemplo 3 (Diagonal do quadrado):</strong> Quadrado de lado 6. A diagonal é a hipotenusa. d² = 6² + 6² = 72. d = √72 = 6√2.</li>
+                             </ul>
+                             <h3 class="sub-topic-title">Relações Métricas no Triângulo Retângulo</h3>
+                             <p class="formula">a⋅h = b⋅c  |  h² = m⋅n  |  b² = a⋅m  |  c² = a⋅n</p>
+                             <ul>
+                                <li><strong>Exemplo 1:</strong> Projeções m=4, n=9. A altura h² = 4*9 = 36 -> h=6.</li>
+                                <li><strong>Exemplo 2:</strong> Catetos b=6, c=8. A hipotenusa a=10. A altura será 10*h = 6*8 -> 10h=48 -> h=4,8.</li>
+                                 <li><strong>Exemplo 3:</strong> Hipotenusa a=12, projeção m=3. O cateto b será b² = 12*3 = 36 -> b=6.</li>
+                             </ul>
+                              <h3 class="sub-topic-title">Razões Trigonométricas</h3>
+                             <p class="formula">sen(α) = co/hip | cos(α) = ca/hip | tg(α) = co/ca</p>
+                             <ul>
+                                <li><strong>Exemplo 1:</strong> Cateto oposto = 6, hipotenusa = 10. sen(α) = 6/10 = 0,6.</li>
+                                 <li><strong>Exemplo 2:</strong> Cateto adjacente = 8, hipotenusa = 10. cos(α) = 8/10 = 0,8.</li>
+                                 <li><strong>Exemplo 3:</strong> Cateto oposto = 6, cateto adjacente = 8. tg(α) = 6/8 = 0,75.</li>
+                             </ul>
+                        </div>
+                        
+                         <div class="topic-section">
+                            <h2 class="topic-title">n) Lei dos Senos e Cossenos</h2>
+                             <h3 class="sub-topic-title">Lei dos Senos</h3>
+                            <p class="formula">a/sen(A) = b/sen(B) = c/sen(C)</p>
+                             <ul>
+                                 <li><strong>Exemplo 1:</strong> Lado a=10, ângulo A=30°, ângulo B=45°. Achar lado b. 10/sen(30°) = b/sen(45°) -> 10/0,5 = b/0,707 -> b = 20 * 0,707 = 14,14.</li>
+                                 <li><strong>Exemplo 2:</strong> Lado c=20, ângulo C=60°, ângulo A=45°. Achar lado a. a/sen(45°) = 20/sen(60°) -> a/0,707 = 20/0,866 -> a ≈ 16,33.</li>
+                                 <li><strong>Exemplo 3:</strong> Num triângulo, um lado de 8cm é oposto a um ângulo de 30°. Qual o diâmetro da circunferência circunscrita? Pela lei estendida, 8/sen(30°) = 2R -> 8/0,5 = 2R -> 16 = 2R -> R=8. Diâmetro = 16cm.</li>
+                             </ul>
+                             <h3 class="sub-topic-title">Lei dos Cossenos</h3>
+                            <p class="formula">a² = b² + c² - 2bc⋅cos(A)</p>
+                              <ul>
+                                 <li><strong>Exemplo 1:</strong> Lados b=5, c=8, ângulo A=60°. Achar lado a. a² = 5²+8² - 2*5*8*cos(60°) = 25+64 - 80*0,5 = 89 - 40 = 49. a=7.</li>
+                                  <li><strong>Exemplo 2:</strong> Lados a=7, b=5, c=8. Achar o ângulo A. 7² = 5²+8² - 2*5*8*cos(A) -> 49=89-80*cos(A) -> -40=-80*cos(A) -> cos(A)=0,5 -> A=60°.</li>
+                                  <li><strong>Exemplo 3:</strong> Lados b=3, c=10, ângulo A=120°. Achar lado a. a² = 3²+10² - 2*3*10*cos(120°) = 9+100 - 60*(-0,5) = 109 + 30 = 139. a = √139.</li>
+                             </ul>
+                        </div>
+
+                         <div class="topic-section">
+                            <h2 class="topic-title">o), p), q) Polígonos</h2>
+                             <p>Polígonos <span class="highlight">regulares</span> têm todos os lados e ângulos iguais.</p>
+                             <h3 class="sub-topic-title">Soma dos Ângulos Internos (Sᵢ)</h3>
+                             <p class="formula">Sᵢ = (n - 2) ⋅ 180°</p>
+                              <ul>
+                                 <li><strong>Exemplo (Pentágono n=5):</strong> Sᵢ = (5-2)*180 = 3*180 = 540°.</li>
+                                  <li><strong>Exemplo (Hexágono n=6):</strong> Sᵢ = (6-2)*180 = 4*180 = 720°.</li>
+                                  <li><strong>Exemplo (Decágono n=10):</strong> Sᵢ = (10-2)*180 = 8*180 = 1440°.</li>
+                             </ul>
+                             <h3 class="sub-topic-title">Número de Diagonais (d)</h3>
+                             <p class="formula">d = n(n - 3) / 2</p>
+                             <ul>
+                                 <li><strong>Exemplo (Pentágono n=5):</strong> d = 5(5-3)/2 = 5*2/2 = 5 diagonais.</li>
+                                  <li><strong>Exemplo (Octógono n=8):</strong> d = 8(8-3)/2 = 8*5/2 = 20 diagonais.</li>
+                                  <li><strong>Exemplo (Icoságono n=20):</strong> d = 20(20-3)/2 = 20*17/2 = 170 diagonais.</li>
+                             </ul>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">r), s), t) Circunferência e Áreas</h2>
+                            <p>O <span class="highlight">perímetro</span> é a soma dos lados. A <span class="highlight">área</span> é a medida da superfície.</p>
+                             <h3 class="sub-topic-title">Comprimento e Área da Circunferência</h3>
+                             <p class="formula">C = 2πr  |  A = πr²</p>
+                             <ul>
+                                <li><strong>Exemplo 1 (Comprimento):</strong> Raio r=5. C = 2 * 3,14 * 5 = 31,4.</li>
+                                <li><strong>Exemplo 2 (Área):</strong> Raio r=5. A = 3,14 * 5² = 3,14 * 25 = 78,5.</li>
+                                <li><strong>Exemplo 3 (Caminho inverso):</strong> Se a área é 12,56, qual o raio? 12,56 = 3,14 * r² -> r² = 4 -> r=2.</li>
+                             </ul>
+                             <h3 class="sub-topic-title">Relação entre Cordas</h3>
+                            <p class="formula">PA ⋅ PB = PC ⋅ PD</p>
+                             <ul>
+                                <li><strong>Exemplo 1:</strong> Segmentos de uma corda são 3 e 8. Na outra, um é 4. 3*8 = 4*x -> 24=4x -> x=6.</li>
+                                <li><strong>Exemplo 2:</strong> Segmentos de uma são 2 e 10. Na outra, x e 5. 2*10 = x*5 -> 20=5x -> x=4.</li>
+                                <li><strong>Exemplo 3:</strong> As cordas se cruzam no ponto médio e medem 12 cada. Os segmentos são 6 e 6. 6*6 = 6*6 -> 36=36.</li>
+                             </ul>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-math-9ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-math-9ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // a) Medidas de comprimento, tempo, massa, etc. (5 questões)
+            { topic: 'Grandezas e Medidas', difficulty: 'Fácil', q: '1) Uma maratona tem 42.195 metros. Essa distância em quilômetros é:', options: ['4,2195 km', '42,195 km', '421,95 km', '4219,5 km'], answer: '42,195 km', explanation: 'Para converter metros para quilômetros, divide-se por 1000, o que equivale a mover a vírgula 3 casas para a esquerda.'},
+            { topic: 'Grandezas e Medidas', difficulty: 'Fácil', q: '2) Um filme começou às 19h45min e terminou às 22h. Qual foi a duração do filme?', options: ['2 horas e 15 minutos', '2 horas e 30 minutos', '1 hora e 45 minutos', '2 horas e 45 minutos'], answer: '2 horas e 15 minutos', explanation: 'Das 19h45 às 20h são 15 minutos. Das 20h às 22h são 2 horas. Total: 2h 15min.'},
+            { topic: 'Grandezas e Medidas', difficulty: 'Fácil', q: '3) Se uma caixa de bananas pesa 2,5 kg, qual seu peso em gramas?', options: ['25 g', '250 g', '2500 g', '25000 g'], answer: '2500 g', explanation: '1 quilograma equivale a 1000 gramas. Portanto, 2,5 * 1000 = 2500 g.'},
+            { topic: 'Grandezas e Medidas', difficulty: 'Médio', q: '4) A temperatura em uma cidade era de -5°C e subiu 12°C. Qual a temperatura final?', options: ['-17°C', '-7°C', '7°C', '17°C'], answer: '7°C', explanation: 'A operação é -5 + 12 = 7. A temperatura final é de 7°C positivos.'},
+            { topic: 'Grandezas e Medidas', difficulty: 'Fácil', q: '5) Uma garrafa de refrigerante tem capacidade para 1,5 litros. Isso equivale a quantos mililitros (mL)?', options: ['15 mL', '150 mL', '1500 mL', '15000 mL'], answer: '1500 mL', explanation: '1 litro equivale a 1000 mililitros. Portanto, 1,5 * 1000 = 1500 mL.'},
+            
+            // b) Medidas de área e volume (5 questões)
+            { topic: 'Área e Volume', difficulty: 'Fácil', q: '6) Qual a área de um terreno quadrado com lado medindo 20 metros?', options: ['40 m²', '80 m²', '200 m²', '400 m²'], answer: '400 m²', explanation: 'A área de um quadrado é lado ao quadrado: 20² = 400 m².'},
+            { topic: 'Área e Volume', difficulty: 'Médio', q: '7) Uma caixa cúbica tem 50 cm de aresta. Qual o seu volume em cm³?', options: ['150 cm³', '2500 cm³', '12500 cm³', '125000 cm³'], answer: '125000 cm³', explanation: 'O volume de um cubo é a aresta ao cubo: 50³ = 125.000 cm³.'},
+            { topic: 'Área e Volume', difficulty: 'Médio', q: '8) A área de um triângulo com base 10 cm e altura 8 cm é:', options: ['80 cm²', '40 cm²', '18 cm²', '90 cm²'], answer: '40 cm²', explanation: 'A área do triângulo é (base * altura) / 2 = (10 * 8) / 2 = 40 cm².'},
+            { topic: 'Área e Volume', difficulty: 'Fácil', q: '9) O que mede o volume de um objeto?', options: ['O comprimento do seu contorno', 'A medida de sua superfície', 'O espaço que ele ocupa', 'O seu peso'], answer: 'O espaço que ele ocupa', explanation: 'Volume é a medida do espaço tridimensional ocupado por um corpo.'},
+            { topic: 'Área e Volume', difficulty: 'Difícil', q: '10) Se um metro cúbico (m³) equivale a 1000 litros, quantos litros cabem em uma caixa d\'água de 0,8 m³?', options: ['8 litros', '80 litros', '800 litros', '8000 litros'], answer: '800 litros', explanation: 'Basta multiplicar o volume em m³ por 1000: 0,8 * 1000 = 800 litros.'},
+
+            // c) Conversão de unidades de medida (5 questões)
+            { topic: 'Conversão de Unidades', difficulty: 'Fácil', q: '11) 3,5 quilômetros equivalem a quantos metros?', options: ['35 m', '350 m', '3500 m', '35000 m'], answer: '3500 m', explanation: 'Para converter km para m, multiplica-se por 1000.'},
+            { topic: 'Conversão de Unidades', difficulty: 'Médio', q: '12) Uma área de 2 metros quadrados (m²) equivale a quantos centímetros quadrados (cm²)?', options: ['200 cm²', '2.000 cm²', '20.000 cm²', '200.000 cm²'], answer: '20.000 cm²', explanation: 'Como 1 m = 100 cm, então 1 m² = 100² cm² = 10.000 cm². Logo, 2 m² = 20.000 cm².'},
+            { topic: 'Conversão de Unidades', difficulty: 'Médio', q: '13) 7200 segundos correspondem a quantas horas?', options: ['1 hora', '1,5 horas', '2 horas', '2,5 horas'], answer: '2 horas', explanation: '1 hora = 3600 segundos. 7200 / 3600 = 2 horas.'},
+            { topic: 'Conversão de Unidades', difficulty: 'Fácil', q: '14) 500 gramas correspondem a quantos quilogramas?', options: ['0,05 kg', '0,5 kg', '5 kg', '50 kg'], answer: '0,5 kg', explanation: 'Para converter g para kg, divide-se por 1000.'},
+            { topic: 'Conversão de Unidades', difficulty: 'Difícil', q: '15) Um volume de 3.000 cm³ equivale a quantos litros?', options: ['0,3 L', '3 L', '30 L', '300 L'], answer: '3 L', explanation: '1 litro equivale a 1000 cm³. Portanto, 3000 cm³ equivalem a 3 litros.'},
+
+            // d) e e) e f) Reta e Posições Relativas (5 questões)
+            { topic: 'Reta e Posições Relativas', difficulty: 'Fácil', q: '16) Uma linha que tem começo e fim é um(a):', options: ['Reta', 'Semirreta', 'Segmento de reta', 'Vértice'], answer: 'Segmento de reta', explanation: 'É um pedaço finito de uma reta, delimitado por dois pontos.'},
+            { topic: 'Reta e Posições Relativas', difficulty: 'Médio', q: '17) Duas retas que estão no mesmo plano e não se cruzam são chamadas de:', options: ['Concorrentes', 'Perpendiculares', 'Paralelas', 'Coincidentes'], answer: 'Paralelas', explanation: 'A principal característica das retas paralelas é não possuírem nenhum ponto em comum.'},
+            { topic: 'Reta e Posições Relativas', difficulty: 'Médio', q: '18) Uma reta que corta um segmento de reta em seu ponto médio, formando um ângulo de 90°, é chamada de:', options: ['Bissetriz', 'Altura', 'Mediana', 'Mediatriz'], answer: 'Mediatriz', explanation: 'A mediatriz é definida por essas duas condições: ser perpendicular e passar pelo ponto médio.'},
+            { topic: 'Reta e Posições Relativas', difficulty: 'Fácil', q: '19) Se um ponto P pertence a uma reta r, dizemos que:', options: ['P é exterior a r', 'P é colinear a r', 'P é paralelo a r', 'P é perpendicular a r'], answer: 'P é colinear a r', explanation: 'Colinear significa que está na mesma linha. Também se pode dizer que P é incidente a r.'},
+            { topic: 'Reta e Posições Relativas', difficulty: 'Fácil', q: '20) Duas retas que se cruzam em um único ponto são:', options: ['Paralelas', 'Coincidentes', 'Concorrentes', 'Segmentos'], answer: 'Concorrentes', explanation: 'O ponto de cruzamento é o ponto concorrente entre elas.'},
+
+            // g) e h) e i) Ângulos e Teoremas (5 questões)
+            { topic: 'Ângulos', difficulty: 'Fácil', q: '21) Dois ângulos que somam 180° são chamados de:', options: ['Complementares', 'Suplementares', 'Opostos pelo vértice', 'Agudos'], answer: 'Suplementares', explanation: 'Ângulos suplementares formam um ângulo raso (meia-volta).'},
+            { topic: 'Teorema de Tales', difficulty: 'Médio', q: '22) Pelo Teorema de Tales, se um feixe de retas paralelas corta uma transversal em segmentos de 3 cm e 5 cm, e outra transversal em um segmento de 6 cm correspondente ao de 3 cm, qual a medida do outro segmento?', options: ['8 cm', '9 cm', '10 cm', '11 cm'], answer: '10 cm', explanation: 'Pela proporção: 3/5 = 6/x. Multiplicando em cruz, 3x = 30, logo x = 10 cm.'},
+            { topic: 'Teorema da Bissetriz', difficulty: 'Difícil', q: '23) A bissetriz de um ângulo A de um triângulo ABC divide o lado oposto BC em segmentos de 4 cm e 6 cm. Se o lado AB, oposto ao segmento de 6 cm, mede 9 cm, qual a medida do lado AC?', options: ['5 cm', '6 cm', '7 cm', '8 cm'], answer: '6 cm', explanation: 'Pelo Teorema da Bissetriz Interna, a razão entre os lados é igual à razão entre os segmentos: AC/4 = AB/6 => AC/4 = 9/6 => 6*AC = 36 => AC = 6 cm.'},
+            { topic: 'Ângulos', difficulty: 'Fácil', q: '24) O que é a bissetriz de um ângulo?', options: ['A reta que o corta ao meio', 'A soma de dois ângulos', 'Uma reta perpendicular', 'A semirreta que o divide em dois ângulos iguais'], answer: 'A semirreta que o divide em dois ângulos iguais', explanation: 'Bissetriz significa "dividir em duas partes iguais".'},
+            { topic: 'Ângulos', difficulty: 'Médio', q: '25) O suplemento do complemento de um ângulo de 40° é:', options: ['40°', '50°', '130°', '140°'], answer: '130°', explanation: 'O complemento de 40° é 90°-40°=50°. O suplemento de 50° é 180°-50°=130°.'},
+
+            // j) e k) e l) e m) Triângulos (5 questões)
+            { topic: 'Triângulos - Conceitos', difficulty: 'Fácil', q: '26) Em um triângulo retângulo, os lados que formam o ângulo reto são chamados de:', options: ['Hipotenusas', 'Catetos', 'Bissetrizes', 'Medianas'], answer: 'Catetos', explanation: 'A hipotenusa é o lado oposto ao ângulo reto.'},
+            { topic: 'Teorema de Pitágoras', difficulty: 'Médio', q: '27) Os lados de um triângulo medem 6 cm, 8 cm e 10 cm. Esse triângulo é retângulo?', options: ['Sim', 'Não', 'Faltam dados para saber'], answer: 'Sim', explanation: 'Pelo Teorema de Pitágoras: 6² + 8² = 36 + 64 = 100. Como 10² = 100, a relação é válida, então é um triângulo retângulo.'},
+            { topic: 'Relações Métricas no Triângulo Retângulo', difficulty: 'Difícil', q: '28) Em um triângulo retângulo, a altura relativa à hipotenusa a divide em projeções de 4 cm e 9 cm. Qual o valor dessa altura?', options: ['5 cm', '6 cm', '7 cm', '13 cm'], answer: '6 cm', explanation: 'Pela relação métrica h² = m*n, temos h² = 4*9 = 36. Logo, h = 6 cm.'},
+            { topic: 'Razões Trigonométricas', difficulty: 'Médio', q: '29) O seno de um ângulo agudo em um triângulo retângulo é a razão entre:', options: ['Cateto Adjacente / Hipotenusa', 'Cateto Oposto / Hipotenusa', 'Cateto Oposto / Cateto Adjacente', 'Hipotenusa / Cateto Oposto'], answer: 'Cateto Oposto / Hipotenusa', explanation: 'Essa é a definição de seno.'},
+            { topic: 'Semelhança de Triângulos', difficulty: 'Médio', q: '30) Um triângulo de lados 3, 4 e 5 é semelhante a um triângulo cujo menor lado mede 6. Qual o perímetro do triângulo maior?', options: ['12', '18', '24', '30'], answer: '24', explanation: 'A razão de semelhança é 6/3 = 2. Os outros lados serão 4*2=8 e 5*2=10. O perímetro é 6+8+10=24.'},
+            
+            // n) e o) e p) e q) Leis e Polígonos (5 questões)
+            { topic: 'Lei dos Cossenos', difficulty: 'Médio', q: '31) Para qual situação a Lei dos Cossenos é mais indicada?', options: ['Calcular a área de um círculo', 'Quando conhecemos os três lados de um triângulo qualquer', 'Quando conhecemos os três ângulos de um triângulo', 'Apenas para triângulos retângulos'], answer: 'Quando conhecemos os três lados de um triângulo qualquer', explanation: 'A Lei dos Cossenos permite descobrir um ângulo a partir dos três lados, ou um lado a partir de dois lados e o ângulo entre eles.'},
+            { topic: 'Polígonos', difficulty: 'Fácil', q: '32) Quantas diagonais tem um hexágono?', options: ['6', '9', '12', '15'], answer: '9', explanation: 'A fórmula é d = n(n-3)/2. Para n=6, d = 6(3)/2 = 9.'},
+            { topic: 'Semelhança de Polígonos', difficulty: 'Médio', q: '33) Se a razão de semelhança entre dois polígonos é 3, e a área do menor é 10 cm², qual a área do maior?', options: ['30 cm²', '60 cm²', '90 cm²', '100 cm²'], answer: '90 cm²', explanation: 'A razão entre as áreas é o quadrado da razão de semelhança (k²). Se k=3, k²=9. A área do maior é 10 * 9 = 90 cm².'},
+            { topic: 'Relações Métricas nos Polígonos Regulares', difficulty: 'Difícil', q: '34) Qual a medida do lado de um quadrado inscrito em uma circunferência de raio 5 cm?', options: ['5 cm', '10 cm', '5√2 cm', '10√2 cm'], answer: '5√2 cm', explanation: 'A relação para o quadrado inscrito é L = R√2. Logo, L = 5√2 cm.'},
+            { topic: 'Lei dos Senos', difficulty: 'Médio', q: '35) Um triângulo tem um lado de 10 cm oposto a um ângulo de 30°. Outro lado é oposto a um ângulo de 45°. Qual o comprimento deste segundo lado? (Dados: sen 30° = 0,5; sen 45° ≈ 0,7)', options: ['12 cm', '14 cm', '16 cm', '18 cm'], answer: '14 cm', explanation: 'Pela Lei dos Senos: x/sen(45°) = 10/sen(30°) => x/0,7 = 10/0,5 => x/0,7 = 20 => x = 14 cm.'},
+
+            // r) e s) e t) Circunferência e Áreas (5 questões)
+            { topic: 'Circunferência', difficulty: 'Fácil', q: '36) Qual o comprimento de uma circunferência com raio de 10 cm? (Use π ≈ 3,14)', options: ['31,4 cm', '62,8 cm', '314 cm²', '100 cm'], answer: '62,8 cm', explanation: 'A fórmula do comprimento é C = 2πr. C = 2 * 3,14 * 10 = 62,8 cm.'},
+            { topic: 'Área de Figuras Planas', difficulty: 'Médio', q: '37) Qual a área de um círculo com diâmetro de 20 cm? (Use π = 3)', options: ['60 cm²', '120 cm²', '300 cm²', '1200 cm²'], answer: '300 cm²', explanation: 'Se o diâmetro é 20, o raio é 10. A área é A = πr² = 3 * 10² = 3 * 100 = 300 cm².'},
+            { topic: 'Relações Métricas na Circunferência', difficulty: 'Difícil', q: '38) Duas cordas se cruzam dentro de um círculo. Os segmentos de uma medem 4 e 9. Se um dos segmentos da outra mede 6, quanto mede o outro?', options: ['4', '5', '6', '8'], answer: '6', explanation: 'Pela relação de cordas, o produto dos segmentos é igual: 4 * 9 = 6 * x => 36 = 6x => x = 6.'},
+            { topic: 'Perímetro e Área', difficulty: 'Fácil', q: '39) O perímetro de um retângulo com lados 15m e 10m é:', options: ['25 m', '50 m', '150 m', '100 m'], answer: '50 m', explanation: 'O perímetro é a soma de todos os lados: 15 + 10 + 15 + 10 = 50 m.'},
+            { topic: 'Perímetro e Área', difficulty: 'Médio', q: '40) Qual a área de um trapézio com bases 12 cm e 8 cm, e altura 5 cm?', options: ['25 cm²', '50 cm²', '100 cm²', '200 cm²'], answer: '50 cm²', explanation: 'A fórmula da área do trapézio é A = ((B+b)*h)/2 = ((12+8)*5)/2 = (20*5)/2 = 50 cm².'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && currentIndex < quizData.length) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            quizContainer.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = 'final-results';
+            finalResultsDiv.className = 'text-center';
+            practiceSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn" class="btn-primary mt-6">Recomeçar Quiz</button>
+            `;
+            
+            document.getElementById('restart-btn').onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
+
