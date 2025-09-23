@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Matemática – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .formula { background-color: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; margin-top: 1rem; font-family: 'Courier New', Courier, monospace; text-align: center; font-size: 1.1rem; }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+        .question-tags { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
+        .topic-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; background-color: rgba(59, 130, 246, 0.2); color: var(--accent); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Matemática — 7º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos: Números, Potenciação e Geometria.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Operações com Números Decimais</h2>
+                            <h3 class="sub-topic-title">Multiplicação de Decimais</h3>
+                            <p>Para multiplicar números decimais, siga dois passos: 1) Multiplique os números como se fossem inteiros, ignorando as vírgulas. 2) Conte o <span class="highlight">total de casas decimais</span> nos fatores e coloque a vírgula no resultado, contando da direita para a esquerda.</p>
+                            <ul>
+                                <li><strong>Exemplo 1:</strong> 2,5 x 0,3 -> Fazemos 25 x 3 = 75. O número 2,5 tem 1 casa decimal e 0,3 tem 1 casa decimal (total de 2 casas). O resultado é <span class="highlight">0,75</span>.</li>
+                                <li><strong>Exemplo 2:</strong> 1,25 x 0,4 -> Fazemos 125 x 4 = 500. 1,25 tem 2 casas e 0,4 tem 1 (total de 3 casas). O resultado é <span class="highlight">0,500</span> ou 0,5.</li>
+                                <li><strong>Exemplo 3:</strong> 4 x 0,8 -> Fazemos 4 x 8 = 32. 0,8 tem 1 casa decimal. O resultado é <span class="highlight">3,2</span>.</li>
+                            </ul>
+                            <h3 class="sub-topic-title">Divisão de Decimais</h3>
+                            <p>Para dividir números decimais: 1) Iguale o número de casas decimais dos dois números acrescentando zeros. 2) "Corte" as vírgulas. 3) Efetue a divisão como se fossem números inteiros.</p>
+                             <ul>
+                                <li><strong>Exemplo 1:</strong> 1,2 ÷ 0,03 -> Igualamos as casas: 1,20 ÷ 0,03. Cortamos as vírgulas: 120 ÷ 3. O resultado é <span class="highlight">40</span>.</li>
+                                <li><strong>Exemplo 2:</strong> 7 ÷ 1,4 -> Igualamos as casas: 7,0 ÷ 1,4. Cortamos as vírgulas: 70 ÷ 14. O resultado é <span class="highlight">5</span>.</li>
+                                <li><strong>Exemplo 3:</strong> 0,5 ÷ 2 -> Igualamos as casas: 0,5 ÷ 2,0. Cortamos as vírgulas: 5 ÷ 20. Como não dá, acrescentamos 0 e vírgula: 50 ÷ 20 = <span class="highlight">0,25</span>.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                             <h2 class="topic-title">Potenciação e Raiz Quadrada</h2>
+                             <p>Potenciação é uma multiplicação de fatores iguais. Em <span class="highlight">aⁿ</span>, 'a' é a base e 'n' é o expoente, que indica quantas vezes a base se multiplica por si mesma.</p>
+                             <h3 class="sub-topic-title">Cálculos com Frações e Decimais</h3>
+                             <ul>
+                                <li><strong>Fração:</strong> Eleva-se o numerador e o denominador ao expoente. Ex: (2/3)³ = 2³ / 3³ = <span class="highlight">8/27</span>.</li>
+                                <li><strong>Decimal:</strong> Calcule a potência como se fosse um número inteiro e posicione a vírgula. O número de casas decimais do resultado será (nº de casas da base) x (expoente). Ex: (0,2)³ -> Fazemos 2³=8. A base 0,2 tem 1 casa decimal. O resultado terá 1 x 3 = 3 casas. Resposta: <span class="highlight">0,008</span>.</li>
+                             </ul>
+                             <h3 class="sub-topic-title">Propriedades da Potenciação</h3>
+                             <ul>
+                                 <li><strong>Produto de mesma base (aᵐ ⋅ aⁿ = aᵐ⁺ⁿ):</strong> Conserva a base e soma os expoentes. Ex: 2³ ⋅ 2² = 2⁵ = 32.</li>
+                                 <li><strong>Divisão de mesma base (aᵐ / aⁿ = aᵐ⁻ⁿ):</strong> Conserva a base e subtrai os expoentes. Ex: 5⁷ / 5³ = 5⁴ = 625.</li>
+                                 <li><strong>Potência de potência ((aᵐ)ⁿ = aᵐ⋅ⁿ):</strong> Conserva a base e multiplica os expoentes. Ex: (3²)⁴ = 3⁸.</li>
+                             </ul>
+                             <h3 class="sub-topic-title">Raiz Quadrada (√)</h3>
+                             <p>A raiz quadrada é a operação inversa da potenciação ao quadrado. Calcular √x é encontrar um número que, multiplicado por si mesmo, resulta em x.</p>
+                             <ul>
+                                 <li><strong>Número Natural:</strong> √49 = 7, pois 7 x 7 = 49. √121 = 11, pois 11 x 11 = 121.</li>
+                                 <li><strong>Fração:</strong> Extrai-se a raiz do numerador e do denominador. Ex: √(9/25) = √9 / √25 = <span class="highlight">3/5</span>.</li>
+                                 <li><strong>Número Decimal:</strong> O melhor método é transformar em fração e depois calcular a raiz.
+                                    <ul style="padding-left: 1rem; list-style-type: circle;">
+                                        <li><strong>Exemplo 1:</strong> √0,64 = √(64/100) = √64 / √100 = 8/10 = <span class="highlight">0,8</span>.</li>
+                                        <li><strong>Exemplo 2:</strong> √1,21 = √(121/100) = √121 / √100 = 11/10 = <span class="highlight">1,1</span>.</li>
+                                        <li><strong>Exemplo 3:</strong> √0,09 = √(9/100) = √9 / √100 = 3/10 = <span class="highlight">0,3</span>.</li>
+                                    </ul>
+                                 </li>
+                             </ul>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">Circunferência</h2>
+                            <p>É uma linha curva fechada onde todos os pontos estão à mesma distância de um ponto central.</p>
+                            <ul>
+                                <li><strong>Raio (r):</strong> A distância do centro a qualquer ponto da circunferência.</li>
+                                <li><strong>Diâmetro (d):</strong> O maior segmento de reta que une dois pontos da circunferência, passando pelo centro. <span class="highlight">d = 2r</span>.</li>
+                                <li><strong>Corda:</strong> Qualquer segmento de reta que une dois pontos da circunferência. O diâmetro é a maior corda possível.</li>
+                                <li><strong>Valor de Pi (π):</strong> É uma constante matemática que representa a razão entre o comprimento de uma circunferência e seu diâmetro. Seu valor aproximado é <span class="highlight">3,14</span>.</li>
+                             </ul>
+                             <h3 class="sub-topic-title">Fórmuras Essenciais</h3>
+                            <p><strong>Perímetro (Comprimento):</strong> É o contorno da circunferência.</p>
+                             <p class="formula">C = 2 ⋅ π ⋅ r</p>
+                            <p><strong>Área:</strong> É a medida da superfície do círculo.</p>
+                             <p class="formula">A = π ⋅ r²</p>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Triângulos e Quadriláteros</h2>
+                             <h3 class="sub-topic-title">Triângulo: Condição de Existência</h3>
+                             <p>Para formar um triângulo, a medida de <span class="highlight">qualquer lado deve ser sempre menor que a soma das medidas dos outros dois lados</span>. <br><strong>Exemplo:</strong> É possível formar um triângulo com lados 5, 7 e 10? Sim, pois 5+7 > 10, 5+10 > 7 e 7+10 > 5. E com 4, 5 e 10? Não, pois 4+5 (que é 9) não é maior que 10.</p>
+                             
+                             <h3 class="sub-topic-title">Soma dos Ângulos Internos</h3>
+                             <ul>
+                                <li><strong>Triângulos:</strong> A soma dos três ângulos internos de QUALQUER triângulo é sempre <span class="highlight">180°</span>.</li>
+                                 <li><strong>Quadriláteros:</strong> A soma dos quatro ângulos internos de QUALQUER quadrilátero convexo (quadrado, retângulo, losango, trapézio...) é sempre <span class="highlight">360°</span>.</li>
+                             </ul>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-math-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-math-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Números Decimais', difficulty: 'Fácil', q: '1) Qual o resultado de 3,5 x 0,2?', options: ['7,0', '0,7', '0,07', '70'], answer: '0,7', explanation: 'Primeiro, 35 * 2 = 70. Como 3,5 tem uma casa decimal e 0,2 tem uma, o resultado terá duas casas decimais: 0,70 ou 0,7.'},
+            { topic: 'Números Decimais', difficulty: 'Médio', q: '2) Calcule 4,8 ÷ 0,12.', options: ['4', '0,4', '40', '400'], answer: '40', explanation: 'Igualamos as casas decimais: 4,80 ÷ 0,12. Removemos as vírgulas: 480 ÷ 12 = 40.'},
+            { topic: 'Potenciação e Raiz Quadrada', difficulty: 'Fácil', q: '3) Qual o valor de (1/4)²?', options: ['1/8', '2/8', '1/16', '2/16'], answer: '1/16', explanation: 'Elevamos o numerador e o denominador ao expoente: 1² = 1 e 4² = 16.'},
+            { topic: 'Potenciação e Raiz Quadrada', difficulty: 'Médio', q: '4) O resultado de (0,5)³ é:', options: ['1,5', '0,15', '0,125', '1,25'], answer: '0,125', explanation: '5³ = 125. Como 0,5 tem uma casa decimal, o resultado terá 1*3=3 casas: 0,125.'},
+            { topic: 'Propriedades da Potenciação', difficulty: 'Médio', q: '5) Simplificando a expressão 7⁵ ⋅ 7³, obtemos:', options: ['7⁸', '7¹⁵', '49⁸', '14⁸'], answer: '7⁸', explanation: 'Na multiplicação de potências de mesma base, conservamos a base e somamos os expoentes (5 + 3 = 8).'},
+            { topic: 'Propriedades da Potenciação', difficulty: 'Médio', q: '6) A expressão (10⁴)³ é igual a:', options: ['10⁷', '10¹', '10¹²', '30⁴'], answer: '10¹²', explanation: 'Em uma potência de potência, conservamos a base e multiplicamos os expoentes (4 * 3 = 12).'},
+            { topic: 'Potenciação e Raiz Quadrada', difficulty: 'Médio', q: '7) Qual o valor de √(49/100)?', options: ['7/100', '4/10', '7/10', '4/9'], answer: '7/10', explanation: 'Extraímos a raiz do numerador (√49 = 7) e do denominador (√100 = 10).'},
+            { topic: 'Potenciação e Raiz Quadrada', difficulty: 'Médio', q: '8) Qual o valor de √1,44?', options: ['1,2', '0,12', '12', '0,012'], answer: '1,2', explanation: 'Transforme em fração: √1,44 = √(144/100) = √144 / √100 = 12/10 = 1,2.'},
+            { topic: 'Circunferência - Elementos', difficulty: 'Fácil', q: '9) Como é chamado o segmento de reta que une o centro a qualquer ponto da circunferência?', options: ['Corda', 'Diâmetro', 'Raio', 'Arco'], answer: 'Raio', explanation: 'Essa é a definição de raio, a medida fundamental da circunferência.'},
+            { topic: 'Circunferência - Elementos', difficulty: 'Fácil', q: '10) A maior corda de uma circunferência é o:', options: ['Raio', 'Diâmetro', 'Arco', 'Setor'], answer: 'Diâmetro', explanation: 'O diâmetro passa pelo centro e equivale a duas vezes o raio.'},
+            { topic: 'Circunferência - Perímetro', difficulty: 'Médio', q: '11) Qual o comprimento de uma circunferência de raio 5 cm? (Use π = 3,14)', options: ['15,7 cm', '31,4 cm', '78,5 cm', '10 cm'], answer: '31,4 cm', explanation: 'C = 2 * π * r = 2 * 3,14 * 5 = 31,4 cm.'},
+            { topic: 'Circunferência - Área', difficulty: 'Médio', q: '12) Qual a área de um círculo com diâmetro de 20 metros? (Use π = 3,14)', options: ['62,8 m²', '125,6 m²', '314 m²', '1256 m²'], answer: '314 m²', explanation: 'Se o diâmetro é 20m, o raio é 10m. A = π * r² = 3,14 * 10² = 314 m².'},
+            { topic: 'Circunferência - Fórmulas', difficulty: 'Fácil', q: '13) Qual é a fórmula para calcular a área de um círculo?', options: ['A = 2πr', 'A = πd', 'A = πr²', 'A = π²r'], answer: 'A = πr²', explanation: 'A área do círculo é calculada por Pi multiplicado pelo raio ao quadrado.'},
+            { topic: 'Circunferência - Fórmulas', difficulty: 'Fácil', q: '14) Qual é a fórmula para calcular o perímetro (comprimento) de uma circunferência?', options: ['C = πr²', 'C = 2πr', 'C = πd²', 'C = πr'], answer: 'C = 2πr', explanation: 'O comprimento é duas vezes o Pi vezes o raio, ou Pi vezes o diâmetro.'},
+            { topic: 'Triângulos - Existência', difficulty: 'Médio', q: '15) Com quais medidas é POSSÍVEL formar um triângulo?', options: ['2 cm, 3 cm, 6 cm', '1 cm, 2 cm, 3 cm', '5 cm, 8 cm, 12 cm', '4 cm, 5 cm, 10 cm'], answer: '5 cm, 8 cm, 12 cm', explanation: 'É a única opção onde a soma dos dois menores lados (5+8=13) é maior que o terceiro lado (12).'},
+            { topic: 'Triângulos - Existência', difficulty: 'Médio', q: '16) Dois lados de um triângulo medem 6 cm e 10 cm. O terceiro lado NÃO pode medir:', options: ['5 cm', '8 cm', '15 cm', '16 cm'], answer: '16 cm', explanation: 'Pela condição de existência, o terceiro lado deve ser menor que a soma dos outros dois (6+10=16). Ele não pode ser igual a 16.'},
+            { topic: 'Triângulos - Ângulos', difficulty: 'Fácil', q: '17) Qual é a soma dos ângulos internos de qualquer triângulo?', options: ['90°', '180°', '270°', '360°'], answer: '180°', explanation: 'Essa é uma propriedade fundamental de todos os triângulos.'},
+            { topic: 'Triângulos - Ângulos', difficulty: 'Fácil', q: '18) Se dois ângulos de um triângulo medem 50° e 70°, qual a medida do terceiro ângulo?', options: ['50°', '60°', '70°', '80°'], answer: '60°', explanation: 'A soma deve ser 180°. 180 - (50 + 70) = 180 - 120 = 60°.'},
+            { topic: 'Triângulos - Ângulos', difficulty: 'Médio', q: '19) Em um triângulo retângulo isósceles, quais são as medidas dos seus três ângulos?', options: ['90°, 45°, 45°', '90°, 30°, 60°', '60°, 60°, 60°', '100°, 40°, 40°'], answer: '90°, 45°, 45°', explanation: 'Um ângulo é 90° (retângulo). Os outros dois são iguais (isósceles), e sua soma deve ser 90°. Logo, 45° para cada um.'},
+            { topic: 'Quadriláteros - Ângulos', difficulty: 'Fácil', q: '20) Qual é a soma dos ângulos internos de qualquer quadrilátero convexo?', options: ['90°', '180°', '270°', '360°'], answer: '360°', explanation: 'Essa é a propriedade fundamental de todos os quadriláteros convexos.'},
+            { topic: 'Quadriláteros - Ângulos', difficulty: 'Fácil', q: '21) Os ângulos de um retângulo medem:', options: ['Todos 60°', 'Dois de 60° e dois de 120°', 'Todos 90°', 'Depende do tamanho'], answer: 'Todos 90°', explanation: 'A definição de um retângulo é ser um quadrilátero com quatro ângulos retos (90°).'},
+            { topic: 'Quadriláteros - Ângulos', difficulty: 'Médio', q: '22) Três ângulos de um quadrilátero medem 70°, 100° e 110°. Qual a medida do quarto ângulo?', options: ['60°', '70°', '80°', '90°'], answer: '80°', explanation: 'A soma deve ser 360°. 360 - (70 + 100 + 110) = 360 - 280 = 80°.'},
+            { topic: 'Quadriláteros - Ângulos', difficulty: 'Médio', q: '23) Em um losango, os ângulos opostos são sempre:', options: ['Complementares', 'Suplementares', 'Diferentes', 'Iguais'], answer: 'Iguais', explanation: 'Uma das propriedades do losango é ter ângulos opostos com a mesma medida.'},
+            { topic: 'Quadriláteros - Ângulos', difficulty: 'Difícil', q: '24) Em um trapézio isósceles, um dos ângulos da base maior mede 75°. Qual a medida de um dos ângulos da base menor?', options: ['75°', '90°', '105°', '115°'], answer: '105°', explanation: 'Em um trapézio, os ângulos adjacentes a um lado não paralelo são suplementares (somam 180°). 180 - 75 = 105°.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '25) Qual o resultado da expressão (1/2)² + √0,25?', options: ['0,50', '0,75', '1,00', '1,25'], answer: '0,75', explanation: '(1/2)² = 1/4 = 0,25. √0,25 = 0,5. A soma é 0,25 + 0,5 = 0,75.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '26) Se o diâmetro de um pneu é 60 cm, qual a distância aproximada que ele percorre em uma volta completa? (Use π = 3,1)', options: ['186 cm', '93 cm', '372 cm', '60 cm'], answer: '186 cm', explanation: 'A distância de uma volta é o comprimento. C = d * π = 60 * 3,1 = 186 cm.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '27) Qual o valor da expressão (5²)³ / 5⁴?', options: ['5', '25', '125', '1'], answer: '25', explanation: '(5²)³ = 5⁶. Então, 5⁶ / 5⁴ = 5⁶⁻⁴ = 5² = 25.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '28) Um terreno retangular tem 15m de largura e 300m² de área. Qual o seu comprimento?', options: ['10m', '15m', '20m', '25m'], answer: '20m', explanation: 'Área = Comprimento * Largura => 300 = C * 15 => C = 300 / 15 = 20m.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '29) Um ângulo de 45° é classificado como:', options: ['Agudo', 'Reto', 'Obtuso', 'Raso'], answer: 'Agudo', explanation: 'Ângulos agudos são aqueles menores que 90°.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '30) Qual dos seguintes trios de ângulos pode formar um triângulo?', options: ['60°, 60°, 70°', '90°, 90°, 10°', '40°, 50°, 90°', '80°, 80°, 30°'], answer: '40°, 50°, 90°', explanation: 'É o único trio cuja soma dos ângulos é exatamente 180°.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'question-tags';
+        const questionTopic = document.createElement('span');
+        questionTopic.className='topic-badge';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && currentIndex < quizData.length) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            // Limpa e adiciona as tags de tópico e dificuldade
+            questionInfoContainer.innerHTML = '';
+            questionInfoContainer.appendChild(questionTopic);
+            questionInfoContainer.appendChild(questionDifficulty);
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            quizContainer.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = 'final-results';
+            finalResultsDiv.className = 'text-center';
+            practiceSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn" class="btn-primary mt-6">Recomeçar Quiz</button>
+            `;
+            
+            document.getElementById('restart-btn').onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
