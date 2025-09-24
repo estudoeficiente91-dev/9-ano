@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Neodarwinismo – 9º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Ciências — 9º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo sobre Neodarwinismo.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Neodarwinismo ou Teoria Sintética da Evolução</h2>
+                            <p>O Neodarwinismo é a "versão moderna" da teoria da evolução de Charles Darwin. Darwin explicou brilhantemente o mecanismo da <span class="highlight">seleção natural</span>, mas na sua época não sabia EXATAMENTE como as características eram passadas de pais para filhos e, principalmente, como novas características surgiam. O Neodarwinismo une as ideias de Darwin com os conhecimentos da <span class="highlight">Genética</span>, explicando as causas da variabilidade.</p>
+
+                            <h3 class="sub-topic-title">Os Pilares do Neodarwinismo</h3>
+                            <p>A teoria moderna se baseia em três grandes pilares:</p>
+                            <ul>
+                                <li><strong>Mutação Gênica:</strong> É a <span class="highlight">fonte primária</span> de toda a variabilidade. Mutações são <span class="highlight">alterações aleatórias</span> no DNA de um ser vivo. Elas acontecem por acaso (ex: erros na cópia do DNA) e podem criar uma nova característica que não existia antes. A maioria das mutações é neutra ou prejudicial, mas algumas podem ser vantajosas em um determinado ambiente.</li>
+                                <li><strong>Recombinação Gênica:</strong> É a "mistura" dos genes dos pais que acontece durante a formação dos gametas (reprodução sexuada). Ela não cria genes novos, mas <span class="highlight">embaralha os genes existentes</span>, criando combinações únicas e aumentando a diversidade de características em uma população.</li>
+                                <li><strong>Seleção Natural:</strong> Continua sendo o mecanismo central. O ambiente "seleciona" as características mais adaptativas. Indivíduos com mutações vantajosas para aquele ambiente têm mais chances de <span class="highlight">sobreviver e deixar mais descendentes</span>. Com o tempo, essa característica vantajosa se torna mais comum na população.</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-science-9ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-science-9ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Conceitos Fundamentais', difficulty: 'Fácil', q: '1) O Neodarwinismo é a união das ideias de Darwin com os conhecimentos da:', options: ['Física Quântica', 'Genética', 'Química Orgânica', 'Geologia'], answer: 'Genética', explanation: 'A Teoria Sintética da Evolução incorpora os conceitos de mutação e recombinação gênica para explicar a variabilidade que Darwin observou.'},
+            { topic: 'Conceitos Fundamentais', difficulty: 'Fácil', q: '2) Qual foi a principal "lacuna" na teoria original de Darwin que o Neodarwinismo preencheu?', options: ['A falta de fósseis', 'A explicação para a origem da vida', 'A causa da variabilidade entre os indivíduos', 'A idade da Terra'], answer: 'A causa da variabilidade entre os indivíduos', explanation: 'Darwin sabia que existiam variações, mas não conhecia os mecanismos genéticos (mutação e recombinação) que as causavam.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Fácil', q: '3) Qual é a fonte primária de novas características nos seres vivos?', options: ['Seleção natural', 'Recombinação gênica', 'Mutação', 'Adaptação ao meio'], answer: 'Mutação', explanation: 'A mutação é o único processo que cria novos alelos (versões de genes), sendo a fonte original de toda a variabilidade.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Médio', q: '4) A recombinação gênica, que ocorre durante a meiose, tem como principal função:', options: ['Criar novos genes que não existiam antes', 'Corrigir erros no DNA', 'Embaralhar os genes existentes, criando novas combinações', 'Causar doenças genéticas'], answer: 'Embaralhar os genes existentes, criando novas combinações', explanation: 'A recombinação aumenta a diversidade de uma população ao criar novas combinações de características herdadas dos pais.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Médio', q: '5) As mutações são eventos:', options: ['Direcionados pela necessidade do organismo', 'Sempre benéficos para a sobrevivência', 'Aleatórios e não intencionais', 'Que acontecem apenas em plantas'], answer: 'Aleatórios e não intencionais', explanation: 'As mutações ocorrem ao acaso. É a seleção natural que atua sobre elas, favorecendo as que se mostram úteis em um determinado ambiente.'},
+            { topic: 'Seleção Natural', difficulty: 'Fácil', q: '6) A seleção natural atua diretamente sobre:', options: ['O genótipo (os genes)', 'O fenótipo (as características observáveis)', 'O ambiente', 'As mutações futuras'], answer: 'O fenótipo (as características observáveis)', explanation: 'O ambiente "seleciona" as características (fenótipo) que conferem maior chance de sobrevivência e reprodução. Consequentemente, os genes (genótipo) responsáveis por elas são passados adiante.'},
+            { topic: 'Seleção Natural', difficulty: 'Médio', q: '7) O uso indiscriminado de antibióticos pode levar ao surgimento de "superbactérias" resistentes. Isso ocorre porque:', options: ['Os antibióticos fazem as bactérias sofrerem mutações para resistir', 'As bactérias se acostumam com o remédio', 'Algumas bactérias já possuem mutações de resistência e são selecionadas pelo antibiótico', 'As bactérias aprendem a se defender'], answer: 'Algumas bactérias já possuem mutações de resistência e são selecionadas pelo antibiótico', explanation: 'A resistência já existe na população bacteriana por mutação. O antibiótico mata as sensíveis e "seleciona" as resistentes, que se multiplicam.'},
+            { topic: 'Seleção Natural', difficulty: 'Médio', q: '8) Em uma floresta escura, mariposas de cor escura têm mais chances de sobreviver a predadores do que as de cor clara. Este é um exemplo de:', options: ['Mutação direcionada', 'Recombinação gênica', 'Seleção natural', 'Deriva genética'], answer: 'Seleção natural', explanation: 'O ambiente (cor da floresta) está selecionando a característica (cor escura) que oferece uma vantagem (camuflagem).'},
+            { topic: 'Seleção Natural', difficulty: 'Difícil', q: '9) A frase "o mais forte sobrevive" é uma interpretação popular, mas imprecisa, da seleção natural. A ideia central de Darwin é a sobrevivência do:', options: ['Mais inteligente', 'Maior', 'Mais adaptado ao ambiente', 'Mais agressivo'], answer: 'Mais adaptado ao ambiente', explanation: 'Não se trata de força, mas de adaptação. Um ser pequeno e lento pode ser mais adaptado que um grande e forte, dependendo do ambiente.'},
+            { topic: 'Conceitos Fundamentais', difficulty: 'Fácil', q: '10) Os três pilares do Neodarwinismo são:', options: ['Mutação, Herança e Ambiente', 'Variação, Competição e Sucesso Reprodutivo', 'Mutação, Recombinação Gênica e Seleção Natural', 'Genética, Ecologia e Paleontologia'], answer: 'Mutação, Recombinação Gênica e Seleção Natural', explanation: 'A mutação e a recombinação geram a variabilidade sobre a qual a seleção natural atua.'},
+            
+            { topic: 'Variabilidade Genética', difficulty: 'Médio', q: '11) Qual processo NÃO aumenta a variabilidade genética em uma população?', options: ['Mutação', 'Recombinação na meiose', 'Reprodução sexuada', 'Reprodução assexuada'], answer: 'Reprodução assexuada', explanation: 'A reprodução assexuada gera clones, cópias genéticas do indivíduo original, não promovendo a variabilidade.'},
+            { topic: 'Seleção Natural', difficulty: 'Médio', q: '12) O bico dos tentilhões de Galápagos, estudados por Darwin, variam de formato de ilha para ilha. Segundo o Neodarwinismo, essa variação surgiu por:', options: ['Esforço dos pássaros para comer sementes diferentes', 'Mutação e recombinação, sendo depois selecionada pelo tipo de alimento disponível', 'Uma decisão divina', 'Necessidade de se diferenciarem'], answer: 'Mutação e recombinação, sendo depois selecionada pelo tipo de alimento disponível', explanation: 'A variação genética surge ao acaso; a seleção natural (tipo de alimento) favorece os bicos mais eficientes para cada ambiente.'},
+            { topic: 'Conceitos Fundamentais', difficulty: 'Difícil', q: '13) O que é especiação?', options: ['O estudo de uma única espécie', 'O processo de surgimento de novas espécies a partir de um ancestral comum', 'A extinção em massa de várias espécies', 'A classificação dos seres vivos'], answer: 'O processo de surgimento de novas espécies a partir de um ancestral comum', explanation: 'Geralmente ocorre quando populações são separadas por isolamento geográfico e sofrem mutações e pressões seletivas diferentes.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Médio', q: '14) Uma mutação em uma célula da pele de um animal:', options: ['Será passada para seus descendentes', 'Não será passada para seus descendentes', 'Sempre causará câncer', 'Mudará a cor do animal inteiro'], answer: 'Não será passada para seus descendentes', explanation: 'Para ser hereditária, uma mutação precisa ocorrer nas células germinativas (gametas: óvulo ou espermatozoide).'},
+            { topic: 'Seleção Natural', difficulty: 'Médio', q: '15) Insetos que desenvolvem resistência a inseticidas são um exemplo prático de:', options: ['Lamarckismo', 'Seleção artificial', 'Seleção natural', 'Geração espontânea'], answer: 'Seleção natural', explanation: 'O veneno atua como um agente seletivo, eliminando os suscetíveis e favorecendo a reprodução dos que já eram resistentes.'},
+            
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '16) A Teoria Sintética da Evolução considera a ________ como a unidade evolutiva.', options: ['Célula', 'Indivíduo', 'População', 'Espécie'], answer: 'População', explanation: 'A evolução não ocorre em um indivíduo isolado, mas sim através da mudança na frequência dos genes ao longo das gerações em uma população.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '17) Qual conceito NÃO faz parte do Neodarwinismo?', options: ['Seleção Natural', 'Mutação', 'Lei do uso e desuso', 'Recombinação Gênica'], answer: 'Lei do uso e desuso', explanation: 'A "lei do uso e desuso" e a "herança dos caracteres adquiridos" são ideias de Lamarck, que foram superadas.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '18) Um urso polar tem uma pelagem branca e espessa. Segundo o Neodarwinismo, essa característica:', options: ['Surgiu porque o urso sentia frio na neve', 'Foi uma mutação aleatória que se mostrou vantajosa no ambiente ártico', 'Foi adquirida durante a vida e passada aos filhos', 'É um exemplo de recombinação gênica apenas'], answer: 'Foi uma mutação aleatória que se mostrou vantajosa no ambiente ártico', explanation: 'A mutação para a cor branca surgiu ao acaso e foi selecionada por oferecer camuflagem e, consequentemente, maior sucesso na caça.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '19) Qual dos eventos abaixo mais promove a recombinação gênica?', options: ['Divisão celular por mitose', 'Reprodução por brotamento', 'Reprodução sexuada', 'Uma mutação pontual'], answer: 'Reprodução sexuada', explanation: 'A reprodução sexuada envolve a fusão de gametas de dois indivíduos, promovendo uma intensa mistura de genes.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '20) O isolamento geográfico de duas populações de uma mesma espécie pode levar à especiação porque:', options: ['Impede a seleção natural de atuar', 'Aumenta a ocorrência de mutações', 'Interrompe o fluxo gênico entre elas', 'Faz os indivíduos se tornarem mais fortes'], answer: 'Interrompe o fluxo gênico entre elas', explanation: 'Sem a troca de genes, as duas populações acumulam mutações diferentes e são submetidas a pressões seletivas distintas, podendo se tornar tão diferentes a ponto de não poderem mais cruzar.'},
+             { topic: 'Conceitos Fundamentais', difficulty: 'Médio', q: '21) A Teoria Sintética da Evolução também é conhecida como:', options: ['Lamarckismo', 'Darwinismo Social', 'Criacionismo', 'Neodarwinismo'], answer: 'Neodarwinismo', explanation: 'É o nome dado à "síntese" moderna entre as ideias de Darwin e a genética.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Fácil', q: '22) Qual dos processos abaixo cria novas combinações de genes, mas NÃO cria genes totalmente novos?', options: ['Mutação', 'Seleção Natural', 'Recombinação Gênica', 'Isolamento Geográfico'], answer: 'Recombinação Gênica', explanation: 'A recombinação apenas "embaralha" os alelos que já existem na população.'},
+            { topic: 'Seleção Natural', difficulty: 'Médio', q: '23) O pescoço longo das girafas, segundo a visão neodarwinista, é resultado de:', options: ['Um esforço contínuo para alcançar folhas mais altas, passado aos descendentes.', 'Uma mutação aleatória para pescoço longo que foi vantajosa e selecionada pelo ambiente.', 'Um processo de crescimento que ocorre durante a vida de cada girafa.', 'Uma escolha estética das fêmeas por machos de pescoço comprido.'], answer: 'Uma mutação aleatória para pescoço longo que foi vantajosa e selecionada pelo ambiente.', explanation: 'A variação (pescoços de diferentes tamanhos) surgiu por mutação/recombinação. A seleção natural favoreceu os indivíduos com pescoços mais longos, que tinham mais acesso a alimento.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '24) A evolução ocorre para tornar os organismos "perfeitos". Essa afirmação é:', options: ['Verdadeira, pois a seleção natural busca a perfeição.', 'Falsa, pois a evolução é um processo contínuo de adaptação a um ambiente em mudança, sem um objetivo final.', 'Verdadeira, pois as mutações sempre melhoram os organismos.', 'Falsa, pois apenas a recombinação leva à melhoria.'], answer: 'Falsa, pois a evolução é um processo contínuo de adaptação a um ambiente em mudança, sem um objetivo final.', explanation: 'Uma característica pode ser adaptativa hoje e desvantajosa amanhã se o ambiente mudar. Não existe "perfeição" na evolução.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Fácil', q: '25) A principal matéria-prima para a seleção natural é:', options: ['O esforço do indivíduo', 'A variabilidade genética', 'A perfeição das espécies', 'O tamanho da população'], answer: 'A variabilidade genética', explanation: 'Sem variação, não há o que ser selecionado. A seleção natural precisa de diferentes características para poder atuar.'},
+            { topic: 'Seleção Natural', difficulty: 'Fácil', q: '26) O que significa "ser mais adaptado" em um contexto evolutivo?', options: ['Ser o mais forte fisicamente', 'Ser o mais inteligente', 'Conseguir sobreviver e deixar mais descendentes férteis', 'Viver por mais tempo que os outros'], answer: 'Conseguir sobreviver e deixar mais descendentes férteis', explanation: 'O sucesso evolutivo é medido pela capacidade de passar os genes para a próxima geração.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '27) Um exemplo de seleção artificial, e não natural, é:', options: ['A resistência de bactérias a antibióticos.', 'A camuflagem de um inseto em uma folha.', 'As diferentes raças de cães, criadas por humanos.', 'A pelagem branca de um urso polar.'], answer: 'As diferentes raças de cães, criadas por humanos.', explanation: 'Na seleção artificial, é o ser humano, e não o ambiente, quem seleciona as características desejadas para a reprodução.'},
+            { topic: 'Conceitos Fundamentais', difficulty: 'Difícil', q: '28) A ideia de que as populações crescem em progressão geométrica enquanto os recursos crescem em progressão aritmética, gerando uma "luta pela vida", foi inspirada nos estudos de:', options: ['Gregor Mendel', 'Jean-Baptiste Lamarck', 'Thomas Malthus', 'Alfred Russel Wallace'], answer: 'Thomas Malthus', explanation: 'Darwin leu o trabalho de Malthus sobre populações e aplicou a ideia de competição por recursos limitados ao mundo natural.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Médio', q: '29) A diversidade de características em irmãos que são filhos dos mesmos pais é um ótimo exemplo de:', options: ['Mutação', 'Recombinação Gênica', 'Seleção Natural', 'Anagênese'], answer: 'Recombinação Gênica', explanation: 'Embora tenham os mesmos pais, a "mistura" de genes que cada irmão herda é única, graças à recombinação.'},
+            { topic: 'Seleção Natural', difficulty: 'Difícil', q: '30) A anemia falciforme é uma doença genética, mas em regiões com malária, portadores do traço falciforme (heterozigotos) são mais resistentes à malária. Isso faz com que o gene da anemia seja mantido na população. Este é um exemplo de:', options: ['Seleção direcional', 'Seleção disruptiva', 'Seleção estabilizadora', 'Seleção sexual'], answer: 'Seleção estabilizadora', explanation: 'A seleção natural favorece o heterozigoto, mantendo tanto o alelo normal quanto o alelo da anemia na população, pois ambos os extremos (homozigotos) são desvantajosos.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '31) Qual é a unidade fundamental da hereditariedade?', options: ['A célula', 'O gene', 'A proteína', 'O cromossomo'], answer: 'O gene', explanation: 'O gene é o segmento de DNA que carrega a informação para uma determinada característica.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '32) A semelhança entre a asa de um morcego e a asa de uma borboleta é um exemplo de:', options: ['Homologia (mesma origem)', 'Analogia (mesma função)', 'Órgãos vestigiais', 'Especiação'], answer: 'Analogia (mesma função)', explanation: 'As asas têm a mesma função (voar), mas origens evolutivas diferentes. Isso é resultado da convergência adaptativa.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '33) A semelhança entre o braço de um humano e a nadadeira de uma baleia é um exemplo de:', options: ['Homologia (mesma origem)', 'Analogia (mesma função)', 'Convergência adaptativa', 'Mimetismo'], answer: 'Homologia (mesma origem)', explanation: 'Ambos possuem a mesma estrutura óssea básica herdada de um ancestral comum, apesar de terem funções diferentes. Isso é um forte indício de parentesco evolutivo.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Médio', q: '34) Uma população de coelhos brancos vive na neve. Uma mutação aleatória faz surgir um coelho marrom. É provável que este coelho:', options: ['Seja favorecido pela seleção natural', 'Seja predado mais facilmente', 'Ensine os outros a serem marrons', 'Mude de cor para branco'], answer: 'Seja predado mais facilmente', explanation: 'Neste ambiente específico, a mutação para a cor marrom é desvantajosa, pois elimina a camuflagem e aumenta a chance de predação.'},
+            { topic: 'Seleção Natural', difficulty: 'Fácil', q: '35) O que impulsiona a seleção natural?', options: ['A vontade do indivíduo', 'A perfeição da natureza', 'As pressões do ambiente', 'O acaso completo'], answer: 'As pressões do ambiente', explanation: 'São as "dificuldades" impostas pelo ambiente (predadores, clima, competição, etc.) que determinam quais características são vantajosas.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '36) A evolução é uma teoria que afirma que:', options: ['O homem veio do macaco', 'Os seres vivos mudam ao longo do tempo', 'Os mais fortes sempre vencem', 'A vida surgiu do nada'], answer: 'Os seres vivos mudam ao longo do tempo', explanation: 'A ideia central é que as espécies não são fixas, mas se transformam através de processos como mutação e seleção natural.'},
+            { topic: 'Conceitos Fundamentais', difficulty: 'Médio', q: '37) Para o Neodarwinismo, a adaptação é um processo que resulta da:', options: ['Lei do uso e desuso', 'Necessidade de sobrevivência', 'Seleção de variações genéticas favoráveis que surgiram ao acaso', 'Herança de características adquiridas'], answer: 'Seleção de variações genéticas favoráveis que surgiram ao acaso', explanation: 'A adaptação não é um esforço intencional, mas o resultado da seleção natural atuando sobre a variabilidade genética pré-existente.'},
+            { topic: 'Variabilidade Genética', difficulty: 'Médio', q: '38) A exposição a raios X ou a certas substâncias químicas pode aumentar a taxa de:', options: ['Recombinação Gênica', 'Seleção Natural', 'Mutações', 'Adaptação'], answer: 'Mutações', explanation: 'Esses são agentes mutagênicos, ou seja, fatores que podem causar alterações no DNA.'},
+            { topic: 'Seleção Natural', difficulty: 'Médio', q: '39) Por que a diversidade genética é importante para a sobrevivência de uma espécie?', options: ['Para que todos os indivíduos sejam iguais', 'Para aumentar a chance de que alguns indivíduos tenham características que permitam a adaptação a mudanças no ambiente', 'Para diminuir a competição', 'Para acelerar a extinção'], answer: 'Para aumentar a chance de que alguns indivíduos tenham características que permitam a adaptação a mudanças no ambiente', explanation: 'Se todos forem geneticamente iguais, uma única doença ou mudança ambiental poderia extinguir toda a população.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '40) A evolução dos antibióticos e a resistência bacteriana mostram que a evolução:', options: ['É um processo muito lento que não podemos observar', 'Só aconteceu no passado', 'É um processo contínuo e observável', 'Não se aplica a microrganismos'], answer: 'É um processo contínuo e observável', explanation: 'Como as bactérias se reproduzem muito rápido, podemos observar a seleção natural e a evolução acontecendo em tempo real.'}
+        ];
+        
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && currentIndex < quizData.length) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            quizContainer.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = 'final-results';
+            finalResultsDiv.className = 'text-center';
+            practiceSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn" class="btn-primary mt-6">Recomeçar Quiz</button>
+            `;
+            
+            document.getElementById('restart-btn').onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
