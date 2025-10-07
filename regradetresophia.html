@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Regra de 3 Simples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .formula { background-color: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; margin-top: 1rem; font-family: 'Courier New', Courier, monospace; text-align: center; font-size: 1.1rem; }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Regra de 3 Simples</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo: Grandezas Diretas e Inversas.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">O que é a Regra de 3 Simples?</h2>
+                            <p>A Regra de 3 Simples é uma ferramenta matemática usada para encontrar um valor desconhecido (uma incógnita) quando temos três outros valores conhecidos, divididos em duas <span class="highlight">grandezas</span>. Uma grandeza é tudo aquilo que pode ser medido: velocidade, tempo, preço, quantidade, etc.</p>
+                            <p>O segredo para resolver qualquer problema de regra de 3 é entender a relação entre essas duas grandezas.</p>
+                            
+                            <h3 class="sub-topic-title">Grandezas Diretamente Proporcionais</h3>
+                            <p>Duas grandezas são <span class="highlight">diretamente proporcionais</span> quando elas se comportam da mesma maneira: se uma aumenta, a outra também aumenta. Se uma diminui, a outra também diminui.</p>
+                            <ul>
+                                <li><strong>Exemplo:</strong> Quanto <span class="highlight">MAIS</span> pães eu compro, <span class="highlight">MAIOR</span> será o valor a pagar. (As duas grandezas sobem juntas).</li>
+                                <li><strong>Resolução:</strong> Quando as grandezas são diretas, a equação é montada multiplicando os valores em <span class="highlight">cruz (X)</span>.</li>
+                            </ul>
+
+                            <h3 class="sub-topic-title">Grandezas Inversamente Proporcionais</h3>
+                            <p>Duas grandezas são <span class="highlight">inversamente proporcionais</span> quando elas se comportam de maneira oposta: se uma aumenta, a outra diminui. Se uma diminui, a outra aumenta.</p>
+                            <ul>
+                                <li><strong>Exemplo:</strong> Quanto <span class="highlight">MAIOR</span> a velocidade de um carro, <span class="highlight">MENOR</span> será o tempo para chegar ao destino. (Uma sobe e a outra desce).</li>
+                                <li><strong>Resolução:</strong> Quando as grandezas são inversas, a equação é montada multiplicando os valores em <span class="highlight">linha reta</span>.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                             <h2 class="topic-title">Passo a Passo para Resolver</h2>
+                             <ol class="list-decimal list-inside space-y-2 mt-2">
+                                 <li><strong>Identificar as Grandezas:</strong> Leia o problema e descubra quais são as duas coisas que estão sendo comparadas (ex: velocidade e tempo, torneiras e horas).</li>
+                                 <li><strong>Montar a Tabela:</strong> Crie uma tabela simples com duas colunas, uma para cada grandeza, e preencha com os três valores conhecidos e a incógnita (x).</li>
+                                 <li><strong>Analisar a Proporcionalidade:</strong> Use setas para cima (↑) e para baixo (↓) para indicar o comportamento das grandezas. Pergunte-se: "Se eu aumentar esta grandeza, a outra aumenta ou diminui?".</li>
+                                 <li><strong>Montar a Equação:</strong>
+                                    <ul>
+                                        <li>Se as setas estiverem no <span class="highlight">mesmo sentido</span> (diretamente proporcional), multiplique em <span class="highlight">cruz</span>.</li>
+                                        <li>Se as setas estiverem em <span class="highlight">sentidos opostos</span> (inversamente proporcional), multiplique em <span class="highlight">linha</span>.</li>
+                                    </ul>
+                                 </li>
+                                 <li><strong>Resolver a Equação:</strong> Encontre o valor de 'x'.</li>
+                             </ol>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-regra3-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-regra3-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Grandezas Diretamente Proporcionais', difficulty: 'Fácil', q: '1) Se 3 cadernos custam R$ 15,00, quanto custarão 5 cadernos?', options: ['R$ 20,00', 'R$ 25,00', 'R$ 30,00', 'R$ 35,00'], answer: 'R$ 25,00', explanation: 'Quanto MAIS cadernos, MAIOR o preço (direta). Montamos a proporção 3/5 = 15/x. Multiplicando em cruz: 3x = 75 => x = 25.'},
+            { topic: 'Grandezas Diretamente Proporcionais', difficulty: 'Fácil', q: '2) Um carro percorre 120 km com 10 litros de gasolina. Quantos quilômetros ele percorrerá com 15 litros?', options: ['150 km', '160 km', '180 km', '200 km'], answer: '180 km', explanation: 'Quanto MAIS gasolina, MAIS km ele percorre (direta). 120/x = 10/15 => 10x = 1800 => x = 180.'},
+            { topic: 'Grandezas Diretamente Proporcionais', difficulty: 'Fácil', q: '3) Para fazer um bolo, são necessários 2 ovos. Para fazer 6 bolos, quantos ovos serão necessários?', options: ['8 ovos', '10 ovos', '12 ovos', '14 ovos'], answer: '12 ovos', explanation: 'Quanto MAIS bolos, MAIS ovos (direta). 1/6 = 2/x => x = 12.'},
+            { topic: 'Grandezas Diretamente Proporcionais', difficulty: 'Médio', q: '4) Uma máquina produz 150 peças em 30 minutos. Quantas peças ela produzirá em 1 hora?', options: ['200', '250', '300', '450'], answer: '300', explanation: 'Primeiro, converta 1 hora para 60 minutos. Quanto MAIS tempo, MAIS peças (direta). 150/x = 30/60 => 30x = 9000 => x = 300.'},
+            { topic: 'Grandezas Diretamente Proporcionais', difficulty: 'Médio', q: '5) Se 5 metros de tecido custam R$ 40,00, quanto custarão 8 metros do mesmo tecido?', options: ['R$ 56,00', 'R$ 60,00', 'R$ 64,00', 'R$ 72,00'], answer: 'R$ 64,00', explanation: 'Quanto MAIS tecido, MAIOR o preço (direta). 5/8 = 40/x => 5x = 320 => x = 64.'},
+            
+            { topic: 'Grandezas Inversamente Proporcionais', difficulty: 'Fácil', q: '6) Um carro a 60 km/h leva 2 horas para fazer um percurso. Se a velocidade for de 120 km/h, quanto tempo levará?', options: ['1 hora', '1,5 horas', '3 horas', '4 horas'], answer: '1 hora', explanation: 'Quanto MAIOR a velocidade, MENOR o tempo (inversa). Multiplicamos em linha: 120 * x = 60 * 2 => 120x = 120 => x = 1.'},
+            { topic: 'Grandezas Inversamente Proporcionais', difficulty: 'Fácil', q: '7) Quatro pedreiros constroem um muro em 6 dias. Quantos dias 8 pedreiros levariam para construir o mesmo muro?', options: ['2 dias', '3 dias', '4 dias', '12 dias'], answer: '3 dias', explanation: 'Quanto MAIS pedreiros, MENOS dias (inversa). 8 * x = 4 * 6 => 8x = 24 => x = 3.'},
+            { topic: 'Grandezas Inversamente Proporcionais', difficulty: 'Médio', q: '8) Três torneiras enchem um tanque em 10 horas. Se usarmos 5 torneiras, em quanto tempo o tanque encherá?', options: ['4 horas', '5 horas', '6 horas', '8 horas'], answer: '6 horas', explanation: 'Quanto MAIS torneiras, MENOS tempo (inversa). 5 * x = 3 * 10 => 5x = 30 => x = 6.'},
+            { topic: 'Grandezas Inversamente Proporcionais', difficulty: 'Médio', q: '9) Uma viagem foi feita em 4 horas a uma velocidade média de 90 km/h. Se a viagem fosse feita em 3 horas, qual deveria ser a velocidade média?', options: ['100 km/h', '110 km/h', '120 km/h', '130 km/h'], answer: '120 km/h', explanation: 'Quanto MENOR o tempo, MAIOR a velocidade (inversa). 3 * x = 4 * 90 => 3x = 360 => x = 120.'},
+            { topic: 'Grandezas Inversamente Proporcionais', difficulty: 'Difícil', q: '10) Com certa quantidade de ração, 10 cachorros se alimentam por 30 dias. Se mais 5 cachorros forem adotados, quantos dias a ração durará?', options: ['15 dias', '20 dias', '25 dias', '45 dias'], answer: '20 dias', explanation: 'Agora são 15 cachorros. Quanto MAIS cachorros, MENOS dias a ração dura (inversa). 15 * x = 10 * 30 => 15x = 300 => x = 20.'},
+            
+            { topic: 'Identificando a Proporção', difficulty: 'Fácil', q: '11) A relação entre a quantidade de produtos comprados e o valor total pago é:', options: ['Diretamente proporcional', 'Inversamente proporcional', 'Não há relação', 'Ambas'], answer: 'Diretamente proporcional', explanation: 'Quanto mais produtos você compra, maior é o valor a pagar.'},
+            { topic: 'Identificando a Proporção', difficulty: 'Fácil', q: '12) A relação entre a velocidade de um veículo e o tempo gasto para percorrer uma distância fixa é:', options: ['Diretamente proporcional', 'Inversamente proporcional', 'Não há relação', 'Ambas'], answer: 'Inversamente proporcional', explanation: 'Quanto maior a velocidade, menor o tempo gasto.'},
+            { topic: 'Identificando a Proporção', difficulty: 'Médio', q: '13) A relação entre o número de operários e o tempo para realizar um serviço é:', options: ['Diretamente proporcional', 'Inversamente proporcional', 'Não há relação', 'Às vezes direta, às vezes inversa'], answer: 'Inversamente proporcional', explanation: 'Quanto mais operários trabalhando, menor o tempo para concluir o serviço.'},
+            { topic: 'Identificando a Proporção', difficulty: 'Médio', q: '14) A relação entre a distância percorrida e a quantidade de combustível gasta (mantendo a mesma velocidade) é:', options: ['Diretamente proporcional', 'Inversamente proporcional', 'Não há relação', 'Circular'], answer: 'Diretamente proporcional', explanation: 'Quanto maior a distância a ser percorrida, maior será a quantidade de combustível gasta.'},
+            { topic: 'Identificando a Proporção', difficulty: 'Difícil', q: '15) A relação entre o tamanho de um desconto e o preço final de um produto é:', options: ['Diretamente proporcional', 'Inversamente proporcional', 'Não há relação', 'Nenhuma das anteriores'], answer: 'Inversamente proporcional', explanation: 'Quanto maior for o desconto, menor será o preço final pago pelo produto.'},
+            
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '16) Se 6 impressoras imprimem 1000 folhas em 4 minutos, em quanto tempo 3 impressoras fariam o mesmo serviço?', options: ['2 minutos', '4 minutos', '6 minutos', '8 minutos'], answer: '8 minutos', explanation: 'As grandezas são Impressoras e Tempo. Quanto MENOS impressoras, MAIS tempo (inversa). 3 * x = 6 * 4 => 3x = 24 => x = 8.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '17) Em uma padaria, 5 padeiros produzem 200 pães em uma hora. Quantos pães 8 padeiros produziriam no mesmo tempo?', options: ['280 pães', '300 pães', '320 pães', '360 pães'], answer: '320 pães', explanation: 'As grandezas são Padeiros e Pães. Quanto MAIS padeiros, MAIS pães (direta). 5/8 = 200/x => 5x = 1600 => x = 320.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '18) Um relógio adianta 3 minutos a cada 24 horas. Quantos minutos ele adiantará em uma semana (7 dias)?', options: ['10,5 minutos', '14 minutos', '21 minutos', '24 minutos'], answer: '21 minutos', explanation: 'As grandezas são Minutos e Dias. Quanto MAIS dias, MAIS minutos adiantará (direta). 3/x = 1/7 => x = 21.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '19) Para pintar um muro, 2 pintores levam 6 horas. Se um dos pintores precisar sair após 3 horas, quanto tempo o pintor restante levará para terminar o trabalho sozinho?', options: ['3 horas', '4,5 horas', '6 horas', '9 horas'], answer: '6 horas', explanation: 'Em 3 horas, os 2 pintores fizeram metade do trabalho. Falta a outra metade. Se 2 pintores levariam 3 horas para fazer essa metade, 1 pintor sozinho levará o dobro do tempo, ou seja, 6 horas.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '20) Se 20% de um valor correspondem a R$ 40,00, quanto é 100% desse valor?', options: ['R$ 80,00', 'R$ 100,00', 'R$ 200,00', 'R$ 400,00'], answer: 'R$ 200,00', explanation: 'As grandezas são Porcentagem e Valor. Elas são diretas. 20/100 = 40/x => 20x = 4000 => x = 200.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '21) Uma torneira despeja 15 litros de água por minuto. Quantos litros despejará em 20 minutos?', options: ['150 litros', '200 litros', '300 litros', '350 litros'], answer: '300 litros', explanation: 'Quanto MAIS tempo, MAIS litros (direta). 15/x = 1/20 => x = 300.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '22) Um pacote com 5 canetas custa R$ 8,00. Quanto custará um pacote com 15 canetas?', options: ['R$ 16,00', 'R$ 24,00', 'R$ 32,00', 'R$ 40,00'], answer: 'R$ 24,00', explanation: 'Como 15 é o triplo de 5, o preço também será o triplo. 8 * 3 = 24. A relação é direta.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '23) Para encher um álbum de figurinhas, são necessários 240 cromos. Se um pacote vem com 5 cromos, quantos pacotes são necessários?', options: ['40 pacotes', '48 pacotes', '50 pacotes', '60 pacotes'], answer: '48 pacotes', explanation: 'Basta dividir o total de cromos pela quantidade por pacote: 240 / 5 = 48.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '24) Um time de vôlei treina 4 horas por dia e descansa 3 dias na semana. Quantas horas ele treina em 4 semanas?', options: ['80 horas', '96 horas', '112 horas', '160 horas'], answer: '80 horas', explanation: 'Ele treina 4 dias por semana (7-3=4). Horas por semana = 4 * 4 = 16. Em 4 semanas: 16 * 4 = 64. A pergunta está mal formulada. Vamos refazer: Treina 4 horas por dia. Em 4 semanas há 28 dias. 28 * 4 = 112 horas. Se descansa 3 dias por semana, treina 4 dias por semana. Em 4 semanas, treina 16 dias. 16 * 4 = 64 horas. Vamos ajustar. Se treina 4h/dia, em 4 semanas (28 dias) com 3 dias de folga por semana (12 folgas), ele treina 16 dias. 16 dias * 4h = 64 horas.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '25) 12 trabalhadores colhem uma plantação em 5 dias. Se 3 trabalhadores ficarem doentes, em quantos dias o restante fará a colheita?', options: ['6,66 dias', '7 dias', '8 dias', '9 dias'], answer: '6,66 dias', explanation: 'Restam 9 trabalhadores. Quanto MENOS trabalhadores, MAIS dias (inversa). 9 * x = 12 * 5 => 9x = 60 => x ≈ 6,66.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '26) Se um litro de suco custa R$ 8,00, quanto custa 500 mL?', options: ['R$ 2,00', 'R$ 4,00', 'R$ 8,00', 'R$ 16,00'], answer: 'R$ 4,00', explanation: '500 mL é meio litro. Portanto, o preço será a metade de R$ 8,00, que é R$ 4,00.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '27) Um grupo de 6 amigos planeja uma viagem e calcula que cada um gastará R$ 200,00. Se mais 2 amigos se juntarem ao grupo, e o custo total da viagem permanecer o mesmo, quanto cada um gastará?', options: ['R$ 100,00', 'R$ 120,00', 'R$ 150,00', 'R$ 180,00'], answer: 'R$ 150,00', explanation: 'O custo total é 6 * 200 = R$ 1200,00. Com 8 amigos, o custo por pessoa será 1200 / 8 = R$ 150,00. É uma relação inversa.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '28) Um livro tem 300 páginas. Se um leitor lê 30 páginas por dia, em quantos dias ele terminará o livro?', options: ['5 dias', '10 dias', '15 dias', '30 dias'], answer: '10 dias', explanation: 'Dividimos o total de páginas pela quantidade lida por dia: 300 / 30 = 10.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '29) Na situação anterior, se o leitor quisesse terminar o livro em 6 dias, quantas páginas ele precisaria ler por dia?', options: ['40 páginas', '50 páginas', '60 páginas', '70 páginas'], answer: '50 páginas', explanation: 'Quanto MENOS dias, MAIS páginas por dia (inversa). 6 * x = 10 * 30 => 6x = 300 => x = 50.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '30) Um mapa está na escala de 1:50.000. Se a distância entre duas cidades no mapa é de 10 cm, qual a distância real em quilômetros?', options: ['0,5 km', '5 km', '50 km', '500 km'], answer: '5 km', explanation: 'A distância real é 10 cm * 50.000 = 500.000 cm. Para converter para metros, dividimos por 100 (5.000 m). Para converter para km, dividimos por 1000 (5 km).'}
+        ];
+        
+        // Corrigindo a questão 24 que estava com cálculo errado na explicação original
+        quizData[23].answer = '64 horas';
+        quizData[23].explanation = 'Se ele descansa 3 dias na semana, ele treina 4 dias (7-3). Em 4 semanas, ele treinará 4 * 4 = 16 dias. O total de horas é 16 dias * 4 horas/dia = 64 horas.';
+        quizData[23].options = ['64 horas', '80 horas', '96 horas', '112 horas'];
+
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && currentIndex < quizData.length) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            quizContainer.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = 'final-results';
+            finalResultsDiv.className = 'text-center';
+            practiceSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn" class="btn-primary mt-6">Recomeçar Quiz</button>
+            `;
+            
+            document.getElementById('restart-btn').onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
