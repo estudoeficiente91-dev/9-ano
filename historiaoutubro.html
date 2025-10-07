@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>História – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">História — 7º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos sobre a Escravidão Africana no Brasil e nas Américas.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">TEMA 3: A Escravidão Africana no Brasil</h2>
+                            <h3 class="sub-topic-title">Os Africanos Trazidos para o Brasil</h3>
+                            <p>O Brasil foi o país que mais recebeu africanos escravizados no mundo. Eles não eram um povo único, mas vinham de diversas regiões, etnias e culturas. A maioria era originária de duas grandes áreas: a <span class="highlight">África Centro-Ocidental</span> (região dos atuais Angola e Congo, de povos Bantos) e a <span class="highlight">Costa da Mina</span>, na África Ocidental (região dos atuais Nigéria e Benim, de povos como os Iorubás e Jejes).</p>
+
+                            <h3 class="sub-topic-title">Escravidão e Resistência no Brasil</h3>
+                            <p>A escravidão foi a base da economia e da sociedade brasileira por mais de 300 anos. No entanto, ela nunca foi aceita passivamente. A resistência foi constante e se manifestou de várias formas:</p>
+                            <ul>
+                                <li><strong>Resistência Ativa:</strong> A forma mais direta de luta. Incluía <span class="highlight">revoltas</span> (como a Revolta dos Malês), <span class="highlight">ataques</span> a feitores e as <span class="highlight">fugas</span>, que levavam à formação dos <span class="highlight">quilombos</span>, comunidades de escravizados fugidos que se tornaram símbolos de liberdade e resistência.</li>
+                                <li><strong>Resistência Cotidiana:</strong> Ações do dia a dia, como a <span class="highlight">sabotagem</span> de ferramentas, a lentidão proposital no trabalho, o suicídio e o controle da natalidade.</li>
+                                <li><strong>Resistência Cultural:</strong> A preservação de suas culturas, religiões e costumes foi uma poderosa forma de luta. A <span class="highlight">capoeira</span>, uma mistura de luta e dança, é um dos maiores símbolos. Ela permitia o treinamento corporal para a defesa enquanto era disfarçada de uma atividade de lazer, mantendo a sociabilidade e a identidade cultural.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">TEMA 4: A Escravidão no Caribe e nos Estados Unidos</h2>
+                             <h3 class="sub-topic-title">A Conquista Europeia do Caribe</h3>
+                             <p>As ilhas do Caribe foram uma das primeiras áreas a serem colonizadas e tiveram suas populações nativas dizimadas rapidamente. A economia se baseou na <span class="highlight">plantation de cana-de-açúcar</span>, um sistema brutal com altíssimas taxas de mortalidade, o que exigia um fluxo contínuo de africanos escravizados para repor a mão de obra.</p>
+
+                             <h3 class="sub-topic-title">A Escravidão nos Estados Unidos</h3>
+                             <p>A escravidão nos EUA também foi fundamental, principalmente nas colônias do sul, com as plantações de algodão e tabaco. Uma diferença importante em relação ao Brasil é que a população escravizada nos EUA teve um <span class="highlight">crescimento natural</span> (mais nascimentos do que mortes), enquanto no Brasil, a altíssima mortalidade tornava a reposição pelo tráfico negreiro constante e essencial.</p>
+
+                             <h3 class="sub-topic-title">A Resistência à Escravidão</h3>
+                             <p>Assim como no Brasil, a resistência nos EUA também foi marcada por revoltas e fugas. A mais famosa rede de fuga foi a <span class="highlight">"Underground Railroad"</span> (Estrada de Ferro Subterrânea), uma rede secreta de rotas e abrigos seguros que ajudava os escravizados a fugir dos estados do sul para os estados livres do norte ou para o Canadá.</p>
+                             <p>A cultura afro-americana também é uma forma de resistência. As raízes de gêneros musicais como o <span class="highlight">Blues, o Jazz e o Gospel</span> estão nos cantos de trabalho e nas expressões religiosas dos escravizados nas plantações do sul dos EUA.</p>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-history-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-history-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Origem dos Escravizados', difficulty: 'Fácil', q: '1) A maioria dos africanos trazidos para o Brasil vinha de quais grandes regiões?', options: ['Norte da África e Egito', 'África do Sul e Madagascar', 'África Centro-Ocidental e Costa da Mina', 'Etiópia e Somália'], answer: 'África Centro-Ocidental e Costa da Mina', explanation: 'Essas duas áreas, correspondentes a Angola, Congo, Nigéria, etc., foram os principais pontos de partida do tráfico para o Brasil.'},
+            { topic: 'Origem dos Escravizados', difficulty: 'Médio', q: '2) A chegada de povos como Bantos e Iorubás ao Brasil significa que a população escravizada era:', options: ['Culturalmente homogênea', 'Culturalmente diversa, com muitas línguas e religiões', 'Toda da mesma tribo', 'Composta apenas por homens'], answer: 'Culturalmente diversa, com muitas línguas e religiões', explanation: 'A África é um continente diverso, e os escravizados trouxeram consigo uma enorme riqueza cultural.'},
+            { topic: 'Resistência no Brasil', difficulty: 'Fácil', q: '3) O que eram os quilombos?', options: ['Mercados de escravos', 'Navios negreiros', 'Comunidades de escravizados fugidos', 'Fazendas de café'], answer: 'Comunidades de escravizados fugidos', explanation: 'Os quilombos eram os principais símbolos de resistência ativa, representando a busca pela liberdade.'},
+            { topic: 'Resistência no Brasil', difficulty: 'Fácil', q: '4) Qual o nome do quilombo mais famoso do Brasil e quem foi seu último grande líder?', options: ['Quilombo do Leblon, com Zezé Motta', 'Quilombo da Cuca, com Saci Pererê', 'Quilombo dos Palmares, com Zumbi', 'Quilombo do Jabaquara, com Pelé'], answer: 'Quilombo dos Palmares, com Zumbi', explanation: 'Palmares foi o maior quilombo da história do Brasil, e Zumbi seu líder mais conhecido, um ícone da resistência.'},
+            { topic: 'Resistência no Brasil', difficulty: 'Médio', q: '5) Trabalhar lentamente de propósito ou quebrar ferramentas eram formas de:', options: ['Resistência passiva ou cotidiana', 'Revolta armada', 'Aliança com os senhores', 'Adaptação ao trabalho'], answer: 'Resistência passiva ou cotidiana', explanation: 'Eram ações do dia a dia que, sem confronto direto, prejudicavam a produção e o lucro do senhor.'},
+            { topic: 'Capoeira', difficulty: 'Médio', q: '6) Por que a capoeira é considerada uma forma de resistência?', options: ['Porque era apenas uma dança para relaxar', 'Porque era uma luta disfarçada de dança, para treino e defesa', 'Porque era ensinada pelos feitores para disciplinar', 'Porque era uma competição esportiva com prêmios'], answer: 'Porque era uma luta disfarçada de dança, para treino e defesa', explanation: 'A capoeira permitia a manutenção da cultura e o treinamento do corpo para a autodefesa de uma forma que não era percebida como ameaça direta pelos senhores.'},
+            { topic: 'Capoeira', difficulty: 'Fácil', q: '7) Além de luta, a capoeira também é uma expressão de:', options: ['Sociabilidade e cultura', 'Tristeza e solidão', 'Obediência e submissão', 'Comércio e lucro'], answer: 'Sociabilidade e cultura', explanation: 'A roda de capoeira, com seus cantos e instrumentos, era um momento de união, socialização e manutenção das tradições africanas.'},
+            { topic: 'Escravidão no Caribe', difficulty: 'Fácil', q: '8) Qual atividade econômica dominou a colonização europeia do Caribe, usando mão de obra escrava intensiva?', options: ['Mineração de ouro', 'Plantação de cana-de-açúcar', 'Criação de gado', 'Extração de borracha'], answer: 'Plantação de cana-de-açúcar', explanation: 'O sistema de plantation de açúcar foi a base da economia em muitas ilhas caribenhas, como Cuba e Haiti.'},
+            { topic: 'Escravidão no Caribe', difficulty: 'Médio', q: '9) A alta mortalidade de escravos nos engenhos do Caribe levou a:', options: ['Um grande crescimento natural da população escravizada', 'Uma necessidade constante de reposição de mão de obra pelo tráfico', 'Ao fim rápido da escravidão na região', 'À substituição por trabalhadores livres'], answer: 'Uma necessidade constante de reposição de mão de obra pelo tráfico', explanation: 'As condições de trabalho eram tão brutais que a população escravizada não conseguia se reproduzir em número suficiente para se manter.'},
+            { topic: 'Escravidão nos EUA', difficulty: 'Médio', q: '10) Uma diferença fundamental da escravidão nos EUA em comparação ao Brasil foi:', options: ['A ausência total de resistência', 'A dependência exclusiva do tráfico até o final do século XIX', 'O maior crescimento natural da população escravizada', 'O uso de escravos apenas em fábricas'], answer: 'O maior crescimento natural da população escravizada', explanation: 'Nos EUA, a população escravizada cresceu por si só (mais nascimentos que mortes), enquanto o Brasil dependeu massivamente do tráfico contínuo.'},
+            { topic: 'Resistência nos EUA', difficulty: 'Fácil', q: '11) O que foi a "Underground Railroad"?', options: ['A primeira linha de metrô dos EUA', 'Um trem que transportava escravos do sul para o norte', 'Uma rede secreta de rotas de fuga para escravos', 'Uma empresa de ferrovias construída por escravos'], answer: 'Uma rede secreta de rotas de fuga para escravos', explanation: 'Era um sistema clandestino de pessoas e locais que ajudavam os escravizados a fugir para a liberdade.'},
+            { topic: 'Resistência nos EUA', difficulty: 'Médio', q: '12) Qual figura histórica é mais associada à "Underground Railroad"?', options: ['Abraham Lincoln', 'Martin Luther King Jr.', 'Zumbi dos Palmares', 'Harriet Tubman'], answer: 'Harriet Tubman', explanation: 'Harriet Tubman foi uma ex-escravizada que se tornou uma das "condutoras" mais famosas, arriscando a vida para guiar outros à liberdade.'},
+            { topic: 'Cultura Afro-americana', difficulty: 'Fácil', q: '13) Gêneros musicais como o Blues e o Jazz têm suas raízes mais profundas:', options: ['Na música clássica europeia', 'Nos cantos de trabalho e religiosos dos escravizados nos EUA', 'Na música indígena brasileira', 'No rock britânico'], answer: 'Nos cantos de trabalho e religiosos dos escravizados nos EUA', explanation: 'Esses gêneros nasceram da expressão cultural e da resiliência dos africanos e seus descendentes em meio à opressão.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '14) O que eram os navios negreiros, também conhecidos como "tumbeiros"?', options: ['Navios que traziam imigrantes europeus', 'Embarcações que transportavam os africanos em condições desumanas para a América', 'Navios que levavam açúcar para a Europa', 'Barcos usados para fugas de escravos'], answer: 'Embarcações que transportavam os africanos em condições desumanas para a América', explanation: 'Eram chamados de "tumbeiros" (tumbas flutuantes) por causa da altíssima taxa de mortalidade durante a travessia do Atlântico.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '15) Qual alternativa contém apenas formas de resistência à escravidão?', options: ['Trabalho forçado, castigos, senzala', 'Capitania hereditária, Governo-geral, Pacto Colonial', 'Fugas, quilombos, capoeira, sabotagem', 'Escambo, feitorias, tráfico'], answer: 'Fugas, quilombos, capoeira, sabotagem', explanation: 'Todas as opções nesta alternativa representam diferentes maneiras pelas quais os escravizados lutaram contra o sistema.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '16) Por que a existência de um museu nacional da escravidão no Brasil é um tema debatido?', options: ['Porque já existem muitos museus sobre o tema', 'Porque a escravidão foi um evento pequeno e pouco importante', 'Porque o Brasil tem dificuldade em confrontar as feridas e o legado da escravidão', 'Porque não há documentos históricos sobre o período'], answer: 'Porque o Brasil tem dificuldade em confrontar as feridas e o legado da escravidão', explanation: 'Um museu nacional forçaria a sociedade a encarar a centralidade e a brutalidade da escravidão na formação do país, algo que muitas vezes é minimizado.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '17) A principal atividade econômica no Brasil que consolidou o uso em larga escala da mão de obra africana foi:', options: ['A extração de pau-brasil', 'A produção de açúcar', 'A mineração de ouro', 'O cultivo de café'], answer: 'A produção de açúcar', explanation: 'Os engenhos de açúcar no Nordeste foram os grandes impulsionadores do tráfico negreiro no início da colonização.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '18) O que significa dizer que na escravidão moderna a pessoa era "coisificada"?', options: ['Que ela era tratada com muito carinho', 'Que ela era considerada uma mercadoria, uma propriedade que podia ser comprada e vendida', 'Que ela tinha os mesmos direitos que os colonos', 'Que ela trabalhava em troca de um salário'], answer: 'Que ela era considerada uma mercadoria, uma propriedade que podia ser comprada e vendida', explanation: 'O escravizado perdia sua condição humana perante a lei e era visto como um bem ou objeto pertencente ao seu senhor.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '19) Qual era o principal objetivo dos europeus ao estabelecerem o sistema escravista nas Américas?', options: ['Promover a igualdade racial', 'Gerar lucro através da exploração do trabalho compulsório', 'Conhecer novas culturas', 'Oferecer melhores condições de vida aos africanos'], answer: 'Gerar lucro através da exploração do trabalho compulsório', explanation: 'A escravidão foi uma instituição econômica extremamente lucrativa que sustentou as economias coloniais por séculos.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '20) A mistura de elementos de religiões africanas com o catolicismo, dando origem a práticas como o Candomblé e a Umbanda, é um exemplo de:', options: ['Sincretismo religioso e resistência cultural', 'Conversão total ao catolicismo', 'Abandono das tradições africanas', 'Catequese jesuítica'], answer: 'Sincretismo religioso e resistência cultural', explanation: 'Foi uma forma inteligente de preservar suas crenças originais, disfarçando-as com a aparência da religião imposta.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '21) A casa do senhor de engenho, centro do poder na sociedade açucareira, era chamada de:', options: ['Senzala', 'Quilombo', 'Casa-Grande', 'Feitoria'], answer: 'Casa-Grande', explanation: 'A Casa-Grande era a moradia da família do senhor e o centro administrativo do engenho.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '22) Onde viviam os escravizados dentro de um engenho?', options: ['Na Casa-Grande', 'Na Senzala', 'Na Moenda', 'Na Capela'], answer: 'Na Senzala', explanation: 'A senzala era o alojamento, muitas vezes precário, destinado aos escravizados.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '23) O que foi o Período Pré-Colonial (1500-1530) no Brasil?', options: ['Período de intensa produção de açúcar', 'Período focado na extração de pau-brasil através do escambo', 'Período da descoberta do ouro em Minas Gerais', 'Período da vinda da Família Real para o Brasil'], answer: 'Período focado na extração de pau-brasil através do escambo', explanation: 'Nessas três primeiras décadas, Portugal ainda não havia iniciado a colonização efetiva com agricultura e vilas.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '24) A visão europeia de que sua cultura era superior à dos outros povos é chamada de:', options: ['Relativismo cultural', 'Etnocentrismo', 'Socialismo', 'Anarquismo'], answer: 'Etnocentrismo', explanation: 'É a tendência de julgar outras culturas com base nos valores e padrões da sua própria.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '25) Qual destes itens NÃO era um produto europeu trocado por escravos na África?', options: ['Armas de fogo', 'Aguardente', 'Tecidos', 'Ouro'], answer: 'Ouro', explanation: 'O ouro era um dos produtos que os europeus buscavam na África, e não um item que eles levavam para troca.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '26) O Quilombo dos Palmares estava localizado em uma região que hoje corresponde ao estado de:', options: ['Rio de Janeiro', 'Bahia', 'São Paulo', 'Alagoas'], answer: 'Alagoas', explanation: 'Palmares se localizava na Serra da Barriga, no atual estado de Alagoas.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '27) A Lei Eusébio de Queirós, de 1850, foi um passo fundamental para o fim da escravidão no Brasil. O que ela determinava?', options: ['A libertação de todos os escravos com mais de 60 anos', 'A proibição do tráfico negreiro para o Brasil', 'A proibição da venda de escravos em público', 'A libertação dos filhos de escravas'], answer: 'A proibição do tráfico negreiro para o Brasil', explanation: 'Ao proibir a chegada de novos africanos, a lei encareceu o preço dos escravos e enfraqueceu o sistema escravista.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '28) A sociedade do algodão no sul dos EUA e a do açúcar no Brasil e Caribe tinham em comum o fato de serem baseadas no sistema de:', options: ['Minifúndio familiar', 'Trabalho livre assalariado', 'Comércio com a Ásia', 'Plantation'], answer: 'Plantation', explanation: 'O sistema de Plantation é caracterizado pelo latifúndio (grande propriedade), monocultura (um produto principal) e mão de obra escrava.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '29) Além da violência física, qual era uma das principais armas dos senhores para manter o controle sobre os escravizados?', options: ['A oferta de salários', 'A promoção de festas constantes', 'O controle psicológico e a tentativa de destruir sua cultura', 'A educação formal'], answer: 'O controle psicológico e a tentativa de destruir sua cultura', explanation: 'A desumanização e a tentativa de apagar a identidade cultural eram ferramentas poderosas de dominação.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '30) Qual alternativa descreve corretamente a interação inicial entre portugueses e indígenas?', options: ['Guerra imediata e total', 'Aliança pacífica e duradoura', 'Relação baseada no escambo de pau-brasil', 'Indiferença total de ambos os lados'], answer: 'Relação baseada no escambo de pau-brasil', explanation: 'Nos primeiros anos, a relação foi majoritariamente comercial, baseada na troca de trabalho por mercadorias.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '31) Qual o nome da madeira que atraiu o interesse dos portugueses no início da colonização?', options: ['Mogno', 'Jacarandá', 'Pau-brasil', 'Eucalipto'], answer: 'Pau-brasil', explanation: 'Essa madeira era valiosa por produzir um corante vermelho muito cobiçado na Europa.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '32) O que eram as Capitanias Hereditárias?', options: ['Títulos de nobreza dados aos escravos libertos', 'Divisões de terra entregues a donatários para colonizar', 'Impostos cobrados sobre o ouro', 'Fortes militares no litoral'], answer: 'Divisões de terra entregues a donatários para colonizar', explanation: 'Foi o primeiro sistema administrativo de Portugal para ocupar o Brasil.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '33) A frase "a gente precisa ter um objetivo na vida..." dita por uma personagem de tirinha que escala uma montanha e não encontra nada no topo, expressa:', options: ['Alegria pela conquista', 'Frustração e ironia', 'Medo da altura', 'Orgulho da sua força'], answer: 'Frustração e ironia', explanation: 'A fala contrasta com a imagem, criando um efeito de humor irônico sobre a busca por objetivos.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '34) Qual a principal consequência da introdução de armas de fogo europeias no comércio com reinos africanos?', options: ['A pacificação de todo o continente africano', 'A diminuição do número de guerras', 'O aumento das guerras e da captura de prisioneiros para o tráfico', 'A proibição do comércio de escravos pelos próprios africanos'], answer: 'O aumento das guerras e da captura de prisioneiros para o tráfico', explanation: 'As armas de fogo deram um poder militar maior a certos reinos, que passaram a guerrear mais para obter cativos e trocá-los por mais armas, criando um ciclo vicioso.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '35) Qual destes grupos de trabalhadores NÃO era comum na sociedade açucareira?', options: ['Senhor de engenho', 'Escravizados', 'Feitor', 'Operário industrial'], answer: 'Operário industrial', explanation: 'A sociedade açucareira era agrária, e a indústria só se desenvolveria no Brasil séculos depois.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '36) O que é um texto multimodal?', options: ['Um texto escrito em várias línguas', 'Um texto que usa apenas palavras', 'Um texto que combina linguagem verbal (palavras) e não verbal (imagens)', 'Um texto muito antigo'], answer: 'Um texto que combina linguagem verbal (palavras) e não verbal (imagens)', explanation: 'Tirinhas, charges e infográficos são exemplos de textos multimodais.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '37) A imagem de um escravizado acorrentado é um forte símbolo visual de qual conceito?', options: ['Liberdade', 'Riqueza', 'Opressão', 'Alegria'], answer: 'Opressão', explanation: 'As correntes representam a perda da liberdade e a violência do sistema escravista.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '38) Qual o objetivo de um texto que pergunta "Por que não há no Brasil um museu da escravidão?"', options: ['Informar o endereço de museus', 'Criticar a falta de memória e reconhecimento sobre a importância da escravidão', 'Vender ingressos para um museu', 'Contar a história de um museu específico'], answer: 'Criticar a falta de memória e reconhecimento sobre a importância da escravidão', explanation: 'O título, em forma de pergunta, serve para provocar a reflexão do leitor sobre como o Brasil lida com seu passado escravista.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '39) Qual era a função do feitor no engenho?', options: ['Cuidar das finanças', 'Supervisionar e punir o trabalho dos escravizados', 'Moer a cana', 'Plantar a cana'], answer: 'Supervisionar e punir o trabalho dos escravizados', explanation: 'O feitor era o capataz, o braço direito do senhor de engenho na fiscalização do trabalho forçado.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '40) A ideia de que os indígenas eram "povos sem fé, sem lei e sem rei" é um exemplo de visão:', options: ['Científica e neutra', 'Indígena e positiva', 'Eurocêntrica e preconceituosa', 'Relativista e compreensiva'], answer: 'Eurocêntrica e preconceituosa', explanation: 'Essa visão julgava a cultura indígena com base nos valores europeus (fé cristã, lei escrita, rei absolutista), considerando-a inferior por ser diferente.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && currentIndex < quizData.length) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            quizContainer.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = 'final-results';
+            finalResultsDiv.className = 'text-center';
+            practiceSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn" class="btn-primary mt-6">Recomeçar Quiz</button>
+            `;
+            
+            document.getElementById('restart-btn').onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
