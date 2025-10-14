@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gramática e Texto – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button{ background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Português — 7º Ano</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos: Sintaxe, Pontuação e Gêneros Textuais.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Predicado e Transitividade Verbal</h2>
+                            <p>O <span class="highlight">predicado</span> é tudo aquilo que se declara sobre o sujeito. O seu núcleo (a parte mais importante) define sua classificação.</p>
+                            <h3 class="sub-topic-title">Tipos de Predicado</h3>
+                            <ul>
+                                <li><strong>Predicado Verbal:</strong> O núcleo é um verbo que indica <span class="highlight">ação</span> (verbo significativo). Ex: "Os alunos <span class="highlight">estudaram</span> muito."</li>
+                                <li><strong>Predicado Nominal:</strong> O núcleo é um <span class="highlight">nome</span> (adjetivo ou substantivo) que dá uma característica ao sujeito. Esse nome é chamado de <span class="highlight">predicativo do sujeito</span> e é ligado ao sujeito por um <span class="highlight">verbo de ligação</span> (ser, estar, parecer, ficar, etc.). Ex: "A prova estava <span class="highlight">difícil</span>."</li>
+                                <li><strong>Predicado Verbo-Nominal:</strong> Possui <span class="highlight">dois núcleos</span>: um verbo de ação e um predicativo (do sujeito ou do objeto). Ex: "Os alunos saíram da sala <span class="highlight">felizes</span>." (Eles saíram e eles estavam felizes).</li>
+                            </ul>
+                             <h3 class="sub-topic-title">Transitividade Verbal</h3>
+                             <p>É a necessidade que um verbo de ação tem de um complemento para fazer sentido.</p>
+                             <ul>
+                                 <li><strong>Verbo Intransitivo (VI):</strong> Não precisa de complemento, tem sentido completo. Ex: "O bebê <span class="highlight">nasceu</span>.", "Ele <span class="highlight">morreu</span>."</li>
+                                 <li><strong>Verbo Transitivo Direto (VTD):</strong> Pede um complemento <span class="highlight">sem preposição</span>, chamado Objeto Direto. Responde à pergunta "o quê?" ou "quem?". Ex: "Eu comprei <span class="highlight">um livro</span>." (comprou o quê?).</li>
+                                 <li><strong>Verbo Transitivo Indireto (VTI):</strong> Pede um complemento <span class="highlight">com preposição</span>, chamado Objeto Indireto. Responde a "de quê?", "a quem?", "em quê?", etc. Ex: "Eu preciso <span class="highlight">de ajuda</span>." (precisa de quê?).</li>
+                                  <li><strong>Verbo Transitivo Direto e Indireto (VTDI):</strong> Pede dois complementos, um direto e um indireto. Ex: "Eu entreguei <span class="highlight">o presente</span> <span class="highlight">para ela</span>." (entregou o quê? para quem?).</li>
+                             </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Gênero Textual: Reportagem</h2>
+                            <p>A <span class="highlight">reportagem</span> é um gênero jornalístico que tem como principal objetivo <span class="highlight">informar</span> sobre um assunto de forma aprofundada. Diferente da notícia (que é mais curta e factual), a reportagem vai além do fato e busca apresentar diferentes pontos de vista, dados, entrevistas e análises.</p>
+                            <h3 class="sub-topic-title">Estrutura e Características</h3>
+                            <ul>
+                                <li><strong>Título:</strong> Chamativo, para despertar o interesse do leitor.</li>
+                                <li><strong>Lead (ou Lide):</strong> O primeiro parágrafo, que resume as informações mais importantes (o quê, quem, quando, onde, como, por quê).</li>
+                                <li><strong>Corpo do Texto:</strong> Desenvolvimento do assunto, com mais detalhes, entrevistas, dados, gráficos e opiniões de especialistas.</li>
+                                <li><strong>Linguagem:</strong> Geralmente formal, clara e objetiva, escrita em 3ª pessoa para transmitir imparcialidade.</li>
+                            </ul>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">Uso da Vírgula no Período Composto por Coordenação</h2>
+                            <p>No período composto por coordenação, as orações são independentes. A vírgula é usada para organizá-las.</p>
+                             <ul>
+                                 <li><strong>Regra 1:</strong> Separam-se com vírgula as orações coordenadas que <span class="highlight">não são ligadas pela conjunção "e"</span>. Ex: "Cheguei em casa, tomei um banho, jantei e fui dormir."</li>
+                                 <li><strong>Regra 2:</strong> Usa-se vírgula <span class="highlight">antes das conjunções adversativas</span> (mas, porém, contudo, todavia...) e <span class="highlight">conclusivas</span> (logo, portanto, por isso...). Ex: "Ele estudou muito, <span class="highlight">mas</span> não passou." / "Estava chovendo, <span class="highlight">por isso</span> me molhei."</li>
+                                  <li><strong>Regra 3:</strong> Usa-se vírgula antes da conjunção <span class="highlight">"e"</span> apenas quando as orações têm <span class="highlight">sujeitos diferentes</span>. Ex: "<span class="highlight">O menino</span> brincava, <span class="highlight">e</span> <span class="highlight">seus pais</span> observavam."</li>
+                             </ul>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const questionButtons = document.getElementById('question-buttons');
+        const quizContainer = document.getElementById('quiz-container');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-port-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-port-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // Predicado e Transitividade
+            { topic: 'Tipos de Predicado', difficulty: 'Fácil', q: '1) Na oração "A prova estava fácil", o predicado é classificado como:', options: ['Verbal', 'Nominal', 'Verbo-nominal', 'Inexistente'], answer: 'Nominal', explanation: 'O verbo "estava" é de ligação e "fácil" é um predicativo do sujeito, uma característica. O núcleo é um nome.'},
+            { topic: 'Tipos de Predicado', difficulty: 'Fácil', q: '2) Qual frase contém um predicado verbal?', options: ['Meus amigos são legais.', 'O dia amanheceu ensolarado.', 'O time jogou bem.', 'Ela parece cansada.'], answer: 'O time jogou bem.', explanation: 'O núcleo do predicado é o verbo de ação "jogou".'},
+            { topic: 'Tipos de Predicado', difficulty: 'Médio', q: '3) Em "Os alunos chegaram ao colégio ansiosos", o predicado é:', options: ['Verbal', 'Nominal', 'Verbo-nominal', 'Oração sem predicado'], answer: 'Verbo-nominal', explanation: 'Possui dois núcleos: um verbo de ação ("chegaram") e um predicativo do sujeito ("ansiosos").'},
+            { topic: 'Transitividade Verbal', difficulty: 'Fácil', q: '4) Na frase "O bebê dormiu tranquilamente", o verbo "dormir" é:', options: ['Transitivo Direto', 'Transitivo Indireto', 'Intransitivo', 'De Ligação'], answer: 'Intransitivo', explanation: 'O verbo "dormiu" tem sentido completo. "Tranquilamente" é um adjunto adverbial de modo, não um complemento verbal.'},
+            { topic: 'Transitividade Verbal', difficulty: 'Fácil', q: '5) Em "Eu comprei um livro novo", o verbo "comprar" é:', options: ['Intransitivo', 'Transitivo Direto', 'Transitivo Indireto', 'De Ligação'], answer: 'Transitivo Direto', explanation: 'Quem compra, compra ALGO. "um livro novo" é o objeto direto.'},
+            { topic: 'Transitividade Verbal', difficulty: 'Fácil', q: '6) Na oração "Nós gostamos de chocolate", o verbo "gostar" é:', options: ['Intransitivo', 'Transitivo Direto', 'Transitivo Indireto', 'De Ligação'], answer: 'Transitivo Indireto', explanation: 'Quem gosta, gosta DE ALGO. "de chocolate" é o objeto indireto.'},
+            { topic: 'Transitividade Verbal', difficulty: 'Médio', q: '7) Qual oração possui um Verbo Transitivo Direto e Indireto (VTDI)?', options: ['A chuva caiu forte.', 'Eu preciso de ajuda.', 'O professor entregou a prova ao aluno.', 'O céu está azul.'], answer: 'O professor entregou a prova ao aluno.', explanation: 'O verbo "entregou" tem dois complementos: "a prova" (objeto direto) e "ao aluno" (objeto indireto).'},
+            { topic: 'Tipos de Predicado', difficulty: 'Médio', q: '8) "Os manifestantes caminhavam pela avenida." O predicado é:', options: ['Verbal', 'Nominal', 'Verbo-nominal'], answer: 'Verbal', explanation: 'O núcleo é o verbo de ação "caminhavam". "Pela avenida" é um adjunto adverbial de lugar.'},
+            { topic: 'Transitividade Verbal', difficulty: 'Fácil', q: '9) O que é um verbo intransitivo?', options: ['Aquele que precisa de um complemento com preposição.', 'Aquele que precisa de um complemento sem preposição.', 'Aquele que tem sentido completo e não precisa de complemento.', 'Aquele que liga o sujeito a uma característica.'], answer: 'Aquele que tem sentido completo e não precisa de complemento.', explanation: 'Verbos como "nascer", "morrer", "chegar" e "cair" são exemplos clássicos.'},
+            { topic: 'Tipos de Predicado', difficulty: 'Fácil', q: '10) Qual verbo abaixo é sempre de ligação?', options: ['Correr', 'Estudar', 'Comer', 'Ser'], answer: 'Ser', explanation: 'O verbo "ser" sempre atua como verbo de ligação, conectando o sujeito a um predicativo.'},
+
+            // Reportagem
+            { topic: 'Gênero: Reportagem', difficulty: 'Fácil', q: '11) Qual é o principal objetivo de uma reportagem?', options: ['Dar uma opinião pessoal', 'Contar uma história de ficção', 'Instruir o leitor a fazer algo', 'Aprofundar a informação sobre um fato ou assunto'], answer: 'Aprofundar a informação sobre um fato ou assunto', explanation: 'Diferente da notícia, a reportagem vai além do fato imediato, trazendo mais dados, entrevistas e contextos.'},
+            { topic: 'Gênero: Reportagem', difficulty: 'Fácil', q: '12) O primeiro parágrafo de uma reportagem, que resume as informações principais, é chamado de:', options: ['Título', 'Corpo do texto', 'Lead ou Lide', 'Legenda'], answer: 'Lead ou Lide', explanation: 'O lide busca responder às perguntas básicas: O quê? Quem? Quando? Onde? Como? Por quê?'},
+            { topic: 'Gênero: Reportagem', difficulty: 'Médio', q: '13) Uma reportagem sobre o desmatamento na Amazônia que inclui falas de cientistas, madeireiros e indígenas está buscando:', options: ['Confundir o leitor', 'Apresentar diferentes pontos de vista sobre o assunto', 'Provar que apenas os cientistas estão certos', 'Ser um texto de ficção'], answer: 'Apresentar diferentes pontos de vista sobre o assunto', explanation: 'Uma boa reportagem aprofunda o tema ouvindo fontes diversas, o que confere mais credibilidade ao texto.'},
+            { topic: 'Gênero: Reportagem', difficulty: 'Fácil', q: '14) Qual tipo de linguagem é mais comum em uma reportagem?', options: ['Formal, objetiva e em 3ª pessoa', 'Informal, com gírias e em 1ª pessoa', 'Poética, com rimas e metáforas', 'Técnica, com muitos jargões'], answer: 'Formal, objetiva e em 3ª pessoa', explanation: 'O objetivo é informar com clareza e imparcialidade, por isso se prefere uma linguagem mais neutra.'},
+            { topic: 'Gênero: Reportagem', difficulty: 'Médio', q: '15) A principal diferença entre uma notícia e uma reportagem é que a reportagem é:', options: ['Menor e mais rápida', 'Sempre sobre esportes', 'Mais aprofundada e analítica', 'Sempre escrita em 1ª pessoa'], answer: 'Mais aprofundada e analítica', explanation: 'A notícia informa o fato do momento, a reportagem investiga e aprofunda esse fato ou um tema relacionado a ele.'},
+
+            // Uso da Vírgula
+            { topic: 'Uso da Vírgula', difficulty: 'Fácil', q: '16) Qual frase utiliza a vírgula corretamente?', options: ['Eu gosto de, ler e escrever.', 'Eu gosto, de ler e escrever.', 'Eu gosto de ler, e de escrever.', 'Eu gosto de ler e escrever.'], answer: 'Eu gosto de ler e escrever.', explanation: 'Não se usa vírgula antes de "e" quando as orações têm o mesmo sujeito ("Eu").'},
+            { topic: 'Uso da Vírgula', difficulty: 'Médio', q: '17) A vírgula está empregada corretamente em:', options: ['Ele chegou, pegou o livro e, saiu.', 'Ele chegou, pegou o livro e saiu.', 'Ele chegou pegou o livro, e saiu.', 'Ele chegou pegou o livro e saiu.'], answer: 'Ele chegou, pegou o livro e saiu.', explanation: 'As duas primeiras orações ("chegou", "pegou") são coordenadas assindéticas e devem ser separadas por vírgula.'},
+            { topic: 'Uso da Vírgula', difficulty: 'Médio', q: '18) Marque a opção em que o uso da vírgula antes do "e" é obrigatório:', options: ['Ela canta e dança muito bem.', 'O sol apareceu e o dia ficou mais bonito.', 'João estudou muito para a prova, e sua irmã foi ao cinema.', 'Pegue suas coisas e vamos embora.'], answer: 'João estudou muito para a prova, e sua irmã foi ao cinema.', explanation: 'A vírgula é usada antes de "e" porque as duas orações ("João estudou" e "sua irmã foi") possuem sujeitos diferentes.'},
+            { topic: 'Uso da Vírgula', difficulty: 'Fácil', q: '19) Em "Estudei bastante, mas não entendi a matéria", a vírgula foi usada para:', options: ['Separar o sujeito do predicado', 'Indicar uma pausa para respirar', 'Isolar uma conjunção adversativa', 'Separar o verbo do objeto'], answer: 'Isolar uma conjunção adversativa', explanation: 'A regra geral é usar vírgula antes de conjunções como "mas", "porém", "contudo", etc.'},
+            { topic: 'Uso da Vírgula', difficulty: 'Fácil', q: '20) "Choveu muito, portanto as ruas alagaram." A vírgula foi usada corretamente antes da conjunção:', options: ['Aditiva', 'Adversativa', 'Alternativa', 'Conclusiva'], answer: 'Conclusiva', explanation: 'Deve-se usar vírgula antes das conjunções conclusivas como "portanto", "logo", "assim".'},
+            
+            // Revisão Geral
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '21) Na frase "Os jogadores permaneceram calados após a derrota", o predicado é:', options: ['Nominal', 'Verbal', 'Verbo-nominal'], answer: 'Verbo-nominal', explanation: 'O verbo "permaneceram" indica uma ação, mas também liga o sujeito à característica "calados" (predicativo do sujeito).'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '22) Qual a função sintática do termo destacado em "Eu acredito **em você**"?', options: ['Objeto Direto', 'Objeto Indireto', 'Sujeito', 'Predicativo'], answer: 'Objeto Indireto', explanation: 'O verbo "acreditar" é transitivo indireto e rege a preposição "em".'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '23) O primeiro parágrafo de uma notícia ou reportagem é chamado de:', options: ['Lead', 'Corpo', 'Título', 'Manchete'], answer: 'Lead', explanation: 'O Lead (ou Lide) resume as informações essenciais do texto.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '24) Qual frase está com a pontuação INCORRETA?', options: ['O menino correu, pulou, e depois caiu.', 'O tempo mudou, mas o calor continuou.', 'Ele gritou, porém ninguém ouviu.', 'Pedro estuda, e Maria trabalha.'], answer: 'O menino correu, pulou, e depois caiu.', explanation: 'A vírgula antes do "e" está incorreta, pois o sujeito das três orações é o mesmo ("O menino").'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '25) Em "A vida é bonita", o verbo "é" é classificado como:', options: ['Intransitivo', 'Transitivo Direto', 'De Ligação', 'Transitivo Indireto'], answer: 'De Ligação', explanation: 'Ele está ligando o sujeito "A vida" à sua característica "bonita".'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '26) "O juiz considerou o réu culpado." Nesta oração, "culpado" é:', options: ['Objeto direto', 'Predicativo do sujeito', 'Predicativo do objeto', 'Adjunto adverbial'], answer: 'Predicativo do objeto', explanation: '"Culpado" é uma característica atribuída ao objeto direto ("o réu"). O predicado é verbo-nominal.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '27) O objetivo principal de uma reportagem sobre os perigos das fake news é:', options: ['Entreter', 'Instruir', 'Informar e conscientizar', 'Vender um produto'], answer: 'Informar e conscientizar', explanation: 'A reportagem busca aprofundar o tema para que o leitor compreenda o problema e reflita sobre ele.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '28) "A cidade precisa de mais parques." A transitividade do verbo "precisar" é:', options: ['Intransitivo', 'Transitivo Direto', 'Transitivo Indireto', 'De Ligação'], answer: 'Transitivo Indireto', explanation: 'Quem precisa, precisa DE algo. O verbo exige a preposição "de".'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '29) Em qual das frases a vírgula foi usada para separar orações com sujeitos diferentes?', options: ['Ele estudou, mas não entendeu.', 'Acordei, levantei e saí.', 'O professor falava, e os alunos ouviam atentos.', 'Venha aqui, pois preciso de você.'], answer: 'O professor falava, e os alunos ouviam atentos.', explanation: 'O sujeito da primeira oração é "O professor", e o da segunda é "os alunos".'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '30) "O cachorro latiu." O predicado desta oração é:', options: ['Nominal', 'Verbal', 'Verbo-nominal'], answer: 'Verbal', explanation: 'O verbo "latiu" indica uma ação e tem sentido completo, sendo o núcleo do predicado.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function switchView(view){
+            if(view==='learn'){
+                practiceSection.classList.add('hidden');
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+                btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            } else {
+                learnSection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                btnLearn.classList.replace('btn-primary', 'btn-ghost');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+
+        btnLearn.addEventListener('click', () => switchView('learn'));
+        btnPractice.addEventListener('click', () => switchView('practice'));
+
+        function renderQuestionButtons(){
+            questionButtons.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = questionOrder.indexOf(originalIndex);
+                    if(pos >= 0){ currentIndex = pos; showQuestion(); }
+                };
+                if(questionStatus[originalIndex]==='correct') b.classList.add('correct-status');
+                if(questionStatus[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && currentIndex < quizData.length) {
+                    const currentQuestionOriginalIndex = questionOrder[currentIndex];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                questionButtons.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults();
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons();
+        }
+        
+        function showFinalResults() {
+            const correctCount = questionStatus.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            quizContainer.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = 'final-results';
+            finalResultsDiv.className = 'text-center';
+            practiceSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn" class="btn-primary mt-6">Recomeçar Quiz</button>
+            `;
+            
+            document.getElementById('restart-btn').onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons();
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults();
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
