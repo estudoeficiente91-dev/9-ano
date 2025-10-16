@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Regra de 3 Simples e Composta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mode-button.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .nav-button-default { background-color: #374151; }
+        .nav-button-active { background-color: #4f46e5; }
+        .nav-button-correct { background-color: #22c55e; }
+        .nav-button-incorrect { background-color: #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex flex-col items-center min-h-screen p-4 sm:p-6">
+
+    <div class="w-full max-w-5xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Regra de 3 Simples e Composta</h1>
+            <p class="text-lg text-gray-400">Seu guia completo para o 7º ano</p>
+        </header>
+
+        <nav class="flex justify-center items-center bg-gray-800 rounded-lg p-2 mb-8 gap-2 flex-wrap">
+            <button id="btn-learn" class="mode-button active flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Praticar</button>
+            <button id="btn-flashcards" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Modo Flashcards</button>
+        </nav>
+
+        <main id="content-container">
+            <!-- Seção Aprender -->
+            <section id="learn-section" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+                <article class="prose prose-invert max-w-none text-gray-300 prose-headings:text-white prose-strong:text-indigo-400">
+                    <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4">O que são Grandezas?</h2>
+                    <p>No nosso dia a dia, lidamos com muitas coisas que podem ser medidas ou contadas. Por exemplo, podemos medir a distância entre duas cidades, o tempo que levamos para fazer uma tarefa, a velocidade de um carro, o peso de uma fruta, ou o preço de um produto. <strong>Tudo aquilo que pode ser medido ou contado é chamado de grandeza.</strong></p>
+
+                    <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mt-8 mb-4">Grandezas Diretamente Proporcionais</h2>
+                    <p>Duas grandezas são <strong>diretamente proporcionais</strong> quando elas se comportam da mesma maneira. Ou seja, se uma aumenta, a outra também aumenta na mesma proporção. Se uma diminui, a outra também diminui na mesma proporção.</p>
+                    <p><strong>Exemplo:</strong> Pães e Preço.</p>
+                    <ul>
+                        <li>Se 1 pão custa R$ 0,50, então 2 pães custarão R$ 1,00.</li>
+                        <li>Se 10 pães custam R$ 5,00, então 5 pães custarão R$ 2,50.</li>
+                    </ul>
+                    <p>Perceba que, ao <strong>aumentar</strong> a quantidade de pães, o preço a pagar também <strong>aumenta</strong>. Ao <strong>diminuir</strong> a quantidade de pães, o preço também <strong>diminui</strong>. Por isso, são grandezas diretamente proporcionais.</p>
+
+                    <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mt-8 mb-4">Grandezas Inversamente Proporcionais</h2>
+                    <p>Duas grandezas são <strong>inversamente proporcionais</strong> quando elas se comportam de maneira oposta. Ou seja, se uma aumenta, a outra diminui na mesma proporção. Se uma diminui, a outra aumenta na mesma proporção.</p>
+                    <p><strong>Exemplo:</strong> Velocidade e Tempo.</p>
+                    <ul>
+                        <li>Se um carro viaja a 50 km/h e leva 2 horas para chegar a um destino.</li>
+                        <li>Se ele viajar mais rápido, a 100 km/h, ele levará menos tempo, apenas 1 hora.</li>
+                    </ul>
+                    <p>Note que, ao <strong>aumentar</strong> a velocidade, o tempo de viagem <strong>diminui</strong>. Se ele diminuísse a velocidade, o tempo de viagem aumentaria. Por isso, são grandezas inversamente proporcionais.</p>
+                    
+                    <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mt-8 mb-4">Passo a Passo: Regra de 3 Simples</h2>
+                    <p>A regra de 3 simples é usada quando temos duas grandezas proporcionais.</p>
+                    <ol>
+                        <li><strong>Organizar os dados:</strong> Crie uma tabela com duas colunas, uma para cada grandeza. Coloque os valores conhecidos e a incógnita (o valor que você quer descobrir, representado por 'x').</li>
+                        <li><strong>Analisar a proporcionalidade:</strong> Verifique se as grandezas são diretamente ou inversamente proporcionais. Use setas para ajudar: para cima (↑) para aumentar e para baixo (↓) para diminuir.
+                            <ul>
+                                <li><strong>Diretamente Proporcionais:</strong> As setas apontarão para o mesmo lado.</li>
+                                <li><strong>Inversamente Proporcionais:</strong> As setas apontarão para lados opostos.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Montar a equação:</strong>
+                            <ul>
+                                <li>Se for <strong>direta</strong>, monte a proporção e multiplique em cruz.</li>
+                                <li>Se for <strong>inversa</strong>, inverta uma das frações antes de multiplicar em cruz.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Resolver a equação:</strong> Encontre o valor de 'x'.</li>
+                    </ol>
+
+                    <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mt-8 mb-4">Passo a Passo: Regra de 3 Composta</h2>
+                    <p>A regra de 3 composta é usada quando temos três ou mais grandezas.</p>
+                    <ol>
+                        <li><strong>Organizar os dados:</strong> Crie uma tabela com uma coluna para cada grandeza.</li>
+                        <li><strong>Analisar a proporcionalidade:</strong> Compare cada grandeza com a grandeza que contém a incógnita ('x'), uma de cada vez. Ignore as outras grandezas temporariamente ao fazer cada comparação.</li>
+                        <li><strong>Montar a equação:</strong>
+                            <ul>
+                                <li>Coloque a fração com a incógnita 'x' de um lado da igualdade.</li>
+                                <li>Do outro lado, coloque as outras frações se multiplicando.</li>
+                                <li><strong>Importante:</strong> Se uma grandeza for <strong>inversamente proporcional</strong> à grandeza da incógnita, você deve <strong>inverter</strong> a fração dela antes de colocar na equação.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Resolver a equação:</strong> Multiplique as frações e, em seguida, multiplique em cruz para encontrar o valor de 'x'.</li>
+                    </ol>
+                </article>
+            </section>
+
+            <!-- Seção Praticar / Flashcards -->
+            <section id="practice-section" class="hidden">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                    <h2 id="practice-title" class="text-3xl font-bold text-white">Praticar</h2>
+                    <button id="shuffle-btn" class="bg-gray-700 text-white py-2 px-4 rounded-md font-semibold hover:bg-gray-600 transition-colors">Ordem: Crescente</button>
+                </div>
+                
+                <div id="quiz-container" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+                    <div id="question-header" class="mb-4 text-center">
+                        <p class="text-indigo-400 font-semibold" id="question-topic"></p>
+                        <p class="text-sm text-gray-400" id="question-difficulty"></p>
+                    </div>
+                    <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                    <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    <div id="feedback-container" class="mt-6 text-center"></div>
+
+                    <!-- Navegação -->
+                    <div class="flex justify-between items-center mt-8">
+                        <button id="prev-btn" class="bg-indigo-600 py-2 px-5 rounded-md font-semibold hover:bg-indigo-500 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                        <span id="question-counter" class="font-semibold"></span>
+                        <button id="next-btn" class="bg-indigo-600 py-2 px-5 rounded-md font-semibold hover:bg-indigo-500 transition-colors">Próxima</button>
+                    </div>
+                </div>
+
+                <!-- Navegação por bolinhas -->
+                 <div id="question-nav-container" class="mt-6 p-4 bg-gray-800 rounded-lg shadow-lg flex flex-wrap justify-center gap-2"></div>
+                
+                 <!-- Tela de Pontuação -->
+                <div id="score-screen" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg mt-8">
+                    <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                    <p id="final-score" class="text-6xl font-bold text-indigo-400 mb-2"></p>
+                    <p id="score-message" class="text-lg text-gray-300 mb-8"></p>
+                    <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // Fácil - Simples Direta
+            { id: 1, topic: "Regra de 3 Simples Direta", difficulty: "Fácil", question: "Se 3 lápis custam R$ 6,00, quanto custarão 7 lápis?", options: ["R$ 14,00", "R$ 12,00", "R$ 21,00", "R$ 15,00"], answer: 0, explanation: "Quanto mais lápis, maior o custo. Proporção direta. 3/7 = 6/x  => 3x = 42 => x = 14." },
+            { id: 2, topic: "Regra de 3 Simples Direta", difficulty: "Fácil", question: "Um carro percorre 120 km com 10 litros de gasolina. Quantos km ele percorrerá com 15 litros?", options: ["150 km", "160 km", "180 km", "200 km"], answer: 2, explanation: "Quanto mais gasolina, mais km percorre. Proporção direta. 10/15 = 120/x => 10x = 1800 => x = 180." },
+            { id: 3, topic: "Regra de 3 Simples Direta", difficulty: "Fácil", question: "Para fazer um bolo, uso 2 xícaras de farinha. Para fazer 5 bolos, quantas xícaras preciso?", options: ["8 xícaras", "10 xícaras", "12 xícaras", "15 xícaras"], answer: 1, explanation: "Quanto mais bolos, mais farinha. Proporção direta. 1/5 = 2/x => x = 10." },
+            
+            // Fácil - Simples Inversa
+            { id: 6, topic: "Regra de 3 Simples Inversa", difficulty: "Fácil", question: "Dois pedreiros constroem um muro em 6 dias. Se fossem 4 pedreiros, em quantos dias construiriam?", options: ["2 dias", "3 dias", "4 dias", "5 dias"], answer: 1, explanation: "Quanto mais pedreiros, menos tempo. Proporção inversa. 2/4 = x/6 (inverte a segunda fração) => 4x = 12 => x = 3." },
+            { id: 7, topic: "Regra de 3 Simples Inversa", difficulty: "Fácil", question: "Um carro a 80 km/h leva 3 horas para fazer uma viagem. Se a velocidade for 120 km/h, quanto tempo levará?", options: ["1 hora", "1.5 horas", "2 horas", "2.5 horas"], answer: 2, explanation: "Quanto maior a velocidade, menor o tempo. Proporção inversa. 80/120 = x/3 => 120x = 240 => x = 2." },
+            { id: 8, topic: "Regra de 3 Simples Inversa", difficulty: "Fácil", question: "Três torneiras enchem uma piscina em 10 horas. Se forem 6 torneiras, em quanto tempo encherão?", options: ["3 horas", "4 horas", "5 horas", "6 horas"], answer: 2, explanation: "Quanto mais torneiras, menos tempo. Proporção inversa. 3/6 = x/10 => 6x = 30 => x = 5." },
+            
+            // Médio - Simples Direta
+            { id: 11, topic: "Regra de 3 Simples Direta", difficulty: "Médio", question: "Com R$ 75,00 compro 5 camisetas. Quantas camisetas posso comprar com R$ 120,00?", options: ["6 camisetas", "7 camisetas", "8 camisetas", "9 camisetas"], answer: 2, explanation: "Quanto mais dinheiro, mais camisetas. Proporção direta. 75/120 = 5/x => 75x = 600 => x = 8." },
+            { id: 12, topic: "Regra de 3 Simples Direta", difficulty: "Médio", question: "Uma impressora imprime 150 páginas em 4 minutos. Quantas páginas ela imprime em 10 minutos?", options: ["375 páginas", "350 páginas", "400 páginas", "450 páginas"], answer: 0, explanation: "Quanto mais tempo, mais páginas. Proporção direta. 4/10 = 150/x => 4x = 1500 => x = 375." },
+            { id: 13, topic: "Regra de 3 Simples Direta", difficulty: "Médio", question: "Se um atleta corre 5 km em 25 minutos, em quanto tempo ele correrá 8 km, mantendo o ritmo?", options: ["35 minutos", "40 minutos", "42 minutos", "45 minutos"], answer: 1, explanation: "Quanto maior a distância, maior o tempo. Proporção direta. 5/8 = 25/x => 5x = 200 => x = 40." },
+            
+            // Médio - Simples Inversa
+            { id: 16, topic: "Regra de 3 Simples Inversa", difficulty: "Médio", question: "Para esvaziar um tanque, 5 ralos levam 8 horas. Se usarmos apenas 4 ralos, quanto tempo levará?", options: ["9 horas", "10 horas", "11 horas", "12 horas"], answer: 1, explanation: "Menos ralos, mais tempo. Proporção inversa. 5/4 = x/8 => 4x = 40 => x = 10." },
+            { id: 17, topic: "Regra de 3 Simples Inversa", difficulty: "Médio", question: "Um grupo de 8 amigos tem comida para 15 dias de acampamento. Se mais 2 amigos se juntarem, para quantos dias a comida será suficiente?", options: ["10 dias", "11 dias", "12 dias", "13 dias"], answer: 2, explanation: "Mais amigos (10 no total), menos dias de comida. Proporção inversa. 8/10 = x/15 => 10x = 120 => x = 12." },
+            { id: 20, topic: "Regra de 3 Simples Inversa", difficulty: "Médio", question: "Com 12 operários, uma obra termina em 30 dias. Para terminar em 20 dias, quantos operários são necessários?", options: ["15 operários", "16 operários", "18 operários", "20 operários"], answer: 2, explanation: "Menos dias, mais operários. Proporção inversa. 30/20 = x/12 => 20x = 360 => x = 18." },
+
+            // Difícil - Simples
+            { id: 21, topic: "Regra de 3 Simples Direta", difficulty: "Difícil", question: "Para produzir 1.200 parafusos, uma máquina gasta 5 horas. Para produzir 3.000 parafusos, quanto tempo ela gastará em minutos?", options: ["600 minutos", "750 minutos", "800 minutos", "900 minutos"], answer: 1, explanation: "Proporção direta. 1200/3000 = 5/x => 1200x = 15000 => x = 12.5 horas. Convertendo para minutos: 12.5 * 60 = 750 minutos." },
+            { id: 22, topic: "Regra de 3 Simples Inversa", difficulty: "Difícil", question: "Um avião voando a 800 km/h leva 4 horas e 30 minutos para cruzar o oceano. Se voasse a 900 km/h, quanto tempo levaria?", options: ["3 horas", "3 horas e 30 min", "4 horas", "4 horas e 15 min"], answer: 2, explanation: "Maior velocidade, menor tempo. Inversa. 4h30min = 270 min. 800/900 = x/270 => 900x = 216000 => x = 240 minutos, que são 4 horas." },
+            { id: 24, topic: "Regra de 3 Simples Direta", difficulty: "Difícil", question: "Uma vela de 20 cm de altura queima completamente em 5 horas. Após 3 horas, qual será a altura restante da vela?", options: ["8 cm", "10 cm", "12 cm", "14 cm"], answer: 0, explanation: "Em 3 horas, ela queima x cm. Direta. 20/x = 5/3 => 5x = 60 => x = 12 cm queimados. A altura restante é 20 - 12 = 8 cm." },
+            { id: 27, topic: "Regra de 3 Simples Inversa", difficulty: "Difícil", question: "Se 15 homens fazem um trabalho em 8 dias, quantos homens a mais seriam necessários para fazer o mesmo trabalho em 6 dias?", options: ["3", "4", "5", "6"], answer: 2, explanation: "Inversa. 8/6 = x/15 => 6x = 120 => x = 20 homens. Eram 15, agora são 20, então precisa de 20 - 15 = 5 homens a mais." },
+
+            // Regra de 3 Composta
+            { id: 31, topic: "Regra de 3 Composta", difficulty: "Médio", question: "Se 4 padeiros produzem 200 pães em 2 horas, quantos pães 6 padeiros produzirão em 3 horas?", options: ["350 pães", "400 pães", "450 pães", "500 pães"], answer: 2, explanation: "Pães vs Padeiros (Direta). Pães vs Horas (Direta). 200/x = (4/6) * (2/3) => 200/x = 8/18 => 8x = 3600 => x = 450." },
+            { id: 32, topic: "Regra de 3 Composta", difficulty: "Médio", question: "Em 8 horas, 20 caminhões descarregam 160 m³ de areia. Em 5 horas, quantos caminhões serão necessários para descarregar 125 m³?", options: ["20 caminhões", "25 caminhões", "30 caminhões", "35 caminhões"], answer: 1, explanation: "Caminhões vs Horas (Inversa). Caminhões vs m³ (Direta). 20/x = (5/8) * (160/125) => 20/x = 800/1000 => 800x = 20000 => x = 25." },
+            { id: 36, topic: "Regra de 3 Composta", difficulty: "Difícil", question: "Uma confecção com 16 costureiras produz 960 calças em 6 dias de 8 horas de trabalho. Quantas costureiras são necessárias para produzir 1200 calças em 10 dias de 6 horas de trabalho?", options: ["16 costureiras", "18 costureiras", "20 costureiras", "22 costureiras"], answer: 0, explanation: "Costureiras vs Calças (Direta), Costureiras vs Dias (Inversa), Costureiras vs Horas/dia (Inversa). 16/x = (960/1200) * (10/6) * (6/8) => 16/x = (4/5) * (10/6) * (6/8) => 16/x = (4/5) * (60/48) = (4/5)*(5/4) = 1. => x = 16." },
+            { id: 39, topic: "Regra de 3 Composta", difficulty: "Difícil", question: "Uma frota de 18 ônibus consome 7200 litros de combustível em 5 dias, rodando 6 horas por dia. Se a frota for aumentada para 24 ônibus e rodar 8 horas por dia, qual será o consumo em litros para 10 dias?", options: ["25600 litros", "26800 litros", "28200 litros", "30000 litros"], answer: 0, explanation: "Litros vs Ônibus(D), Litros vs Dias(D), Litros vs H/dia(D). Todas diretas. 7200/x = (18/24) * (5/10) * (6/8) => 7200/x = (3/4)*(1/2)*(3/4) = 9/32 => 9x = 230400 => x = 25600." },
+        ];
+
+        // --- LÓGICA DO APP ---
+        
+        // Elementos DOM
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const btnFlashcards = document.getElementById('btn-flashcards');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const shuffleBtn = document.getElementById('shuffle-btn');
+        
+        const quizContainer = document.getElementById('quiz-container');
+        const scoreScreen = document.getElementById('score-screen');
+        const questionTopic = document.getElementById('question-topic');
+        const questionDifficulty = document.getElementById('question-difficulty');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const questionCounter = document.getElementById('question-counter');
+        const questionNavContainer = document.getElementById('question-nav-container');
+        const finalScore = document.getElementById('final-score');
+        const scoreMessage = document.getElementById('score-message');
+        const restartBtn = document.getElementById('restart-btn');
+        const practiceTitle = document.getElementById('practice-title');
+
+        // Estado do App
+        let state = {
+            currentMode: 'learn', // 'learn', 'practice', 'flashcards'
+            currentQuestionIndex: 0,
+            isShuffled: false,
+            questionOrder: Array.from(Array(questions.length).keys()),
+            userAnswers: [],
+            score: 0,
+        };
+
+        // Funções
+        function switchMode(mode) {
+            state.currentMode = mode;
+            
+            // Atualiza botões
+            document.querySelectorAll('.mode-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${mode}`).classList.add('active');
+
+            // Atualiza seções
+            learnSection.classList.toggle('hidden', mode !== 'learn');
+            practiceSection.classList.toggle('hidden', mode === 'learn');
+
+            if (mode === 'practice' || mode === 'flashcards') {
+                practiceTitle.textContent = mode === 'practice' ? 'Praticar' : 'Modo Flashcards';
+                startPractice();
+            }
+        }
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function toggleShuffle() {
+            state.isShuffled = !state.isShuffled;
+            shuffleBtn.textContent = `Ordem: ${state.isShuffled ? 'Aleatória' : 'Crescente'}`;
+            startPractice();
+        }
+
+        function startPractice() {
+            state.currentQuestionIndex = 0;
+            state.score = 0;
+            state.userAnswers = Array(questions.length).fill(null);
+            
+            if (state.isShuffled) {
+                shuffleArray(state.questionOrder);
+            } else {
+                state.questionOrder = Array.from(Array(questions.length).keys());
+            }
+
+            quizContainer.classList.remove('hidden');
+            scoreScreen.classList.add('hidden');
+
+            renderQuestion(state.currentQuestionIndex);
+            renderNavButtons();
+        }
+
+        function renderQuestion(index) {
+            const questionIndexInDB = state.questionOrder[index];
+            const question = questions[questionIndexInDB];
+
+            questionTopic.textContent = question.topic;
+            questionDifficulty.textContent = `Dificuldade: ${question.difficulty}`;
+            questionText.textContent = question.question;
+            questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+            optionsContainer.innerHTML = '';
+            feedbackContainer.innerHTML = '';
+
+            // Lógica para Flashcards
+            if (state.currentMode === 'flashcards') {
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors";
+                    optionsContainer.appendChild(button);
+                });
+                
+                const showAnswerBtn = document.createElement('button');
+                showAnswerBtn.textContent = 'Mostrar Resposta';
+                showAnswerBtn.className = 'bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-500 transition-colors mt-4';
+                showAnswerBtn.onclick = () => showFlashcardAnswer(question);
+                feedbackContainer.appendChild(showAnswerBtn);
+
+            } else { // Lógica para Praticar
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            updateNavButtonsState();
+        }
+
+        function checkAnswer(selectedIndex, correctIndex, explanation) {
+            const isCorrect = selectedIndex === correctIndex;
+            state.userAnswers[state.currentQuestionIndex] = isCorrect;
+
+            if (isCorrect) {
+                state.score++;
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            }
+
+            // Desabilita botões e mostra feedback
+            Array.from(optionsContainer.children).forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === correctIndex) {
+                    btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                    btn.classList.add('bg-green-600', 'text-white');
+                } else if (i === selectedIndex) {
+                    btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                    btn.classList.add('bg-red-600', 'text-white');
+                }
+            });
+
+            feedbackContainer.innerHTML = `
+                <div class="p-4 rounded-lg ${isCorrect ? 'bg-green-900' : 'bg-red-900'}">
+                    <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                    <p class="text-sm">${explanation}</p>
+                </div>`;
+            
+            updateNavButtons();
+        }
+
+        function showFlashcardAnswer(question) {
+            Array.from(optionsContainer.children).forEach((btn, i) => {
+                if (i === question.answer) {
+                     btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                     btn.classList.add('bg-green-600', 'text-white');
+                }
+            });
+            
+            feedbackContainer.innerHTML = `
+                <div class="p-4 rounded-lg bg-gray-700">
+                    <h4 class="font-bold text-lg mb-2">Explicação:</h4>
+                    <p class="text-sm">${question.explanation}</p>
+                </div>
+                <div class="mt-4 flex justify-center gap-4">
+                    <button id="btn-correct" class="bg-green-600 text-white py-2 px-5 rounded-md font-semibold hover:bg-green-500">Acertei</button>
+                    <button id="btn-incorrect" class="bg-red-600 text-white py-2 px-5 rounded-md font-semibold hover:bg-red-500">Errei</button>
+                </div>`;
+            
+            document.getElementById('btn-correct').onclick = () => selfAssess(true);
+            document.getElementById('btn-incorrect').onclick = () => selfAssess(false);
+        }
+        
+        function selfAssess(isCorrect) {
+            state.userAnswers[state.currentQuestionIndex] = isCorrect;
+            if(isCorrect) state.score++;
+            
+            feedbackContainer.querySelector('.mt-4').innerHTML = `<p class="font-bold text-lg">${isCorrect ? 'Ótimo!' : 'Continue estudando!'}</p>`;
+            updateNavButtons();
+        }
+
+        function renderNavButtons() {
+            questionNavContainer.innerHTML = '';
+            for(let i = 0; i < questions.length; i++) {
+                const button = document.createElement('button');
+                button.textContent = i + 1;
+                button.className = "nav-button w-8 h-8 rounded-full flex items-center justify-center font-semibold transition-all duration-200 nav-button-default";
+                button.onclick = () => goToQuestion(i);
+                questionNavContainer.appendChild(button);
+            }
+        }
+        
+        function updateNavButtons() {
+            Array.from(questionNavContainer.children).forEach((btn, i) => {
+                btn.classList.remove('nav-button-correct', 'nav-button-incorrect', 'nav-button-active');
+                if (state.userAnswers[i] === true) {
+                    btn.classList.add('nav-button-correct');
+                } else if (state.userAnswers[i] === false) {
+                    btn.classList.add('nav-button-incorrect');
+                }
+                if (i === state.currentQuestionIndex) {
+                    btn.classList.add('nav-button-active');
+                }
+            });
+        }
+        
+        function updateNavButtonsState() {
+            prevBtn.disabled = state.currentQuestionIndex === 0;
+            if (state.currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = "Finalizar";
+            } else {
+                nextBtn.textContent = "Próxima";
+            }
+            updateNavButtons();
+        }
+
+        function nextQuestion() {
+            if (state.currentQuestionIndex < questions.length - 1) {
+                state.currentQuestionIndex++;
+                renderQuestion(state.currentQuestionIndex);
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQuestionIndex > 0) {
+                state.currentQuestionIndex--;
+                renderQuestion(state.currentQuestionIndex);
+            }
+        }
+        
+        function goToQuestion(index) {
+            state.currentQuestionIndex = index;
+            renderQuestion(index);
+        }
+        
+        function showFinalScore() {
+            quizContainer.classList.add('hidden');
+            scoreScreen.classList.remove('hidden');
+
+            const percentage = Math.round((state.score / questions.length) * 100);
+            finalScore.textContent = `${percentage}%`;
+
+            let message = '';
+            if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+            else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+            else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+            else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+            
+            scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+        }
+
+
+        // Event Listeners
+        btnLearn.addEventListener('click', () => switchMode('learn'));
+        btnPractice.addEventListener('click', () => switchMode('practice'));
+        btnFlashcards.addEventListener('click', () => switchMode('flashcards'));
+        shuffleBtn.addEventListener('click', toggleShuffle);
+        prevBtn.addEventListener('click', prevQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', startPractice);
+        
+        // Inicialização
+        switchMode('learn');
+
+    </script>
+</body>
+</html>
+
