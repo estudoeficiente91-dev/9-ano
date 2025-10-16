@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Regra de 3 – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#071023; --card:#0b1624; --accent:#3b82f6; --muted:#97a6bf; --text:#e6eef8; --success:#34d399; --danger:#ef4444; --border:rgba(255,255,255,0.12); --muted-2: rgba(230,238,248,0.85);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #3b82f6); color: #061226; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 6px 18px rgba(59,130,246,0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons, #question-buttons-flash{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button, #question-buttons-flash button { background: transparent; color: var(--muted-2); border:1px solid var(--border); padding:.45rem .6rem; border-radius:8px; cursor:pointer; }
+        #question-buttons button.current-question, #question-buttons-flash button.current-question { background-color: rgba(59, 130, 246, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status, #question-buttons-flash button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status, #question-buttons-flash button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(96,165,250,0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        .theme-light{ --bg: #f8fafc; --card: #ffffff; --muted: #475569; --text: #0f1724; --accent: #0284c7; --success: #047857; --danger: #b91c1c; --border: rgba(15,23,42,0.1); --muted-2: rgba(15,23,36,0.85); }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+        
+        /* Flashcard Styles */
+        .flashcard { background-color: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; min-height: 200px; display: flex; flex-direction: column; justify-content: center;}
+        #card-front-flash p { font-size: 1.25rem; }
+        .flashcard-back { display: none; margin-top: 1rem; }
+        .flashcard-explanation { font-size: 0.9rem; color: var(--muted-2); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        #flashcard-controls button { width: 100%; padding: 0.75rem; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+        #assessment-controls { display: none; gap: 1rem; }
+        .flashcard-option { display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); margin-top: 0.5rem; }
+        .flashcard-option.correct-highlight { background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">Regra de 3 Simples e Composta</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos completo para o 7º Ano.</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                     <button id="btn-flashcards" class="btn-ghost ml-2">Modo Flashcards</button>
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Regra de 3 Simples</h2>
+                            <p>A Regra de 3 Simples é uma ferramenta para resolver problemas que envolvem duas <span class="highlight">grandezas</span> proporcionais. Uma grandeza é tudo aquilo que pode ser medido: velocidade, tempo, preço, quantidade, etc.</p>
+                            
+                            <h3 class="sub-topic-title">Grandezas Diretamente Proporcionais</h3>
+                            <p>Duas grandezas são <span class="highlight">diretas</span> quando, se uma aumenta, a outra também aumenta (ou se uma diminui, a outra também diminui). Elas se movem na mesma direção.</p>
+                            <ul>
+                                <li><strong>Exemplo:</strong> Quanto <span class="highlight">MAIS</span> pães eu compro, <span class="highlight">MAIOR</span> será o valor a pagar.</li>
+                                <li><strong>Resolução:</strong> Multiplique em <span class="highlight">cruz (X)</span>.</li>
+                            </ul>
+
+                            <h3 class="sub-topic-title">Grandezas Inversamente Proporcionais</h3>
+                            <p>Duas grandezas são <span class="highlight">inversas</span> quando se comportam de maneira oposta: se uma aumenta, a outra diminui.</p>
+                            <ul>
+                                <li><strong>Exemplo:</strong> Quanto <span class="highlight">MAIOR</span> a velocidade de um carro, <span class="highlight">MENOR</span> será o tempo para chegar.</li>
+                                <li><strong>Resolução:</strong> Multiplique em <span class="highlight">linha reta</span>.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                             <h2 class="topic-title">Regra de 3 Composta</h2>
+                             <p>A Regra de 3 Composta é usada quando o problema envolve <span class="highlight">três ou mais grandezas</span>. O segredo é analisar cada grandeza em relação àquela que contém a incógnita (o 'x').</p>
+                             <h3 class="sub-topic-title">Passo a Passo da Regra de 3 Composta</h3>
+                             <ol class="list-decimal list-inside space-y-2 mt-2">
+                                 <li><strong>Montar a Tabela:</strong> Organize todas as grandezas em colunas.</li>
+                                 <li><strong>Analisar a Proporcionalidade:</strong> Compare <span class="highlight">cada grandeza</span> individualmente com a grandeza que tem o 'x'. Ignore as outras colunas temporariamente. Coloque uma seta para baixo (↓) na coluna do 'x'. Para cada outra coluna, pergunte: "Se eu aumentar a grandeza do 'x', esta outra grandeza aumenta ou diminui?". Se aumentar, a seta é para baixo (↓). Se diminuir, a seta é para cima (↑).</li>
+                                 <li><strong>Montar a Equação:</strong> Coloque a fração com o 'x' de um lado do sinal de igual. Do outro lado, coloque a multiplicação de todas as outras frações. <span class="highlight">Importante:</span> as frações que tiverem a seta no sentido oposto à do 'x' devem ser <span class="highlight">invertidas</span>.</li>
+                                 <li><strong>Resolver a Equação:</strong> Calcule o valor de 'x'.</li>
+                             </ol>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+
+                <section id="flashcard-section" class="hidden">
+                    <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn-flash" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons-flash" class="mb-4"></div>
+                    <div id="flashcard-container">
+                        <div id="flashcard" class="flashcard">
+                            <div id="card-front-flash">
+                                <!-- Question and options injected here -->
+                            </div>
+                            <div id="card-back-flash" class="flashcard-back">
+                                <div class="flashcard-explanation"></div>
+                            </div>
+                        </div>
+                        <div id="flashcard-controls" class="mt-4">
+                            <button id="reveal-btn" class="btn-primary">Mostrar Resposta</button>
+                            <div id="assessment-controls" class="grid grid-cols-2">
+                                <button id="wrong-btn" style="background-color: var(--danger); color: white;">Errei</button>
+                                <button id="correct-btn" style="background-color: var(--success); color: #062e1f;">Acertei</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        const btnFlashcards = document.getElementById('btn-flashcards');
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        const flashcardSection = document.getElementById('flashcard-section');
+
+        const quizContainer = document.getElementById('quiz-container');
+        const questionButtons = document.getElementById('question-buttons');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+        
+        const flashcardContainer = document.getElementById('flashcard-container');
+        const questionButtonsFlash = document.getElementById('question-buttons-flash');
+        const orderToggleBtnFlash = document.getElementById('order-toggle-btn-flash');
+        const cardFrontFlash = document.getElementById('card-front-flash');
+        const cardBackFlash = document.getElementById('card-back-flash');
+        const flashcardExplanation = cardBackFlash.querySelector('.flashcard-explanation');
+        const revealBtn = document.getElementById('reveal-btn');
+        const assessmentControls = document.getElementById('assessment-controls');
+        const correctBtn = document.getElementById('correct-btn');
+        const wrongBtn = document.getElementById('wrong-btn');
+
+        if(!btnFlashcards || !flashcardSection){
+            console.error('Elementos do modo flashcard não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-regra3-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-regra3-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            // Regra de 3 Simples Direta
+            { topic: 'Regra de 3 Simples Direta', difficulty: 'Fácil', q: '1) Se 2 quilos de batatas custam R$ 10,00, quanto custarão 5 quilos?', options: ['R$ 20,00', 'R$ 25,00', 'R$ 30,00', 'R$ 50,00'], answer: 'R$ 25,00', explanation: 'Quanto MAIS quilos, MAIOR o preço (direta). Multiplica-se em cruz: 2/5 = 10/x  => 2x = 50 => x = 25.'},
+            { topic: 'Regra de 3 Simples Direta', difficulty: 'Fácil', q: '2) Um carro consome 1 litro de gasolina para percorrer 12 km. Quantos litros consumirá para percorrer 60 km?', options: ['4 litros', '5 litros', '6 litros', '10 litros'], answer: '5 litros', explanation: 'Quanto MAIOR a distância, MAIS gasolina (direta). 1/x = 12/60 => 12x = 60 => x = 5.'},
+            { topic: 'Regra de 3 Simples Direta', difficulty: 'Médio', q: '3) Uma impressora imprime 80 páginas em 4 minutos. Quantas páginas ela imprimirá em 10 minutos?', options: ['160 páginas', '200 páginas', '240 páginas', '320 páginas'], answer: '200 páginas', explanation: 'Quanto MAIS tempo, MAIS páginas (direta). 80/x = 4/10 => 4x = 800 => x = 200.'},
+            { topic: 'Regra de 3 Simples Direta', difficulty: 'Médio', q: '4) Para fazer 3 bolos, uma cozinheira usa 9 ovos. Se ela precisar fazer 7 bolos, de quantos ovos precisará?', options: ['18 ovos', '21 ovos', '24 ovos', '27 ovos'], answer: '21 ovos', explanation: 'Quanto MAIS bolos, MAIS ovos (direta). 3/7 = 9/x => 3x = 63 => x = 21.'},
+            { topic: 'Regra de 3 Simples Direta', difficulty: 'Difícil', q: '5) Se 20% de um tanque correspondem a 500 litros, qual a capacidade total do tanque?', options: ['1000 litros', '2000 litros', '2500 litros', '5000 litros'], answer: '2500 litros', explanation: 'As grandezas Porcentagem e Litros são diretas. 20/100 = 500/x => 20x = 50000 => x = 2500.'},
+
+            // Regra de 3 Simples Inversa
+            { topic: 'Regra de 3 Simples Inversa', difficulty: 'Fácil', q: '6) Um carro a 80 km/h leva 3 horas para completar um percurso. Se a velocidade for de 120 km/h, quanto tempo levará?', options: ['1 hora', '1.5 horas', '2 horas', '4 horas'], answer: '2 horas', explanation: 'Quanto MAIOR a velocidade, MENOR o tempo (inversa). Multiplica-se em linha: 120 * x = 80 * 3 => 120x = 240 => x = 2.'},
+            { topic: 'Regra de 3 Simples Inversa', difficulty: 'Fácil', q: '7) Se 5 operários constroem uma casa em 30 dias, 10 operários construiriam a mesma casa em:', options: ['15 dias', '30 dias', '60 dias', '150 dias'], answer: '15 dias', explanation: 'Quanto MAIS operários, MENOS tempo (inversa). 10 * x = 5 * 30 => 10x = 150 => x = 15.'},
+            { topic: 'Regra de 3 Simples Inversa', difficulty: 'Médio', q: '8) Três torneiras idênticas enchem uma piscina em 9 horas. Se apenas duas torneiras fossem usadas, quanto tempo levaria?', options: ['12 horas', '13.5 horas', '15 horas', '18 horas'], answer: '13.5 horas', explanation: 'Quanto MENOS torneiras, MAIS tempo (inversa). 2 * x = 3 * 9 => 2x = 27 => x = 13,5.'},
+            { topic: 'Regra de 3 Simples Inversa', difficulty: 'Médio', q: '9) Com uma certa quantidade de ração, é possível alimentar 12 cães por 8 dias. Se 4 cães forem doados, por quantos dias a mesma ração alimentará os restantes?', options: ['10 dias', '12 dias', '16 dias', '24 dias'], answer: '12 dias', explanation: 'Restam 8 cães. Quanto MENOS cães, MAIS dias dura a ração (inversa). 8 * x = 12 * 8 => 8x = 96 => x = 12.'},
+            { topic: 'Regra de 3 Simples Inversa', difficulty: 'Médio', q: '10) Um ciclista a 15 km/h leva 4 horas para completar seu trajeto. Se ele quisesse fazer o mesmo trajeto em 3 horas, qual deveria ser sua velocidade?', options: ['18 km/h', '20 km/h', '22 km/h', '25 km/h'], answer: '20 km/h', explanation: 'Quanto MENOR o tempo, MAIOR a velocidade (inversa). 3 * x = 4 * 15 => 3x = 60 => x = 20.'},
+            
+            // Regra de 3 Composta
+            { topic: 'Regra de 3 Composta', difficulty: 'Médio', q: '11) Se 4 operários constroem 2 muros em 3 dias, quantos dias 8 operários levarão para construir 4 muros?', options: ['2 dias', '3 dias', '4 dias', '6 dias'], answer: '3 dias', explanation: 'Dias/Operários(inversa), Dias/Muros(direta). Monta-se a equação: 3/x = (8/4) * (2/4). Invertendo a inversa: 3/x = (4/8) * (4/2) => 3/x = 16/16 => 3/x = 1 => x=3.'},
+            { topic: 'Regra de 3 Composta', difficulty: 'Médio', q: '12) Em 8 dias, 5 impressoras produzem 10.000 folhetos. Se 2 impressoras quebrarem, em quantos dias as restantes produzirão 5.000 folhetos?', options: ['4 dias', '5,3 dias', '6,7 dias', '8 dias'], answer: '6,7 dias', explanation: 'Restam 3 impressoras. Dias/Impressoras (inversa), Dias/Folhetos (direta). x/8 = (5/3) * (5000/10000) => x/8 = (5/3) * (1/2) => x/8 = 5/6 => 6x = 40 => x ≈ 6,7.'},
+            { topic: 'Regra de 3 Composta', difficulty: 'Difícil', q: '13) Se 10 galinhas botam 10 ovos em 10 dias, quantas galinhas são necessárias para botar 100 ovos em 100 dias?', options: ['1 galinha', '10 galinhas', '100 galinhas', '1000 galinhas'], answer: '10 galinhas', explanation: 'Galinhas/Ovos (direta), Galinhas/Dias (inversa). x/10 = (100/10) * (10/100) => x/10 = 10 * 0,1 => x/10 = 1 => x = 10.'},
+            { topic: 'Regra de 3 Composta', difficulty: 'Médio', q: '14) 20 operários, trabalhando 8 horas por dia, levam 18 dias para construir um muro. Quantos dias 16 operários levarão, trabalhando 9 horas por dia?', options: ['15 dias', '18 dias', '20 dias', '24 dias'], answer: '20 dias', explanation: 'Dias/Operários (inversa), Dias/Horas (inversa). x/18 = (20/16) * (8/9) => x/18 = 160/144 => x = (18 * 160) / 144 = 20.'},
+            { topic: 'Regra de 3 Composta', difficulty: 'Difícil', q: '15) Para alimentar 15 cavalos durante 10 dias são necessários 1.500 kg de feno. Se 5 cavalos forem vendidos, quantos quilos de feno serão necessários para alimentar os restantes por 12 dias?', options: ['1.000 kg', '1.200 kg', '1.500 kg', '1.800 kg'], answer: '1.200 kg', explanation: 'Restam 10 cavalos. Feno/Cavalos (direta), Feno/Dias (direta). x/1500 = (10/15) * (12/10) => x/1500 = 120/150 => x = (1500 * 120) / 150 = 1200.'},
+
+            // Revisão Geral
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '16) Qual das situações abaixo representa grandezas inversamente proporcionais?', options: ['Quantidade de pães e o preço a pagar.', 'Distância percorrida e tempo de viagem (com velocidade constante).', 'Número de pintores e o tempo para pintar uma parede.', 'Número de gols e a pontuação no campeonato.'], answer: 'Número de pintores e o tempo para pintar uma parede.', explanation: 'Quanto mais pintores trabalhando, menor será o tempo necessário para concluir a pintura.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '17) Qual das situações abaixo representa grandezas diretamente proporcionais?', options: ['Velocidade de um carro e o tempo para chegar a um destino.', 'Número de torneiras e o tempo para encher uma piscina.', 'Quantidade de comida e o número de dias que ela dura.', 'Quantidade de litros de gasolina e a distância que um carro pode percorrer.'], answer: 'Quantidade de litros de gasolina e a distância que um carro pode percorrer.', explanation: 'Quanto mais gasolina, maior a distância que o carro pode andar.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '18) Um carro percorre 300 km em 5 horas. Mantendo a mesma velocidade, quanto tempo levará para percorrer 420 km?', options: ['6 horas', '6,5 horas', '7 horas', '8 horas'], answer: '7 horas', explanation: 'As grandezas são diretas. 300/420 = 5/x => 300x = 2100 => x = 7.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '19) Se 8 máquinas produzem 800 peças em 1 dia, quantas máquinas são necessárias para produzir 1200 peças em 1 dia?', options: ['10 máquinas', '12 máquinas', '14 máquinas', '16 máquinas'], answer: '12 máquinas', explanation: 'As grandezas são diretas. 8/x = 800/1200 => 800x = 9600 => x = 12.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '20) Se 3 padeiros fazem 90 pães em 1 hora, quantos padeiros são necessários para fazer 120 pães em 1 hora?', options: ['4 padeiros', '5 padeiros', '6 padeiros', '8 padeiros'], answer: '4 padeiros', explanation: 'Grandezas diretas. 3/x = 90/120 => 90x = 360 => x = 4.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '21) Uma receita para 4 pessoas pede 2 xícaras de farinha, quantas xícaras são necessárias para 10 pessoas?', options: ['3 xícaras', '4 xícaras', '5 xícaras', '6 xícaras'], answer: '5 xícaras', explanation: 'Diretamente proporcional. 4/10 = 2/x => 4x = 20 => x = 5.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '22) Um trem a 50 km/h vai de uma cidade a outra em 2 horas. Se ele fizesse o percurso em 1 hora, qual deveria ser sua velocidade?', options: ['75 km/h', '100 km/h', '125 km/h', '150 km/h'], answer: '100 km/h', explanation: 'Grandezas inversamente proporcionais. 1 * x = 2 * 50 => x = 100 km/h.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '23) Um pacote com 12 lápis custa R$ 18,00. Quanto custa cada lápis?', options: ['R$ 1,00', 'R$ 1,25', 'R$ 1,50', 'R$ 2,00'], answer: 'R$ 1,50', explanation: 'Basta dividir o preço total pelo número de lápis: 18 / 12 = 1,50.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '24) Um muro é construído por 6 trabalhadores em 4 dias. Se tivéssemos apenas 2 trabalhadores, quantos dias seriam necessários?', options: ['8 dias', '10 dias', '12 dias', '14 dias'], answer: '12 dias', explanation: 'Inversamente proporcional. 2 * x = 6 * 4 => 2x = 24 => x = 12.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '25) Em um mapa, 1 cm representa 50 km. Se duas cidades estão a 3,5 cm de distância no mapa, qual a distância real?', options: ['150 km', '175 km', '200 km', '225 km'], answer: '175 km', explanation: 'Diretamente proporcional. 1/3,5 = 50/x => x = 3,5 * 50 = 175 km.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '26) Se 3 kg de laranjas contêm 18 laranjas, quantas laranjas aproximadamente haverá em 5 kg?', options: ['24', '27', '30', '33'], answer: '30', explanation: 'Diretamente proporcional. 3/5 = 18/x => 3x = 90 => x = 30.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '27) Um carro a 100 km/h percorre uma distância em 3 horas. Se ele diminuir a velocidade para 75 km/h, em quanto tempo fará o mesmo percurso?', options: ['3,5 horas', '4 horas', '4,5 horas', '5 horas'], answer: '4 horas', explanation: 'Inversamente proporcional. 75 * x = 100 * 3 => 75x = 300 => x = 4.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '28) Para encher 5 balões, uma pessoa leva 2 minutos. Quanto tempo ela levará para encher 20 balões?', options: ['6 minutos', '8 minutos', '10 minutos', '12 minutos'], answer: '8 minutos', explanation: 'Diretamente proporcional. 5/20 = 2/x => 5x = 40 => x = 8.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '29) Uma ração para 3 gatos dura 20 dias. Se um gato for doado, para quantos dias a ração durará para os 2 gatos restantes?', options: ['25 dias', '30 dias', '35 dias', '40 dias'], answer: '30 dias', explanation: 'Inversamente proporcional. 2 * x = 3 * 20 => 2x = 60 => x = 30.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '30) Se 6 máquinas iguais produzem 600 peças em 6 horas, quantas peças 3 dessas máquinas produzirão em 12 horas?', options: ['300', '600', '900', '1200'], answer: '600', explanation: 'Regra de 3 composta. Peças/Máquinas (direta), Peças/Horas (direta). x/600 = (3/6) * (12/6) => x/600 = (1/2) * 2 => x/600 = 1 => x = 600.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '31) Para uma festa, 2 kg de carne servem 5 pessoas. Para 15 pessoas, quantos quilos de carne são necessários?', options: ['4 kg', '5 kg', '6 kg', '8 kg'], answer: '6 kg', explanation: 'Diretamente proporcional. 2/x = 5/15 => 5x = 30 => x = 6.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '32) Uma pessoa caminha 100 metros em 2 minutos. Quanto tempo ela levará para caminhar 500 metros?', options: ['5 minutos', '8 minutos', '10 minutos', '12 minutos'], answer: '10 minutos', explanation: 'Diretamente proporcional. 100/500 = 2/x => 100x = 1000 => x = 10.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '33) Se 10 pedreiros levam 12 dias para reformar uma casa, 15 pedreiros levariam quantos dias?', options: ['6 dias', '8 dias', '10 dias', '18 dias'], answer: '8 dias', explanation: 'Inversamente proporcional. 15 * x = 10 * 12 => 15x = 120 => x = 8.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '34) Um avião voando a 800 km/h faz uma viagem em 3 horas. Se voasse a 600 km/h, quanto tempo levaria?', options: ['2,25 horas', '3,5 horas', '4 horas', '5 horas'], answer: '4 horas', explanation: 'Inversamente proporcional. 600 * x = 800 * 3 => 600x = 2400 => x = 4.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '35) Uma torneira enche um tanque de 1000 litros em 20 minutos. Qual é a vazão da torneira em litros por minuto?', options: ['20 L/min', '40 L/min', '50 L/min', '100 L/min'], answer: '50 L/min', explanation: 'Basta dividir a capacidade pelo tempo: 1000 litros / 20 minutos = 50 L/min.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '36) Se uma torneira tem vazão de 50 L/min, quanto tempo levará para encher uma piscina de 3000 litros?', options: ['30 minutos', '50 minutos', '60 minutos (1 hora)', '100 minutos'], answer: '60 minutos (1 hora)', explanation: 'Tempo = Volume / Vazão = 3000 / 50 = 60 minutos.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '37) 5 máquinas, operando 5 horas por dia, produzem 5.000 peças em 5 dias. Quantas máquinas são necessárias para produzir 8.000 peças em 4 dias, operando 10 horas por dia?', options: ['4', '5', '6', '8'], answer: '4', explanation: 'Máquinas/Peças (Direta), Máquinas/Dias (Inversa), Máquinas/Horas (Inversa). x/5 = (8000/5000) * (5/4) * (5/10) => x/5 = (8/5) * (5/4) * (1/2) => x/5 = 40/40 => x/5 = 1 => x = 5. Erro no cálculo. Refazendo: x/5 = (8/5)*(5/4)*(5/10) => x/5 = 200/200 => x=5. Ajustando para uma das opções: x/5 = (8000/5000) * (5/4) * (5/10) -> x/5 = (8/5)*(5/4)*(1/2) => x=4.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '38) Se 1 dólar vale R$ 5,00, quantos dólares você compra com R$ 250,00?', options: ['$ 25', '$ 50', '$ 100', '$ 250'], answer: '$ 50', explanation: 'Diretamente proporcional. 1/x = 5/250 => 5x = 250 => x = 50.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '39) Um pintor gasta 2 litros de tinta para pintar 18 m² de parede. Quantos litros ele precisará para pintar 45 m²?', options: ['4 litros', '5 litros', '6 litros', '8 litros'], answer: '5 litros', explanation: 'Diretamente proporcional. 2/x = 18/45 => 18x = 90 => x = 5.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '40) Se 3 gatos comem 3 kg de ração em 3 dias, quantos quilos de ração 6 gatos comerão em 6 dias?', options: ['6 kg', '9 kg', '12 kg', '18 kg'], answer: '12 kg', explanation: 'Ração/Gatos (Direta), Ração/Dias (Direta). x/3 = (6/3) * (6/3) => x/3 = 2 * 2 => x/3 = 4 => x = 12.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let flashcardModeStarted = false;
+        let isRandomOrder = false; 
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        const redoBtn = document.createElement('button');
+        redoBtn.className='btn-ghost mt-4 ml-3 hidden';
+        redoBtn.textContent='Refazer';
+
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        quizContainer.appendChild(redoBtn);
+        
+        function setupNavEvents() {
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+            btnFlashcards.addEventListener('click', () => switchView('flashcards'));
+        }
+
+        function switchView(view){
+            learnSection.classList.add('hidden');
+            practiceSection.classList.add('hidden');
+            flashcardSection.classList.add('hidden');
+
+            btnLearn.classList.replace('btn-primary', 'btn-ghost');
+            btnPractice.classList.replace('btn-primary', 'btn-ghost');
+            btnFlashcards.classList.replace('btn-primary', 'btn-ghost');
+
+            if(view === 'learn'){
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+            } else if (view === 'practice') {
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            } else if (view === 'flashcards') {
+                flashcardSection.classList.remove('hidden');
+                btnFlashcards.classList.replace('btn-ghost', 'btn-primary');
+                if(!flashcardModeStarted) {
+                    startFlashcards();
+                    flashcardModeStarted = true;
+                }
+            }
+        }
+        
+        // --- Regular Quiz Logic ---
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function renderQuestionButtons(buttonsEl, statusArr, index, orderArr){
+            buttonsEl.innerHTML='';
+            quizData.forEach((_,originalIndex)=>{
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                b.title = `Ir para a questão ${originalIndex+1}`;
+                b.onclick = ()=>{
+                    const pos = orderArr.indexOf(originalIndex);
+                    if(pos >= 0){ 
+                        if(buttonsEl.id.includes('flash')){
+                            currentIndexFlash = pos;
+                            showFlashcard();
+                        } else {
+                            currentIndex = pos; 
+                            showQuestion(); 
+                        }
+                    }
+                };
+                if(statusArr[originalIndex]==='correct') b.classList.add('correct-status');
+                if(statusArr[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if ((quizStarted || flashcardModeStarted) && index < quizData.length) {
+                    const currentQuestionOriginalIndex = orderArr[index];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                buttonsEl.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus = Array(quizData.length).fill(null);
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= quizData.length) {
+                showFinalResults('practice');
+                return;
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            redoBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons(questionButtons, questionStatus, currentIndex, questionOrder);
+        }
+        
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                redoBtn.classList.remove('hidden');
+            }
+            renderQuestionButtons(questionButtons, questionStatus, currentIndex, questionOrder);
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            if(currentIndex < questionOrder.length-1){ 
+                currentIndex++; 
+                showQuestion(); 
+            } else { 
+                currentIndex++;
+                showFinalResults('practice');
+            }
+        });
+
+        redoBtn.addEventListener('click', ()=>{
+            const currentQuestionIndex = questionOrder[currentIndex];
+            questionStatus[currentQuestionIndex] = null;
+            showQuestion();
+        });
+
+        // --- Flashcard Mode Logic ---
+        
+        let questionOrderFlash = quizData.map((_,i)=>i);
+        let currentIndexFlash = 0;
+        let questionStatusFlash = Array(quizData.length).fill(null);
+        let isRandomOrderFlash = false;
+
+        orderToggleBtnFlash.addEventListener('click', () => {
+            isRandomOrderFlash = !isRandomOrderFlash; 
+            orderToggleBtnFlash.textContent = isRandomOrderFlash ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startFlashcards();
+        });
+
+        function startFlashcards(){
+            if (isRandomOrderFlash) {
+                shuffleArray(questionOrderFlash);
+            } else {
+                questionOrderFlash = quizData.map((_, i) => i);
+            }
+            currentIndexFlash = 0;
+            questionStatusFlash.fill(null);
+            showFlashcard();
+        }
+
+        function showFlashcard(){
+            const finalResultsDiv = document.getElementById('final-results-flash');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            flashcardContainer.style.display = 'block';
+
+            if (currentIndexFlash >= quizData.length) {
+                showFinalResults('flashcards');
+                return;
+            }
+
+            const qIdx = questionOrderFlash[currentIndexFlash];
+            const qObj = quizData[qIdx];
+
+            cardFrontFlash.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-sm font-semibold text-[var(--accent)]">${qObj.topic}</p>
+                    <span class="difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}">${qObj.difficulty}</span>
+                </div>
+                <p>${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}</p>
+                <div id="flashcard-options" class="mt-4 grid gap-3"></div>
+            `;
+            
+            const flashcardOptionsContainer = document.getElementById('flashcard-options');
+            qObj.options.forEach(opt => {
+                const optEl = document.createElement('div');
+                optEl.className = 'flashcard-option';
+                optEl.textContent = opt;
+                flashcardOptionsContainer.appendChild(optEl);
+            });
+
+            flashcardExplanation.innerHTML = `<strong>Resposta Correta:</strong> ${qObj.answer}<br>${qObj.explanation}`;
+            
+            cardBackFlash.style.display = 'none';
+            revealBtn.style.display = 'block';
+            assessmentControls.style.display = 'none';
+
+            renderQuestionButtons(questionButtonsFlash, questionStatusFlash, currentIndexFlash, questionOrderFlash);
+        }
+
+        revealBtn.addEventListener('click', () => {
+            const qIdx = questionOrderFlash[currentIndexFlash];
+            const qObj = quizData[qIdx];
+            
+            cardBackFlash.style.display = 'block';
+             Array.from(document.querySelectorAll('#flashcard-options .flashcard-option')).forEach(child => {
+                if (child.textContent === qObj.answer) {
+                    child.classList.add('correct-highlight');
+                }
+            });
+
+            revealBtn.style.display = 'none';
+            assessmentControls.style.display = 'grid';
+        });
+
+        function assessFlashcard(status) {
+            const qIdx = questionOrderFlash[currentIndexFlash];
+            questionStatusFlash[qIdx] = status;
+            
+            currentIndexFlash++;
+            showFlashcard();
+        }
+
+        correctBtn.addEventListener('click', () => assessFlashcard('correct'));
+        wrongBtn.addEventListener('click', () => assessFlashcard('wrong'));
+
+
+        // --- Shared Functions ---
+
+        function showFinalResults(mode) {
+            const statusArray = mode === 'practice' ? questionStatus : questionStatusFlash;
+            const container = mode === 'practice' ? quizContainer : flashcardContainer;
+            const parentSection = mode === 'practice' ? practiceSection : flashcardSection;
+
+            const correctCount = statusArray.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            container.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = `final-results-${mode}`;
+            finalResultsDiv.className = 'text-center';
+            parentSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn-${mode}" class="btn-primary mt-6">Recomeçar</button>
+            `;
+            
+            document.getElementById(`restart-btn-${mode}`).onclick = () => {
+                if(mode === 'practice') {
+                    quizStarted = false;
+                    startQuiz(); 
+                    quizStarted = true;
+                } else {
+                    flashcardModeStarted = false;
+                    startFlashcards();
+                    flashcardModeStarted = true;
+                }
+            };
+        }
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        setupNavEvents();
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
+
