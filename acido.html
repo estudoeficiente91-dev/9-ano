@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Funções Inorgânicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .nav-link.active, .mode-button.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .prose-headings:text-indigo-400 {
+            color: #818cf8;
+        }
+        .prose-strong:text-emerald-400 {
+            color: #34d399;
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #4b5563; /* gray-600 */
+            padding: 0.5em 1em;
+        }
+        .prose-th {
+            background-color: #374151; /* gray-700 */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Funções Inorgânicas</h1>
+            <p class="text-lg text-gray-400">Um guia sobre Ácidos, Bases, Sais e Óxidos para o 9º Ano.</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-gray-800 rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button active flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral -->
+                <aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-gray-800 rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#introducao" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500 active">Introdução e Indicadores</a></li>
+                            <li><a href="#acidos" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Ácidos</a></li>
+                            <li><a href="#bases" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Bases</a></li>
+                            <li><a href="#sais" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Sais</a></li>
+                            <li><a href="#oxidos" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:bg-indigo-500">Óxidos</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal -->
+                <main class="lg:w-3/4 space-y-12">
+                    <section id="introducao" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-gray-300">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings:text-indigo-400">Introdução e Indicadores</h2>
+                            <p>Na química, as <strong class="prose-strong:text-emerald-400">funções inorgânicas</strong> são grupos de substâncias que possuem propriedades químicas semelhantes. No 9º ano, estudamos as quatro principais funções: Ácidos, Bases, Sais e Óxidos.</p>
+                            <p>A primeira forma de classificar muitas dessas substâncias é através da teoria de <strong class="prose-strong:text-emerald-400">Arrhenius</strong>, que se baseia no comportamento delas em água.</p>
+                            <ul>
+                                <li><strong>Ionização:</strong> Processo em que compostos moleculares (como os ácidos) formam íons em água. Ex: HCl em água forma H⁺ e Cl⁻.</li>
+                                <li><strong>Dissociação:</strong> Processo em que compostos iônicos (como as bases e sais) apenas separam seus íons que já existiam, em água. Ex: NaOH em água libera Na⁺ e OH⁻.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Indicadores Ácido-Base</h3>
+                            <p>Como não podemos provar substâncias químicas, usamos <strong class="prose-strong:text-emerald-400">indicadores</strong>, que são substâncias que mudam de cor na presença de um ácido ou de uma base.</p>
+                            <table class="prose-table">
+                                <thead>
+                                    <tr>
+                                        <th class="prose-th">Indicador</th>
+                                        <th class="prose-th">Cor em Meio Ácido</th>
+                                        <th class="prose-th">Cor em Meio Básico</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="prose-td">Tornassol (Azul)</td>
+                                        <td class="prose-td">Vermelho</td>
+                                        <td class="prose-td">Permanece Azul</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="prose-td">Tornassol (Vermelho)</td>
+                                        <td class="prose-td">Permanece Vermelho</td>
+                                        <td class="prose-td">Azul</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="prose-td">Fenolftaleína</td>
+                                        <td class="prose-td">Incolor</td>
+                                        <td class="prose-td">Rosa (ou Róseo)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </article>
+                    </section>
+                    
+                    <section id="acidos" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-gray-300">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings:text-indigo-400">Ácidos</h2>
+                            <p>Segundo Arrhenius, <strong class="prose-strong:text-emerald-400">Ácidos</strong> são todas as substâncias que, em solução aquosa, sofrem ionização e liberam como <strong class="text-yellow-400">único cátion</strong> o íon H⁺.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Propriedades dos Ácidos</h3>
+                            <ul>
+                                <li>Possuem sabor azedo (Ex: limão, vinagre).</li>
+                                <li>Conduzem eletricidade quando em solução aquosa.</li>
+                                <li>Tornam o papel de tornassol vermelho.</li>
+                                <li>Deixam a fenolftaleína incolor.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Dica: Como identificar um Ácido?</h3>
+                            <p>A maioria dos ácidos de Arrhenius tem uma fórmula que <strong class="prose-strong:text-emerald-400">começa com H</strong> (Hidrogênio).</p>
+                            <ul>
+                                <li><strong>Exemplos:</strong> <strong class="text-yellow-400">H</strong>Cl, <strong class="text-yellow-400">H</strong>₂SO₄, <strong class="text-yellow-400">H</strong>NO₃.</li>
+                                <li>Ao liberar o H⁺, o que sobra é um ânion (Cl⁻, SO₄²⁻, NO₃⁻).</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Classificação e Nomenclatura</h3>
+                            <p><strong>1. Quanto à presença de Oxigênio:</strong></p>
+                            <ul>
+                                <li><strong>Hidrácidos (Sem Oxigênio):</strong> Regra: Ácido + [Nome do Elemento] + <strong class="text-yellow-400">ídrico</strong>.
+                                    <ul>
+                                        <li>HCl: Ácido Clor<strong class="text-yellow-400">ídrico</strong></li>
+                                        <li>HF: Ácido Fluor<strong class="text-yellow-400">ídrico</strong></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Oxiácidos (Com Oxigênio):</strong> Regra: Ácido + [Nome do Elemento] + <strong class="text-yellow-400">ico</strong> (para o átomo central com NOX mais comum).
+                                    <ul>
+                                        <li>H₂SO₄: Ácido Sulfúr<strong class="text-yellow-400">ico</strong></li>
+                                        <li>HNO₃: Ácido Nítr<strong class="text-yellow-400">ico</strong></li>
+                                        <li>H₂CO₃: Ácido Carbôn<strong class="text-yellow-400">ico</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="bases" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-gray-300">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings:text-indigo-400">Bases (ou Hidróxidos)</h2>
+                            <p>Segundo Arrhenius, <strong class="prose-strong:text-emerald-400">Bases</strong> são todas as substâncias que, em solução aquosa, sofrem dissociação e liberam como <strong class="text-yellow-400">único ânion</strong> o íon OH⁻ (Hidroxila).</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Propriedades das Bases</h3>
+                            <ul>
+                                <li>Possuem sabor adstringente (sabor que "amarra" a boca, como caju verde).</li>
+                                <li>Possuem sensação saponácea (escorregadia, como sabão).</li>
+                                <li>Conduzem eletricidade quando em solução aquosa.</li>
+                                <li>Tornam o papel de tornassol azul.</li>
+                                <li>Deixam a fenolftaleína rosa.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Dica: Como identificar uma Base?</h3>
+                            <p>A maioria das bases de Arrhenius tem uma fórmula que <strong class="prose-strong:text-emerald-400">termina com OH</strong> (Hidroxila) e <strong class="prose-strong:text-emerald-400">começa com um Metal</strong>.</p>
+                            <ul>
+                                <li><strong>Exemplos:</strong> Na<strong class="text-yellow-400">OH</strong>, Ca<strong class="text-yellow-400">(OH)₂</strong>, Al<strong class="text-yellow-400">(OH)₃</strong>.</li>
+                                <li>A única exceção importante é a Amônia (NH₃), que é uma base mas não tem essa fórmula.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Classificação e Nomenclatura</h3>
+                            <p><strong>1. Quanto à Solubilidade:</strong></p>
+                            <ul>
+                                <li><strong>Solúveis:</strong> Bases formadas por metais da Família 1A (LiOH, <strong class="text-yellow-400">NaOH</strong>, <strong class="text-yellow-400">KOH</strong>).</li>
+                                <li><strong>Pouco Solúveis:</strong> Bases formadas por metais da Família 2A (Mg(OH)₂, <strong class="text-yellow-400">Ca(OH)₂</strong>).</li>
+                                <li><strong>Insolúveis:</strong> Todas as demais (Ex: Al(OH)₃, Fe(OH)₂).</li>
+                            </ul>
+                            <p><strong>2. Quanto à Força (capacidade de dissociar):</strong></p>
+                            <ul>
+                                <li><strong>Fortes:</strong> As solúveis e pouco solúveis (Família 1A e 2A).</li>
+                                <li><strong>Fracas:</strong> As insolúveis.</li>
+                            </ul>
+                            
+                            <p><strong>Nomenclatura:</strong> A regra é única e simples.</p>
+                            <p><strong class="text-yellow-400">Hidróxido de [Nome do Metal]</strong></p>
+                             <ul>
+                                <li>NaOH: Hidróxido de Sódio</li>
+                                <li>Ca(OH)₂: Hidróxido de Cálcio</li>
+                                <li>Al(OH)₃: Hidróxido de Alumínio</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="sais" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-gray-300">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings:text-indigo-400">Sais</h2>
+                            <p><strong class="prose-strong:text-emerald-400">Sais</strong> são compostos iônicos formados através de uma <strong class="text-yellow-400">Reação de Neutralização</strong>, que ocorre entre um ácido e uma base, produzindo <strong class="text-yellow-400">Sal</strong> e <strong class="text-yellow-400">Água</strong>.</p>
+                            
+                            <p class="text-center text-lg bg-gray-700 p-4 rounded-md">
+                                ÁCIDO + BASE  →  SAL + ÁGUA
+                            </p>
+                            <p class="text-center text-lg bg-gray-700 p-4 rounded-md">
+                                <strong class="text-red-400">HCl</strong> + <strong class="text-blue-400">NaOH</strong>  →  <strong class="text-green-400">NaCl</strong> + <strong class="text-cyan-400">H₂O</strong>
+                            </p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Dica: Como identificar um Sal?</h3>
+                            <p>Um sal é um composto iônico que <strong class="prose-strong:text-emerald-400">não começa com H⁺</strong> (não é ácido) e <strong class="prose-strong:text-emerald-400">não termina com OH⁻</strong> (não é base).</p>
+                            <ul>
+                                <li>Geralmente é formado por um <strong class="text-yellow-400">Cátion</strong> (que vem da base, ex: Na⁺) e um <strong class="text-yellow-400">Ânion</strong> (que vem do ácido, ex: Cl⁻).</li>
+                                <li><strong>Exemplos:</strong> Na<strong class="text-yellow-400">Cl</strong> (Metal + Ametal), K<strong class="text-yellow-400">NO₃</strong> (Metal + Ânion composto).</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Nomenclatura dos Sais</h3>
+                            <p>O nome do sal é formado pelo nome do ânion (que vem do ácido) e do cátion (que vem da base).</p>
+                            <p>Regra de Nomenclatura: <strong class="text-yellow-400">[Nome do Ânion] de [Nome do Cátion]</strong></p>
+                            <p>Para saber o nome do ânion, usamos a seguinte tabela de conversão a partir do nome do ácido:</p>
+
+                            <table class="prose-table">
+                                <thead>
+                                    <tr>
+                                        <th class="prose-th">Terminação do Ácido</th>
+                                        <th class="prose-th">Terminação do Ânion (Sal)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="prose-td">...<strong class="text-yellow-400">ídrico</strong> (Ex: Clorídrico)</td>
+                                        <td class="prose-td">...<strong class="text-yellow-400">eto</strong> (Ex: Clor<strong class="text-yellow-400">eto</strong>)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="prose-td">...<strong class="text-yellow-400">ico</strong> (Ex: Sulfúrico)</td>
+                                        <td class="prose-td">...<strong class="text-yellow-400">ato</strong> (Ex: Sulf<strong class="text-yellow-400">ato</strong>)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="prose-td">...<strong class="text-yellow-400">oso</strong> (Ex: Nitroso)</td>
+                                        <td class="prose-td">...<strong class="text-yellow-400">ito</strong> (Ex: Nitr<strong class="text-yellow-400">ito</strong>)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p><strong>Exemplos:</strong></p>
+                            <ul>
+                                <li><strong>NaCl:</strong> Vem do NaOH (Sódio) e do HCl (Ácido Clor<strong class="text-yellow-400">ídrico</strong>) → Clor<strong class="text-yellow-400">eto</strong> de Sódio.</li>
+                                <li><strong>CaCO₃:</strong> Vem do Ca(OH)₂ (Cálcio) e H₂CO₃ (Ácido Carbôn<strong class="text-yellow-400">ico</strong>) → Carbon<strong class="text-yellow-400">ato</strong> de Cálcio.</li>
+                                <li><strong>KNO₂:</strong> Vem do KOH (Potássio) e HNO₂ (Ácido Nitr<strong class="text-yellow-400">oso</strong>) → Nitr<strong class="text-yellow-400">ito</strong> de Potássio.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="oxidos" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-gray-300">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings:text-indigo-400">Óxidos</h2>
+                            <p><strong class="prose-strong:text-emerald-400">Óxidos</strong> são compostos binários (formados por dois elementos) onde o <strong class="text-yellow-400">Oxigênio</strong> é o elemento mais eletronegativo.</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Dica: Como identificar um Óxido?</h3>
+                            <p>É um composto formado por <strong class="prose-strong:text-emerald-400">apenas dois elementos</strong> (binário), onde um deles é <strong class="prose-strong:text-emerald-400">obrigatoriamente o Oxigênio (O)</strong>, sendo ele o mais eletronegativo.</p>
+                            <ul>
+                                <li><strong>Exemplos:</strong> C<strong class="text-yellow-400">O</strong>₂, Ca<strong class="text-yellow-400">O</strong>, S<strong class="text-yellow-400">O</strong>₃, N₂<strong class="text-yellow-400">O</strong>.</li>
+                                <li><strong>Cuidado:</strong> NaCl<strong class="text-yellow-400">O</strong> (Hipoclorito de Sódio) não é um óxido, pois tem 3 elementos (Na, Cl, O).</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Principais Tipos de Óxidos</h3>
+                            <p><strong>1. Óxidos Básicos:</strong></p>
+                            <ul>
+                                <li>Formados por <strong class="prose-strong:text-emerald-400">Metal + Oxigênio</strong>.</li>
+                                <li>Reagem com Água e formam uma <strong class="text-yellow-400">Base</strong>. (Ex: Na₂O + H₂O → 2 NaOH)</li>
+                                <li>Reagem com Ácido e formam Sal + Água. (Ex: CaO + 2 HCl → CaCl₂ + H₂O)</li>
+                                <li>Exemplos: Na₂O (Óxido de Sódio), CaO (Óxido de Cálcio).</li>
+                            </ul>
+
+                            <p><strong>2. Óxidos Ácidos (ou Anidridos):</strong></p>
+                            <ul>
+                                <li>Formados por <strong class="prose-strong:text-emerald-400">Ametal + Oxigênio</strong>.</li>
+                                <li>Reagem com Água e formam um <strong class="text-yellow-400">Ácido</strong>. (Ex: SO₃ + H₂O → H₂SO₄)</li>
+                                <li>Reagem com Base e formam Sal + Água. (Ex: CO₂ + 2 NaOH → Na₂CO₃ + H₂O)</li>
+                                <li>Exemplos: CO₂ (Dióxido de Carbono), SO₃ (Trióxido de Enxofre).</li>
+                            </ul>
+                            
+                            <p><strong>3. Óxidos Neutros:</strong></p>
+                            <ul>
+                                <li>Não reagem com água, nem com ácidos, nem com bases.</li>
+                                <li>São poucos. Os principais são: CO (Monóxido de Carbono), NO (Óxido Nítrico), N₂O (Óxido Nitroso).</li>
+                            </ul>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar -->
+        <section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="text-indigo-400 font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação -->
+                <div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="bg-indigo-600 py-2 px-5 rounded-md font-semibold hover:bg-indigo-500 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold"></span>
+                    <button id="next-btn" class="bg-indigo-600 py-2 px-5 rounded-md font-semibold hover:bg-indigo-500 transition-colors">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões -->
+            <div id="question-nav-container" class="hidden bg-gray-800 p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here -->
+                </div>
+            </div>
+
+             <!-- Tela de Pontuação -->
+            <div id="score-screen" class="hidden text-center bg-gray-800 p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold text-indigo-400 mb-2"></p>
+                <p id="score-message" class="text-lg text-gray-300 mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // Introdução e Indicadores (6 questões)
+            { topic: "Introdução", question: "Segundo Arrhenius, qual íon os ácidos liberam em água?", options: ["OH⁻", "H⁺", "Cl⁻", "Na⁺"], answer: 1, explanation: "Ácidos liberam o cátion H⁺ (íon hidrogênio) em solução aquosa." },
+            { topic: "Introdução", question: "Segundo Arrhenius, qual íon as bases liberam em água?", options: ["H⁺", "SO₄²⁻", "OH⁻", "K⁺"], answer: 2, explanation: "Bases liberam o ânion OH⁻ (íon hidroxila) em solução aquosa." },
+            { topic: "Indicadores", question: "Como fica a cor da Fenolftaleína em um meio BÁSICO?", options: ["Incolor", "Azul", "Vermelho", "Rosa"], answer: 3, explanation: "A Fenolftaleína fica rosa (ou róseo) em meio básico e incolor em meio ácido ou neutro." },
+            { topic: "Indicadores", question: "Como fica a cor do papel de Tornassol Azul em um meio ÁCIDO?", options: ["Permanece Azul", "Vermelho", "Rosa", "Incolor"], answer: 1, explanation: "O Tornassol fica vermelho na presença de ácidos." },
+            { topic: "Propriedades", question: "O sabor azedo (como o do limão) é característico de qual função?", options: ["Sais", "Bases", "Ácidos", "Óxidos"], answer: 2, explanation: "O sabor azedo é uma propriedade dos ácidos." },
+            { topic: "Propriedades", question: "A sensação saponácea (escorregadia, como sabão) é característica de qual função?", options: ["Bases", "Ácidos", "Sais", "Óxidos Neutros"], answer: 0, explanation: "A sensação saponácea é uma propriedade das bases." },
+            
+            // Ácidos (6 questões)
+            { topic: "Nomenclatura de Ácidos", question: "Qual é o nome do ácido HCl?", options: ["Ácido Cloroso", "Ácido Clórico", "Ácido Hipocloroso", "Ácido Clorídrico"], answer: 3, explanation: "HCl é um hidrácido (sem oxigênio). A terminação para hidrácidos é 'ídrico'." },
+            { topic: "Nomenclatura de Ácidos", question: "Qual é o nome do ácido H₂SO₄?", options: ["Ácido Sulfuroso", "Ácido Sulfúrico", "Ácido Sulfídrico", "Ácido Hipossulfuroso"], answer: 1, explanation: "H₂SO₄ é um oxiácido. Sua terminação padrão é 'ico'." },
+            { topic: "Classificação de Ácidos", question: "O ácido HNO₃ (Ácido Nítrico) é classificado como:", options: ["Hidrácido", "Oxiácido", "Base", "Sal"], answer: 1, explanation: "Como ele possui Oxigênio em sua fórmula, é classificado como um Oxiácido." },
+            { topic: "Nomenclatura de Ácidos", question: "Qual é o nome do ácido H₂CO₃?", options: ["Ácido Carbônico", "Ácido Carbonoso", "Ácido Carbídrico", "Hidróxido de Carbono"], answer: 0, explanation: "H₂CO₃ é o Ácido Carbônico, presente em refrigerantes e água com gás." },
+            { topic: "Classificação de Ácidos", question: "O ácido HF (Ácido Fluorídrico) é classificado como:", options: ["Sal", "Base", "Oxiácido", "Hidrácido"], answer: 3, explanation: "Como ele NÃO possui Oxigênio em sua fórmula, é classificado como um Hidrácido." },
+            { topic: "Nomenclatura de Ácidos", question: "Qual é o nome do ácido HNO₂?", options: ["Ácido Nítrico", "Ácido Nitroso", "Ácido Nitrídrico", "Hidróxido de Nitrogênio"], answer: 1, explanation: "Se HNO₃ é o Ácido Nítrico (padrão 'ico'), o HNO₂ (com um oxigênio a menos) tem a terminação 'oso'." },
+
+            // Bases (6 questões)
+            { topic: "Nomenclatura de Bases", question: "Qual é o nome da base NaOH?", options: ["Hidróxido de Sódio", "Nitrato de Sódio", "Óxido de Sódio", "Ácido Sódico"], answer: 0, explanation: "A regra de nomenclatura das bases é 'Hidróxido de [Metal]'." },
+            { topic: "Nomenclatura de Bases", question: "Qual é o nome da base Ca(OH)₂?", options: ["Carbonato de Cálcio", "Hidróxido de Cálcio", "Óxido de Cálcio", "Ácido Cálcico"], answer: 1, explanation: "A regra de nomenclatura das bases é 'Hidróxido de [Metal]'." },
+            { topic: "Classificação de Bases", question: "A base KOH (Hidróxido de Potássio) é classificada como:", options: ["Fraca e Insolúvel", "Forte e Solúvel", "Forte e Insolúvel", "Fraca e Solúvel"], answer: 1, explanation: "O Potássio (K) é da Família 1A, portanto sua base é Forte e Solúvel." },
+            { topic: "Classificação de Bases", question: "A base Al(OH)₃ (Hidróxido de Alumínio) é classificada como:", options: ["Fraca e Insolúvel", "Forte e Solúvel", "Forte e Insolúvel", "Fraca e Solúvel"], answer: 0, explanation: "O Alumínio não é da Família 1A ou 2A, portanto sua base é considerada Fraca e Insolúvel." },
+            { topic: "Nomenclatura de Bases", question: "Qual é a fórmula do Hidróxido de Magnésio?", options: ["Mg(OH)₂", "MgOH", "Ma(OH)₂", "MgO"], answer: 0, explanation: "O Magnésio (Mg) é da Família 2A, por isso tem carga +2 e precisa de duas hidroxilas (OH⁻)." },
+            { topic: "Propriedades", question: "As bases formadas por metais das Famílias 1A e 2A são geralmente consideradas:", options: ["Fracas", "Neutras", "Fortes", "Ácidas"], answer: 2, explanation: "As bases de metais alcalinos (1A) e alcalino-terrosos (2A) são as bases Fortes." },
+            
+            // Sais (6 questões)
+            { topic: "Reação de Sais", question: "Qual é o produto da reação entre um Ácido e uma Base?", options: ["Sal e Óxido", "Ácido e Óxido", "Sal e Água", "Base e Água"], answer: 2, explanation: "A reação de neutralização entre um ácido e uma base sempre forma Sal e Água." },
+            { topic: "Nomenclatura de Sais", question: "Qual é o nome do sal NaCl?", options: ["Cloreto de Sódio", "Clorito de Sódio", "Clorato de Sódio", "Hipoclorito de Sódio"], answer: 0, explanation: "O ânion Cl⁻ vem do Ácido Clorídrico (ídrico -> eto). O cátion Na⁺ vem do Hidróxido de Sódio. Logo, Cloreto de Sódio." },
+            { topic: "Nomenclatura de Sais", question: "O ânion 'Sulfato' (SO₄²⁻) vem de qual ácido?", options: ["Ácido Sulfuroso (H₂SO₃)", "Ácido Sulfúrico (H₂SO₄)", "Ácido Sulfídrico (H₂S)", "Óxido de Enxofre (SO₃)"], answer: 1, explanation: "A regra é: 'ico' vira 'ato'. Sulfúrico -> Sulfato." },
+            { topic: "Nomenclatura de Sais", question: "Qual é o nome do sal CaCO₃?", options: ["Carbonito de Cálcio", "Carbonato de Cálcio", "Carbeto de Cálcio", "Óxido de Cálcio"], answer: 1, explanation: "O ânion CO₃²⁻ vem do Ácido Carbônico (H₂CO₃). 'ico' vira 'ato'. Logo, Carbonato de Cálcio." },
+            { topic: "Nomenclatura de Sais", question: "O ânion 'Nitrato' (NO₃⁻) vem de qual ácido?", options: ["Ácido Nítrico (HNO₃)", "Ácido Nitroso (HNO₂)", "Ácido Nitrídrico (H₃N)", "Óxido Nítrico (NO)"], answer: 0, explanation: "A regra é: 'ico' vira 'ato'. Nítrico -> Nitrato." },
+            { topic: "Nomenclatura de Sais", question: "Qual o nome do sal KNO₂?", options: ["Nitrato de Potássio", "Nitreto de Potássio", "Nitrito de Potássio", "Óxido de Potássio"], answer: 2, explanation: "O ânion NO₂⁻ vem do Ácido Nitroso (HNO₂). A regra é: 'oso' vira 'ito'. Nitroso -> Nitrito. Logo, Nitrito de Potássio." },
+
+            // Óxidos (6 questões)
+            { topic: "Classificação de Óxidos", question: "O CO₂ (Dióxido de Carbono) é classificado como:", options: ["Óxido Básico", "Óxido Ácido", "Óxido Neutro", "Sal"], answer: 1, explanation: "O CO₂ é um óxido formado por um ametal (Carbono). Ele reage com água formando um ácido (Ácido Carbônico). É um óxido ácido." },
+            { topic: "Classificação de Óxidos", question: "O CaO (Óxido de Cálcio), conhecido como 'cal virgem', é classificado como:", options: ["Óxido Ácido", "Óxido Neutro", "Óxido Básico", "Ácido"], answer: 2, explanation: "O CaO é um óxido formado por um metal (Cálcio). Ele reage com água formando uma base (Hidróxido de Cálcio). É um óxido básico." },
+            { topic: "Reação de Óxidos", question: "Qual substância é formada quando o SO₃ (Trióxido de Enxofre) reage com a água (H₂O)?", options: ["H₂SO₃ (Ácido Sulfuroso)", "H₂S (Ácido Sulfídrico)", "H₂SO₄ (Ácido Sulfúrico)", "SO₂ (Dióxido de Enxofre)"], answer: 2, explanation: "O SO₃ é um óxido ácido (anidrido) que, ao reagir com água, forma o Ácido Sulfúrico (H₂SO₄)." },
+            { topic: "Reação de Óxidos", question: "Qual substância é formada quando o Na₂O (Óxido de Sódio) reage com a água (H₂O)?", options: ["NaOH (Hidróxido de Sódio)", "H₂NaO₂", "NaH₂O", "HNaO"], answer: 0, explanation: "O Na₂O é um óxido básico que, ao reagir com água, forma a base Hidróxido de Sódio (NaOH)." },
+            { topic: "Classificação de Óxidos", question: "O CO (Monóxido de Carbono), um gás muito tóxico, é classificado como:", options: ["Óxido Básico", "Óxido Ácido", "Sal", "Óxido Neutro"], answer: 3, explanation: "O CO é um dos principais exemplos de óxido neutro, pois não reage com água, ácidos ou bases." },
+            { topic: "Geral", question: "Qual das substâncias abaixo é um SAL?", options: ["H₃PO₄", "NH₃", "Ca(OH)₂", "KNO₃"], answer: 3, explanation: "KNO₃ (Nitrato de Potássio) é um sal. H₃PO₄ é um ácido, Ca(OH)₂ é uma base e NH₃ (amônia) é uma base de Arrhenius." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = question.topic;
+                questionText.textContent = question.question;
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                if (state.userAnswers[state.currentQuestionIndex] === null) { // Only score the first attempt
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect;
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-green-900' : 'bg-red-900'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm">${explanation}</p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 bg-indigo-600 rounded-md font-semibold hover:bg-indigo-500 transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                // Adiciona o listener para o novo botão
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                // Limpa o feedback
+                feedbackContainer.innerHTML = '';
+                
+                // Re-abilita as opções e reseta os estilos
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    // Reset classes, keeping base styles
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-indigo-500');
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+        });
+    </script>
+</body>
+</html>
+
