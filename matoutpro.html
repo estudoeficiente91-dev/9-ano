@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Matemática (9º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Matemática 9º Ano</h1>
+            <p class="text-lg text-dark-light-text">Função Quadrática, Relações Métricas e Trigonometria.</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#funcao_quadratica" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">Função Quadrática</a></li>
+                            <li><a href="#relacoes_metricas" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Relações Métricas</a></li>
+                            <li><a href="#razoes_trigonometricas" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Trigonometria</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    <section id="funcao_quadratica" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">Função Quadrática (Função do 2º Grau)</h2>
+                            <p>Uma <strong class="prose-strong">Função Quadrática</strong> é qualquer função que pode ser escrita na forma:</p>
+                            <p class="text-center text-xl font-bold accent-secondary">f(x) = ax² + bx + c</p>
+                            <p>Onde <strong class="text-highlight">a</strong>, <strong class="text-highlight">b</strong> e <strong class="text-highlight">c</strong> são números reais (chamados coeficientes) e, o mais importante, <strong class="text-highlight">a ≠ 0</strong> (o 'a' não pode ser zero).</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">O Gráfico: A Parábola</h3>
+                            <p>O gráfico de uma função quadrática é sempre uma curva chamada <strong class="prose-strong">parábola</strong>.</p>
+                            <ul>
+                                <li><strong>Concavidade (Abertura):</strong> É definida pelo coeficiente <strong class="text-highlight">a</strong>.
+                                    <ul>
+                                        <li>Se <strong class="prose-strong">a > 0</strong> (positivo): A parábola tem concavidade para <strong class="text-highlight">cima</strong> (feliz, U). Ela possui um ponto de <strong class="text-highlight">mínimo</strong>.</li>
+                                        <li>Se <strong class="prose-strong">a < 0</strong> (negativo): A parábola tem concavidade para <strong class="text-highlight">baixo</strong> (triste, ∩). Ela possui um ponto de <strong class="text-highlight">máximo</strong>.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Intersecção com Eixo Y:</strong> A parábola <strong class="text-highlight">sempre</strong> corta o eixo Y no valor do coeficiente <strong class="text-highlight">c</strong>.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Raízes ou Zeros da Função</h3>
+                            <p>As <strong class="prose-strong">raízes</strong> (ou zeros) são os pontos onde a parábola corta o eixo X. Para encontrá-las, basta igualar a função a zero (<strong class="text-highlight">f(x) = 0</strong>) e resolver a equação do 2º grau.</p>
+                            
+                            <h4 class="text-xl font-semibold mt-4">1. Discriminante (Delta - Δ)</h4>
+                            <p>Primeiro, calculamos o <strong class="prose-strong">Delta</strong>:</p>
+                            <p class="text-center text-xl font-bold accent-secondary">Δ = b² - 4ac</p>
+                            <ul>
+                                <li>Se <strong class="prose-strong">Δ > 0</strong>: A função tem <strong class="text-highlight">duas raízes reais diferentes</strong> (corta o eixo X em dois pontos).</li>
+                                <li>Se <strong class="prose-strong">Δ = 0</strong>: A função tem <strong class="text-highlight">duas raízes reais iguais</strong> (toca o eixo X em um único ponto).</li>
+                                <li>Se <strong class="prose-strong">Δ < 0</strong>: A função <strong class="text-highlight">não tem raízes reais</strong> (não corta o eixo X).</li>
+                            </ul>
+
+                            <h4 class="text-xl font-semibold mt-4">2. Fórmula de Bhaskara</h4>
+                            <p>Se o Delta for positivo ou zero, usamos Bhaskara para achar as raízes (x):</p>
+                            <p class="text-center text-xl font-bold accent-secondary">x = (-b ± √Δ) / 2a</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Vértice da Parábola (V)</h3>
+                            <p>O <strong class="prose-strong">vértice</strong> é o ponto de mínimo (se a>0) ou máximo (se a<0). É o "ponto de virada" da curva. Ele tem duas coordenadas, <strong class="text-highlight">Xv</strong> e <strong class="text-highlight">Yv</strong>.</p>
+                            <ul>
+                                <li><strong>X do Vértice (Xv):</strong> <span class="font-bold accent-secondary">Xv = -b / 2a</span></li>
+                                <li><strong>Y do Vértice (Yv):</strong> <span class="font-bold accent-secondary">Yv = -Δ / 4a</span></li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="relacoes_metricas" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">Relações Métricas no Triângulo Retângulo</h2>
+                            <p>Em qualquer triângulo retângulo, além do Teorema de Pitágoras, existem outras relações (fórmulas) que envolvem seus lados e a altura relativa à hipotenusa.</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Elementos</h3>
+                            <p>Imagine um triângulo retângulo com o ângulo de 90° em cima. Os elementos são:</p>
+                            <ul>
+                                <li><strong class="prose-strong">a</strong>: Hipotenusa (o lado maior, oposto ao ângulo de 90°).</li>
+                                <li><strong class="prose-strong">b</strong> e <strong class="prose-strong">c</strong>: Catetos (os lados que formam o ângulo de 90°).</li>
+                                <li><strong class="prose-strong">h</strong>: Altura (a linha que sai do ângulo de 90° e forma 90° com a hipotenusa).</li>
+                                <li><strong class="prose-strong">m</strong> e <strong class="prose-strong">n</strong>: Projeções dos catetos (os pedaços em que a altura 'h' divide a hipotenusa 'a'. 'm' é a projeção de 'b', e 'n' é a projeção de 'c').</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">As Fórmulas Principais</h3>
+                            <ol>
+                                <li><strong>Teorema de Pitágoras:</strong> A soma dos quadrados dos catetos é igual ao quadrado da hipotenusa.
+                                    <p class="text-center text-xl font-bold accent-secondary">a² = b² + c²</p>
+                                </li>
+                                <li><strong>Relação Cateto-Projeção:</strong> O quadrado de um cateto é igual ao produto da hipotenusa pela projeção desse cateto.
+                                    <p class="text-center text-xl font-bold accent-secondary">b² = a · m</p>
+                                    <p class="text-center text-xl font-bold accent-secondary">c² = a · n</p>
+                                </li>
+                                <li><strong>Relação Altura-Projeções:</strong> O quadrado da altura é igual ao produto das projeções.
+                                    <p class="text-center text-xl font-bold accent-secondary">h² = m · n</p>
+                                </li>
+                                <li><strong>Relação Catetos-Altura:</strong> O produto da hipotenusa pela altura é igual ao produto dos catetos.
+                                    <p class="text-center text-xl font-bold accent-secondary">a · h = b · c</p>
+                                </li>
+                            </ol>
+                        </article>
+                    </section>
+
+                    <section id="razoes_trigonometricas" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">Razões Trigonométricas (Seno e Cosseno)</h2>
+                            <p>A <strong class="prose-strong">Trigonometria</strong> estuda a relação entre os <strong class="text-highlight">ângulos</strong> e os <strong class="text-highlight">lados</strong> de um triângulo retângulo.</p>
+                            <p>Para um ângulo agudo (menor que 90°) de um triângulo retângulo, definimos os lados como:</p>
+                            <ul>
+                                <li><strong class="prose-strong">Hipotenusa (HIP):</strong> O lado maior, oposto ao ângulo de 90°.</li>
+                                <li><strong class="prose-strong">Cateto Oposto (CO):</strong> O lado que está "do outro lado" (de frente) do ângulo.</li>
+                                <li><strong class="prose-strong">Cateto Adjacente (CA):</strong> O lado que está "ao lado" (colado) do ângulo, mas que não é a hipotenusa.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Seno (sen)</h3>
+                            <p>Seno de um ângulo é a razão (divisão) entre o Cateto Oposto e a Hipotenusa.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">sen(ângulo) = Cateto Oposto / Hipotenusa</p>
+                            <p>(Dica: "SOH" - <strong class="text-highlight">S</strong>eno = <strong class="text-highlight">O</strong>posto / <strong class="text-highlight">H</strong>ipotenusa)</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Cosseno (cos)</h3>
+                            <p>Cosseno de um ângulo é a razão entre o Cateto Adjacente e a Hipotenusa.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">cos(ângulo) = Cateto Adjacente / Hipotenusa</p>
+                            <p>(Dica: "CAH" - <strong class="text-highlight">C</strong>osseno = <strong class="text-highlight">A</strong>djacente / <strong class="text-highlight">H</strong>ipotenusa)</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Tangente (tan)</h3>
+                            <p>A tangente é a razão entre o Cateto Oposto e o Cateto Adjacente.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">tan(ângulo) = Cateto Oposto / Cateto Adjacente</p>
+                            <p>(Dica: "TOA" - <strong class="text-highlight">T</strong>angente = <strong class="text-highlight">O</strong>posto / <strong class="text-highlight">A</strong>djacente)</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Ângulos Notáveis</h3>
+                            <p>Os valores de seno, cosseno e tangente para os ângulos de 30°, 45° e 60° são muito usados:</p>
+                            <table class="prose-table text-dark-light-text">
+                                <thead>
+                                    <tr>
+                                        <th class="prose-th">Ângulo</th>
+                                        <th class="prose-th">30°</th>
+                                        <th class="prose-th">45°</th>
+                                        <th class="prose-th">60°</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="prose-td"><strong class="prose-strong">Seno</strong></td>
+                                        <td class="prose-td">1 / 2</td>
+                                        <td class="prose-td">√2 / 2</td>
+                                        <td class="prose-td">√3 / 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="prose-td"><strong class="prose-strong">Cosseno</strong></td>
+                                        <td class="prose-td">√3 / 2</td>
+                                        <td class="prose-td">√2 / 2</td>
+                                        <td class="prose-td">1 / 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="prose-td"><strong class="prose-strong">Tangente</strong></td>
+                                        <td class="prose-td">√3 / 3</td>
+                                        <td class="prose-td">1</td>
+                                        <td class="prose-td">√3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões)
+            { topic: "Função Quadrática", difficulty: "Fácil", question: "Na função f(x) = -x² + 3x - 5, quais são os coeficientes a, b e c?", options: ["a=1, b=3, c=-5", "a=-1, b=3, c=-5", "a=0, b=3, c=-5", "a=-1, b=3, c=5"], answer: 1, explanation: "O coeficiente 'a' acompanha x² (a=-1), 'b' acompanha x (b=3) e 'c' é o termo independente (c=-5)." },
+            { topic: "Função Quadrática", difficulty: "Fácil", question: "A parábola da função f(x) = 3x² - 2x + 1 tem concavidade para:", options: ["Cima, pois a > 0", "Baixo, pois a < 0", "Cima, pois c > 0", "Baixo, pois b < 0"], answer: 0, explanation: "A concavidade é definida pelo coeficiente 'a'. Como a = 3 (positivo), a concavidade é para cima (U)." },
+            { topic: "Função Quadrática", difficulty: "Fácil", question: "Se Δ = -10 em uma função quadrática, quantas raízes reais ela possui?", options: ["Duas raízes diferentes", "Uma raiz (duas iguais)", "Nenhuma raiz real", "Três raízes"], answer: 2, explanation: "Quando o Delta (Δ) é negativo (Δ < 0), a função não possui raízes reais, ou seja, não corta o eixo X." },
+            { topic: "Função Quadrática", difficulty: "Fácil", question: "O gráfico de f(x) = x² + 2x - 8 corta o eixo Y em qual ponto?", options: ["y = 1", "y = 2", "y = 0", "y = -8"], answer: 3, explanation: "A parábola sempre corta o eixo Y no valor do coeficiente 'c'. Na função, c = -8." },
+            { topic: "Função Quadrática", difficulty: "Fácil", question: "A função f(x) = 5x² - 10x + 1 possui um ponto de:", options: ["Máximo, pois a > 0", "Mínimo, pois a > 0", "Máximo, pois a < 0", "Mínimo, pois a < 0"], answer: 1, explanation: "Como a = 5 (positivo), a parábola tem concavidade para cima (U) e, portanto, possui um ponto de Mínimo." },
+            { topic: "Função Quadrática", difficulty: "Fácil", question: "O vértice da parábola f(x) = -x² + 4x é (2, 4). Esse ponto é um...", options: ["Ponto de mínimo", "Ponto de máximo", "Uma raiz", "Onde corta o eixo Y"], answer: 1, explanation: "Como 'a' é negativo (a = -1), a concavidade é para baixo (∩). Portanto, o vértice é o ponto de Máximo da função." },
+            { topic: "Função Quadrática", difficulty: "Fácil", question: "Se Δ = 0, o que acontece com a parábola?", options: ["Ela não toca o eixo X", "Ela corta o eixo X em dois pontos", "Ela toca o eixo X em apenas um ponto (no vértice)", "Ela fica de cabeça para baixo"], answer: 2, explanation: "Quando Δ = 0, a função tem apenas uma raiz real (ou duas iguais). Isso significa que o vértice da parábola está exatamente sobre o eixo X." },
+            { topic: "Relações Métricas", difficulty: "Fácil", question: "Num triângulo retângulo, os catetos medem 3 e 4. Qual a medida da hipotenusa?", options: ["5", "6", "7", "25"], answer: 0, explanation: "Teorema de Pitágoras: a² = b² + c². a² = 3² + 4². a² = 9 + 16. a² = 25. a = √25. a = 5." },
+            { topic: "Trigonometria", difficulty: "Fácil", question: "Seno é a razão entre:", options: ["Oposto / Adjacente", "Adjacente / Hipotenusa", "Oposto / Hipotenusa", "Hipotenusa / Oposto"], answer: 2, explanation: "SOH: Seno = Oposto / Hipotenusa." },
+            { topic: "Trigonometria", difficulty: "Fácil", question: "Cosseno é a razão entre:", options: ["Oposto / Adjacente", "Adjacente / Hipotenusa", "Oposto / Hipotenusa", "Hipotenusa / Adjacente"], answer: 1, explanation: "CAH: Cosseno = Adjacente / Hipotenusa." },
+
+            // NÍVEL MÉDIO (12 Questões)
+            { topic: "Função Quadrática", difficulty: "Médio", question: "Na função f(x) = x² - 5x + 6, qual é o valor do discriminante (Δ)?", options: ["Δ = 1", "Δ = -1", "Δ = 25", "Δ = 49"], answer: 0, explanation: "Δ = b² - 4ac. Δ = (-5)² - 4(1)(6). Δ = 25 - 24. Δ = 1." },
+            { topic: "Função Quadrática", difficulty: "Médio", question: "Quais são as raízes da função f(x) = x² - 5x + 6? (Use Bhaskara, Δ=1)", options: ["x=2 e x=3", "x=-2 e x=-3", "x=1 e x=5", "x=5 e x=6"], answer: 0, explanation: "x = (-b ± √Δ) / 2a. x = (-(-5) ± √1) / 2(1). x = (5 ± 1) / 2. x' = (5+1)/2 = 3. x'' = (5-1)/2 = 2." },
+            { topic: "Função Quadrática", difficulty: "Médio", question: "Qual é o X do vértice (Xv) da função f(x) = -x² + 4x?", options: ["Xv = 2", "Xv = -2", "Xv = 4", "Xv = 0"], answer: 0, explanation: "A fórmula é Xv = -b / 2a. Xv = -(4) / 2(-1). Xv = -4 / -2. Xv = 2." },
+            { topic: "Função Quadrática", difficulty: "Médio", question: "Qual é o Y do vértice (Yv) da função f(x) = -x² + 4x? (Δ = 16)", options: ["Yv = 16", "Yv = 4", "Yv = -4", "Yv = 2"], answer: 1, explanation: "A fórmula é Yv = -Δ / 4a. Yv = -(16) / 4(-1). Yv = -16 / -4. Yv = 4." },
+            { topic: "Função Quadrática", difficulty: "Médio", question: "Quais são as raízes da função f(x) = x² - 9?", options: ["x=3", "x=3 e x=-3", "x=9 e x=-9", "Não tem raiz real"], answer: 1, explanation: "x² - 9 = 0. x² = 9. x = ±√9. x = 3 ou x = -3." },
+            { topic: "Relações Métricas", difficulty: "Médio", question: "A hipotenusa de um triângulo retângulo mede 10 e um dos catetos mede 6. Quanto mede o outro cateto?", options: ["4", "8", "64", "100"], answer: 1, explanation: "a² = b² + c². 10² = 6² + c². 100 = 36 + c². c² = 100 - 36. c² = 64. c = √64. c = 8." },
+            { topic: "Relações Métricas", difficulty: "Médio", question: "A altura (h) de um triângulo retângulo divide a hipotenusa em projeções m=4 e n=9. Quanto vale a altura (h)?", options: ["6", "13", "36", "1.5"], answer: 0, explanation: "Usamos a relação h² = m · n. h² = 4 · 9. h² = 36. h = √36. h = 6." },
+            { topic: "Relações Métricas", difficulty: "Médio", question: "A hipotenusa (a) mede 10 e a projeção (m) de um cateto (b) mede 3.6. Qual o valor do cateto (b)?", options: ["6", "36", "13.6", "1.9"], answer: 0, explanation: "Usamos b² = a · m. b² = 10 · 3.6. b² = 36. b = √36. b = 6." },
+            { topic: "Relações Métricas", difficulty: "Médio", question: "As projeções dos catetos sobre a hipotenusa medem m=2 e n=8. Qual a medida da hipotenusa (a)?", options: ["16", "10", "6", "4"], answer: 1, explanation: "A hipotenusa 'a' é a soma das projeções 'm' e 'n'. a = m + n. a = 2 + 8. a = 10." },
+            { topic: "Trigonometria", difficulty: "Médio", question: "Quanto vale o Seno de 30°?", options: ["1/2", "√3 / 2", "√2 / 2", "1"], answer: 0, explanation: "Pela tabela dos ângulos notáveis, sen(30°) = 1/2 (ou 0.5)." },
+            { topic: "Trigonometria", difficulty: "Médio", question: "Quanto vale o Cosseno de 60°?", options: ["√3 / 2", "√2 / 2", "1/2", "0"], answer: 2, explanation: "Pela tabela dos ângulos notáveis, cos(60°) = 1/2 (ou 0.5)." },
+            { topic: "Trigonometria", difficulty: "Médio", question: "Em um triângulo retângulo com catetos 3 e 4, e hipotenusa 5, qual o SENO do ângulo oposto ao cateto 3?", options: ["3/5 (0.6)", "4/5 (0.8)", "3/4 (0.75)", "5/3"], answer: 0, explanation: "Seno = Cateto Oposto / Hipotenusa. O cateto oposto é 3, a hipotenusa é 5. Seno = 3/5." },
+            
+            // NÍVEL DIFÍCIL (8 Questões)
+            { topic: "Relações Métricas", difficulty: "Difícil", question: "Um triângulo retângulo tem catetos b=6, c=8 e hipotenusa a=10. Qual a medida da altura (h) relativa à hipotenusa?", options: ["1.2", "14", "48", "4.8"], answer: 3, explanation: "Usamos a relação a · h = b · c. 10 · h = 6 · 8. 10h = 48. h = 48 / 10. h = 4.8." },
+            { topic: "Relações Métricas", difficulty: "Difícil", question: "Em um triângulo retângulo, a hipotenusa (a) mede 12 e o cateto (c) mede 6. Qual o valor da projeção (n) deste cateto?", options: ["2", "3", "36", "0.5"], answer: 1, explanation: "Usamos c² = a · n. 6² = 12 · n. 36 = 12n. n = 36 / 12. n = 3." },
+            { topic: "Relações Métricas", difficulty: "Difícil", question: "Uma escada de 5 metros está apoiada em um muro. A base da escada está a 3 metros do muro. Qual a altura do muro que a escada alcança?", options: ["2 metros", "4 metros", "5 metros", "8 metros"], answer: 1, explanation: "A escada é a hipotenusa (a=5), a distância é um cateto (b=3). A altura é o outro cateto (c). a² = b² + c². 5² = 3² + c². 25 = 9 + c². c² = 16. c = 4." },
+            { topic: "Relações Métricas", difficulty: "Difícil", question: "A hipotenusa mede 20. A altura (h) mede 8. Um cateto (b) mede 10. Qual a projeção (m) desse cateto?", options: ["5", "1.25", "2", "6.4"], answer: 0, explanation: "Usamos b² = a · m. 10² = 20 · m. 100 = 20m. m = 100 / 20. m = 5." },
+            { topic: "Trigonometria", difficulty: "Difícil", question: "No mesmo triângulo (catetos 3 e 4, hipotenusa 5), qual o COSSENO do ângulo oposto ao cateto 3?", options: ["3/5 (0.6)", "4/5 (0.8)", "3/4 (0.75)", "5/4"], answer: 1, explanation: "Cosseno = Cateto Adjacente / Hipotenusa. Se o oposto é 3, o adjacente é 4. Cosseno = 4/5." },
+            { topic: "Trigonometria", difficulty: "Difícil", question: "Em um triângulo, o ângulo é 30° e a hipotenusa é 10. Qual o valor do cateto OPOSTO? (Dado: sen(30°) = 0,5)", options: ["10", "20", "5", "8.6"], answer: 2, explanation: "sen(30°) = Oposto / Hipotenusa. 0,5 = Oposto / 10. Oposto = 0,5 * 10. Oposto = 5." },
+            { topic: "Trigonometria", difficulty: "Difícil", question: "Em um triângulo, o ângulo é 60° e a hipotenusa é 20. Qual o valor do cateto ADJACENTE? (Dado: cos(60°) = 0,5)", options: ["10", "17.3", "20", "40"], answer: 0, explanation: "cos(60°) = Adjacente / Hipotenusa. 0,5 = Adjacente / 20. Adjacente = 0,5 * 20. Adjacente = 10." },
+            { topic: "Trigonometria", difficulty: "Difícil", question: "Uma escada forma um ângulo de 60° com o chão. O pé da escada está a 4m da parede. Qual o tamanho da escada? (Dado: cos(60°) = 0,5)", options: ["2m", "4m", "8m", "6.9m"], answer: 2, explanation: "Temos o Cateto Adjacente (4m) e queremos a Hipotenusa (escada). Usamos Cosseno. cos(60°) = CA / HIP. 0,5 = 4 / HIP. HIP = 4 / 0,5. HIP = 8m." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; // Ajustado para 0.1
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.textContent = question.question;
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect; // Set state on first try
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    // This is the user's request: was wrong, retried, now correct
+                    state.userAnswers[state.currentQuestionIndex] = true; // Update state to correct
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // Fire confetti on correction
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm">${explanation}</p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                // Adiciona o listener para o novo botão
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                // Limpa o feedback
+                feedbackContainer.innerHTML = '';
+                
+                // Re-abilita as opções e reseta os estilos
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    // Reset classes, keeping base styles
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); /* Alterado para ring-orange-500 */
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            // Assegura que os botões de modo tenham a cor correta no início
+            btnLearn.classList.add('active'); // Começa no modo 'learn'
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            // Garante que o estado inicial (learn) esteja correto
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
+
