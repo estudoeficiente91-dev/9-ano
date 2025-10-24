@@ -1,77 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudos Sophia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .menu-btn {
-            transition: transform 0.1s, box-shadow 0.2s;
-        }
-        .menu-btn:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 8px 24px 0 rgba(2,132,199,0.10);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌙 Estudos Sophia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f0f10;
+      color: #e5e7eb;
+    }
+    .menu-btn {
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .menu-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+    }
+  </style>
 </head>
-<body class="bg-stone-100 text-slate-800 min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex items-center justify-center p-6">
 
-    <div class="container mx-auto max-w-lg p-6 sm:p-10 bg-white rounded-xl shadow-lg text-center">
-        <h1 class="text-4xl font-bold text-sky-800 mb-2">Estudos 7º Ano</h1>
-        <p class="text-slate-600 mb-8">Escolha um conteúdo para começar a estudar:</p>
-        <div class="flex flex-col gap-6">
-            <a href="7ano_mat1.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Matematica outubro (regra de tres simples e composta)- 7° ano</span>
-            </a>
-            <a href="sophia_composta.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Regra de tres simples e composta- 7° ano</span>
-            </a>
-            <a href="gram_out.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Gramatica 14/10 - Sophia</span>
-            </a>
-            <a href="regradetresophia.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Regra de três - Sophia</span>
-            </a>
-            <a href="historiaoutubro.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Historia - Unidade 6: tema 3 e 4</span>
-            </a>
-            <a href="mat-sophia-revisao.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Matematica - Revisão I e II</span>
-            </a>
-           <a href="ciencias7ano.html" class="menu-btn px-8 py-5 bg-blue-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-blue-600 transition-colors flex items-center justify-center gap-3">
-            <span>Ciências 7º ano</span>
-            </a>
-            <a href="sophia-mat-racionais.html" class="menu-btn px-8 py-5 bg-fuchsia-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-fuchsia-600 transition-colors flex items-center justify-center gap-3">
-                <span>Numeros racionais – Sophia</span>
-            </a>
-            <a href="sophia-lite.html" class="menu-btn px-8 py-5 bg-fuchsia-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-fuchsia-600 transition-colors flex items-center justify-center gap-3">
-                <span>📘 Grãos de Paisagens – Sophia</span>
-            </a>
-            <a href="trian-7ano.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Triangulos - Sophia</span>
-            </a>
-            <a href="sophia-port.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Português- Sophia</span>
-            </a>
-            <a href="hist-sohia.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Historia - Sophia</span>
-            </a>
-             <a href="geo-sophia.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Geografia - Sophia</span>
-            </a>
-            <a href="sophia-artes.html" class="menu-btn px-8 py-5 bg-amber-500 text-white text-xl font-semibold rounded-lg shadow hover:bg-amber-600 transition-colors flex items-center justify-center gap-3">
-                <span> Artes - Sophia</span>
-            </a>
-        </div>
-        <footer class="mt-10 text-slate-400 text-sm">
-            Para alunos do <strong>7º ano</strong> &middot; Desenvolvido para facilitar seus estudos!
-        </footer>
+  <div class="container mx-auto max-w-lg p-8 bg-[#18181b] rounded-2xl shadow-2xl text-center border border-gray-800">
+    <h1 class="text-4xl font-bold text-amber-400 mb-2">📚 Estudos 7º Ano</h1>
+    <p class="text-gray-400 mb-8">Escolha um conteúdo para começar a estudar:</p>
+
+    <div class="flex flex-col gap-6">
+      <!-- Matemática 🧮 -->
+      <a href="somaproout.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        🧮 Matemática 1: prova 28/10 - 7° ano
+      </a>
+      <a href="soma2proout.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        🧮 Matemática 2: prova 28/10 - 7° ano
+      </a>
+      <a href="7ano_mat1.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        📏 Regra de Três simples e composta - Outubro
+      </a>
+      <a href="sophia_composta.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        📐 Regra de Três simples e composta - Sophia
+      </a>
+      <a href="regradetresophia.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        🔢 Regra de Três - Sophia
+      </a>
+      <a href="mat-sophia-revisao.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        🧩 Matemática - Revisão I e II
+      </a>
+      <a href="sophia-mat-racionais.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        ➗ Números Racionais – Sophia
+      </a>
+      <a href="trian-7ano.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+        🔺 Triângulos - Sophia
+      </a>
+
+      <!-- Português 📖 -->
+      <a href="gram_out.html" class="menu-btn px-8 py-5 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
+        📖 Gramática 14/10 - Sophia
+      </a>
+      <a href="sophia-port.html" class="menu-btn px-8 py-5 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
+        ✍️ Português - Sophia
+      </a>
+      <a href="sophia-lite.html" class="menu-btn px-8 py-5 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
+        📘 Grãos de Paisagens – Sophia
+      </a>
+
+      <!-- História 🏺 -->
+      <a href="historiaoutubro.html" class="menu-btn px-8 py-5 bg-amber-600 hover:bg-amber-500 text-white text-lg font-semibold rounded-lg">
+        🏺 História - Unidade 6: temas 3 e 4
+      </a>
+      <a href="hist-sohia.html" class="menu-btn px-8 py-5 bg-amber-600 hover:bg-amber-500 text-white text-lg font-semibold rounded-lg">
+        📜 História - Sophia
+      </a>
+
+      <!-- Geografia 🌍 -->
+      <a href="geo-sophia.html" class="menu-btn px-8 py-5 bg-green-600 hover:bg-green-500 text-white text-lg font-semibold rounded-lg">
+        🌍 Geografia - Sophia
+      </a>
+
+      <!-- Ciências 🔬 -->
+      <a href="ciencias7ano.html" class="menu-btn px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
+        🔬 Ciências 7º ano
+      </a>
+
+      <!-- Artes 🎨 -->
+      <a href="sophia-artes.html" class="menu-btn px-8 py-5 bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-lg font-semibold rounded-lg">
+        🎨 Artes - Sophia
+      </a>
     </div>
+
+    <footer class="mt-10 text-gray-500 text-sm">
+      Para alunos do <strong>7º ano</strong> • Desenvolvido para facilitar seus estudos!
+    </footer>
+  </div>
 
 </body>
 </html>

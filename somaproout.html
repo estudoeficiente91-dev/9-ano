@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Proporção e Aplicações (7º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Proporção e Aplicações</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre Razão, Proporção, Grandezas e Regra de Três Simples (7º Ano).</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#razao_proporcao" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Razão e Proporção</a></li>
+                            <li><a href="#grandezas" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Grandezas e Medidas</a></li>
+                            <li><a href="#proporcionalidade" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. Proporcionalidade</a></li>
+                            <li><a href="#regra_de_tres" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Regra de Três Simples</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    <section id="razao_proporcao" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. Razão e Proporção</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">1. Razão</h3>
+                            <p>Uma <strong class="prose-strong">Razão</strong> é uma <strong class="text-highlight">comparação</strong> entre dois números ou duas grandezas, feita através de uma <strong class="text-highlight">divisão (fração)</strong>.</p>
+                            <p>Se temos dois números 'a' e 'b' (com b ≠ 0), a razão de 'a' para 'b' é:</p>
+                            <p class="text-center text-xl font-bold accent-secondary">a / b   ou   a : b</p>
+                            <p>Lemos: "a está para b".</p>
+                            <ul>
+                                <li>Exemplo: Numa sala com 10 meninas e 20 meninos, qual a razão entre meninas e meninos?
+                                    <ul>
+                                        <li>Razão = (Número de meninas) / (Número de meninos) = 10 / 20</li>
+                                        <li>Simplificando, a razão é <strong class="text-highlight">1 / 2</strong> (ou 1:2).</li>
+                                        <li>Isso significa que, para cada 1 menina, existem 2 meninos.</li>
+                                    </ul>
+                                </li>
+                                <li>Exemplo de Escala: A escala de um mapa é uma razão. Se a escala é 1:100.000, significa que 1 cm no mapa representa 100.000 cm na realidade.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">2. Proporção</h3>
+                            <p>Uma <strong class="prose-strong">Proporção</strong> é uma <strong class="text-highlight">igualdade entre duas razões</strong>.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">a / b = c / d</p>
+                            <p>Lemos: "a está para b, assim como c está para d".</p>
+                            
+                            <h4 class="text-xl font-semibold mt-4">Propriedade Fundamental da Proporção</h4>
+                            <p>Em toda proporção, o produto dos meios é igual ao produto dos extremos (a famosa <strong class="text-highlight">"multiplicação cruzada"</strong>).</p>
+                            <p class="text-center text-xl font-bold accent-secondary">a · d = b · c</p>
+                            <ul>
+                                <li>Exemplo: As frações 1/2 e 5/10 formam uma proporção?
+                                    <ul>
+                                        <li>1 / 2 = 5 / 10</li>
+                                        <li>Multiplicando em cruz: 1 · 10 = 2 · 5</li>
+                                        <li><strong class="text-highlight">10 = 10</strong>. Sim, é uma proporção.</li>
+                                    </ul>
+                                </li>
+                                <li>Exemplo (achar o 'x'): Encontre o valor de x na proporção:  x / 4 = 15 / 10
+                                    <ul>
+                                        <li>Multiplicando em cruz: 10 · x = 4 · 15</li>
+                                        <li>10x = 60</li>
+                                        <li>x = 60 / 10</li>
+                                        <li><strong class="text-highlight">x = 6</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="grandezas" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Grandezas e Medidas</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">3. Grandezas e Medidas</h3>
+                            <p>Uma <strong class="prose-strong">Grandeza</strong> é tudo aquilo que pode ser <strong class="text-highlight">medido ou contado</strong>.</p>
+                            <p>Uma <strong class="prose-strong">Medida</strong> é o valor numérico que associamos a uma grandeza, usando uma unidade como referência.</p>
+
+                            <h4 class="text-xl font-semibold mt-4">Exemplos de Grandezas:</h4>
+                            <ul>
+                                <li><strong>Comprimento:</strong> Pode ser medido em metros (m), centímetros (cm), quilômetros (km).</li>
+                                <li><strong>Tempo:</strong> Pode ser medido em segundos (s), minutos (min), horas (h).</li>
+                                <li><strong>Massa:</strong> Pode ser medida em gramas (g), quilogramas (kg), toneladas (t).</li>
+                                <li><strong>Velocidade:</strong> Pode ser medida em km/h (quilômetros por hora).</li>
+                                <li><strong>Quantidade:</strong> Número de pessoas, número de tijolos, número de ovos.</li>
+                            </ul>
+
+                            <h4 class="text-xl font-semibold mt-4">O que NÃO é uma grandeza?</h4>
+                            <p>Sentimentos (amor, raiva), qualidades (beleza, bondade) ou cores (azul, verde) não são grandezas, pois não podemos medi-los objetivamente com um número.</p>
+                        </article>
+                    </section>
+
+                    <section id="proporcionalidade" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. Proporcionalidade</h2>
+                            <p>Quando relacionamos duas ou mais grandezas, elas podem ser proporcionais.</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">4. Grandezas Diretamente Proporcionais (GDP)</h3>
+                            <p>Duas grandezas são <strong class="prose-strong">Diretamente Proporcionais</strong> quando elas <strong class="text-highlight">aumentam ou diminuem juntas</strong>, na mesma proporção.</p>
+                            <p>Se uma <strong class="text-highlight">dobra</strong>, a outra <strong class="text-highlight">dobra</strong>. Se uma <strong class="text-highlight">cai pela metade</strong>, a outra <strong class="text-highlight">cai pela metade</strong>.</p>
+                            <ul>
+                                <li><strong>Exemplo:</strong> Quantidade de pães e Preço a pagar.
+                                    <ul>
+                                        <li>Se 1 pão custa R$ 0,50...</li>
+                                        <li>... 2 pães custam R$ 1,00 (dobrou o pão, dobrou o preço).</li>
+                                        <li>... 10 pães custam R$ 5,00 (multiplicou o pão por 10, multiplicou o preço por 10).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Outros Exemplos:</strong>
+                                    <ul>
+                                        <li>Distância percorrida e Tempo (com velocidade constante).</li>
+                                        <li>Número de tijolos e Altura do muro.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">5. Grandezas Inversamente Proporcionais (GIP)</h3>
+                            <p>Duas grandezas são <strong class="prose-strong">Inversamente Proporcionais</strong> quando uma <strong class="text-highlight">aumenta</strong> enquanto a outra <strong class="text-highlight">diminui</strong>, na proporção inversa.</p>
+                            <p>Se uma <strong class="text-highlight">dobra</strong>, a outra <strong class="text-highlight">cai pela metade</strong>. Se uma <strong class="text-highlight">triplica</strong>, a outra <strong class="text-highlight">cai para um terço</strong>.</p>
+                            <ul>
+                                <li><strong>Exemplo:</strong> Velocidade e Tempo para um percurso fixo.
+                                    <ul>
+                                        <li>Se você faz um trajeto a 50 km/h e leva 2 horas...</li>
+                                        <li>... a 100 km/h (dobrou a velocidade), você levará 1 hora (tempo caiu pela metade).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Outros Exemplos:</strong>
+                                    <ul>
+                                        <li>Número de trabalhadores e Tempo para terminar uma obra.</li>
+                                        <li>Quantidade de ração e Duração (para um número fixo de animais).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="regra_de_tres" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Regra de Três Simples</h2>
+                            <p>A <strong class="prose-strong">Regra de Três Simples</strong> é um método para resolver problemas que envolvem <strong class="text-highlight">duas grandezas proporcionais</strong> (diretas ou inversas), onde conhecemos três valores e queremos descobrir o quarto.</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Passo a Passo para Resolver</h3>
+                            <ol>
+                                <li><strong>Organizar os Dados:</strong> Crie uma tabela com duas colunas, uma para cada grandeza. Coloque os valores conhecidos e o 'x' no valor desconhecido.</li>
+                                <li><strong>Analisar a Proporção:</strong> Verifique se as grandezas são Diretamente (GDP) ou Inversamente (GIP) proporcionais. (Pergunte-se: "Se eu aumentar a grandeza A, a grandeza B aumenta ou diminui?").</li>
+                                <li><strong>Montar a Proporção:</strong>
+                                    <ul>
+                                        <li>Se for <strong class="prose-strong">GDP</strong>: Monte a proporção do jeito que está na tabela e <strong class="text-highlight">multiplique em cruz (X)</strong>.</li>
+                                        <li>Se for <strong class="prose-strong">GIP</strong>: <strong class="text-highlight">Inverta uma</strong> das colunas (razões) e multiplique em cruz (X). (Ou, mais fácil: multiplique em linha reta).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Resolver a Equação:</strong> Encontre o valor de 'x'.</li>
+                            </ol>
+
+                            <h4 class="text-xl font-semibold mt-4">Exemplo 1 (Diretamente Proporcional)</h4>
+                            <p>Se 3 cadernos custam R$ 12,00, quanto custarão 5 cadernos?</p>
+                            <p><strong>1. Organizar:</strong><br>
+                            Cadernos | Preço (R$)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp; 3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp; 12<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp; 5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp; x</p>
+                            <p><strong>2. Analisar:</strong> Se eu <strong class="text-highlight">aumento</strong> o nº de cadernos, o preço <strong class="text-highlight">aumenta</strong>. (GDP)</p>
+                            <p><strong>3. Montar (GDP - Multiplica em Cruz):</strong><br>
+                            3 / 5 = 12 / x<br>
+                            3 · x = 5 · 12</p>
+                            <p><strong>4. Resolver:</strong><br>
+                            3x = 60<br>
+                            x = 60 / 3<br>
+                            <strong class="text-highlight">x = 20</strong> (R$ 20,00)</p>
+
+                            <h4 class="text-xl font-semibold mt-4">Exemplo 2 (Inversamente Proporcional)</h4>
+                            <p>Dois pedreiros constroem um muro em 12 dias. Quantos dias 6 pedreiros levariam?</p>
+                            <p><strong>1. Organizar:</strong><br>
+                            Pedreiros | Dias<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp; 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp; 12<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp; 6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp; x</p>
+                            <p><strong>2. Analisar:</strong> Se eu <strong class="text-highlight">aumento</strong> o nº de pedreiros, o tempo (dias) <strong class="text-highlight">diminui</strong>. (GIP)</p>
+                            <p><strong>3. Montar (GIP - Inverte uma coluna):</strong><br>
+                            Vamos inverter a coluna "Pedreiros":<br>
+                            6 / 2 = 12 / x<br>
+                            6 · x = 2 · 12</p>
+                            <p><strong>4. Resolver:</strong><br>
+                            6x = 24<br>
+                            x = 24 / 6<br>
+                            <strong class="text-highlight">x = 4</strong> (4 dias)</p>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões)
+            { topic: "Razão e Proporção", difficulty: "Fácil", question: "O que é uma Razão?", options: ["Uma igualdade de frações", "Uma comparação por divisão (fração)", "Uma soma de números", "Uma medida de comprimento"], answer: 1, explanation: "Razão é uma comparação entre dois números ou grandezas através de uma divisão (fração)." },
+            { topic: "Razão e Proporção", difficulty: "Fácil", question: "Numa cesta há 5 maçãs e 15 laranjas. Qual a razão entre maçãs e laranjas?", options: ["1/3", "3/1", "1/4", "5/10"], answer: 0, explanation: "A razão é (Maçãs / Laranjas) = 5 / 15. Simplificando por 5, obtemos 1 / 3." },
+            { topic: "Razão e Proporção", difficulty: "Fácil", question: "O que é uma Proporção?", options: ["Uma fração com números grandes", "Uma comparação por divisão", "Uma igualdade entre duas razões", "Uma multiplicação em linha"], answer: 2, explanation: "Proporção é a igualdade entre duas razões (frações). Ex: 1/2 = 2/4." },
+            { topic: "Grandezas", difficulty: "Fácil", question: "Qual das seguintes opções NÃO é uma grandeza?", options: ["Tempo", "Comprimento", "Beleza", "Massa"], answer: 2, explanation: "Beleza é uma qualidade subjetiva, não pode ser medida ou contada objetivamente. Tempo, comprimento e massa são grandezas." },
+            { topic: "Grandezas", difficulty: "Fácil", question: "O 'km/h' (quilômetro por hora) é uma unidade de medida de qual grandeza?", options: ["Distância", "Tempo", "Velocidade", "Peso"], answer: 2, explanation: "Km/h (distância por tempo) é a unidade de medida padrão para a grandeza Velocidade." },
+            { topic: "Proporcionalidade", difficulty: "Fácil", question: "Se uma grandeza aumenta e a outra aumenta na mesma proporção, elas são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Grandezas iguais"], answer: 0, explanation: "Grandezas Diretamente Proporcionais (GDP) aumentam ou diminuem juntas, na mesma proporção." },
+            { topic: "Proporcionalidade", difficulty: "Fácil", question: "Se uma grandeza dobra e a outra cai pela metade, elas são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Grandezas opostas"], answer: 1, explanation: "Grandezas Inversamente Proporcionais (GIP) se movem em direções opostas; se uma dobra, a outra reduz à metade." },
+            { topic: "Proporcionalidade", difficulty: "Fácil", question: "A quantidade de gasolina gasta e a distância percorrida por um carro são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Sempre iguais"], answer: 0, explanation: "Quanto MAIS distância você percorre, MAIS gasolina você gasta. Elas aumentam juntas, portanto são Diretamente Proporcionais." },
+            { topic: "Proporcionalidade", difficulty: "Fácil", question: "A velocidade de um carro e o tempo para percorrer uma distância fixa são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Sempre iguais"], answer: 1, explanation: "Quanto MAIOR a velocidade, MENOR o tempo gasto. Elas se movem em direções opostas, portanto são Inversamente Proporcionais." },
+            { topic: "Regra de Três", difficulty: "Fácil", question: "Na Regra de Três Simples, quando as grandezas são Diretamente Proporcionais (GDP), como multiplicamos?", options: ["Em linha reta", "Em cruz (X)", "Somamos os valores", "Invertemos as duas colunas"], answer: 1, explanation: "Em grandezas diretamente proporcionais (GDP), montamos a proporção e multiplicamos em cruz (X)." },
+
+            // NÍVEL MÉDIO (12 Questões)
+            { topic: "Razão e Proporção", difficulty: "Médio", question: "A escala de um mapa é 1:500.000. Se a distância no mapa é de 2 cm, qual a distância real?", options: ["1.000.000 cm (10 km)", "250.000 cm (2,5 km)", "100.000 cm (1 km)", "500.000 cm (5 km)"], answer: 0, explanation: "1 cm no mapa = 500.000 cm reais. 2 cm no mapa = 2 * 500.000 = 1.000.000 cm. (Lembrando que 100.000 cm = 1 km)." },
+            { topic: "Razão e Proporção", difficulty: "Médio", question: "Encontre o valor de 'x' na proporção: 2 / 5 = 8 / x", options: ["x = 11", "x = 40", "x = 1.25", "x = 20"], answer: 3, explanation: "Multiplicando em cruz: 2 · x = 5 · 8. 2x = 40. x = 40 / 2. x = 20." },
+            { topic: "Razão e Proporção", difficulty: "Médio", question: "Encontre o valor de 'x' na proporção: x / 3 = 12 / 9", options: ["x = 4", "x = 36", "x = 0.75", "x = 27"], answer: 0, explanation: "Multiplicando em cruz: 9 · x = 3 · 12. 9x = 36. x = 36 / 9. x = 4." },
+            { topic: "Proporcionalidade", difficulty: "Médio", question: "O número de pedreiros e o tempo para construir um muro são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Sempre 10"], answer: 1, explanation: "Quanto MAIS pedreiros trabalhando, MENOS tempo levará para terminar. São Inversamente Proporcionais." },
+            { topic: "Proporcionalidade", difficulty: "Médio", question: "A quantidade de comida em um refeitório e o número de pessoas a serem alimentadas (para um tempo fixo) são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Sempre 100"], answer: 0, explanation: "Quanto MAIS pessoas, MAIS comida será necessária. Elas aumentam juntas, são Diretamente Proporcionais." },
+            { topic: "Regra de Três", difficulty: "Médio", question: "Se 4 camisas custam R$ 100,00, quanto custarão 6 camisas?", options: ["R$ 120,00", "R$ 150,00", "R$ 200,00", "R$ 600,00"], answer: 1, explanation: "GDP (Mais camisas, mais R$). 4/6 = 100/x. 4x = 6 * 100. 4x = 600. x = 600 / 4. x = 150." },
+            { topic: "Regra de Três", difficulty: "Médio", question: "Uma torneira enche um tanque em 6 horas. Três torneiras iguais encheriam o mesmo tanque em:", options: ["18 horas", "9 horas", "3 horas", "2 horas"], answer: 3, explanation: "GIP (Mais torneiras, menos tempo). 1 torneira = 6h. 3 torneiras = x. Invertendo a coluna das torneiras: 3/1 = 6/x. 3x = 6. x = 2 horas." },
+            { topic: "Regra de Três", difficulty: "Médio", question: "Um carro a 60 km/h faz um percurso em 2 horas. Se fizesse a 80 km/h, em quanto tempo faria?", options: ["1,5 horas (1h 30min)", "2,6 horas", "3 horas", "1 hora"], answer: 0, explanation: "GIP (Mais velocidade, menos tempo). 60 km/h = 2h. 80 km/h = x. Invertendo: 80/60 = 2/x. 80x = 120. x = 120/80. x = 1,5 horas." },
+            { topic: "Regra de Três", difficulty: "Médio", question: "Para fazer um bolo, uso 300g de farinha e 2 ovos. Se eu quiser usar 900g de farinha, quantos ovos precisarei?", options: ["4 ovos", "5 ovos", "6 ovos", "9 ovos"], answer: 2, explanation: "GDP (Mais farinha, mais ovos). 300g = 2 ovos. 900g = x. 300/900 = 2/x. 300x = 1800. x = 1800 / 300. x = 6 ovos." },
+            { topic: "Regra de Três", difficulty: "Médio", question: "Na Regra de Três Simples, quando as grandezas são Inversamente Proporcionais (GIP), o que devemos fazer antes de multiplicar em cruz?", options: ["Não multiplicar em cruz", "Somar os valores", "Inverter uma das colunas (razões)", "Inverter as duas colunas"], answer: 2, explanation: "Em grandezas inversamente proporcionais (GIP), devemos inverter uma das colunas antes de montar a proporção e multiplicar em cruz." },
+            { topic: "Proporcionalidade", difficulty: "Médio", question: "A quantidade de ração e o número de dias que ela dura (para 1 cão) são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Sempre 30 dias"], answer: 0, explanation: "Quanto MAIS ração eu compro, MAIS dias ela dura. Elas aumentam juntas, são Diretamente Proporcionais." },
+            { topic: "Proporcionalidade", difficulty: "Médio", question: "O número de cães e o número de dias que um pacote de ração dura são:", options: ["Diretamente Proporcionais", "Inversamente Proporcionais", "Não proporcionais", "Sempre 30 dias"], answer: 1, explanation: "Quanto MAIS cães comendo, MENOS dias a ração dura. Elas se movem em direções opostas, são Inversamente Proporcionais." },
+
+            // NÍVEL DIFÍCIL (8 Questões)
+            { topic: "Razão e Proporção", difficulty: "Difícil", question: "A razão entre a idade de Pedro e João é 2/3. Se a soma das idades é 40 anos, qual a idade de João?", options: ["16 anos", "20 anos", "24 anos", "30 anos"], answer: 2, explanation: "P/J = 2/3 e P+J=40. Pela proporção, P=2x e J=3x. 2x + 3x = 40. 5x = 40. x = 8. A idade de João é 3x = 3 * 8 = 24 anos." },
+            { topic: "Razão e Proporção", difficulty: "Difícil", question: "A razão entre a altura de um prédio e sua sombra é 5/4. Se a sombra mede 16 metros, qual a altura do prédio?", options: ["12,8 metros", "20 metros", "16 metros", "25 metros"], answer: 1, explanation: "Altura / Sombra = 5 / 4. A / 16 = 5 / 4. 4A = 16 * 5. 4A = 80. A = 80 / 4. A = 20 metros." },
+            { topic: "Razão e Proporção", difficulty: "Difícil", question: "Se 2/3 = x/12, e 5/y = x/8, qual o valor de 'y'?", options: ["y = 8", "y = 10", "y = 5", "y = 20"], answer: 1, explanation: "Primeiro, achamos x: 2/3 = x/12 -> 3x = 24 -> x = 8. Agora substituímos x na segunda: 5/y = 8/8. 5/y = 1. y = 5." },
+            { topic: "Regra de Três", difficulty: "Difícil", question: "5 máquinas produzem 100 peças em 1 hora. Quantas peças 8 máquinas produziriam em 1 hora?", options: ["160 peças", "120 peças", "800 peças", "62,5 peças"], answer: 0, explanation: "GDP (Mais máquinas, mais peças). 5/8 = 100/x. 5x = 800. x = 160 peças." },
+            { topic: "Regra de Três", difficulty: "Difícil", question: "Para pintar um muro, 6 pintores levam 4 dias. Se 2 pintores faltarem, quantos dias levará?", options: ["6 dias", "3 dias", "8 dias", "5 dias"], answer: 0, explanation: "Se 2 faltam, sobram 4 pintores. GIP (Menos pintores, mais dias). 6 pintores = 4 dias. 4 pintores = x. Invertendo pintores: 4/6 = 4/x. 4x = 24. x = 6 dias." },
+            { topic: "Regra de Três", difficulty: "Difícil", question: "Uma impressora imprime 150 páginas em 5 minutos. Quantas páginas ela imprime em 8 minutos?", options: ["240 páginas", "180 páginas", "153 páginas", "93,75 páginas"], answer: 0, explanation: "GDP (Mais minutos, mais páginas). 150/x = 5/8. 5x = 150 * 8. 5x = 1200. x = 1200 / 5. x = 240 páginas." },
+            { topic: "Regra de Três", difficulty: "Difícil", question: "Um avião, a 800 km/h, leva 45 minutos para ir de A até B. Se voasse a 600 km/h, levaria:", options: ["33,75 minutos", "50 minutos", "60 minutos (1 hora)", "120 minutos (2 horas)"], answer: 2, explanation: "GIP (Menos velocidade, mais tempo). 800 km/h = 45 min. 600 km/h = x. Invertendo: 600/800 = 45/x. 600x = 800 * 45. 600x = 36000. x = 36000 / 600. x = 60 minutos." },
+            { topic: "Regra de Três", difficulty: "Difícil", question: "Três torneiras enchem uma piscina em 10 horas. Se mais duas torneiras (iguais) forem abertas, em quanto tempo a piscina encherá?", options: ["4 horas", "6 horas", "15 horas", "5 horas"], answer: 1, explanation: "Tínhamos 3 torneiras, agora temos 5 (3+2). GIP (Mais torneiras, menos tempo). 3 torneiras = 10h. 5 torneiras = x. Invertendo: 5/3 = 10/x. 5x = 30. x = 6 horas." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; // Ajustado para 0.1
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.textContent = question.question;
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect; // Set state on first try
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    // This is the user's request: was wrong, retried, now correct
+                    state.userAnswers[state.currentQuestionIndex] = true; // Update state to correct
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // Fire confetti on correction
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm">${explanation}</p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                // Adiciona o listener para o novo botão
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                // Limpa o feedback
+                feedbackContainer.innerHTML = '';
+                
+                // Re-abilita as opções e reseta os estilos
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    // Reset classes, keeping base styles
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); /* Alterado para ring-orange-500 */
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            // Assegura que os botões de modo tenham a cor correta no início
+            btnLearn.classList.add('active'); // Começa no modo 'learn'
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            // Garante que o estado inicial (learn) esteja correto
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>

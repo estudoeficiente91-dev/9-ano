@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Área de Figuras Planas (7º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Área de Figuras Planas</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre a área de Quadriláteros e Triângulos (7º Ano).</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#conceitos" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. O que é Área?</a></li>
+                            <li><a href="#quadrilateros" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Área de Quadriláteros</a></li>
+                            <li><a href="#triangulos" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. Área de Triângulos</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    <section id="conceitos" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. O que é Área?</h2>
+                            
+                            <p><strong class="prose-strong">Área</strong> é a medida do <strong class="text-highlight">espaço interno</strong> ou da <strong class="text-highlight">superfície</strong> de uma figura plana.</p>
+                            <p>Pense em "área" como a quantidade de "quadradinhos" (unidades) que cabem dentro de uma forma.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Unidades de Medida</h3>
+                            <p>Como a área mede uma superfície (que tem duas dimensões: comprimento e largura), sua unidade de medida é sempre <strong class="text-highlight">elevada ao quadrado</strong>.</p>
+                            <ul>
+                                <li>Metro quadrado (m²) - para medir uma casa ou um terreno.</li>
+                                <li>Centímetro quadrado (cm²) - para medir uma folha de papel.</li>
+                                <li>Quilômetro quadrado (km²) - para medir uma cidade ou um país.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="quadrilateros" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Área de Quadriláteros</h2>
+                            <p>Quadriláteros são figuras geométricas que possuem quatro lados.</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Quadrado</h3>
+                            <p>O quadrado tem 4 lados iguais. Para calcular sua área, basta multiplicar um lado por ele mesmo.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">Área = Lado × Lado  (ou A = L²)</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Retângulo</h3>
+                            <p>O retângulo tem lados opostos iguais. Para calcular sua área, multiplicamos o lado maior (base) pelo lado menor (altura).</p>
+                            <p class="text-center text-xl font-bold accent-secondary">Área = Base × Altura (ou A = b × h)</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Paralelogramo</h3>
+                            <p>O paralelogramo é como um "retângulo inclinado". Sua área é calculada da mesma forma que o retângulo, mas atenção: a <strong class="text-highlight">altura (h)</strong> é a distância perpendicular (reta) entre a base e o lado oposto, não o lado inclinado!</p>
+                            <p class="text-center text-xl font-bold accent-secondary">Área = Base × Altura (ou A = b × h)</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Losango</h3>
+                            <p>O losango é o "diamante" (parece uma pipa). Ele tem duas linhas internas chamadas diagonais (uma maior e outra menor). A área é metade da multiplicação dessas diagonais.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">Área = (Diagonal maior × Diagonal menor) / 2  (ou A = D × d / 2)</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Trapézio</h3>
+                            <p>O trapézio tem duas bases paralelas (uma maior e outra menor). A fórmula parece complicada, mas é simples: somamos as duas bases, multiplicamos pela altura e dividimos tudo por 2.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">Área = [(Base maior + Base menor) × Altura] / 2  (ou A = (B + b) × h / 2)</p>
+                        </article>
+                    </section>
+
+                    <section id="triangulos" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. Área de Triângulos</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Fórmula Principal</h3>
+                            <p>O triângulo é a figura de 3 lados. Pense nele como <strong class="text-highlight">metade de um retângulo</strong> ou metade de um paralelogramo.</p>
+                            <p>Por isso, sua fórmula de área é exatamente a fórmula do retângulo (base × altura), mas <strong class="text-highlight">dividida por 2</strong>.</p>
+                            <p class="text-center text-xl font-bold accent-secondary">Área = (Base × Altura) / 2  (ou A = b × h / 2)</p>
+                            <p><strong>Atenção:</strong> Assim como no paralelogramo, a <strong class="prose-strong">altura (h)</strong> do triângulo é a medida reta (perpendicular) da base até o vértice (ponta) oposto.</p>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões)
+            { topic: "Conceitos de Área", difficulty: "Fácil", question: "O que 'Área' mede?", options: ["O comprimento de uma linha", "O espaço dentro de uma figura", "O peso de uma figura", "A distância ao redor da figura"], answer: 1, explanation: "Área mede a superfície, ou seja, o espaço interno de uma figura plana." },
+            { topic: "Conceitos de Área", difficulty: "Fácil", question: "Qual é a unidade de medida correta para a área de uma sala?", options: ["Metros (m)", "Metros quadrados (m²)", "Metros cúbicos (m³)", "Quilogramas (kg)"], answer: 1, explanation: "Unidades de área são sempre 'ao quadrado' (duas dimensões). Metros (m) medem comprimento." },
+            { topic: "Quadriláteros", difficulty: "Fácil", question: "Qual é a fórmula da área do Quadrado?", options: ["Base × Altura", "Lado × Lado", "Base + Altura", "Lado × 4"], answer: 1, explanation: "A área do quadrado é Lado vezes Lado (A = L²)." },
+            { topic: "Quadriláteros", difficulty: "Fácil", question: "Qual é a fórmula da área do Retângulo?", options: ["Base × Altura", "Lado × Lado", "Base + Altura", "Lado × 2"], answer: 0, explanation: "A área do retângulo é Base vezes Altura (A = b × h)." },
+            { topic: "Triângulos", difficulty: "Fácil", question: "Qual é a fórmula da área do Triângulo?", options: ["Base × Altura", "(Base × Altura) / 2", "Base + Altura + Lado", "(Base + Altura) / 2"], answer: 1, explanation: "A área do triângulo é Base vezes Altura, dividido por 2 (A = b × h / 2), pois ele é metade de um retângulo." },
+            { topic: "Quadriláteros", difficulty: "Fácil", question: "A fórmula 'Base × Altura' (A = b × h) serve para quais figuras?", options: ["Retângulo e Triângulo", "Quadrado e Losango", "Retângulo e Paralelogramo", "Trapézio e Quadrado"], answer: 2, explanation: "A fórmula A = b × h é usada para calcular a área do Retângulo e também do Paralelogramo." },
+            { topic: "Quadriláteros", difficulty: "Fácil", question: "Um quadrado tem lado de 5 cm. Qual é a sua área?", options: ["20 cm²", "25 cm²", "10 cm²", "5 cm²"], answer: 1, explanation: "Área = Lado × Lado. A = 5 × 5 = 25 cm²." },
+            { topic: "Quadriláteros", difficulty: "Fácil", question: "Um retângulo tem base 6m e altura 4m. Qual é a sua área?", options: ["24 m²", "20 m²", "10 m²", "12 m²"], answer: 0, explanation: "Área = Base × Altura. A = 6 × 4 = 24 m²." },
+            { topic: "Quadriláteros", difficulty: "Fácil", question: "Qual figura usa a fórmula A = (D × d) / 2 ?", options: ["Trapézio", "Triângulo", "Losango", "Paralelogramo"], answer: 2, explanation: "A área do Losango é (Diagonal maior × Diagonal menor) / 2." },
+            { topic: "Quadriláteros", difficulty: "Fácil", question: "Qual figura usa a fórmula A = [(B + b) × h] / 2 ?", options: ["Trapézio", "Triângulo", "Losango", "Paralelogramo"], answer: 0, explanation: "A área do Trapézio é (Base maior + Base menor) × Altura / 2." },
+
+            // NÍVEL MÉDIO (12 Questões)
+            { topic: "Triângulos", difficulty: "Médio", question: "Um triângulo tem base 10 cm e altura 6 cm. Qual é a sua área?", options: ["60 cm²", "30 cm²", "16 cm²", "15 cm²"], answer: 1, explanation: "Área = (Base × Altura) / 2. A = (10 × 6) / 2 = 60 / 2 = 30 cm²." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "Um paralelogramo tem base 8m e altura 5m. Qual é a sua área?", options: ["40 m²", "20 m²", "26 m²", "13 m²"], answer: 0, explanation: "A área do paralelogramo é Base × Altura (A = b × h). A = 8 × 5 = 40 m²." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "Um losango tem Diagonal maior (D) = 10 cm e diagonal menor (d) = 8 cm. Qual a área?", options: ["80 cm²", "18 cm²", "36 cm²", "40 cm²"], answer: 3, explanation: "Área = (D × d) / 2. A = (10 × 8) / 2 = 80 / 2 = 40 cm²." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "Um trapézio tem Base maior (B) = 12 cm, base menor (b) = 8 cm e altura (h) = 5 cm. Qual a área?", options: ["100 cm²", "50 cm²", "480 cm²", "25 cm²"], answer: 1, explanation: "Área = [(B + b) × h] / 2. A = [(12 + 8) × 5] / 2 = [20 × 5] / 2 = 100 / 2 = 50 cm²." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "Se a área de um quadrado é 36 m², quanto mede seu lado?", options: ["4 m", "6 m", "9 m", "18 m"], answer: 1, explanation: "Área = L². L² = 36. L = √36. L = 6 m." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "A área de um retângulo é 45 cm². Se a base mede 9 cm, qual a altura?", options: ["5 cm", "10 cm", "36 cm", "405 cm"], answer: 0, explanation: "Área = b × h. 45 = 9 × h. h = 45 / 9. h = 5 cm." },
+            { topic: "Triângulos", difficulty: "Médio", question: "Um triângulo tem área de 20 m². Se sua base mede 10 m, qual é a sua altura?", options: ["2 m", "4 m", "5 m", "10 m"], answer: 1, explanation: "Área = (b × h) / 2. 20 = (10 × h) / 2. 40 = 10 × h. h = 40 / 10. h = 4 m." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "Um jardim retangular mede 10m de comprimento por 7m de largura. Qual a área do jardim?", options: ["17 m²", "34 m²", "70 m²", "700 m²"], answer: 2, explanation: "Sendo um retângulo, a área é Base × Altura. A = 10 × 7 = 70 m²." },
+            { topic: "Triângulos", difficulty: "Médio", question: "Um triângulo tem base 7m e altura 4m. Qual é a sua área?", options: ["11 m²", "22 m²", "28 m²", "14 m²"], answer: 3, explanation: "Área = (Base × Altura) / 2. A = (7 × 4) / 2 = 28 / 2 = 14 m²." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "Um losango tem área de 30 cm². Se a Diagonal maior mede 10 cm, quanto mede a diagonal menor?", options: ["3 cm", "6 cm", "5 cm", "15 cm"], answer: 1, explanation: "Área = (D × d) / 2. 30 = (10 × d) / 2. 60 = 10 × d. d = 60 / 10. d = 6 cm." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "O que acontece com a área de um quadrado se você dobrar o tamanho do seu lado?", options: ["A área dobra", "A área não muda", "A área quadruplica", "A área cai pela metade"], answer: 2, explanation: "Se L=2, A=4. Se dobrar o lado (L=4), A=16. A área foi de 4 para 16, ou seja, quadruplicou (4x)." },
+            { topic: "Quadriláteros", difficulty: "Médio", question: "Um trapézio tem Base maior (B) = 15m, base menor (b) = 5m e altura (h) = 10m. Qual a área?", options: ["100 m²", "200 m²", "150 m²", "50 m²"], answer: 0, explanation: "Área = [(B + b) × h] / 2. A = [(15 + 5) × 10] / 2 = [20 × 10] / 2 = 200 / 2 = 100 m²." },
+
+            // NÍVEL DIFÍCIL (8 Questões)
+            { topic: "Quadriláteros", difficulty: "Difícil", question: "Um terreno retangular tem 25m de comprimento. Se a área total é 500 m², qual a largura?", options: ["10 m", "15 m", "20 m", "25 m"], answer: 2, explanation: "Área = b × h. 500 = 25 × h. h = 500 / 25. h = 20 m." },
+            { topic: "Quadriláteros", difficulty: "Difícil", question: "Um quadrado tem um perímetro de 28 cm. Qual é a sua área?", options: ["49 cm²", "28 cm²", "56 cm²", "7 cm²"], answer: 0, explanation: "Perímetro é a soma dos 4 lados. 28 / 4 = 7 cm por lado. Área = L² = 7² = 49 cm²." },
+            { topic: "Triângulos", difficulty: "Difícil", question: "A área de um triângulo é 48 cm². A altura é 8 cm. Qual a base?", options: ["6 cm", "8 cm", "12 cm", "16 cm"], answer: 2, explanation: "Área = (b × h) / 2. 48 = (b × 8) / 2. 96 = b × 8. b = 96 / 8. b = 12 cm." },
+            { topic: "Quadriláteros", difficulty: "Difícil", question: "A área de um trapézio é 60 m². A altura é 6m. A Base maior é 12m. Qual a base menor (b)?", options: ["8 m", "10 m", "15 m", "20 m"], answer: 0, explanation: "Área = [(B + b) × h] / 2. 60 = [(12 + b) × 6] / 2. 60 = (12 + b) × 3. 20 = 12 + b. b = 8 m." },
+            { topic: "Quadriláteros", difficulty: "Difícil", question: "Quantos azulejos quadrados de 20cm de lado preciso para cobrir um piso retangular de 4m por 2m?", options: ["100 azulejos", "150 azulejos", "200 azulejos", "400 azulejos"], answer: 2, explanation: "Área do piso = 4m × 2m = 8 m². Área do azulejo = 0,2m × 0,2m = 0,04 m². (Cuidado com as unidades!). Nº = 8 / 0,04 = 200 azulejos." },
+            { topic: "Triângulos", difficulty: "Difícil", question: "Um triângulo retângulo tem catetos (lados que formam 90°) medindo 6m e 8m. Qual a sua área?", options: ["48 m²", "14 m²", "24 m²", "12 m²"], answer: 2, explanation: "Em um triângulo retângulo, um cateto é a base e o outro é a altura. A = (b × h) / 2. A = (6 × 8) / 2 = 48 / 2 = 24 m²." },
+            { topic: "Quadriláteros", difficulty: "Difícil", question: "O perímetro de um retângulo é 30m. A base é 10m. Qual a área?", options: ["50 m²", "100 m²", "150 m²", "300 m²"], answer: 0, explanation: "Perímetro = 2b + 2h. 30 = 2(10) + 2h. 30 = 20 + 2h. 10 = 2h. h = 5m. Área = b × h = 10 × 5 = 50 m²." },
+            { topic: "Quadriláteros", difficulty: "Difícil", question: "Um losango está inscrito (desenhado dentro) de um retângulo de 10cm por 6cm. As diagonais do losango são do tamanho dos lados do retângulo. Qual a área do losango?", options: ["60 cm²", "30 cm²", "16 cm²", "15 cm²"], answer: 1, explanation: "As diagonais D e d são 10cm e 6cm. Área = (D × d) / 2 = (10 × 6) / 2 = 60 / 2 = 30 cm²." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; // Ajustado para 0.1
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.textContent = question.question;
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect; // Set state on first try
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    // This is the user's request: was wrong, retried, now correct
+                    state.userAnswers[state.currentQuestionIndex] = true; // Update state to correct
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // Fire confetti on correction
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm">${explanation}</p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                // Adiciona o listener para o novo botão
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                // Limpa o feedback
+                feedbackContainer.innerHTML = '';
+                
+                // Re-abilita as opções e reseta os estilos
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    // Reset classes, keeping base styles
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); /* Alterado para ring-orange-500 */
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            // Assegura que os botões de modo tenham a cor correta no início
+            btnLearn.classList.add('active'); // Começa no modo 'learn'
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            // Garante que o estado inicial (learn) esteja correto
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
