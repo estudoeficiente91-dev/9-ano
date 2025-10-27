@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Ásia e Oriente Médio (9º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Ásia e Oriente Médio (9º Ano)</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre a Guerra Fria na Ásia, conflitos no Oriente Médio e a China moderna.</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#guerra_fria_asia" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Ásia na Guerra Fria</a></li>
+                            <li><a href="#guerra_vietna" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Guerra do Vietnã</a></li>
+                            <li><a href="#china_economia" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. China: Economia de Mercado</a></li>
+                            <li><a href="#massacre_tiananmen" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Massacre da Praça da Paz Celestial</a></li>
+                            <li><a href="#china_taiwan" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">5. China e Taiwan</a></li>
+                            <li><a href="#movimento_sionista" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">6. Movimento Sionista</a></li>
+                            <li><a href="#guerra_arabe_israelense" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">7. Guerra Árabe-Israelense</a></li>
+                            <li><a href="#pan_arabismo" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">8. Pan-Arabismo</a></li>
+                            <li><a href="#petroleo" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">9. O Petróleo no Oriente Médio</a></li>
+                            <li><a href="#guerra_golfo" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">10. Guerra do Golfo</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    
+                    <section id="guerra_fria_asia" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. Ásia e a Guerra Fria</h2>
+                            <p>Após a Segunda Guerra Mundial, a Ásia tornou-se um dos principais palcos da disputa entre os <strong class="text-highlight">EUA (capitalista)</strong> e a <strong class="text-highlight">URSS (comunista)</strong>.</p>
+                            <ul>
+                                <li><strong>Revolução Chinesa (1949):</strong> A China se tornou comunista sob o comando de Mao Tsé-Tung, o que foi uma grande derrota para os EUA.</li>
+                                <li><strong>Guerra da Coreia (1950-1953):</strong> A Coreia foi dividida: Norte (apoiado pela URSS e China) e Sul (apoiado pelos EUA). A guerra terminou em um impasse, e a divisão se mantém até hoje.</li>
+                                <li><strong>Independências:</strong> Movimentos de independência na Índia, Indonésia e outros países foram influenciados por essa disputa.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="guerra_vietna" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Guerra do Vietnã (1955-1975)</h2>
+                            <p>Foi o conflito mais longo e sangrento da Guerra Fria na Ásia.</p>
+                            <ul>
+                                <li><strong>Divisão:</strong> O Vietnã foi dividido em <strong class="prose-strong">Vietnã do Norte</strong> (comunista, líder Ho Chi Minh, capital Hanói) e <strong class="prose-strong">Vietnã do Sul</strong> (capitalista, apoiado pelos EUA, capital Saigon).</li>
+                                <li><strong>A Guerra:</strong> O Norte tentou reunificar o país sob o comunismo. Os EUA entraram na guerra para impedir o "efeito dominó" (medo de que outros países asiáticos se tornassem comunistas).</li>
+                                <li><strong>Vietcongs:</strong> Eram guerrilheiros comunistas que atuavam escondidos no Vietnã do Sul, dificultando muito a ação do exército americano.</li>
+                                <li><strong>Resultado:</strong> Mesmo com poder militar superior, os EUA sofreram muitas baixas e enfrentaram protestos em casa. Em 1973, os EUA se retiraram. Em 1975, o Norte invadiu o Sul e venceu a guerra, unificando o Vietnã sob o regime comunista.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="china_economia" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. China e a Economia de Mercado</h2>
+                            <p>Após a morte de Mao Tsé-Tung (1976), o novo líder <strong class="prose-strong">Deng Xiaoping</strong> iniciou reformas profundas nos anos 1980.</p>
+                            <ul>
+                                <li><strong>"Socialismo de Mercado":</strong> A China manteve o controle político do <strong class="text-highlight">Partido Comunista (PCC)</strong>, mas abriu sua economia para práticas capitalistas.</li>
+                                <li><strong>ZEEs (Zonas Econômicas Especiais):</strong> Cidades costeiras (como Shenzhen) onde empresas estrangeiras podiam se instalar, gerando empregos e atraindo tecnologia.</li>
+                                <li><strong>Resultado:</strong> Um crescimento econômico gigantesco, transformando a China na "fábrica do mundo" e, hoje, numa superpotência econômica.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="massacre_tiananmen" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Massacre da Praça da Paz Celestial (1989)</h2>
+                            <p>Também conhecido como Massacre de Tiananmen.</p>
+                            <ul>
+                                <li><strong>Causa:</strong> As reformas econômicas de Deng Xiaoping trouxeram riqueza, mas não liberdade. Estudantes e trabalhadores começaram a protestar na Praça da Paz Celestial (em Pequim) pedindo <strong class="text-highlight">reformas políticas e democracia</strong>.</li>
+                                <li><strong>O Massacre:</strong> Em junho de 1989, o governo chinês perdeu a paciência e ordenou que o exército usasse tanques e fuzis para acabar com os protestos. Milhares de pessoas foram mortas.</li>
+                                <li><strong>Símbolo:</strong> A foto do "Homem do Tanque" (um civil solitário parando uma coluna de tanques) tornou-se um símbolo mundial de resistência.</li>
+                                <li><strong>Consequência:</strong> A China deixou claro que permitiria a abertura econômica, mas não a abertura política.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="china_taiwan" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">5. A Questão: China e Taiwan</h2>
+                            <ul>
+                                <li><strong>Origem (1949):</strong> A disputa começou no fim da Guerra Civil Chinesa. Os <strong class="prose-strong">Comunistas</strong> (liderados por Mao Tsé-Tung) venceram. Os <strong class="prose-strong">Nacionalistas</strong> (liderados por Chiang Kai-shek) fugiram e se estabeleceram na ilha de Taiwan (Formosa).</li>
+                                <li><strong>"Duas Chinas":</strong> Os Comunistas fundaram a República Popular da China (RPC, ou "China Continental"). Os Nacionalistas mantiveram a República da China (ROC, ou "Taiwan").</li>
+                                <li><strong>"Política de Uma Só China":</strong> A China Continental (RPC) afirma que Taiwan é uma província rebelde e parte de seu território. Ela se recusa a ter relações diplomáticas com qualquer país que reconheça a independência de Taiwan.</li>
+                                <li><strong>Hoje:</strong> Taiwan funciona como um país democrático e capitalista independente, mas a China continental ameaça usar a força para "reunificar" a ilha.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="movimento_sionista" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">6. Movimento Sionista</h2>
+                            <ul>
+                                <li><strong>O que foi:</strong> Um movimento político e nacionalista que surgiu no final do século XIX, fundado principalmente por <strong class="prose-strong">Theodor Herzl</strong>.</li>
+                                <li><strong>Causa:</strong> Foi uma resposta ao crescente <strong class="text-highlight">antissemitismo</strong> (ódio aos judeus) na Europa.</li>
+                                <li><strong>Objetivo:</strong> Criar um <strong class="text-highlight">Lar Nacional Judeu</strong> na região da Palestina, que era considerada a "Terra Prometida" bíblica.</li>
+                                <li><strong>Ação:</strong> O movimento incentivou a migração de judeus europeus para a Palestina, que na época era controlada pelo Império Otomano e, depois, pela Grã-Bretanha. Esse movimento é a base da criação do Estado de Israel em 1948.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="guerra_arabe_israelense" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">7. Guerra Árabe-Israelense</h2>
+                            <p>É um longo conflito entre Israel e as nações árabes vizinhas sobre a posse do território da Palestina.</p>
+                            <ul>
+                                <li><strong>Criação de Israel (1948):</strong> A ONU partilhou a Palestina em um Estado Judeu (Israel) e um Estado Árabe (Palestina). Os judeus aceitaram; os países árabes vizinhos (Egito, Jordânia, Síria, etc.) não.</li>
+                                <li><strong>Guerra de 1948 (Guerra de Independência):</strong> Imediatamente após a declaração de independência, os países árabes atacaram Israel. Israel venceu e expandiu seu território.</li>
+                                <li><strong>Guerra dos Seis Dias (1967):</strong> Em um ataque preventivo, Israel derrotou Egito, Síria e Jordânia em apenas seis dias. Israel <strong class="text-highlight">ocupou territórios</strong> cruciais: a Península do Sinai (do Egito), as Colinas de Golã (da Síria), a Cisjordânia e Jerusalém Oriental (da Jordânia) e a Faixa de Gaza (do Egito).</li>
+                                <li><strong>Guerra do Yom Kippur (1973):</strong> Egito e Síria atacaram Israel de surpresa no feriado do Yom Kippur. Israel quase perdeu, mas conseguiu reverter a situação. Esta guerra levou aos Acordos de Camp David (paz entre Israel e Egito).</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="pan_arabismo" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">8. Pan-Arabismo</h2>
+                            <ul>
+                                <li><strong>O que foi:</strong> Uma ideologia nacionalista que defendia a <strong class="text-highlight">união de todos os povos e países árabes</strong> em uma única nação ou federação.</li>
+                                <li><strong>Características:</strong> Era um movimento secular (não religioso), muitas vezes socialista e anticolonial (contra a influência dos EUA, Reino Unido e França).</li>
+                                <li><strong>Auge:</strong> Nos anos 1950 e 1960, sob a liderança de <strong class="prose-strong">Gamal Abdel Nasser</strong>, presidente do Egito.</li>
+                                <li><strong>Declínio:</strong> O movimento perdeu força após a derrota humilhante dos países árabes para Israel na <strong class="text-highlight">Guerra dos Seis Dias (1967)</strong>, que desacreditou seus líderes.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="petroleo" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">9. O Petróleo no Oriente Médio</h2>
+                            <p>O Oriente Médio possui as maiores reservas de petróleo do mundo, o que o torna uma região de imensa importância estratégica e alvo de interferência estrangeira.</p>
+                            <ul>
+                                <li><strong>OPEP (Organização dos Países Exportadores de Petróleo):</strong> Fundada em 1960 para que os países produtores (liderados por Arábia Saudita, Irã, Iraque, Kuwait, Venezuela) pudessem controlar o preço e a produção, em vez de ficarem reféns das empresas petrolíferas ocidentais.</li>
+                                <li><strong>Crise do Petróleo (1973):</strong> Após a Guerra do Yom Kippur, a OPEP (liderada pelos países árabes) impôs um <strong class="text-highlight">embargo de petróleo</strong> aos países que apoiaram Israel (como os EUA). O preço disparou, causando uma crise econômica global e mostrando o poder do petróleo como arma política.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="guerra_golfo" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">10. Guerra do Golfo (1990-1991)</h2>
+                            <ul>
+                                <li><strong>Causa:</strong> O ditador do Iraque, <strong class="prose-strong">Saddam Hussein</strong>, invadiu o pequeno país vizinho, o <strong class="prose-strong">Kuwait</strong>.</li>
+                                <li><strong>Motivos do Iraque:</strong> Saddam alegava que o Kuwait "roubava" petróleo iraquiano e cobrava dívidas da guerra Irã-Iraque. O objetivo real era tomar as reservas de petróleo do Kuwait.</li>
+                                <li><strong>A Resposta:</strong> Os EUA, temendo que Saddam controlasse o petróleo da região e invadisse a Arábia Saudita, lideraram uma coalizão militar aprovada pela ONU (Operação Tempestade no Deserto).</li>
+                                <li><strong>Resultado:</strong> O Iraque foi rapidamente derrotado e expulso do Kuwait. Saddam Hussein permaneceu no poder no Iraque, mas sob pesadas sanções econômicas.</li>
+                            </ul>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões)
+            { topic: "Ásia na Guerra Fria", difficulty: "Fácil", question: "Quais foram as duas superpotências opostas durante a Guerra Fria?", options: ["Inglaterra e França", "EUA e URSS", "China e Japão", "Alemanha e Itália"], answer: 1, explanation: "A Guerra Fria foi a disputa ideológica, política e militar entre os Estados Unidos (capitalista) e a União Soviética (comunista)." },
+            { topic: "Guerra do Vietnã", difficulty: "Fácil", question: "A Guerra do Vietnã foi um conflito entre o Vietnã do Norte (___) e o Vietnã do Sul (___).", options: ["Comunista / Capitalista", "Capitalista / Comunista", "Monarquista / Republicano", "Nacionalista / Colonialista"], answer: 0, explanation: "O Vietnã do Norte era comunista (apoiado pela URSS) e o Vietnã do Sul era capitalista (apoiado pelos EUA)." },
+            { topic: "Movimento Sionista", difficulty: "Fácil", question: "Qual era o principal objetivo do Movimento Sionista, fundado no século XIX?", options: ["Criar um Estado Judeu na Palestina", "Unir todos os países árabes", "Acabar com a OPEP", "Expulsar os EUA da Ásia"], answer: 0, explanation: "O Sionismo foi o movimento nacionalista judaico que buscava criar um lar nacional para os judeus na Palestina." },
+            { topic: "Petróleo no Oriente Médio", difficulty: "Fácil", question: "Qual é o nome da organização que controla a produção e o preço do petróleo no Oriente Médio e em outros países?", options: ["ONU", "OTAN", "OPEP", "OMC"], answer: 2, explanation: "A OPEP (Organização dos Países Exportadores de Petróleo) foi criada para defender os interesses dos países produtores." },
+            { topic: "China e Taiwan", difficulty: "Fácil", question: "Após a Revolução Comunista de 1949 na China, os nacionalistas derrotados fugiram para qual ilha?", options: ["Japão", "Filipinas", "Coreia", "Taiwan"], answer: 3, explanation: "Os nacionalistas de Chiang Kai-shek fugiram para a ilha de Taiwan (Formosa), fundando a 'outra' China." },
+            { topic: "Pan-Arabismo", difficulty: "Fácil", question: "O Pan-Arabismo foi uma ideologia que defendia a:", options: ["Criação de Israel", "União de todos os povos árabes", "Aliança com os EUA", "Guerra contra a China"], answer: 1, explanation: "O Pan-Arabismo (Pan = Todos) buscava a união política e cultural de todas as nações árabes." },
+            { topic: "Guerra do Golfo", difficulty: "Fácil", question: "Qual país o Iraque (liderado por Saddam Hussein) invadiu em 1990, dando início à Guerra do Golfo?", options: ["Irã", "Arábia Saudita", "Kuwait", "Síria"], answer: 2, explanation: "A invasão do Kuwait pelo Iraque foi o estopim para a Guerra do Golfo (1990-1991)." },
+            { topic: "China e Economia", difficulty: "Fácil", question: "Qual líder chinês iniciou as reformas econômicas (Socialismo de Mercado) após a morte de Mao?", options: ["Ho Chi Minh", "Deng Xiaoping", "Chiang Kai-shek", "Xi Jinping"], answer: 1, explanation: "Deng Xiaoping foi o líder que abriu a economia da China ao capitalismo, mantendo o controle político comunista." },
+            { topic: "Guerra Árabe-Israelense", difficulty: "Fácil", question: "O Estado de Israel foi criado oficialmente em que ano?", options: ["1917", "1945", "1948", "1967"], answer: 2, explanation: "A ONU partilhou a Palestina e o Estado de Israel declarou sua independência em 14 de maio de 1948." },
+            { topic: "Massacre da Paz Celestial", difficulty: "Fácil", question: "Os protestos na Praça da Paz Celestial (Tiananmen) em 1989 pediam principalmente:", options: ["Reformas econômicas", "Reformas políticas (Democracia)", "O fim da OPEP", "A invasão de Taiwan"], answer: 1, explanation: "Os estudantes e trabalhadores protestavam contra a falta de liberdade e pediam democracia, além das reformas econômicas." },
+
+            // NÍVEL MÉDIO (12 Questões)
+            { topic: "Guerra do Vietnã", difficulty: "Médio", question: "Quem foi o líder comunista do Vietnã do Norte?", options: ["Mao Tsé-Tung", "Pol Pot", "Ho Chi Minh", "Deng Xiaoping"], answer: 2, explanation: "Ho Chi Minh foi o líder revolucionário e fundador do Vietnã do Norte comunista." },
+            { topic: "Guerra do Vietnã", difficulty: "Médio", question: "Como eram chamados os guerrilheiros comunistas que lutavam escondidos no Vietnã do Sul?", options: ["Talibãs", "Sionistas", "Vietcongs", "Nacionalistas"], answer: 2, explanation: "Os Vietcongs eram a força de guerrilha que desgastou o exército americano no Vietnã do Sul." },
+            { topic: "Guerra Árabe-Israelense", difficulty: "Médio", question: "Na Guerra dos Seis Dias (1967), Israel conquistou territórios importantes, EXCETO:", options: ["Península do Sinai", "Faixa de Gaza", "Cisjordânia", "O Sul do Líbano"], answer: 3, explanation: "Em 1967, Israel ocupou o Sinai, Gaza, Cisjordânia e as Colinas de Golã. O Sul do Líbano foi invadido posteriormente, em 1982." },
+            { topic: "Pan-Arabismo", difficulty: "Médio", question: "Quem foi o principal líder do Pan-Arabismo e presidente do Egito nos anos 50 e 60?", options: ["Saddam Hussein", "Gamal Abdel Nasser", "Rei Faisal", "Yasser Arafat"], answer: 1, explanation: "Gamal Abdel Nasser, do Egito, foi o grande expoente do nacionalismo árabe (Pan-Arabismo)." },
+            { topic: "Movimento Sionista", difficulty: "Médio", question: "Quem é considerado o fundador do Sionismo político moderno, autor de 'O Estado Judeu'?", options: ["David Ben-Gurion", "Theodor Herzl", "Ariel Sharon", "Golda Meir"], answer: 1, explanation: "Theodor Herzl é considerado o 'pai' do movimento sionista moderno, que organizou politicamente o movimento." },
+            { topic: "China e Economia", difficulty: "Médio", question: "Como é chamada a política econômica chinesa que mistura comunismo político e capitalismo econômico?", options: ["Glasnost", "Perestroika", "Socialismo de Mercado", "Plano Marshall"], answer: 2, explanation: "A política é conhecida como 'Socialismo de Mercado' ou 'Um país, dois sistemas'." },
+            { topic: "Petróleo no Oriente Médio", difficulty: "Médio", question: "A Crise do Petróleo de 1973 foi uma retaliação da OPEP contra o apoio ocidental a Israel em qual guerra?", options: ["Guerra do Golfo", "Guerra do Vietnã", "Guerra do Yom Kippur", "Guerra dos Seis Dias"], answer: 2, explanation: "Foi uma resposta direta à Guerra do Yom Kippur (1973), quando os países árabes da OPEP embargaram petróleo aos EUA e Europa." },
+            { topic: "Guerra do Golfo", difficulty: "Médio", question: "Como foi chamada a operação militar liderada pelos EUA para libertar o Kuwait em 1991?", options: ["Operação Liberdade do Iraque", "Operação Tempestade no Deserto", "Operação Barbarossa", "Operação Overlord"], answer: 1, explanation: "A Operação Tempestade no Deserto (Desert Storm) foi a fase de combate da coalizão internacional." },
+            { topic: "China e Taiwan", difficulty: "Médio", question: "O que defende a 'Política de Uma Só China'?", options: ["Que a China e Taiwan devem ser democracias", "Que Taiwan é o governo legítimo de toda a China", "Que a China (RPC) considera Taiwan uma província rebelde", "Que a China deve anexar o Japão"], answer: 2, explanation: "A 'Política de Uma Só China' é a posição da RPC (Pequim) de que só existe uma China, e Taiwan faz parte dela." },
+            { topic: "Massacre da Paz Celestial", difficulty: "Médio", question: "Em que ano ocorreu o Massacre da Praça da Paz Celestial?", options: ["1949", "1976", "1989", "2001"], answer: 2, explanation: "O massacre ocorreu em junho de 1989, reprimindo os protestos pró-democracia." },
+            { topic: "Ásia na Guerra Fria", difficulty: "Médio", question: "Qual península asiática foi dividida em Norte (comunista) e Sul (capitalista) e palco de uma guerra (1950-53)?", options: ["Indochina", "Arábica", "Malaia", "Coreia"], answer: 3, explanation: "A Guerra da Coreia dividiu a península coreana, uma divisão que permanece até hoje." },
+            { topic: "Guerra Árabe-Israelense", difficulty: "Médio", question: "A 'Intifada', iniciada em 1987, foi uma:", options: ["Guerra entre Egito e Israel", "Revolta popular palestina nos territórios ocupados", "Invasão do Líbano", "Aliança militar árabe"], answer: 1, explanation: "A Primeira Intifada foi uma grande revolta popular (com pedras, greves) dos palestinos na Cisjordânia e Faixa de Gaza contra a ocupação israelense." },
+
+            // NÍVEL DIFÍCIL (8 Questões)
+            { topic: "China e Economia", difficulty: "Difícil", question: "O que são as ZEEs (Zonas Econômicas Especiais) criadas por Deng Xiaoping?", options: ["Zonas de exclusão militar", "Áreas onde o comunismo foi abolido", "Cidades costeiras abertas ao investimento capitalista estrangeiro", "Reservas ambientais protegidas"], answer: 2, explanation: "As ZEEs foram cruciais para a abertura da China, permitindo que empresas estrangeiras se instalassem sob regras capitalistas." },
+            { topic: "Guerra do Vietnã", difficulty: "Difícil", question: "Qual foi o resultado final da Guerra do Vietnã em 1975?", options: ["A divisão permanente do Vietnã", "A vitória do Sul e dos EUA", "A vitória do Norte e a unificação comunista do país", "A intervenção da ONU e a paz"], answer: 2, explanation: "Em 1975, dois anos após a saída dos EUA, o Vietnã do Norte invadiu e conquistou o Sul, unificando o país sob o comunismo." },
+            { topic: "Guerra Árabe-Israelense", difficulty: "Difícil", question: "A Guerra do Yom Kippur (1973) começou com um ataque surpresa de quais dois países contra Israel?", options: ["Iraque e Irã", "Líbano e Jordânia", "Egito e Síria", "Arábia Saudita e Kuwait"], answer: 2, explanation: "Egito (pelo Sinai) e Síria (pelas Colinas de Golã) lançaram um ataque coordenado para recuperar os territórios perdidos em 1967." },
+            { topic: "China e Taiwan", difficulty: "Difícil", question: "Qual era o nome do líder do Partido Nacionalista (Kuomintang) que fugiu para Taiwan em 1949?", options: ["Mao Tsé-Tung", "Deng Xiaoping", "Chiang Kai-shek", "Sun Yat-sen"], answer: 2, explanation: "Chiang Kai-shek foi o líder nacionalista que perdeu a Guerra Civil Chinesa para os comunistas de Mao Tsé-Tung." },
+            { topic: "Pan-Arabismo", difficulty: "Difícil", question: "O Pan-Arabismo de Nasser sofreu seu golpe fatal e entrou em declínio após a derrota árabe em qual guerra?", options: ["Guerra do Yom Kippur (1973)", "Guerra dos Seis Dias (1967)", "Guerra do Golfo (1991)", "Invasão do Suez (1956)"], answer: 1, explanation: "A derrota humilhante e rápida na Guerra dos Seis Dias (1967) desacreditou o projeto de união e força militar árabe de Nasser." },
+            { topic: "Movimento Sionista", difficulty: "Difícil", question: "O Sionismo moderno surgiu no final do século XIX como uma resposta direta ao:", options: ["Colapso do Império Otomano", "Antissemitismo na Europa (ex: Caso Dreyfus)", "Início da Guerra Fria", "Nacionalismo árabe"], answer: 1, explanation: "O Sionismo foi uma resposta ao antissemitismo europeu, que culminou em eventos como os 'pogroms' na Rússia e o Caso Dreyfus na França." },
+            { topic: "Guerra do Golfo", difficulty: "Difícil", question: "Qual conflito anterior (1980-1988) deixou o Iraque de Saddam Hussein endividado e foi um dos motivos para a invasão do Kuwait?", options: ["Guerra do Vietnã", "Guerra Irã-Iraque", "Guerra do Yom Kippur", "Guerra Afegã-Soviética"], answer: 1, explanation: "A longa e custosa Guerra Irã-Iraque (1980-1988) deixou o Iraque endividado, e Saddam acusou o Kuwait de cobrar essas dívidas." },
+            { topic: "Massacre da Paz Celestial", difficulty: "Difícil", question: "Qual foi a principal mensagem que o Massacre de Tiananmen (1989) passou ao mundo?", options: ["Que a China se tornaria uma democracia", "Que a China abandonaria o comunismo", "Que a China permitiria abertura econômica, mas não política", "Que a China invadiria Taiwan"], answer: 2, explanation: "O massacre mostrou que o Partido Comunista Chinês usaria qualquer força necessária para manter seu controle político, mesmo enquanto abria a economia." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; // Ajustado para 0.1
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.textContent = question.question;
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect; // Set state on first try
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    // This is the user's request: was wrong, retried, now correct
+                    state.userAnswers[state.currentQuestionIndex] = true; // Update state to correct
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // Fire confetti on correction
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm">${explanation}</p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                // Adiciona o listener para o novo botão
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                // Limpa o feedback
+                feedbackContainer.innerHTML = '';
+                
+                // Re-abilita as opções e reseta os estilos
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    // Reset classes, keeping base styles
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); /* Alterado para ring-orange-500 */
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            // Assegura que os botões de modo tenham a cor correta no início
+            btnLearn.classList.add('active'); // Começa no modo 'learn'
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            // Garante que o estado inicial (learn) esteja correto
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
