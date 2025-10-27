@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Física - Óptica (9º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Física: Óptica (9º Ano)</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre fontes de luz, reflexão, sombras, cores e o arco-íris.</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#fontes_luz" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Fontes e Feixes de Luz</a></li>
+                            <li><a href="#interacao_luz" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Interação da Luz</a></li>
+                            <li><a href="#luz_sombra" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. Luz e Sombra (Cálculos)</a></li>
+                            <li><a href="#cores_luz" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. As Luzes e Suas Cores</a></li>
+                            <li><a href="#arco_iris" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">5. O Arco-íris</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    
+                    <section id="fontes_luz" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. Fontes e Feixes de Luz</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Fontes de Luz</h3>
+                            <ul>
+                                <li><strong>Fontes Primárias (Corpos Luminosos):</strong> São corpos que <strong class="text-highlight">produzem e emitem luz própria</strong>. Ex: O Sol, uma lâmpada acesa, a chama de uma vela.</li>
+                                <li><strong>Fontes Secundárias (Corpos Iluminados):</strong> São corpos que <strong class="text-highlight">apenas refletem</strong> a luz que recebem de uma fonte primária. A maioria dos objetos ao nosso redor são fontes secundárias. Ex: A Lua, um livro, uma parede, você.</li>
+                            </ul>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Meios de Propagação</h3>
+                            <p>É como a luz se comporta ao tentar atravessar um material.</p>
+                            <ul>
+                                <li><strong>Meio Transparente:</strong> Permite que a luz atravesse <strong class="text-highlight">totalmente e de forma nítida</strong>. Vemos perfeitamente através dele. Ex: Vidro liso, ar, água pura.</li>
+                                <li><strong>Meio Translúcido:</strong> Permite que a luz atravesse, mas de <strong class="text-highlight">forma irregular e embaçada</strong>. Vemos sombras e vultos, mas sem nitidez. Ex: Vidro fosco, papel vegetal, névoa.</li>
+                                <li><strong>Meio Opaco:</strong> <strong class="text-highlight">Não permite</strong> que a luz atravesse. A luz é refletida ou absorvida. Ex: Parede de tijolos, madeira, metal.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Feixes de Luz (Raios de Luz)</h3>
+                            <p>Feixe de luz é um conjunto de raios de luz. A luz se propaga em linha reta (Princípio da Propagação Retilínea).</p>
+                            <ul>
+                                <li><strong>Paralelo (ou Cilíndrico):</strong> Os raios de luz são paralelos entre si. Ex: Luz de um laser, luz do Sol (por estar muito distante).</li>
+                                <li><strong>Convergente:</strong> Os raios de luz <strong class="text-highlight">se juntam</strong> em um único ponto. Ex: Luz passando por uma lupa.</li>
+                                <li><strong>Divergente:</strong> Os raios de luz <strong class="text-highlight">se espalham</strong> a partir de um ponto. Ex: Luz de uma lanterna, farol de um carro.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="interacao_luz" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Reflexão, Absorção e Transmissão</h2>
+                            <p>Quando a luz de uma fonte primária atinge um objeto (fonte secundária), três coisas podem acontecer:</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Reflexão</h3>
+                            <p>A luz <strong class="text-highlight">bate e volta</strong>.</p>
+                            <ul>
+                                <li><strong>Reflexão Regular (Especular):</strong> Ocorre em superfícies <strong class="prose-strong">muito lisas</strong> (polidas), como um espelho ou a superfície de um lago calmo. Os raios de luz voltam de forma organizada, permitindo a <strong class="text-highlight">formação de imagens nítidas</strong>.</li>
+                                <li><strong>Reflexão Difusa:</strong> Ocorre em superfícies <strong class="prose-strong">irregulares</strong> ou foscas (como uma parede, madeira, o chão). Os raios de luz batem e são espalhados em todas as direções. É a reflexão difusa que nos <strong class="text-highlight">permite enxergar os objetos</strong> que não têm luz própria.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Absorção</h3>
+                            <p>A luz <strong class="text-highlight">é "engolida"</strong> pelo objeto e geralmente transformada em <strong class="text-highlight">calor</strong>. É por isso que uma roupa preta (que absorve muita luz) esquenta mais no sol do que uma roupa branca (que reflete mais).</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Transmissão</h3>
+                            <p>A luz <strong class="text-highlight">atravessa</strong> o objeto. Isso acontece em meios transparentes (transmissão regular) e translúcidos (transmissão difusa).</p>
+                        </article>
+                    </section>
+
+                    <section id="luz_sombra" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. Luz e Sombra (Cálculos)</h2>
+                            <p>A formação de sombra é a principal prova do <strong class="prose-strong">Princípio da Propagação Retilínea da Luz</strong>: como a luz viaja em linha reta, ela não consegue "desviar" de um objeto opaco.</p>
+                            <ul>
+                                <li><strong>Sombra (Umbra):</strong> Região onde <strong class="text-highlight">não há</strong> passagem de luz.</li>
+                                <li><strong>Penumbra:</strong> Região onde há <strong class="text-highlight">passagem parcial</strong> de luz. A penumbra só acontece quando a fonte de luz é "extensa" (grande), como uma lâmpada fluorescente ou o Sol.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Cálculo de Sombra (Semelhança de Triângulos)</h3>
+                            <p>Podemos calcular a altura de prédios, postes ou o tamanho de sombras usando a semelhança de triângulos. O caso mais comum usa o Sol como fonte de luz.</p>
+                            <p>Como o Sol está muito longe, seus raios chegam à Terra de forma paralela. Isso significa que, no mesmo instante, o ângulo da luz que atinge o topo de um poste e o topo de uma pessoa é o mesmo, formando triângulos semelhantes.</p>
+                            
+                            <p class="text-center text-xl font-bold accent-secondary">(Altura do Objeto 1) / (Sombra do Objeto 1) = (Altura do Objeto 2) / (Sombra do Objeto 2)</p>
+
+                            <h4 class="text-xl font-semibold mt-4">Exemplo de Cálculo</h4>
+                            <p>Um poste de <strong class="text-highlight">5 metros</strong> de altura projeta uma sombra de <strong class="text-highlight">2 metros</strong> no chão. No mesmo instante, uma pessoa ao lado projeta uma sombra de <strong class="text-highlight">0,6 metros</strong>. Qual é a altura da pessoa?</p>
+                            <ul>
+                                <li>Altura do Poste (H) = 5 m</li>
+                                <li>Sombra do Poste (S) = 2 m</li>
+                                <li>Altura da Pessoa (h) = ?</li>
+                                <li>Sombra da Pessoa (s) = 0,6 m</li>
+                            </ul>
+                            <p>Montamos a proporção:</p>
+                            <p>H / S = h / s</p>
+                            <p>5 / 2 = h / 0,6</p>
+                            <p>Multiplicamos cruzado: 2 × h = 5 × 0,6</p>
+                            <p>2h = 3</p>
+                            <p>h = 3 / 2</p>
+                            <p><strong class="text-highlight">h = 1,5 metros</strong> (A pessoa tem 1,5m de altura).</p>
+                        </article>
+                    </section>
+                    
+                    <section id="cores_luz" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. As Luzes e Suas Cores</h2>
+                            <p>A luz branca (como a do Sol) não é "branca". Ela é <strong class="prose-strong">policromática</strong>, ou seja, é a mistura de todas as cores visíveis. (Isaac Newton provou isso ao decompor a luz com um prisma).</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Sistema Aditivo (Cores-Luz) - RGB</h3>
+                            <p>Usado em telas (TV, celular, monitor). São as cores primárias da LUZ. A soma (adição) delas resulta em cores mais claras.</p>
+                            <ul>
+                                <li>Cores Primárias: <strong class="text-highlight">Vermelho (R), Verde (G) e Azul (B)</strong>.</li>
+                                <li>Vermelho + Verde = <strong class="text-highlight">Amarelo</strong></li>
+                                <li>Vermelho + Azul = <strong class="text-highlight">Magenta</strong></li>
+                                <li>Verde + Azul = <strong class="text-highlight">Ciano</strong></li>
+                                <li>Vermelho + Verde + Azul = <strong class="text-highlight">Branco</strong></li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Sistema Subtrativo (Cores-Pigmento) - CMYK</h3>
+                            <p>Usado em tintas (impressora, pintura). São as cores primárias de PIGMENTOS. A mistura (subtração) delas resulta em cores mais escuras.</p>
+                            <ul>
+                                <li>Cores Primárias: <strong class="text-highlight">Ciano (C), Magenta (M) e Amarelo (Y)</strong>. (O K é o Preto, usado para economia).</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Como Vemos a Cor de um Objeto</h3>
+                            <p>A cor de um objeto (iluminado por luz branca) é a cor que ele <strong class="text-highlight">reflete</strong>.</p>
+                            <ul>
+                                <li><strong>Objeto Branco:</strong> Reflete todas as cores e não absorve quase nada.</li>
+                                <li><strong>Objeto Preto:</strong> Absorve todas as cores e não reflete quase nada (por isso esquenta).</li>
+                                <li><strong>Objeto Verde:</strong> Absorve o vermelho, o azul, o amarelo, etc., mas <strong class="text-highlight">reflete o Verde</strong>.</li>
+                                <li><strong>Dica:</strong> Se um objeto só reflete Verde, e você o ilumina apenas com uma luz Vermelha, ele parecerá <strong class="text-highlight">Preto</strong> (pois não há luz verde para ele refletir).</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="arco_iris" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">5. O Arco-íris</h2>
+                            <p>O arco-íris é um fenômeno óptico que acontece quando a luz do Sol interage com gotículas de água suspensas na atmosfera (após uma chuva, por exemplo).</p>
+                            <p>Para ver um, o <strong class="text-highlight">Sol deve estar atrás de você</strong> e a <strong class="text-highlight">chuva (ou névoa) à sua frente</strong>.</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">O Processo (Dentro da Gota)</h3>
+                            <p>A luz branca do Sol sofre três fenômenos ao entrar na gotícula de água:</p>
+                            <ol>
+                                <li><strong>Refração:</strong> A luz entra na gota (muda do ar para a água) e sua velocidade diminui, fazendo-a "quebrar" (mudar de direção).</li>
+                                <li><strong>Dispersão:</strong> Ao refratar, cada cor que compõe a luz branca se quebra em um ângulo ligeiramente diferente. O <strong class="prose-strong">vermelho se desvia menos</strong> e o <strong class="prose-strong">violeta se desvia mais</strong>. Isso decompõe a luz branca nas cores do espectro.</li>
+                                <li><strong>Reflexão Interna:</strong> As luzes coloridas batem no fundo da gota e são refletidas de volta, em direção ao observador.</li>
+                                <li>(Ocorre uma segunda refração/dispersão na saída da gota).</li>
+                            </ol>
+                            <p>O vermelho sempre aparece na parte de cima (externa) do arco-íris primário, e o violeta na parte de baixo (interna).</p>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões)
+            { topic: "Fontes de Luz", difficulty: "Fácil", question: "O Sol é considerado uma fonte de luz:", options: ["Primária (Luminosa)", "Secundária (Iluminada)", "Translúcida", "Opaca"], answer: 0, explanation: "Fontes primárias produzem luz própria, como o Sol e uma lâmpada acesa." },
+            { topic: "Fontes de Luz", difficulty: "Fácil", question: "A Lua é considerada uma fonte de luz:", options: ["Primária", "Secundária", "Transparente", "Opaca"], answer: 1, explanation: "Fontes secundárias apenas refletem a luz que recebem. A Lua reflete a luz do Sol." },
+            { topic: "Meios de Propagação", difficulty: "Fácil", question: "Uma parede de madeira, que não deixa a luz atravessar, é um meio:", options: ["Transparente", "Translúcido", "Opaco", "Primário"], answer: 2, explanation: "Meios opacos bloqueiam totalmente a passagem da luz." },
+            { topic: "Meios de Propagação", difficulty: "Fácil", question: "Um vidro liso de janela, que permite ver nitidamente através dele, é um meio:", options: ["Transparente", "Translúcido", "Opaco", "Secundário"], answer: 0, explanation: "Meios transparentes permitem a passagem nítida da luz." },
+            { topic: "Feixes de Luz", difficulty: "Fácil", question: "A luz de uma lanterna comum se espalha. Ela forma um feixe:", options: ["Paralelo", "Convergente", "Divergente", "Opaco"], answer: 2, explanation: "Feixes divergentes se espalham a partir de um ponto, como uma lanterna." },
+            { topic: "Luz e Sombra", difficulty: "Fácil", question: "A formação de sombras prova qual princípio da óptica?", options: ["A luz faz curvas", "Propagação Retilínea da Luz", "A luz é uma onda", "A luz é branca"], answer: 1, explanation: "A sombra existe porque a luz viaja em linha reta e não consegue desviar de objetos opacos." },
+            { topic: "Interação da Luz", difficulty: "Fácil", question: "O que é reflexão difusa?", options: ["Quando a luz atravessa o objeto", "Quando a luz forma uma imagem nítida (espelho)", "Quando a luz bate e é espalhada (vemos o objeto)", "Quando a luz é absorvida e vira calor"], answer: 2, explanation: "Reflexão difusa ocorre em superfícies irregulares e nos permite ver os objetos." },
+            { topic: "Cores da Luz", difficulty: "Fácil", question: "A luz branca do Sol é, na verdade:", options: ["Policromática (mistura de todas as cores)", "Monocromática (uma cor só)", "Translúcida", "Preta"], answer: 0, explanation: "A luz branca é policromática, uma mistura de todas as cores do espectro visível." },
+            { topic: "Cores da Luz", difficulty: "Fácil", question: "Por que vemos um objeto como 'preto'?", options: ["Porque ele reflete a luz preta", "Porque ele reflete todas as cores", "Porque ele absorve todas as cores", "Porque ele é transparente"], answer: 2, explanation: "O preto não é uma cor-luz, é a ausência de luz. Um objeto preto absorve quase toda a luz que chega nele." },
+            { topic: "Arco-íris", difficulty: "Fácil", question: "O que é necessário para vermos um arco-íris?", options: ["Sol e gotículas de água", "Apenas Sol forte", "Apenas chuva", "Lua cheia e névoa"], answer: 0, explanation: "O arco-íris é formado pela luz do Sol interagindo (refratando, dispersando, refletindo) em gotículas de água." },
+
+            // NÍVEL MÉDIO (12 Questões)
+            { topic: "Meios de Propagação", difficulty: "Médio", question: "Um vidro de banheiro (fosco), que permite a passagem de luz mas embaça a imagem, é um meio:", options: ["Opaco", "Transparente", "Translúcido", "Primário"], answer: 2, explanation: "Meios translúcidos permitem a passagem da luz, mas de forma irregular, embaçando a visão." },
+            { topic: "Feixes de Luz", difficulty: "Médio", question: "Uma lupa concentrando a luz do Sol para queimar papel forma um feixe:", options: ["Paralelo", "Convergente", "Divergente", "Difuso"], answer: 1, explanation: "Feixes convergentes juntam os raios de luz em um único ponto (o foco)." },
+            { topic: "Interação da Luz", difficulty: "Médio", question: "A formação de uma imagem nítida em um espelho é um exemplo de:", options: ["Reflexão Difusa", "Reflexão Especular (Regular)", "Absorção", "Transmissão"], answer: 1, explanation: "Reflexão especular ocorre em superfícies lisas e forma imagens." },
+            { topic: "Luz e Sombra (Cálculo)", difficulty: "Médio", question: "Um poste de 10m projeta uma sombra de 4m. No mesmo instante, uma pessoa de 1,5m projeta uma sombra de:", options: ["0,6 m", "1,0 m", "1,5 m", "2,0 m"], answer: 0, explanation: "H/S = h/s -> 10/4 = 1.5/s -> 10s = 4 * 1.5 -> 10s = 6 -> s = 0,6 m." },
+            { topic: "Luz e Sombra (Cálculo)", difficulty: "Médio", question: "Uma pessoa de 2m projeta uma sombra de 1m. No mesmo instante, um prédio projeta uma sombra de 20m. Qual a altura do prédio?", options: ["10 m", "20 m", "30 m", "40 m"], answer: 3, explanation: "H/S = h/s -> H/20 = 2/1 -> H = 2 * 20 -> H = 40 m." },
+            { topic: "Cores da Luz", difficulty: "Médio", question: "Quais são as cores primárias do sistema aditivo (LUZ), ou RGB?", options: ["Vermelho, Amarelo, Azul", "Ciano, Magenta, Amarelo", "Vermelho, Verde, Azul", "Preto e Branco"], answer: 2, explanation: "As cores primárias da LUZ (usadas em telas) são Vermelho (R), Verde (G) e Azul (B)." },
+            { topic: "Cores da Luz", difficulty: "Médio", question: "Quais são as cores primárias do sistema subtrativo (PIGMENTO), ou CMY?", options: ["Vermelho, Verde, Azul", "Ciano, Magenta, Amarelo", "Vermelho, Amarelo, Azul", "Preto e Branco"], answer: 1, explanation: "As cores primárias de PIGMENTOS (usadas em tintas) são Ciano, Magenta e Amarelo." },
+            { topic: "Cores da Luz", difficulty: "Médio", question: "No sistema de luzes (RGB), a mistura de LUZ VERDE + LUZ VERMELHA resulta em:", options: ["Branco", "Preto", "Magenta", "Amarelo"], answer: 3, explanation: "No sistema aditivo (RGB), Vermelho + Verde = Amarelo." },
+            { topic: "Cores da Luz", difficulty: "Médio", question: "Um objeto AMARELO (que reflete Vermelho+Verde), quando iluminado por uma luz AZUL pura, parecerá:", options: ["Amarelo", "Branco", "Preto", "Azul"], answer: 2, explanation: "O objeto só reflete Vermelho e Verde. Se ele só recebe luz Azul, ele não tem o que refletir. Ele absorve o azul e parece Preto." },
+            { topic: "Arco-íris", difficulty: "Médio", question: "Qual fenômeno é o principal responsável por DECOMPOR a luz branca nas cores do arco-íris?", options: ["Absorção", "Dispersão", "Reflexão Especular", "Propagação Retilínea"], answer: 1, explanation: "A Dispersão é o fenômeno onde cada cor se refrata (desvia) em um ângulo diferente, separando a luz branca." },
+            { topic: "Interação da Luz", difficulty: "Médio", question: "Quando a luz é 'engolida' por um objeto e transformada em calor, chamamos isso de:", options: ["Reflexão", "Transmissão", "Absorção", "Dispersão"], answer: 2, explanation: "Absorção é o processo em que a energia da luz é absorvida pelo material, geralmente virando calor." },
+            { topic: "Interação da Luz", difficulty: "Médio", question: "Quando a luz atravessa um material, como um vidro, chamamos isso de:", options: ["Reflexão", "Transmissão", "Absorção", "Dispersão"], answer: 1, explanation: "Transmissão é a passagem da luz através de um meio." },
+
+            // NÍVEL DIFÍCIL (8 Questões)
+            { topic: "Luz e Sombra (Cálculo)", difficulty: "Difícil", question: "Um poste de 9m projeta uma sombra de 3m. Qual a altura de uma pessoa que, no mesmo instante, projeta uma sombra de 0,5m?", options: ["1,0 m", "1,5 m", "1,8 m", "2,0 m"], answer: 1, explanation: "H/S = h/s -> 9/3 = h/0.5 -> 3 = h/0.5 -> h = 3 * 0.5 -> h = 1,5 m." },
+            { topic: "Luz e Sombra (Cálculo)", difficulty: "Difícil", question: "Uma fonte de luz pontual está a 1m de uma bola de 20cm de diâmetro. A sombra é projetada em uma parede a 4m da bola. Qual o diâmetro da sombra?", options: ["60 cm", "80 cm", "100 cm (1 m)", "120 cm (1,2 m)"], answer: 2, explanation: "Semelhança de triângulos (Câmara Escura). h/H = d/D -> 20/H = 1/(1+4) -> 20/H = 1/5 -> H = 100 cm." },
+            { topic: "Luz e Sombra (Cálculo)", difficulty: "Difícil", question: "Um poste de 6m está a 10m de uma pessoa de 1,5m. Qual o comprimento da sombra da pessoa projetada no chão (fonte no poste)?", options: ["2,5 m", "3,33 m", "4,0 m", "5,0 m"], answer: 1, explanation: "H/h = (D+s)/s -> 6/1.5 = (10+s)/s -> 4 = (10+s)/s -> 4s = 10+s -> 3s = 10 -> s = 3,33 m." },
+            { topic: "Cores da Luz", difficulty: "Difícil", question: "No sistema de luz (RGB), se misturarmos LUZ VERMELHA + LUZ CIANO, qual cor veremos?", options: ["Preto", "Branco", "Amarelo", "Magenta"], answer: 1, explanation: "Ciano é a mistura de Verde + Azul. Portanto, a mistura é Vermelho + (Verde + Azul), que são as três primárias juntas, resultando em Branco." },
+            { topic: "Cores da Luz", difficulty: "Difícil", question: "Um objeto MAGENTA (reflete Vermelho+Azul), quando iluminado por uma luz VERDE pura, parecerá:", options: ["Verde", "Branco", "Magenta", "Preto"], answer: 3, explanation: "O objeto só reflete Vermelho e Azul. Se ele só recebe luz Verde, ele não tem o que refletir. Ele absorve o verde e parece Preto." },
+            { topic: "Arco-íris", difficulty: "Difícil", question: "Quais são os 3 fenômenos ópticos que ocorrem DENTRO da gota de água para formar o arco-íris?", options: ["Refração, Dispersão e Reflexão Interna", "Reflexão, Absorção e Transmissão", "Refração, Difração e Interferência", "Convergência, Divergência e Difusão"], answer: 0, explanation: "A luz sofre refração e dispersão ao entrar, depois uma reflexão interna no fundo da gota, e novamente refração e dispersão ao sair." },
+            { topic: "Arco-íris", difficulty: "Difícil", question: "No arco-íris, a cor VERMELHA fica na parte de CIMA (externa) porque:", options: ["É a cor mais quente", "Se desvia MAIS que o violeta", "Se desvia MENOS que o violeta", "Reflete mais"], answer: 2, explanation: "A luz vermelha tem o maior comprimento de onda e sofre o menor desvio (refração/dispersão) ao passar pela gota." },
+            { topic: "Arco-íris", difficulty: "Difícil", question: "Um arco-íris secundário (mais fraco e com cores invertidas) se forma devido a:", options: ["Nuvens mais altas", "Uma reflexão difusa", "Duas reflexões internas na gota", "Poluição"], answer: 2, explanation: "O arco-íris secundário (e mais raro) ocorre quando a luz sofre duas reflexões internas dentro da gota antes de sair." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; // Ajustado para 0.1
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.textContent = question.question;
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect; // Set state on first try
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    // This is the user's request: was wrong, retried, now correct
+                    state.userAnswers[state.currentQuestionIndex] = true; // Update state to correct
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // Fire confetti on correction
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm">${explanation}</p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                // Adiciona o listener para o novo botão
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                // Limpa o feedback
+                feedbackContainer.innerHTML = '';
+                
+                // Re-abilita as opções e reseta os estilos
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    // Reset classes, keeping base styles
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); /* Alterado para ring-orange-500 */
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            // Assegura que os botões de modo tenham a cor correta no início
+            btnLearn.classList.add('active'); // Começa no modo 'learn'
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            // Garante que o estado inicial (learn) esteja correto
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
