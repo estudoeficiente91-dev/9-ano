@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Geometria Plana (9º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Script para KaTeX (renderizar fórmulas matemáticas) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMviUpHjGzWHidOKghOzzdWISdoQeUroMQCvhfuqbFPxkafpZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmFAILKNpe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURPlLJSytX1omGihIJ0zVabvsZCFitOQRSOIHdn1U6pRWvoIFQ5ATA" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Estilos do KaTeX */
+        .katex-display {
+            padding: 1em;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Geometria Plana (9º Ano)</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre perímetro, áreas e polígonos regulares.</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#perimetro_area" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Perímetro e Área</a></li>
+                            <li><a href="#areas_quadrilateros" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Áreas (Quadriláteros)</a></li>
+                            <li><a href="#areas_triang_circ" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. Áreas (Triângulo e Círculo)</a></li>
+                            <li><a href="#poligonos_regulares" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Polígonos Regulares</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    
+                    <section id="perimetro_area" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. Perímetro e Conceito de Área</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Perímetro</h3>
+                            <p>O <strong class="prose-strong">Perímetro (P)</strong> de uma figura plana é a <strong class="text-highlight">soma das medidas de todos os seus lados</strong>. É, basicamente, a medida do contorno da figura.</p>
+                            <ul>
+                                <li><strong>Quadrado</strong> de lado $l$: $P = l + l + l + l = 4 \cdot l$</li>
+                                <li><strong>Retângulo</strong> de base $b$ e altura $h$: $P = b + h + b + h = 2 \cdot (b + h)$</li>
+                                <li><strong>Triângulo</strong> de lados $a$, $b$, $c$: $P = a + b + c$</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Área</h3>
+                            <p>A <strong class="prose-strong">Área (A)</strong> é a <strong class="text-highlight">medida da superfície</strong> de uma figura plana. É o "espaço interno" da figura. A unidade de medida da área é sempre ao quadrado (Ex: $m^2, cm^2$).</p>
+                        </article>
+                    </section>
+                    
+                    <section id="areas_quadrilateros" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Área de Quadriláteros</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Quadrado</h3>
+                            <p>Quadrilátero com 4 lados iguais ($l$) e 4 ângulos retos (90º).</p>
+                            <div class="katex-display">A = l \cdot l = l^2</div>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Retângulo</h3>
+                            <p>Quadrilátero com 2 pares de lados iguais e 4 ângulos retos (90º). Os lados são a base ($b$) e a altura ($h$).</p>
+                            <div class="katex-display">A = b \cdot h</div>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Losango</h3>
+                            <p>Quadrilátero com 4 lados iguais. Suas diagonais ($D$ - maior e $d$ - menor) são perpendiculares.</p>
+                            <div class="katex-display">A = \frac{D \cdot d}{2}</div>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Trapézio</h3>
+                            <p>Quadrilátero com apenas um par de lados paralelos. Esses lados são a Base maior ($B$) e a base menor ($b$). A distância entre as bases é a altura ($h$).</p>
+                            <div class="katex-display">A = \frac{(B + b) \cdot h}{2}</div>
+                        </article>
+                    </section>
+                    
+                    <section id="areas_triang_circ" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. Área do Triângulo e do Círculo</h2>
+
+                            <h3 class="text-2xl font-semibold mt-6">Triângulo (Fórmula Padrão)</h3>
+                            <p>A área de qualquer triângulo é metade do produto da sua base ($b$) pela sua altura ($h$).</p>
+                            <div class="katex-display">A = \frac{b \cdot h}{2}</div>
+
+                            <h3 class="text-2xl font-semibold mt-6">Triângulo Equilátero</h3>
+                            <p>Triângulo com os 3 lados iguais ($l$). Sua área pode ser calculada de forma especial se soubermos apenas o lado:</p>
+                            <div class="katex-display">A = \frac{l^2 \sqrt{3}}{4}</div>
+
+                            <h3 class="text-2xl font-semibold mt-6">Círculo e Circunferência</h3>
+                            <p>O círculo é a superfície delimitada por uma circunferência. O elemento principal é o raio ($r$). Usamos a constante $\pi$ (Pi $\approx 3,14$).</p>
+                            <p>O <strong class="prose-strong">Perímetro</strong> do círculo (chamado de Comprimento da Circunferência) é:</p>
+                            <div class="katex-display">C = 2 \cdot \pi \cdot r</div>
+                            <p>A <strong class="prose-strong">Área</strong> do círculo é:</p>
+                            <div class="katex-display">A = \pi \cdot r^2</div>
+                        </article>
+                    </section>
+                    
+                    <section id="poligonos_regulares" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Polígonos Regulares (Inscritos)</h2>
+                            <p>Polígonos regulares são aqueles com todos os lados e ângulos iguais. Vamos focar nos polígonos inscritos numa circunferência de raio $R$.</p>
+                            <p>O <strong class="prose-strong">Apótema ($a$)</strong> é o segmento de reta que vai do <strong class="text-highlight">centro do polígono</strong> até o <strong class="text-highlight">ponto médio de um dos seus lados</strong>, formando um ângulo de 90º com esse lado.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Triângulo Equilátero (Inscrito)</h3>
+                            <p>Dividimos o triângulo em 3 triângulos isósceles a partir do centro.</p>
+                            <ul>
+                                <li><strong class="prose-strong">Lado ($l$):</strong> O lado do triângulo em função do raio $R$.</li>
+                                <li><strong class="prose-strong">Apótema ($a$):</strong> A altura desse "triângulo interno".</li>
+                            </ul>
+                            <div class="katex-display">l = R\sqrt{3} \quad | \quad a = \frac{R}{2}</div>
+                            <p>Repare que $l$ é o lado do triângulo e $R$ é o raio da circunferência onde ele está inscrito.</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Hexágono Regular (Inscrito)</h3>
+                            <p>O hexágono regular é especial, pois ele é formado por <strong class="text-highlight">6 triângulos equiláteros</strong> juntos.</p>
+                            <ul>
+                                <li><strong class="prose-strong">Lado ($l$):</strong> O lado do hexágono é <strong class="text-highlight">exatamente igual</strong> ao raio $R$.</li>
+                                <li><strong class="prose-strong">Apótema ($a$):</strong> O apótema do hexágono é a <strong class="text-highlight">altura de um dos triângulos equiláteros</strong> que o formam.</li>
+                            </ul>
+                            <div class="katex-display">l = R \quad | \quad a = \frac{R\sqrt{3}}{2}</div>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Área de Polígonos Regulares</h3>
+                            <p>A área de qualquer polígono regular pode ser calculada pela fórmula geral:</p>
+                            <div class="katex-display">A = \frac{P \cdot a}{2} \quad \text{(Área = Perímetro $\cdot$ Apótema / 2)}</div>
+                            <p>Para o <strong class="prose-strong">Hexágono Regular</strong>, como ele é formado por 6 triângulos equiláteros de lado $l = R$, sua área é:</p>
+                            <div class="katex-display">A = 6 \cdot \left( \frac{l^2 \sqrt{3}}{4} \right) = \frac{3 \cdot l^2 \sqrt{3}}{2}</div>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões)
+            { topic: "Perímetro", difficulty: "Fácil", question: "Qual o perímetro de um quadrado com lado de 5 cm?", options: ["20 cm", "25 cm", "10 cm", "15 cm"], answer: 0, explanation: "O perímetro do quadrado é a soma dos 4 lados: P = 4 * l = 4 * 5 = 20 cm." },
+            { topic: "Área (Quadriláteros)", difficulty: "Fácil", question: "Qual a área de um quadrado com lado de 5 cm?", options: ["20 cm²", "25 cm²", "10 cm²", "15 cm²"], answer: 1, explanation: "A área do quadrado é o lado ao quadrado: A = l² = 5² = 25 cm²." },
+            { topic: "Perímetro", difficulty: "Fácil", question: "Qual o perímetro de um retângulo com base 10m e altura 4m?", options: ["14 m", "40 m", "28 m", "24 m"], answer: 2, explanation: "O perímetro do retângulo é P = 2 * (b + h) = 2 * (10 + 4) = 2 * 14 = 28 m." },
+            { topic: "Área (Quadriláteros)", difficulty: "Fácil", question: "Qual a área de um retângulo com base 10m e altura 4m?", options: ["14 m²", "40 m²", "28 m²", "24 m²"], answer: 1, explanation: "A área do retângulo é A = b * h = 10 * 4 = 40 m²." },
+            { topic: "Área (Triângulo)", difficulty: "Fácil", question: "Qual a área de um triângulo com base 8cm e altura 5cm?", options: ["40 cm²", "13 cm²", "26 cm²", "20 cm²"], answer: 3, explanation: "A área do triângulo é A = (b * h) / 2 = (8 * 5) / 2 = 40 / 2 = 20 cm²." },
+            { topic: "Perímetro", difficulty: "Fácil", question: "O que é perímetro?", options: ["A medida da superfície", "A soma das medidas dos lados", "A medida do ângulo interno", "A distância do centro à borda"], answer: 1, explanation: "Perímetro é a medida do contorno de uma figura, ou seja, a soma de todos os seus lados." },
+            { topic: "Área (Círculo)", difficulty: "Fácil", question: "Qual é a fórmula do Comprimento (Perímetro) da Circunferência?", options: ["C = π * r²", "C = 2 * π * r", "C = π * d²", "C = R + l"], answer: 1, explanation: "O comprimento da circunferência é C = 2 * π * r (duas vezes Pi vezes o raio)." },
+            { topic: "Área (Círculo)", difficulty: "Fácil", question: "Qual é a fórmula da Área do Círculo?", options: ["A = π * r²", "A = 2 * π * r", "A = π * d", "A = l²"], answer: 0, explanation: "A área do círculo é A = π * r² (Pi vezes o raio ao quadrado)." },
+            { topic: "Área (Quadriláteros)", difficulty: "Fácil", question: "Um campo de futebol retangular mede 100m de comprimento por 70m de largura. Qual é a sua área?", options: ["340 m²", "170 m²", "7.000 m²", "700 m²"], answer: 2, explanation: "A área do retângulo é A = b * h = 100 * 70 = 7.000 m²." },
+            { topic: "Perímetro", difficulty: "Fácil", question: "Um terreno quadrado tem 30m de lado. Quantos metros de muro são necessários para cercá-lo?", options: ["30 m", "900 m", "120 m", "60 m"], answer: 2, explanation: "Cercar o terreno é calcular o perímetro: P = 4 * l = 4 * 30 = 120 m." },
+
+            // NÍVEL MÉDIO (12 Questões)
+            { topic: "Área (Círculo)", difficulty: "Média", question: "Qual a área de um círculo com raio de 10cm? (Use π ≈ 3,14)", options: ["31,4 cm²", "62,8 cm²", "314 cm²", "100 cm²"], answer: 2, explanation: "A = π * r² = 3,14 * (10)² = 3,14 * 100 = 314 cm²." },
+            { topic: "Área (Círculo)", difficulty: "Média", question: "Qual o comprimento de uma circunferência com raio de 10cm? (Use π ≈ 3,14)", options: ["31,4 cm", "62,8 cm", "314 cm", "100 cm"], answer: 1, explanation: "C = 2 * π * r = 2 * 3,14 * 10 = 6,28 * 10 = 62,8 cm." },
+            { topic: "Área (Quadriláteros)", difficulty: "Média", question: "Qual a área de um losango que possui diagonal maior (D) de 10m e diagonal menor (d) de 6m?", options: ["60 m²", "16 m²", "30 m²", "32 m²"], answer: 2, explanation: "A área do losango é A = (D * d) / 2 = (10 * 6) / 2 = 60 / 2 = 30 m²." },
+            { topic: "Área (Quadriláteros)", difficulty: "Média", question: "Qual a área de um trapézio com Base maior (B) de 12cm, base menor (b) de 8cm e altura (h) de 5cm?", options: ["100 cm²", "50 cm²", "25 cm²", "75 cm²"], answer: 1, explanation: "A = ((B + b) * h) / 2 = ((12 + 8) * 5) / 2 = (20 * 5) / 2 = 100 / 2 = 50 cm²." },
+            { topic: "Polígonos Regulares", difficulty: "Média", question: "Em um hexágono regular inscrito numa circunferência de raio R=10cm, qual a medida do lado (l)?", options: ["10 cm", "5 cm", "10√3 cm", "20 cm"], answer: 0, explanation: "O hexágono regular é a única figura onde o lado (l) é exatamente igual ao raio (R). Portanto, l = 10 cm." },
+            { topic: "Polígonos Regulares", difficulty: "Média", question: "O que é o Apótema de um polígono regular?", options: ["A soma dos lados", "O lado do polígono", "O raio da circunferência", "A distância do centro ao ponto médio do lado"], answer: 3, explanation: "O apótema (a) é o segmento que liga o centro do polígono ao ponto médio de um lado, formando 90º com ele." },
+            { topic: "Área (Triângulo)", difficulty: "Média", question: "Qual a área de um triângulo equilátero com lado de 4cm?", options: ["$4\\sqrt{3}$ cm²", "$16\\sqrt{3}$ cm²", "$8\\sqrt{3}$ cm²", "$6$ cm²"], answer: 0, explanation: "A = (l² * √3) / 4 = (4² * √3) / 4 = (16 * √3) / 4 = 4√3 cm²." },
+            { topic: "Área (Quadriláteros)", difficulty: "Média", question: "A área de um quadrado é 81 m². Qual é o seu perímetro?", options: ["9 m", "36 m", "18 m", "81 m"], answer: 1, explanation: "Se A = l² = 81, então o lado l = √81 = 9 m. O perímetro é P = 4 * l = 4 * 9 = 36 m." },
+            { topic: "Perímetro", difficulty: "Média", question: "O perímetro de um retângulo é 30 cm. Se a base mede 10 cm, quanto mede a altura?", options: ["5 cm", "15 cm", "20 cm", "2,5 cm"], answer: 0, explanation: "P = 2*(b+h) -> 30 = 2*(10+h) -> 15 = 10+h -> h = 5 cm." },
+            { topic: "Polígonos Regulares", difficulty: "Média", question: "Um hexágono regular tem lado de 6cm. Qual seu perímetro?", options: ["36 cm", "18 cm", "6 cm", "12 cm"], answer: 0, explanation: "O hexágono tem 6 lados. Se o lado (l) é 6cm, o perímetro P = 6 * l = 6 * 6 = 36 cm." },
+            { topic: "Área (Círculo)", difficulty: "Média", question: "A área de um círculo é 100π cm². Qual é o seu raio?", options: ["10 cm", "100 cm", "50 cm", "20 cm"], answer: 0, explanation: "A = π * r² -> 100π = π * r² -> r² = 100 -> r = 10 cm." },
+            { topic: "Polígonos Regulares", difficulty: "Média", question: "Qual é a fórmula do apótema (a) do hexágono regular em função do raio R?", options: ["$a = R$", "$a = R/2$", "$a = R\\sqrt{3}$", "$a = (R\\sqrt{3}) / 2$"], answer: 3, explanation: "O apótema do hexágono regular é a altura do triângulo equilátero de lado R, portanto: a = (R√3) / 2." },
+            
+            // NÍVEL DIFÍCIL (8 Questões)
+            { topic: "Polígonos Regulares", difficulty: "Difícil", question: "Qual é a fórmula do lado (l) do triângulo equilátero em função do raio R?", options: ["$l = R$", "$l = R\\sqrt{3}$", "$l = R\\sqrt{2}$", "$l = R/2$"], answer: 1, explanation: "O lado (l) do triângulo equilátero inscrito na circunferência de raio R é l = R√3." },
+            { topic: "Polígonos Regulares", difficulty: "Difícil", question: "Qual é a fórmula do apótema (a) do triângulo equilátero em função do raio R?", options: ["$a = R$", "$a = R\\sqrt{3}$", "$a = R/2$", "$a = R/3$"], answer: 2, explanation: "O apótema (a) do triângulo equilátero inscrito na circunferência de raio R é a = R/2." },
+            { topic: "Polígonos Regulares", difficulty: "Difícil", question: "Qual o apótema (a) de um hexágono regular com lado l=8cm?", options: ["8 cm", "4 cm", "$4\\sqrt{3}$ cm", "$8\\sqrt{3}$ cm"], answer: 2, explanation: "No hexágono, l = R. Então R = 8cm. O apótema é a = (R√3) / 2 = (8√3) / 2 = 4√3 cm." },
+            { topic: "Polígonos Regulares", difficulty: "Difícil", question: "Qual a área de um hexágono regular com lado de 2cm?", options: ["$12\\sqrt{3}$ cm²", "$24\\sqrt{3}$ cm²", "$6\\sqrt{3}$ cm²", "$12$ cm²"], answer: 2, explanation: "A área é 6 * (l² * √3) / 4 = 6 * (2² * √3) / 4 = 6 * (4√3) / 4 = 6√3 cm²." },
+            { topic: "Área (Círculo)", difficulty: "Difícil", question: "Qual a área de um setor circular de 90º em um círculo de raio 8m?", options: ["$16\\pi$ m²", "$64\\pi$ m²", "$8\\pi$ m²", "$32\\pi$ m²"], answer: 0, explanation: "90º é 1/4 do círculo (360º). A área total é A = πr² = 64π. A área do setor é (64π) / 4 = 16π m²." },
+            { topic: "Polígonos Regulares", difficulty: "Difícil", question: "Qual é a área de um triângulo equilátero inscrito em uma circunferência de raio R=6cm?", options: ["$27\\sqrt{3}$ cm²", "$36\\sqrt{3}$ cm²", "$9\\sqrt{3}$ cm²", "$54\\sqrt{3}$ cm²"], answer: 0, explanation: "O lado do triângulo é l = R√3 = 6√3 cm. A área é A = (l²√3) / 4 = ((6√3)² * √3) / 4 = (36*3 * √3) / 4 = (108√3) / 4 = 27√3 cm²." },
+            { topic: "Área (Quadriláteros)", difficulty: "Difícil", question: "Um losango tem perímetro de 40cm e sua diagonal maior (D) mede 16cm. Qual é a sua área?", options: ["192 cm²", "96 cm²", "120 cm²", "128 cm²"], answer: 1, explanation: "Perímetro 40cm, então l = 10cm. Metade da diagonal D (8cm), o lado (10cm) e metade da diagonal d (x) formam um triângulo retângulo. 10² = 8² + x² -> 100 = 64 + x² -> x² = 36 -> x = 6cm. A diagonal d = 12cm. A = (D*d)/2 = (16*12)/2 = 96 cm²." },
+            { topic: "Polígonos Regulares", difficulty: "Difícil", question: "Um hexágono regular tem área de $24\\sqrt{3}$ cm². Qual a medida do seu lado?", options: ["4 cm", "6 cm", "2 cm", "8 cm"], answer: 0, explanation: "A = 6 * (l²√3) / 4 -> 24√3 = 6l²√3 / 4 -> 24 = 6l²/4 -> 96 = 6l² -> l² = 16 -> l = 4 cm." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Renderiza fórmulas matemáticas
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError : false
+            });
+
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; // Ajustado para 0.1
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.textContent = question.question;
+                
+                // Renderiza fórmulas na pergunta
+                renderMathInElement(questionText, {
+                    delimiters: [{left: '$', right: '$', display: false}],
+                    throwOnError : false
+                });
+
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option; // Usamos innerHTML para KaTeX
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                    // Renderiza fórmulas nas opções
+                    renderMathInElement(button, {
+                        delimiters: [{left: '$', right: '$', display: false}],
+                        throwOnError : false
+                    });
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect; // Set state on first try
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    state.userAnswers[state.currentQuestionIndex] = true; // Update state to correct
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // Fire confetti on correction
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm" id="explanation-text"></p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                const explanationText = document.getElementById('explanation-text');
+                explanationText.innerHTML = explanation; // Usamos innerHTML para KaTeX
+                // Renderiza fórmulas na explicação
+                renderMathInElement(explanationText, {
+                    delimiters: [{left: '$', right: '$', display: false}],
+                    throwOnError : false
+                });
+
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                feedbackContainer.innerHTML = '';
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); 
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            btnLearn.classList.add('active'); 
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
