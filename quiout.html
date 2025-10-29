@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudos: Ácidos e Bases (9º Ano)</title>
+    <title>Estudos: Funções Inorgânicas (9º Ano)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,36 +14,33 @@
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        /* Cores principais atualizadas */
-        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
-        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
-        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
-        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
-
-        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
-        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
-        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
-        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
-        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
-        .text-success { color: #34D399; } /* Esmeralda para sucesso */
-        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
-        .text-error { color: #EF4444; } /* Vermelho para erro */
-        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        .bg-dark-bg { background-color: #121212; }
+        .bg-dark-surface { background-color: #1E1E1E; }
+        .text-dark-text { color: #E0E0E0; }
+        .text-dark-light-text { color: #B0B0B0; }
+        .accent-primary { background-color: #D97706; color: white; }
+        .hover\:accent-primary-dark { background-color: #C26402; }
+        .accent-secondary { color: #FDBA74; }
+        .text-highlight { color: #FED7AA; }
+        .text-success { color: #34D399; }
+        .bg-success-dark { background-color: #065F46; }
+        .text-error { color: #EF4444; }
+        .bg-error-dark { background-color: #991B1B; }
         
         .mode-button.active {
-            background-color: #D97706; /* Cor principal de destaque */
+            background-color: #D97706;
             color: white;
         }
         .nav-link.active {
-            background-color: #D97706; /* Cor principal de destaque */
+            background-color: #D97706;
             color: white;
         }
 
         .prose-headings {
-            color: #FDBA74; /* Laranja claro (Orange 300) */
+            color: #FDBA74;
         }
         .prose-strong {
-            color: #FDBA74; /* Laranja claro (Orange 300) */
+            color: #FDBA74;
         }
         .prose-table {
             width: 100%;
@@ -54,22 +51,20 @@
             display: block;
         }
         .prose-th, .prose-td {
-            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            border: 1px solid #424242;
             padding: 0.5em 1em;
             white-space: nowrap;
         }
         .prose-th {
-            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            background-color: #2F2F2F;
             font-weight: 600;
         }
-        /* Hide scrollbar for Chrome, Safari and Opera */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
-        /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -78,7 +73,7 @@
     <div class="w-full max-w-7xl mx-auto">
         <header class="text-center py-8 px-4">
             <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Funções Inorgânicas (9º Ano)</h1>
-            <p class="text-lg text-dark-light-text">Um guia sobre Ácidos, Bases e a escala de pH.</p>
+            <p class="text-lg text-dark-light-text">Um guia sobre Ácidos, Bases, Sais, Óxidos e a escala de pH.</p>
         </header>
         
         <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
@@ -88,19 +83,23 @@
 
         <div id="learn-container">
             <div class="flex flex-col lg:flex-row gap-8 p-4">
-                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                <!-- Navegação Lateral -->
+                <aside class="lg:w-1/4">
                     <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
                         <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
                         <ul class="space-y-2">
                             <li><a href="#intro" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Funções Inorgânicas</a></li>
                             <li><a href="#acidos" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Ácidos</a></li>
                             <li><a href="#bases" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. Bases</a></li>
-                            <li><a href="#ph" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Escala de pH</a></li>
+                            <li><a href="#sais" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Sais</a></li>
+                            <li><a href="#oxidos" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">5. Óxidos</a></li>
+                            <li><a href="#ph" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">6. Escala de pH</a></li>
                         </ul>
                     </nav>
                 </aside>
 
-                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                <!-- Conteúdo Principal -->
+                <main class="lg:w-3/4 space-y-12">
                     
                     <section id="intro" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
                         <article class="prose prose-invert max-w-none text-dark-light-text">
@@ -115,7 +114,7 @@
                             </ul>
                             
                             <h3 class="text-2xl font-semibold mt-6">As Quatro Principais Funções</h3>
-                            <p>As quatro principais funções inorgânicas são: <strong class="prose-strong">Ácidos, Bases, Sais e Óxidos</strong>. Esta página focará nas duas primeiras e na escala de pH.</p>
+                            <p>As quatro principais funções inorgânicas são: <strong class="prose-strong">Ácidos, Bases, Sais e Óxidos</strong>.</p>
                         </article>
                     </section>
                     
@@ -204,9 +203,116 @@
                         </article>
                     </section>
 
+                    <!-- NOVA SEÇÃO: SAIS -->
+                    <section id="sais" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Sais</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Definição</h3>
+                            <p>Sais são compostos iônicos que resultam da reação de <strong class="text-highlight">neutralização</strong> entre um ácido e uma base. São formados por um cátion (íon positivo) diferente de H<sup>+</sup> e um ânion (íon negativo) diferente de OH<sup>-</sup>.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Propriedades dos Sais</h3>
+                            <ul>
+                                <li>Geralmente possuem <strong class="text-highlight">sabor salgado</strong>.</li>
+                                <li>São sólidos à temperatura ambiente.</li>
+                                <li>Conduzem corrente elétrica quando dissolvidos em água ou fundidos.</li>
+                                <li>Têm pontos de fusão e ebulição elevados.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Como Identificar um Sal</h3>
+                            <p>Os sais são compostos iônicos que <strong class="text-highlight">não começam com H</strong> e <strong class="text-highlight">não terminam com OH</strong>. São formados pela união de um cátion (geralmente de metal) com um ânion (de um ácido).</p>
+                            <ul>
+                                <li>Ex: NaCl, CaCO<sub>3</sub>, KNO<sub>3</sub>.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Nomenclatura dos Sais</h3>
+                            <p>A nomenclatura segue o padrão: <strong class="prose-strong">[Nome do ânion] de [Nome do cátion]</strong>.</p>
+                            <ul>
+                                <li><strong>Sais derivados de hidrácidos:</strong> Terminação <strong class="text-highlight">-ETO</strong>
+                                    <ul>
+                                        <li>NaCl: Cloreto de Sódio</li>
+                                        <li>KBr: Brometo de Potássio</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Sais derivados de oxiácidos:</strong> Terminação <strong class="text-highlight">-ATO</strong> ou <strong class="text-highlight">-ITO</strong>
+                                    <ul>
+                                        <li>NaNO<sub>3</sub>: Nitrato de Sódio</li>
+                                        <li>CaCO<sub>3</sub>: Carbonato de Cálcio</li>
+                                        <li>NaNO<sub>2</sub>: Nitrito de Sódio</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Importância dos Sais</h3>
+                            <ul>
+                                <li><strong>Cloreto de Sódio (NaCl):</strong> Sal de cozinha, essencial para o funcionamento do organismo.</li>
+                                <li><strong>Carbonato de Cálcio (CaCO<sub>3</sub>):</strong> Encontrado no mármore, calcário e cascas de ovos.</li>
+                                <li><strong>Bicarbonato de Sódio (NaHCO<sub>3</sub>):</strong> Usado em fermentos e antiácidos.</li>
+                                <li><strong>Nitrato de Potássio (KNO<sub>3</sub>):</strong> Usado como fertilizante.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <!-- NOVA SEÇÃO: ÓXIDOS -->
+                    <section id="oxidos" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">5. Óxidos</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Definição</h3>
+                            <p>Óxidos são compostos binários formados por <strong class="text-highlight">oxigênio</strong> e outro elemento. O oxigênio sempre tem número de oxidação -2 nestes compostos.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Classificação dos Óxidos</h3>
+                            <ul>
+                                <li><strong>Óxidos Básicos:</strong> Reagem com água formando bases e com ácidos formando sal e água. São formados por metais.
+                                    <ul>
+                                        <li>Ex: CaO, Na<sub>2</sub>O, MgO</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Óxidos Ácidos (Anidridos):</strong> Reagem com água formando ácidos e com bases formando sal e água. São formados por ametais.
+                                    <ul>
+                                        <li>Ex: CO<sub>2</sub>, SO<sub>2</sub>, SO<sub>3</sub></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Óxidos Anfóteros:</strong> Podem se comportar como ácidos ou bases, dependendo da reação.
+                                    <ul>
+                                        <li>Ex: Al<sub>2</sub>O<sub>3</sub>, ZnO</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Óxidos Neutros:</strong> Não reagem com água, ácidos ou bases.
+                                    <ul>
+                                        <li>Ex: CO, NO, N<sub>2</sub>O</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Como Identificar um Óxido</h3>
+                            <p>Óxidos são compostos binários que contêm <strong class="text-highlight">oxigênio</strong> e outro elemento. A fórmula geralmente termina com O (oxigênio).</p>
+                            <ul>
+                                <li>Ex: CO<sub>2</sub>, Fe<sub>2</sub>O<sub>3</sub>, SO<sub>3</sub>.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Nomenclatura dos Óxidos</h3>
+                            <p>A nomenclatura segue o padrão: <strong class="prose-strong">Óxido de [Nome do elemento]</strong>. Quando o elemento tem mais de uma valência, usamos números romanos ou os sufixos -oso e -ico.</p>
+                            <ul>
+                                <li>FeO: Óxido de Ferro II ou Óxido Ferroso</li>
+                                <li>Fe<sub>2</sub>O<sub>3</sub>: Óxido de Ferro III ou Óxido Férrico</li>
+                                <li>CO<sub>2</sub>: Dióxido de Carbono ou Óxido de Carbono IV</li>
+                                <li>CO: Monóxido de Carbono ou Óxido de Carbono II</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Importância dos Óxidos</h3>
+                            <ul>
+                                <li><strong>Dióxido de Carbono (CO<sub>2</sub>):</strong> Essencial para a fotossíntese, mas em excesso contribui para o efeito estufa.</li>
+                                <li><strong>Óxido de Cálcio (CaO):</strong> Conhecido como cal virgem, usado na construção civil.</li>
+                                <li><strong>Óxido de Zinco (ZnO):</strong> Usado em pomadas para assaduras e proteção solar.</li>
+                                <li><strong>Monóxido de Carbono (CO):</strong> Extremamente tóxico, produzido na queima incompleta de combustíveis.</li>
+                            </ul>
+                        </article>
+                    </section>
+
                     <section id="ph" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
                         <article class="prose prose-invert max-w-none text-dark-light-text">
-                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Escala de pH</h2>
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">6. Escala de pH</h2>
                             <p>A escala de pH (Potencial Hidrogeniônico) mede a <strong class="text-highlight">acidez ou basicidade</strong> de uma solução. Ela indica a concentração de íons H<sup>+</sup>.</p>
                             <p>A escala vai de <strong class="prose-strong">0 a 14</strong>.</p>
                             
@@ -244,7 +350,8 @@
             </div>
         </div>
         
-        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+        <!-- Seção Praticar -->
+        <section id="practice-section" class="hidden p-4">
             <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
                 <div id="question-header" class="mb-4 text-center">
                     <p class="accent-secondary font-semibold" id="question-topic"></p>
@@ -253,19 +360,23 @@
                 <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 <div id="feedback-container" class="mt-6 text-center"></div>
 
-                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                <!-- Navegação -->
+                <div class="flex justify-between items-center mt-8">
                     <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
                     <span id="question-counter" class="font-semibold text-dark-text"></span>
                     <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
                 </div>
             </div>
 
-            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+            <!-- Navegação de Questões -->
+            <div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
                 <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
-                    <!-- Buttons will be programmatically inserted here --></div>
+                    <!-- Buttons will be programmatically inserted here -->
+                </div>
             </div>
 
-             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+             <!-- Tela de Pontuação -->
+            <div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
                 <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
                 <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
                 <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
@@ -279,45 +390,55 @@
     <script>
         // --- BANCO DE DADOS DAS QUESTÕES ---
         const questions = [
-            // NÍVEL FÁCIL (10 Questões - Foco em definições)
+            // NÍVEL FÁCIL (15 Questões - Foco em definições)
             { topic: "Conceitos", difficulty: "Fácil", question: "Qual é a principal diferença entre compostos orgânicos e inorgânicos?", options: ["Orgânicos têm Oxigênio, inorgânicos não", "Orgânicos têm Carbono como elemento principal", "Inorgânicos são sempre líquidos", "Inorgânicos são ácidos"], answer: 1, explanation: "Compostos orgânicos são, por definição, aqueles que contêm átomos de carbono formando cadeias. Inorgânicos são os demais." },
             { topic: "Ácidos", difficulty: "Fácil", question: "Qual íon (cátion) um ácido libera em solução aquosa?", options: ["OH<sup>-</sup>", "H<sup>+</sup>", "O<sup>2-</sup>", "Cl<sup>-</sup>"], answer: 1, explanation: "Ácidos sofrem ionização e liberam o cátion H<sup>+</sup> (Hidrogênio) em água." },
             { topic: "Bases", difficulty: "Fácil", question: "Qual íon (ânion) uma base libera em solução aquosa?", options: ["OH<sup>-</sup>", "H<sup>+</sup>", "O<sup>2-</sup>", "Cl<sup>-</sup>"], answer: 0, explanation: "Bases sofrem dissociação e liberam o ânion OH<sup>-</sup> (Hidroxila) em água." },
             { topic: "Propriedades", difficulty: "Fácil", question: "O sabor azedo, como o do limão, é característico de qual função?", options: ["Bases", "Sais", "Óxidos", "Ácidos"], answer: 3, explanation: "O sabor azedo é uma propriedade característica dos ácidos (ex: ácido cítrico do limão)." },
             { topic: "Propriedades", difficulty: "Fácil", question: "O sabor adstringente, que 'amarra' a boca, é característico de qual função?", options: ["Ácidos", "Sais", "Bases", "Óxidos"], answer: 2, explanation: "O sabor adstringente é uma propriedade característica das bases (ex: caju verde)." },
+            { topic: "Sais", difficulty: "Fácil", question: "Qual é o sabor característico da maioria dos sais?", options: ["Azedo", "Adstringente", "Salgado", "Amargo"], answer: 2, explanation: "A maioria dos sais tem sabor salgado, como o cloreto de sódio (sal de cozinha)." },
+            { topic: "Óxidos", difficulty: "Fácil", question: "Qual elemento está sempre presente nos óxidos?", options: ["Hidrogênio", "Oxigênio", "Carbono", "Nitrogênio"], answer: 1, explanation: "Óxidos são compostos binários formados por oxigênio e outro elemento." },
             { topic: "pH", difficulty: "Fácil", question: "Em uma escala de pH, qual valor é considerado Neutro?", options: ["0", "14", "7", "1"], answer: 2, explanation: "Na escala de pH, o valor 7 é considerado neutro (como a água pura)." },
             { topic: "pH", difficulty: "Fácil", question: "Substâncias com pH menor que 7 (pH < 7) são classificadas como:", options: ["Ácidas", "Básicas", "Neutras", "Sais"], answer: 0, explanation: "Valores de pH abaixo de 7 indicam soluções ácidas." },
             { topic: "pH", difficulty: "Fácil", question: "Substâncias com pH maior que 7 (pH > 7) são classificadas como:", options: ["Ácidas", "Básicas (ou Alcalinas)", "Neutras", "Óxidos"], answer: 1, explanation: "Valores de pH acima de 7 indicam soluções básicas ou alcalinas." },
             { topic: "Nomenclatura (Bases)", difficulty: "Fácil", question: "Qual é a regra geral para nomear uma base?", options: ["Ácido de [Elemento]", "Hidróxido de [Elemento]", "[Elemento]ato de Sódio", "[Elemento]ídrico"], answer: 1, explanation: "A nomenclatura oficial de uma base é 'Hidróxido de' seguido do nome do elemento (cátion)." },
             { topic: "Nomenclatura (Ácidos)", difficulty: "Fácil", question: "Ácidos que NÃO possuem oxigênio (Hidrácidos) têm qual terminação?", options: ["-ICO", "-OSO", "-ATO", "-ÍDRICO"], answer: 3, explanation: "Hidrácidos, como HCl, têm a terminação -ÍDRICO (Ex: Ácido Clorídrico)." },
+            { topic: "Nomenclatura (Sais)", difficulty: "Fácil", question: "Qual é a nomenclatura correta para o sal NaCl?", options: ["Clorato de Sódio", "Cloreto de Sódio", "Hipoclorito de Sódio", "Perclorato de Sódio"], answer: 1, explanation: "O NaCl é derivado do ácido clorídrico (HCl) e do hidróxido de sódio (NaOH), então é Cloreto de Sódio." },
+            { topic: "Nomenclatura (Óxidos)", difficulty: "Fácil", question: "Qual é a nomenclatura básica para óxidos?", options: ["Ácido de [Elemento]", "Hidróxido de [Elemento]", "Óxido de [Elemento]", "[Elemento]ato"], answer: 2, explanation: "A nomenclatura básica para óxidos é 'Óxido de' seguido do nome do elemento." },
+            { topic: "Sais", difficulty: "Fácil", question: "Os sais são formados pela reação entre:", options: ["Ácido e Base", "Dois ácidos", "Dois óxidos", "Óxido e Sal"], answer: 0, explanation: "Os sais são formados pela reação de neutralização entre um ácido e uma base." },
 
-            // NÍVEL MÉDIO (10 Questões - Nomenclatura e Exemplos)
+            // NÍVEL MÉDIO (15 Questões - Nomenclatura e Exemplos)
             { topic: "Nomenclatura (Ácidos)", difficulty: "Médio", question: "Qual o nome do ácido HCl?", options: ["Ácido Cloroso", "Ácido Clorídrico", "Ácido Clórico", "Ácido Hipocloroso"], answer: 1, explanation: "HCl é um hidrácido (não tem oxigênio), portanto, sua terminação é -ÍDRICO. É o Ácido Clorídrico." },
             { topic: "Nomenclatura (Ácidos)", difficulty: "Médio", question: "Qual o nome do ácido H<sub>2</sub>SO<sub>4</sub>?", options: ["Ácido Sulfídrico", "Ácido Sulfuroso", "Ácido Sulfúrico", "Ácido Hiposulfuroso"], answer: 2, explanation: "H<sub>2</sub>SO<sub>4</sub> é um oxiácido padrão, sua terminação é -ICO. É o Ácido Sulfúrico." },
             { topic: "Nomenclatura (Bases)", difficulty: "Médio", question: "Qual o nome da base KOH?", options: ["Hidróxido de Potássio", "Hidróxido de Sódio", "Ácido Potássico", "Hidreto de Potássio"], answer: 0, explanation: "A nomenclatura é 'Hidróxido de [Elemento]'. K = Potássio. Portanto, Hidróxido de Potássio." },
             { topic: "Nomenclatura (Bases)", difficulty: "Médio", question: "Qual a fórmula do Hidróxido de Cálcio?", options: ["CaCl<sub>2</sub>", "Ca(OH)<sub>2</sub>", "CaOH", "H<sub>2</sub>Ca"], answer: 1, explanation: "Cálcio (Ca) tem carga 2+, e a Hidroxila (OH) tem carga 1-. São necessários 2 OH para balancear o Ca: Ca(OH)<sub>2</sub>." },
+            { topic: "Nomenclatura (Sais)", difficulty: "Médio", question: "Qual o nome do sal CaCO<sub>3</sub>?", options: ["Carbonato de Cálcio", "Cloreto de Cálcio", "Sulfato de Cálcio", "Nitrato de Cálcio"], answer: 0, explanation: "O ânion CO<sub>3</sub><sup>2-</sup> vem do ácido carbônico (H<sub>2</sub>CO<sub>3</sub>), formando o Carbonato de Cálcio." },
+            { topic: "Nomenclatura (Sais)", difficulty: "Médio", question: "Qual a fórmula do Sulfato de Sódio?", options: ["NaSO<sub>4</sub>", "Na<sub>2</sub>SO<sub>4</sub>", "NaS", "Na<sub>2</sub>SO<sub>3</sub>"], answer: 1, explanation: "O ânion sulfato é SO<sub>4</sub><sup>2-</sup> e o sódio é Na<sup>+</sup>. São necessários 2 Na<sup>+</sup> para balancear: Na<sub>2</sub>SO<sub>4</sub>." },
+            { topic: "Nomenclatura (Óxidos)", difficulty: "Médio", question: "Qual o nome do óxido Fe<sub>2</sub>O<sub>3</sub>?", options: ["Óxido de Ferro", "Óxido de Ferro II", "Óxido de Ferro III", "Peróxido de Ferro"], answer: 2, explanation: "O ferro neste óxido tem nox +3, então é Óxido de Ferro III (ou Óxido Férrico)." },
+            { topic: "Nomenclatura (Óxidos)", difficulty: "Médio", question: "Qual a fórmula do Dióxido de Carbono?", options: ["CO", "C<sub>2</sub>O", "CO<sub>2</sub>", "C<sub>2</sub>O<sub>2</sub>"], answer: 2, explanation: "Dióxido significa dois oxigênios, então a fórmula é CO<sub>2</sub>." },
             { topic: "Exemplos", difficulty: "Médio", question: "O suco gástrico, presente em nosso estômago, é composto principalmente por:", options: ["Ácido Sulfúrico", "Hidróxido de Sódio", "Ácido Clorídrico", "Ácido Nítrico"], answer: 2, explanation: "O suco gástrico é composto por Ácido Clorídrico (HCl), que ajuda na digestão." },
             { topic: "Exemplos", difficulty: "Médio", question: "O 'Leite de Magnésia', usado como antiácido, é uma base. Qual seu nome químico?", options: ["Hidróxido de Magnésio", "Ácido Magnesiano", "Hidróxido de Sódio", "Óxido de Magnésio"], answer: 0, explanation: "O 'Leite de Magnésia' é o nome comercial do Hidróxido de Magnésio (Mg(OH)<sub>2</sub>)." },
             { topic: "Exemplos", difficulty: "Médio", question: "A Vitamina C é um ácido importante para a saúde. Qual seu outro nome?", options: ["Ácido Acético", "Ácido Cítrico", "Ácido Ascórbico", "Ácido Muriático"], answer: 2, explanation: "O nome químico da Vitamina C é Ácido Ascórbico." },
+            { topic: "Exemplos", difficulty: "Médio", question: "Qual sal é conhecido como 'sal de cozinha'?", options: ["Cloreto de Sódio", "Carbonato de Sódio", "Nitrato de Potássio", "Sulfato de Cálcio"], answer: 0, explanation: "O sal de cozinha é o Cloreto de Sódio (NaCl)." },
+            { topic: "Exemplos", difficulty: "Médio", question: "Qual óxido é responsável pelo efeito estufa quando em excesso na atmosfera?", options: ["Monóxido de Carbono", "Dióxido de Carbono", "Óxido de Cálcio", "Óxido de Zinco"], answer: 1, explanation: "O Dióxido de Carbono (CO<sub>2</sub>) é um dos principais gases do efeito estufa." },
             { topic: "pH", difficulty: "Médio", question: "O sangue humano tem pH aproximado de 7,4. Como ele é classificado?", options: ["Fortemente Ácido", "Levemente Ácido", "Neutro", "Levemente Básico"], answer: 3, explanation: "Um pH de 7,4 é ligeiramente maior que 7 (neutro), sendo, portanto, levemente básico (ou alcalino)." },
             { topic: "pH", difficulty: "Médio", question: "O limão e o vinagre são ácidos porque seu pH é:", options: ["Maior que 7", "Igual a 7", "Menor que 7", "Igual a 14"], answer: 2, explanation: "Ambos são ácidos, com pH entre 2 e 3, ou seja, menor que 7." },
-            { topic: "Exemplos", difficulty: "Exemplos", question: "Produtos de limpeza, como a lixívia ou a soda cáustica em solução, geralmente têm qual característica?", options: ["São fortemente ácidos (pH < 3)", "São fortemente básicos (pH > 12)", "São neutros (pH = 7)", "São sais"], answer: 1, explanation: "Produtos de limpeza desengordurantes, como a soda cáustica (NaOH) e lixívia, são muito básicos (alcalinos), com pH elevado." },
 
             // NÍVEL DIFÍCIL (10 Questões - Análise e Consequências)
             { topic: "Propriedades", difficulty: "Difícil", question: "Por que ácidos e bases são bons condutores de eletricidade em água?", options: ["Porque eles esquentam a água", "Porque eles liberam íons livres na solução", "Porque eles são sempre líquidos", "Porque eles têm sabor azedo/adstringente"], answer: 1, explanation: "A condução de eletricidade em soluções depende da presença de íons livres. Ácidos (H<sup>+</sup>) e Bases (OH<sup>-</sup>) liberam íons na água." },
             { topic: "Conceitos", difficulty: "Difícil", question: "O CO<sub>2</sub> (Dióxido de Carbono) é considerado um composto inorgânico por exceção. O que ele forma ao reagir com a água?", options: ["Um ácido (Ácido Carbônico)", "Uma base (Hidróxido de Carbono)", "Um sal", "Oxigênio puro"], answer: 0, explanation: "O CO<sub>2</sub> é um óxido ácido. Ao reagir com a água (H<sub>2</sub>O), ele forma o Ácido Carbônico (H<sub>2</sub>CO<sub>3</sub>), por isso a chuva é levemente ácida." },
             { topic: "Nomenclatura (Bases)", difficulty: "Difícil", question: "Qual a fórmula do Hidróxido de Alumínio (o Alumínio tem carga 3+)?", options: ["AlOH", "Al<sub>3</sub>OH", "Al(OH)<sub>3</sub>", "AlOH<sub>3</sub>"], answer: 2, explanation: "O Alumínio (Al) é 3+ e a Hidroxila (OH) é 1-. São necessários 3 grupos OH para balancear um Al: Al(OH)<sub>3</sub>." },
             { topic: "Reações", difficulty: "Difícil", question: "O Hidróxido de Magnésio (antiácido) combate a 'azia' (excesso de HCl no estômago) através de uma reação de:", options: ["Ionização", "Dissociação", "Neutralização", "Oxidação"], answer: 2, explanation: "A reação de um ácido (HCl) com uma base (Mg(OH)<sub>2</sub>) é chamada de Neutralização, e forma sal e água." },
+            { topic: "Sais", difficulty: "Difícil", question: "O que acontece quando o Carbonato de Cálcio (CaCO<sub>3</sub>) reage com um ácido?", options: ["Forma uma base", "Forma um novo sal, água e gás carbônico", "Não reage", "Forma um óxido"], answer: 1, explanation: "CaCO<sub>3</sub> + 2HCl → CaCl<sub>2</sub> + H<sub>2</sub>O + CO<sub>2</sub>. Esta reação libera gás carbônico (CO<sub>2</sub>)." },
+            { topic: "Óxidos", difficulty: "Difícil", question: "O óxido de alumínio (Al<sub>2</sub>O<sub>3</sub>) é um óxido anfótero. O que isso significa?", options: ["Que ele não reage com nada", "Que ele reage apenas com ácidos", "Que ele reage apenas com bases", "Que ele pode reagir com ácidos e bases"], answer: 3, explanation: "Óxidos anfóteros, como o Al<sub>2</sub>O<sub>3</sub>, podem se comportar como ácidos (reagindo com bases) ou como bases (reagindo com ácidos)." },
             { topic: "pH", difficulty: "Difícil", question: "Uma solução com pH 2 é quantas vezes mais ácida que uma solução com pH 4?", options: ["2 vezes", "10 vezes", "100 vezes", "20 vezes"], answer: 2, explanation: "A escala de pH é logarítmica (base 10). Cada ponto de diferença é um fator de 10. De pH 4 para 3 é 10x, de 3 para 2 é mais 10x. Total: 10 x 10 = 100 vezes." },
             { topic: "Conceitos", difficulty: "Difícil", question: "Qual é a diferença entre Ionização (ácidos) e Dissociação (bases iônicas)?", options: ["Não há diferença", "Ionização forma íons; Dissociação separa íons que já existiam", "Ionização separa; Dissociação forma", "Ionização ocorre em bases; Dissociação em ácidos"], answer: 1, explanation: "Ionização (ácidos moleculares) é o processo onde a água *forma* íons que não existiam. Dissociação (bases iônicas) é o processo onde a água apenas *separa* os íons que já existiam no composto sólido." },
             { topic: "pH", difficulty: "Difícil", question: "Se você adicionar vinagre (ácido) a uma solução de água pura (pH 7), o que acontecerá com o pH?", options: ["O pH aumentará (ficará > 7)", "O pH diminuirá (ficará < 7)", "O pH permanecerá 7", "O pH irá para 14"], answer: 1, explanation: "Adicionar um ácido (pH < 7) a uma solução neutra (pH = 7) tornará a mistura mais ácida, ou seja, o pH diminuirá." },
-            { topic: "pH", difficulty: "Difícil", question: "Se você adicionar soda cáustica (base) a uma solução de água pura (pH 7), o que acontecerá com o pH?", options: ["O pH aumentará (ficará > 7)", "O pH diminuirá (ficará < 7)", "O pH permanecerá 7", "O pH irá para 0"], answer: 0, explanation: "Adicionar uma base (pH > 7) a uma solução neutra (pH = 7) tornará a mistura mais básica, ou seja, o pH aumentará." },
-            { topic: "Nomenclatura (Ácidos)", difficulty: "Difícil", question: "O Ácido Sulfúrico (H<sub>2</sub>SO<sub>4</sub>) é um oxiácido. Se ele perdesse um oxigênio, virando H<sub>2</sub>SO<sub>3</sub>, qual seria seu nome?", options: ["Ácido Sulfúrico", "Ácido Sulfuroso", "Ácido Sulfídrico", "Ácido Persulfúrico"], answer: 1, explanation: "Na regra dos oxiácidos, o ácido padrão é -ICO (H<sub>2</sub>SO<sub>4</sub>). O ácido com um oxigênio a menos é -OSO (H<sub>2</sub>SO<sub>3</sub>)." },
-            { topic: "Exemplos", difficulty: "Difícil", question: "Cal hidratada (Hidróxido de Cálcio) é usada na agricultura para corrigir qual problema do solo?", options: ["Solo seco", "Excesso de pedras", "Solo muito ácido", "Solo muito básico"], answer: 2, explanation: "Muitos solos (especialmente no Brasil) são naturalmente ácidos. A Cal (uma base) é adicionada para neutralizar essa acidez, corrigindo o pH para o plantio." }
+            { topic: "Nomenclatura (Ácidos)", difficulty: "Difícil", question: "O Ácido Sulfúrico (H<sub>2</sub>SO<sub>4</sub>) é um oxiácido. Se ele perdesse um oxigênio, virando H<sub>2</sub>SO<sub>3</sub>, qual seria seu nome?", options: ["Ácido Sulfúrico", "Ácido Sulfuroso", "Ácido Sulfídrico", "Ácido Persulfúrico"], answer: 1, explanation: "Na regra dos oxiácidos, o ácido padrão é -ICO (H<sub>2</sub>SO<sub>4</sub>). O ácido com um oxigênio a menos é -OSO (H<sub>2</sub>SO<sub>3</sub>)." }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            // --- LÓGECA DO MODO DE APRENDIZAGEM ---
+            // --- LÓGICA DO MODO DE APRENDIZAGEM ---
             const links = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('#learn-container main section');
 
@@ -556,4 +677,3 @@
     </script>
 </body>
 </html>
-
