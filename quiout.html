@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Ácidos e Bases (9º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            overflow: auto;
+            display: block;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+            white-space: nowrap;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Funções Inorgânicas (9º Ano)</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre Ácidos, Bases e a escala de pH.</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#intro" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Funções Inorgânicas</a></li>
+                            <li><a href="#acidos" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Ácidos</a></li>
+                            <li><a href="#bases" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. Bases</a></li>
+                            <li><a href="#ph" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Escala de pH</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    
+                    <section id="intro" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. Funções Inorgânicas</h2>
+                            <p>As funções inorgânicas são grupos de compostos que <strong class="text-highlight">não possuem o Carbono</strong> como elemento principal, e que apresentam características químicas semelhantes.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Orgânico vs. Inorgânico</h3>
+                            <ul>
+                                <li><strong>Compostos Orgânicos:</strong> São aqueles que contêm átomos de Carbono (C) formando cadeias.</li>
+                                <li><strong>Compostos Inorgânicos:</strong> São formados pelos demais elementos químicos.</li>
+                                <li><strong>Exceções:</strong> Alguns compostos que têm Carbono, como CO (Monóxido de Carbono), CO<sub>2</sub> (Dióxido de Carbono) e Na<sub>2</sub>CO<sub>3</sub> (Carbonato de Sódio), são estudados como <strong class="text-highlight">inorgânicos</strong> por terem propriedades semelhantes a eles.</li>
+                            </ul>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">As Quatro Principais Funções</h3>
+                            <p>As quatro principais funções inorgânicas são: <strong class="prose-strong">Ácidos, Bases, Sais e Óxidos</strong>. Esta página focará nas duas primeiras e na escala de pH.</p>
+                        </article>
+                    </section>
+                    
+                    <section id="acidos" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Ácidos</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Definição</h3>
+                            <p>Ácidos são substâncias que, em solução aquosa (em contato com a água), sofrem <strong class="prose-strong">ionização</strong> (produção de íons) e liberam como único cátion (íon positivo) o <strong class="text-highlight">Hidrogênio (H<sup>+</sup>)</strong>.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Propriedades dos Ácidos</h3>
+                            <ul>
+                                <li>Liberam íons H<sup>+</sup> em água.</li>
+                                <li>Quanto mais forte o ácido, mais íons H<sup>+</sup> ele libera.</li>
+                                <li>Possuem <strong class="text-highlight">sabor azedo</strong> (Ex: limão, vinagre).</li>
+                                <li>São bons condutores de corrente elétrica quando em solução aquosa.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Dica: Como Identificar um Ácido</h3>
+                            <p>Pela fórmula, um ácido inorgânico <strong class="text-highlight">sempre começa com H</strong> (Hidrogênio) à esquerda.</p>
+                            <ul>
+                                <li>Ex: <strong class="prose-strong">H</strong>Cl, <strong class="prose-strong">H</strong><sub>2</sub>SO<sub>4</sub>, <strong class="prose-strong">H</strong>NO<sub>3</sub>.</li>
+                            </ul>
+                            <p class="text-sm text-dark-light-text">(Nota: A água, H<sub>2</sub>O, é uma exceção e geralmente não é classificada como um ácido neste contexto.)</p>
+
+                            <h3 class="text-2xl font-semibold mt-6">Nomenclatura dos Ácidos</h3>
+                            <ul>
+                                <li><strong>Hidrácidos (sem Oxigênio):</strong> Terminação <strong class="prose-strong">-ÍDRICO</strong>.
+                                    <ul>
+                                        <li>HCl: Ácido Clor<strong class="text-highlight">ídrico</strong></li>
+                                        <li>HF: Ácido Fluor<strong class="text-highlight">ídrico</strong></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Oxiácidos (com Oxigênio):</strong> Terminação <strong class="prose-strong">-ICO</strong> (para o ácido padrão).
+                                    <ul>
+                                        <li>H<sub>2</sub>SO<sub>4</sub>: Ácido Sulfúr<strong class="text-highlight">ico</strong></li>
+                                        <li>HNO<sub>3</sub>: Ácido Nítr<strong class="text-highlight">ico</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Importância dos Ácidos</h3>
+                            <ul>
+                                <li><strong>Ácido Clorídrico (HCl):</strong> Presente no nosso suco gástrico, ajuda na digestão.</li>
+                                <li><strong>Ácido Sulfúrico (H<sub>2</sub>SO<sub>4</sub>):</strong> Usado em baterias de automóveis.</li>
+                                <li><strong>Ácido Ascórbico:</strong> É a Vitamina C, encontrada em frutas cítricas.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="bases" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. Bases</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Definição</h3>
+                            <p>Bases (ou Hidróxidos) são substâncias que, em solução aquosa, sofrem <strong class="prose-strong">dissociação</strong> e liberam como único ânion (íon negativo) a <strong class="text-highlight">Hidroxila (OH<sup>-</sup>)</strong>.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Propriedades das Bases</h3>
+                            <ul>
+                                <li>Liberam íons OH<sup>-</sup> em água.</li>
+                                <li>Possuem <strong class="text-highlight">sabor adstringente</strong> (que "amarra" a boca, como caju verde).</li>
+                                <li>São bons condutores de corrente elétrica em solução aquosa.</li>
+                                <li>Neutralizam os ácidos (formando sal e água).</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Dica: Como Identificar uma Base</h3>
+                            <p>Pela fórmula, uma base inorgânica <strong class="text-highlight">sempre termina com (OH)</strong> (Hidroxila) à direita, ligada a um metal ou ao amônio (NH<sub>4</sub>).</p>
+                            <ul>
+                                <li>Ex: Na<strong class="prose-strong">OH</strong>, Ca<strong class="prose-strong">(OH)</strong><sub>2</sub>, Al<strong class="prose-strong">(OH)</strong><sub>3</sub>.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Nomenclatura das Bases</h3>
+                            <p>A regra é: <strong class="prose-strong">Hidróxido de [Nome do Elemento]</strong>.</p>
+                            <ul>
+                                <li>NaOH: <strong class="text-highlight">Hidróxido de</strong> Sódio</li>
+                                <li>KOH: <strong class="text-highlight">Hidróxido de</strong> Potássio</li>
+                                <li>Ca(OH)<sub>2</sub>: <strong class="text-highlight">Hidróxido de</strong> Cálcio</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Importância das Bases</h3>
+                            <ul>
+                                <li><strong>Hidróxido de Magnésio (Mg(OH)<sub>2</sub>):</strong> Usado como antiácido estomacal (Leite de Magnésia).</li>
+                                <li><strong>Hidróxido de Cálcio (Ca(OH)<sub>2</sub>):</strong> Conhecido como Cal Hidratada, usado em construções e na agricultura.</li>
+                                <li><strong>Hidróxido de Amônia (NH<sub>4</sub>OH):</strong> Presente em produtos de limpeza.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="ph" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Escala de pH</h2>
+                            <p>A escala de pH (Potencial Hidrogeniônico) mede a <strong class="text-highlight">acidez ou basicidade</strong> de uma solução. Ela indica a concentração de íons H<sup>+</sup>.</p>
+                            <p>A escala vai de <strong class="prose-strong">0 a 14</strong>.</p>
+                            
+                            <div class="prose-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Valor do pH</th>
+                                            <th>Classificação</th>
+                                            <th>Exemplos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong class="text-highlight">pH < 7</strong></td>
+                                            <td>Solução <strong class="prose-strong">Ácida</strong></td>
+                                            <td>Suco Gástrico (pH 1), Limão (pH 2), Vinagre (pH 3)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong class="text-highlight">pH = 7</strong></td>
+                                            <td>Solução <strong class="prose-strong">Neutra</strong></td>
+                                            <td>Água Pura, Sangue (levemente básico, ~7,4)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong class="text-highlight">pH > 7</strong></td>
+                                            <td>Solução <strong class="prose-strong">Básica (ou Alcalina)</strong></td>
+                                            <td>Água do Mar (pH 8), Lixívia (pH 12), Soda Cáustica (pH 14)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões - Foco em definições)
+            { topic: "Conceitos", difficulty: "Fácil", question: "Qual é a principal diferença entre compostos orgânicos e inorgânicos?", options: ["Orgânicos têm Oxigênio, inorgânicos não", "Orgânicos têm Carbono como elemento principal", "Inorgânicos são sempre líquidos", "Inorgânicos são ácidos"], answer: 1, explanation: "Compostos orgânicos são, por definição, aqueles que contêm átomos de carbono formando cadeias. Inorgânicos são os demais." },
+            { topic: "Ácidos", difficulty: "Fácil", question: "Qual íon (cátion) um ácido libera em solução aquosa?", options: ["OH<sup>-</sup>", "H<sup>+</sup>", "O<sup>2-</sup>", "Cl<sup>-</sup>"], answer: 1, explanation: "Ácidos sofrem ionização e liberam o cátion H<sup>+</sup> (Hidrogênio) em água." },
+            { topic: "Bases", difficulty: "Fácil", question: "Qual íon (ânion) uma base libera em solução aquosa?", options: ["OH<sup>-</sup>", "H<sup>+</sup>", "O<sup>2-</sup>", "Cl<sup>-</sup>"], answer: 0, explanation: "Bases sofrem dissociação e liberam o ânion OH<sup>-</sup> (Hidroxila) em água." },
+            { topic: "Propriedades", difficulty: "Fácil", question: "O sabor azedo, como o do limão, é característico de qual função?", options: ["Bases", "Sais", "Óxidos", "Ácidos"], answer: 3, explanation: "O sabor azedo é uma propriedade característica dos ácidos (ex: ácido cítrico do limão)." },
+            { topic: "Propriedades", difficulty: "Fácil", question: "O sabor adstringente, que 'amarra' a boca, é característico de qual função?", options: ["Ácidos", "Sais", "Bases", "Óxidos"], answer: 2, explanation: "O sabor adstringente é uma propriedade característica das bases (ex: caju verde)." },
+            { topic: "pH", difficulty: "Fácil", question: "Em uma escala de pH, qual valor é considerado Neutro?", options: ["0", "14", "7", "1"], answer: 2, explanation: "Na escala de pH, o valor 7 é considerado neutro (como a água pura)." },
+            { topic: "pH", difficulty: "Fácil", question: "Substâncias com pH menor que 7 (pH < 7) são classificadas como:", options: ["Ácidas", "Básicas", "Neutras", "Sais"], answer: 0, explanation: "Valores de pH abaixo de 7 indicam soluções ácidas." },
+            { topic: "pH", difficulty: "Fácil", question: "Substâncias com pH maior que 7 (pH > 7) são classificadas como:", options: ["Ácidas", "Básicas (ou Alcalinas)", "Neutras", "Óxidos"], answer: 1, explanation: "Valores de pH acima de 7 indicam soluções básicas ou alcalinas." },
+            { topic: "Nomenclatura (Bases)", difficulty: "Fácil", question: "Qual é a regra geral para nomear uma base?", options: ["Ácido de [Elemento]", "Hidróxido de [Elemento]", "[Elemento]ato de Sódio", "[Elemento]ídrico"], answer: 1, explanation: "A nomenclatura oficial de uma base é 'Hidróxido de' seguido do nome do elemento (cátion)." },
+            { topic: "Nomenclatura (Ácidos)", difficulty: "Fácil", question: "Ácidos que NÃO possuem oxigênio (Hidrácidos) têm qual terminação?", options: ["-ICO", "-OSO", "-ATO", "-ÍDRICO"], answer: 3, explanation: "Hidrácidos, como HCl, têm a terminação -ÍDRICO (Ex: Ácido Clorídrico)." },
+
+            // NÍVEL MÉDIO (10 Questões - Nomenclatura e Exemplos)
+            { topic: "Nomenclatura (Ácidos)", difficulty: "Médio", question: "Qual o nome do ácido HCl?", options: ["Ácido Cloroso", "Ácido Clorídrico", "Ácido Clórico", "Ácido Hipocloroso"], answer: 1, explanation: "HCl é um hidrácido (não tem oxigênio), portanto, sua terminação é -ÍDRICO. É o Ácido Clorídrico." },
+            { topic: "Nomenclatura (Ácidos)", difficulty: "Médio", question: "Qual o nome do ácido H<sub>2</sub>SO<sub>4</sub>?", options: ["Ácido Sulfídrico", "Ácido Sulfuroso", "Ácido Sulfúrico", "Ácido Hiposulfuroso"], answer: 2, explanation: "H<sub>2</sub>SO<sub>4</sub> é um oxiácido padrão, sua terminação é -ICO. É o Ácido Sulfúrico." },
+            { topic: "Nomenclatura (Bases)", difficulty: "Médio", question: "Qual o nome da base KOH?", options: ["Hidróxido de Potássio", "Hidróxido de Sódio", "Ácido Potássico", "Hidreto de Potássio"], answer: 0, explanation: "A nomenclatura é 'Hidróxido de [Elemento]'. K = Potássio. Portanto, Hidróxido de Potássio." },
+            { topic: "Nomenclatura (Bases)", difficulty: "Médio", question: "Qual a fórmula do Hidróxido de Cálcio?", options: ["CaCl<sub>2</sub>", "Ca(OH)<sub>2</sub>", "CaOH", "H<sub>2</sub>Ca"], answer: 1, explanation: "Cálcio (Ca) tem carga 2+, e a Hidroxila (OH) tem carga 1-. São necessários 2 OH para balancear o Ca: Ca(OH)<sub>2</sub>." },
+            { topic: "Exemplos", difficulty: "Médio", question: "O suco gástrico, presente em nosso estômago, é composto principalmente por:", options: ["Ácido Sulfúrico", "Hidróxido de Sódio", "Ácido Clorídrico", "Ácido Nítrico"], answer: 2, explanation: "O suco gástrico é composto por Ácido Clorídrico (HCl), que ajuda na digestão." },
+            { topic: "Exemplos", difficulty: "Médio", question: "O 'Leite de Magnésia', usado como antiácido, é uma base. Qual seu nome químico?", options: ["Hidróxido de Magnésio", "Ácido Magnesiano", "Hidróxido de Sódio", "Óxido de Magnésio"], answer: 0, explanation: "O 'Leite de Magnésia' é o nome comercial do Hidróxido de Magnésio (Mg(OH)<sub>2</sub>)." },
+            { topic: "Exemplos", difficulty: "Médio", question: "A Vitamina C é um ácido importante para a saúde. Qual seu outro nome?", options: ["Ácido Acético", "Ácido Cítrico", "Ácido Ascórbico", "Ácido Muriático"], answer: 2, explanation: "O nome químico da Vitamina C é Ácido Ascórbico." },
+            { topic: "pH", difficulty: "Médio", question: "O sangue humano tem pH aproximado de 7,4. Como ele é classificado?", options: ["Fortemente Ácido", "Levemente Ácido", "Neutro", "Levemente Básico"], answer: 3, explanation: "Um pH de 7,4 é ligeiramente maior que 7 (neutro), sendo, portanto, levemente básico (ou alcalino)." },
+            { topic: "pH", difficulty: "Médio", question: "O limão e o vinagre são ácidos porque seu pH é:", options: ["Maior que 7", "Igual a 7", "Menor que 7", "Igual a 14"], answer: 2, explanation: "Ambos são ácidos, com pH entre 2 e 3, ou seja, menor que 7." },
+            { topic: "Exemplos", difficulty: "Exemplos", question: "Produtos de limpeza, como a lixívia ou a soda cáustica em solução, geralmente têm qual característica?", options: ["São fortemente ácidos (pH < 3)", "São fortemente básicos (pH > 12)", "São neutros (pH = 7)", "São sais"], answer: 1, explanation: "Produtos de limpeza desengordurantes, como a soda cáustica (NaOH) e lixívia, são muito básicos (alcalinos), com pH elevado." },
+
+            // NÍVEL DIFÍCIL (10 Questões - Análise e Consequências)
+            { topic: "Propriedades", difficulty: "Difícil", question: "Por que ácidos e bases são bons condutores de eletricidade em água?", options: ["Porque eles esquentam a água", "Porque eles liberam íons livres na solução", "Porque eles são sempre líquidos", "Porque eles têm sabor azedo/adstringente"], answer: 1, explanation: "A condução de eletricidade em soluções depende da presença de íons livres. Ácidos (H<sup>+</sup>) e Bases (OH<sup>-</sup>) liberam íons na água." },
+            { topic: "Conceitos", difficulty: "Difícil", question: "O CO<sub>2</sub> (Dióxido de Carbono) é considerado um composto inorgânico por exceção. O que ele forma ao reagir com a água?", options: ["Um ácido (Ácido Carbônico)", "Uma base (Hidróxido de Carbono)", "Um sal", "Oxigênio puro"], answer: 0, explanation: "O CO<sub>2</sub> é um óxido ácido. Ao reagir com a água (H<sub>2</sub>O), ele forma o Ácido Carbônico (H<sub>2</sub>CO<sub>3</sub>), por isso a chuva é levemente ácida." },
+            { topic: "Nomenclatura (Bases)", difficulty: "Difícil", question: "Qual a fórmula do Hidróxido de Alumínio (o Alumínio tem carga 3+)?", options: ["AlOH", "Al<sub>3</sub>OH", "Al(OH)<sub>3</sub>", "AlOH<sub>3</sub>"], answer: 2, explanation: "O Alumínio (Al) é 3+ e a Hidroxila (OH) é 1-. São necessários 3 grupos OH para balancear um Al: Al(OH)<sub>3</sub>." },
+            { topic: "Reações", difficulty: "Difícil", question: "O Hidróxido de Magnésio (antiácido) combate a 'azia' (excesso de HCl no estômago) através de uma reação de:", options: ["Ionização", "Dissociação", "Neutralização", "Oxidação"], answer: 2, explanation: "A reação de um ácido (HCl) com uma base (Mg(OH)<sub>2</sub>) é chamada de Neutralização, e forma sal e água." },
+            { topic: "pH", difficulty: "Difícil", question: "Uma solução com pH 2 é quantas vezes mais ácida que uma solução com pH 4?", options: ["2 vezes", "10 vezes", "100 vezes", "20 vezes"], answer: 2, explanation: "A escala de pH é logarítmica (base 10). Cada ponto de diferença é um fator de 10. De pH 4 para 3 é 10x, de 3 para 2 é mais 10x. Total: 10 x 10 = 100 vezes." },
+            { topic: "Conceitos", difficulty: "Difícil", question: "Qual é a diferença entre Ionização (ácidos) e Dissociação (bases iônicas)?", options: ["Não há diferença", "Ionização forma íons; Dissociação separa íons que já existiam", "Ionização separa; Dissociação forma", "Ionização ocorre em bases; Dissociação em ácidos"], answer: 1, explanation: "Ionização (ácidos moleculares) é o processo onde a água *forma* íons que não existiam. Dissociação (bases iônicas) é o processo onde a água apenas *separa* os íons que já existiam no composto sólido." },
+            { topic: "pH", difficulty: "Difícil", question: "Se você adicionar vinagre (ácido) a uma solução de água pura (pH 7), o que acontecerá com o pH?", options: ["O pH aumentará (ficará > 7)", "O pH diminuirá (ficará < 7)", "O pH permanecerá 7", "O pH irá para 14"], answer: 1, explanation: "Adicionar um ácido (pH < 7) a uma solução neutra (pH = 7) tornará a mistura mais ácida, ou seja, o pH diminuirá." },
+            { topic: "pH", difficulty: "Difícil", question: "Se você adicionar soda cáustica (base) a uma solução de água pura (pH 7), o que acontecerá com o pH?", options: ["O pH aumentará (ficará > 7)", "O pH diminuirá (ficará < 7)", "O pH permanecerá 7", "O pH irá para 0"], answer: 0, explanation: "Adicionar uma base (pH > 7) a uma solução neutra (pH = 7) tornará a mistura mais básica, ou seja, o pH aumentará." },
+            { topic: "Nomenclatura (Ácidos)", difficulty: "Difícil", question: "O Ácido Sulfúrico (H<sub>2</sub>SO<sub>4</sub>) é um oxiácido. Se ele perdesse um oxigênio, virando H<sub>2</sub>SO<sub>3</sub>, qual seria seu nome?", options: ["Ácido Sulfúrico", "Ácido Sulfuroso", "Ácido Sulfídrico", "Ácido Persulfúrico"], answer: 1, explanation: "Na regra dos oxiácidos, o ácido padrão é -ICO (H<sub>2</sub>SO<sub>4</sub>). O ácido com um oxigênio a menos é -OSO (H<sub>2</sub>SO<sub>3</sub>)." },
+            { topic: "Exemplos", difficulty: "Difícil", question: "Cal hidratada (Hidróxido de Cálcio) é usada na agricultura para corrigir qual problema do solo?", options: ["Solo seco", "Excesso de pedras", "Solo muito ácido", "Solo muito básico"], answer: 2, explanation: "Muitos solos (especialmente no Brasil) são naturalmente ácidos. A Cal (uma base) é adicionada para neutralizar essa acidez, corrigindo o pH para o plantio." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGECA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.innerHTML = question.question; // Usar innerHTML para <sup> e <sub>
+                
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option; // Usar innerHTML para <sup> e <sub>
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect;
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    state.userAnswers[state.currentQuestionIndex] = true;
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm" id="explanation-text"></p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                const explanationText = document.getElementById('explanation-text');
+                explanationText.innerHTML = explanation; // Usar innerHTML para <sup> e <sub>
+
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                feedbackContainer.innerHTML = '';
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); 
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            btnLearn.classList.add('active'); 
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
+
