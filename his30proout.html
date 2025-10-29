@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Mudanças Sociais (9º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            overflow: auto;
+            display: block;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+            white-space: nowrap;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Mudanças Sociais (9º Ano)</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre a Guerra Fria, ditaduras e movimentos sociais do século XX.</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#guerra_fria_leste" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Guerra Fria e Leste Europeu</a></li>
+                            <li><a href="#america_latina" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Ditaduras na América Latina</a></li>
+                            <li><a href="#modelos_lutas" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. Lutas Sociais (EUA)</a></li>
+                            <li><a href="#contracultura" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Movimentos de Contracultura</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    
+                    <section id="guerra_fria_leste" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. Guerra Fria e Leste Europeu</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Primavera de Praga (1968)</h3>
+                            <p>Foi uma tentativa de reforma e liberalização política na <strong class="text-highlight">Tchecoslováquia</strong>, liderada por Alexander Dubček. O objetivo era criar um <strong class="prose-strong">"socialismo com rosto humano"</strong>.</p>
+                            <ul>
+                                <li><strong>Principais Propostas:</strong>
+                                    <ul>
+                                        <li>Descentralização parcial da economia.</li>
+                                        <li>Fim da censura e maior liberdade de imprensa e expressão.</li>
+                                        <li>Permissão para a formação de novos partidos políticos (além do comunista).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Resultado:</strong> A União Soviética (sob Leonid Brezhnev) viu isso como uma ameaça. Em agosto de 1968, tanques do Pacto de Varsóvia invadiram Praga, pondo fim às reformas e restaurando um governo linha-dura.</li>
+                            </ul>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Conceito de Perestroika e Glasnost</h3>
+                            <p>Nos anos 1980, a URSS estava em profunda crise econômica e política. Mikhail Gorbachev assumiu o poder e propôs duas grandes reformas para tentar salvar o sistema socialista:</p>
+                            <ul>
+                                <li><strong>Perestroika (Reestruturação):</strong> Foi a <strong class="text-highlight">reforma econômica</strong>.
+                                    <ul>
+                                        <li><strong>Ideias:</strong> Permitir alguma propriedade privada (pequenos negócios), dar mais autonomia às fábricas estatais e atrair investimento estrangeiro. O objetivo era modernizar a economia soviética, que estava estagnada.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Glasnost (Transparência/Abertura):</strong> Foi a <strong class="text-highlight">reforma política e social</strong>.
+                                    <ul>
+                                        <li><strong>Ideias:</strong> Fim da censura, maior liberdade de imprensa e expressão, libertação de presos políticos. Gorbachev acreditava que, para a economia (Perestroika) funcionar, ele precisava de transparência e do apoio da sociedade (Glasnost).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p><strong>Resultado:</strong> A Glasnost permitiu que a população criticasse abertamente o governo e que movimentos nacionalistas (nas repúblicas da URSS) crescessem, o que acabou acelerando o colapso da União Soviética em 1991.</p>
+                        </article>
+                    </section>
+                    
+                    <section id="america_latina" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Ditaduras na América Latina</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Contexto e Implantação</h3>
+                            <p>Durante a Guerra Fria, os EUA temiam a expansão do comunismo na América Latina (sua "zona de influência"), especialmente após a Revolução Cubana. Por isso, os EUA apoiaram e financiaram golpes militares em diversos países para derrubar governos democraticamente eleitos que consideravam "de esquerda".</p>
+                            <ul>
+                                <li><strong>Exemplos:</strong> Brasil (1964), Chile (1973), Argentina (1976), Uruguai (1973).</li>
+                                <li><strong>Operação Condor:</strong> Foi uma aliança entre as ditaduras do Cone Sul (Brasil, Chile, Argentina, etc.) para perseguir, prender e assassinar opositores políticos que estivessem exilados em outros países do bloco.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">O Fim das Ditaduras (Anos 1980)</h3>
+                            <p>As ditaduras latino-americanas começaram a ruir nos anos 1980 devido a uma combinação de fatores:</p>
+                            <ul>
+                                <li><strong>Crise Econômica:</strong> A "Década Perdida" (anos 80) foi marcada por hiperinflação e aumento da dívida externa, o que fez os militares perderem apoio da elite econômica.</li>
+                                <li><strong>Pressão Popular:</strong> Aumento de movimentos sociais e manifestações massivas exigindo o fim da repressão e o retorno da democracia (como as "Diretas Já!" no Brasil).</li>
+                                <li><strong>Fim da Guerra Fria:</strong> Com a crise da URSS, os EUA deixaram de ver o "perigo comunista" como uma ameaça iminente e pararam de financiar ativamente esses regimes.</li>
+                            </ul>
+                        </article>
+                    </section>
+
+                    <section id="modelos_lutas" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. Lutas Sociais e Modelos Políticos</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Bem-Estar Social vs. Liberalismo</h3>
+                            <ul>
+                                <li><strong class="prose-strong">Estado de Bem-Estar Social (Welfare State):</strong> Modelo que se popularizou na Europa após a 2ª Guerra Mundial. O governo <strong class="text-highlight">intervém fortemente</strong> na economia e na sociedade, cobrando impostos altos para garantir direitos básicos universais, como saúde pública, educação gratuita e aposentadoria (ex: Suécia, França).</li>
+                                <li><strong class="prose-strong">(Neo)Liberalismo:</strong> Modelo que ganhou força nos anos 1980 (com Reagan nos EUA e Thatcher no Reino Unido). Defende o <strong class="text-highlight">Estado mínimo</strong> e o livre mercado.
+                                    <ul>
+                                        <li><strong>Diferença:</strong> O Liberalismo propõe menos impostos, menos intervenção estatal, privatização de empresas públicas e corte de gastos sociais (o oposto do Welfare State).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">A Luta da População Negra (EUA)</h3>
+                            <p>Nos anos 1950 e 1960, a população negra dos EUA lutou contra as leis de <strong class="text-highlight">segregação racial</strong> (Leis Jim Crow), que impunham a separação entre brancos e negros em escolas, ônibus, restaurantes, etc. Duas grandes vertentes surgiram:</p>
+                            
+                            <ul>
+                                <li><strong>Martin Luther King Jr. (MLK):</strong>
+                                    <ul>
+                                        <li><strong>Característica:</strong> Liderou a luta pelos direitos civis através da <strong class="prose-strong">não-violência</strong> e da <strong class="prose-strong">desobediência civil</strong> (protestos pacíficos, boicotes, marchas).</li>
+                                        <li><strong>Objetivo:</strong> A <strong class="text-highlight">integração</strong> racial e o fim da segregação legal. Seu discurso mais famoso é "Eu tenho um sonho".</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Malcolm X e os Panteras Negras:</strong>
+                                    <ul>
+                                        <li><strong>Malcolm X (Característica):</strong> Inicialmente, defendeu o <strong class="prose-strong">nacionalismo negro</strong> e a separação, desconfiando dos brancos. Era mais radical e defendia a <strong class="prose-strong">autodefesa</strong> ("pelos meios necessários"), criticando a paciência de MLK.</li>
+                                        <li><strong>Panteras Negras:</strong> Fundado *após* a morte de Malcolm X, mas inspirado em suas ideias. Eram um partido que defendia o fim da brutalidade policial, o armamento da comunidade negra para autodefesa e programas sociais (como café da manhã para crianças).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="contracultura" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Movimentos de Contracultura (Anos 60/70)</h2>
+                            <p>Contracultura foi um movimento de <strong class="text-highlight">contestação e negação</strong> dos valores tradicionais da sociedade ocidental (capitalismo, consumismo, moral conservadora, autoridade dos pais e do Estado).</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Movimento Hippie</h3>
+                            <ul>
+                                <li><strong>Características:</strong> Rejeição do materialismo, vida em comunidade, experimentação com drogas (LSD) e crítica à moral sexual conservadora (slogan "Paz e Amor").</li>
+                                <li><strong>Contexto:</strong> O movimento foi fortemente marcado pela <strong class="prose-strong">oposição à Guerra do Vietnã</strong>. O festival de Woodstock (1969) é considerado o auge do movimento.</li>
+                            </ul>
+
+                            <h3 class="text-2xl font-semibold mt-6">Movimento Feminista (Segunda Onda)</h3>
+                            <ul>
+                                <li>Enquanto a "primeira onda" lutou pelo voto, a "segunda onda" (anos 60/70) foi um movimento de contracultura que questionou o papel da mulher na sociedade.</li>
+                                <li><strong>Lema:</strong> "O pessoal é político".</li>
+                                <li><strong>Reivindicações:</strong> Fim do papel tradicional da mulher (apenas dona de casa), direito ao próprio corpo (popularização da <strong class="text-highlight">pílula anticoncepcional</strong>), igualdade no mercado de trabalho e denúncia da violência doméstica.</li>
+                            </ul>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões - Foco em definições)
+            { topic: "Primavera de Praga", difficulty: "Fácil", question: "Em qual país ocorreu a Primavera de Praga em 1968?", options: ["União Soviética", "Polônia", "Tchecoslováquia", "Hungria"], answer: 2, explanation: "A Primavera de Praga ocorreu na Tchecoslováquia, como uma tentativa de liberalizar o regime comunista." },
+            { topic: "Reformas da URSS", difficulty: "Fácil", question: "Qual líder soviético foi responsável pela Perestroika e Glasnost?", options: ["Stalin", "Brezhnev", "Gorbachev", "Yeltsin"], answer: 2, explanation: "Mikhail Gorbachev implementou as reformas nos anos 1980 para tentar salvar a URSS." },
+            { topic: "Reformas da URSS", difficulty: "Fácil", question: "O que significava 'Glasnost'?", options: ["Reestruturação Econômica", "Transparência/Abertura Política", "Coexistência Pacífica", "Corrida Espacial"], answer: 1, explanation: "Glasnost significava 'Abertura' ou 'Transparência', permitindo mais liberdade de expressão e imprensa." },
+            { topic: "Reformas da URSS", difficulty: "Fácil", question: "O que significava 'Perestroika'?", options: ["Reestruturação Econômica", "Transparência Política", "Ditadura Militar", "Guerra nas Estrelas"], answer: 0, explanation: "Perestroika significava 'Reestruturação', e foi a reforma econômica que tentou modernizar a economia soviética." },
+            { topic: "Ditaduras na América Latina", difficulty: "Fácil", question: "Qual foi o nome da aliança entre as ditaduras do Cone Sul para perseguir opositores?", options: ["Pacto de Varsóvia", "Operação Condor", "Doutrina Truman", "Plano Marshall"], answer: 1, explanation: "A Operação Condor foi uma aliança repressiva entre Brasil, Argentina, Chile, Uruguai, etc." },
+            { topic: "Luta da População Negra", difficulty: "Fácil", question: "Qual líder dos direitos civis nos EUA era famoso por sua política de 'não-violência'?", options: ["Malcolm X", "Martin Luther King Jr.", "Che Guevara", "Huey Newton"], answer: 1, explanation: "Martin Luther King Jr. (MLK) foi o principal expoente da desobediência civil e da não-violência." },
+            { topic: "Luta da População Negra", difficulty: "Fácil", question: "Qual líder dos direitos civis nos EUA popularizou a frase 'pelos meios necessários' (autodefesa)?", options: ["Malcolm X", "Martin Luther King Jr.", "Jesse Jackson", "Rosa Parks"], answer: 0, explanation: "Malcolm X defendia que os negros deveriam se defender 'pelos meios necessários', criticando a paciência de MLK." },
+            { topic: "Contracultura", difficulty: "Fácil", question: "Qual era o principal slogan do movimento hippie?", options: ["Paz e Amor", "Ordem e Progresso", "Minha Pátria, Minha Vida", "Liberdade, Igualdade, Fraternidade"], answer: 0, explanation: "O slogan 'Paz e Amor' resumia a filosofia hippie de negação da guerra e do consumismo." },
+            { topic: "Contracultura", difficulty: "Fácil", question: "O movimento hippie foi um grande opositor de qual guerra?", options: ["Guerra da Coreia", "Guerra Fria", "Guerra do Vietnã", "Segunda Guerra Mundial"], answer: 2, explanation: "A oposição à Guerra do Vietnã foi um dos principais pilares do movimento hippie." },
+            { topic: "Modelos Políticos", difficulty: "Fácil", question: "O modelo que defende 'Estado mínimo', privatizações e livre mercado é chamado de:", options: ["Estado de Bem-Estar Social", "(Neo)Liberalismo", "Socialismo", "Comunismo"], answer: 1, explanation: "O Liberalismo (ou Neoliberalismo, nos anos 80) defende a intervenção mínima do Estado na economia." },
+
+            // NÍVEL MÉDIO (10 Questões - Conceitos e Contexto)
+            { topic: "Primavera de Praga", difficulty: "Médio", question: "Qual era o principal objetivo da Primavera de Praga?", options: ["Separar-se da URSS", "Criar um 'socialismo com rosto humano'", "Adotar o capitalismo", "Invadir a Alemanha"], answer: 1, explanation: "Liderada por Dubček, a ideia era reformar o socialismo para ser mais livre e democrático, não acabar com ele." },
+            { topic: "Primavera de Praga", difficulty: "Médio", question: "Como terminou a Primavera de Praga?", options: ["Com eleições livres", "Com a invasão de tanques da União Soviética", "Com a morte de Dubček", "Com a construção do Muro de Berlim"], answer: 1, explanation: "A URSS usou a força (Pacto de Varsóvia) para esmagar o movimento, temendo que a 'doença' da liberdade se espalhasse." },
+            { topic: "Reformas da URSS", difficulty: "Médio", question: "Por que Gorbachev criou a Glasnost (Abertura Política)?", options: ["Para aumentar a censura", "Para prender mais opositores", "Porque ele precisava de apoio popular para suas reformas econômicas", "Para se aliar aos EUA"], answer: 2, explanation: "Gorbachev acreditava que a economia (Perestroika) só mudaria se houvesse transparência e menos corrupção, o que exigia a Glasnost." },
+            { topic: "Ditaduras na América Latina", difficulty: "Médio", question: "Qual foi o papel dos EUA nas ditaduras latino-americanas?", options: ["Combateu as ditaduras", "Apoiou e financiou golpes militares para evitar o comunismo", "Manteve-se neutro", "Condenou, mas não agiu"], answer: 1, explanation: "No contexto da Guerra Fria, os EUA apoiaram ativamente golpes militares (como no Brasil e Chile) para derrubar governos de esquerda." },
+            { topic: "Fim das Ditaduras", difficulty: "Médio", question: "Qual foi um dos principais motivos para o fim das ditaduras na América Latina nos anos 80?", options: ["A morte de todos os generais", "A 'Década Perdida' (crise econômica e inflação)", "Uma invasão da União Soviética", "A popularização da internet"], answer: 1, explanation: "A grave crise econômica dos anos 80 (hiperinflação, dívida externa) tirou o apoio da elite e da classe média aos regimes militares." },
+            { topic: "Modelos Políticos", difficulty: "Médio", question: "Qual a principal diferença entre o Estado de Bem-Estar Social e o Liberalismo?", options: ["Um é democrático, o outro não", "O nível de intervenção do Estado na economia e nos direitos sociais", "Um é capitalista, o outro é socialista", "Não há diferença"], answer: 1, explanation: "O Bem-Estar defende a intervenção máxima do Estado para garantir direitos, enquanto o Liberalismo defende a intervenção mínima." },
+            { topic: "Luta da População Negra", difficulty: "Médio", question: "O que eram as 'Leis Jim Crow' nos EUA?", options: ["Leis de proteção aos negros", "Leis de segregação racial que separavam negros e brancos", "Leis que davam direito ao voto", "Leis que proibiam o racismo"], answer: 1, explanation: "Eram as leis, principalmente no sul dos EUA, que legalizavam a segregação racial em locais públicos." },
+            { topic: "Luta da População Negra", difficulty: "Médio", question: "Qual era a principal característica do Partido dos Panteras Negras?", options: ["A defesa da não-violência total", "A defesa da integração com a sociedade branca a qualquer custo", "A defesa da autodefesa armada e programas sociais na comunidade", "A defesa da monarquia"], answer: 2, explanation: "Os Panteras Negras, inspirados por Malcolm X, defendiam a autodefesa armada contra a brutalidade policial e criaram programas sociais." },
+            { topic: "Contracultura", difficulty: "Médio", question: "O lema 'O pessoal é político' é associado a qual movimento?", options: ["Movimento Hippie", "Movimento Feminista (Segunda Onda)", "Primavera de Praga", "Ditaduras Militares"], answer: 1, explanation: "O feminismo da segunda onda argumentava que problemas pessoais (como casamento, aborto, trabalho doméstico) eram, na verdade, problemas políticos e estruturais." },
+            { topic: "Contracultura", difficulty: "Médio", question: "O que significa 'Contracultura'?", options: ["Defender a cultura tradicional", "Um movimento de negação e oposição aos valores dominantes", "A cultura de países comunistas", "A cultura popular (pop)"], answer: 1, explanation: "É um movimento que vai 'contra' a cultura dominante, questionando seus valores, moral, consumismo e autoridade." },
+            
+            // NÍVEL DIFÍCIL (10 Questões - Análise e Consequências)
+            { topic: "Reformas da URSS", difficulty: "Difícil", question: "Qual foi a consequência não intencional da Glasnost (Abertura)?", options: ["Salvou a economia da URSS", "Aumentou o poder de Gorbachev", "Permitiu o crescimento de movimentos nacionalistas que pediram independência", "Fortaleceu a censura"], answer: 2, explanation: "Ao dar liberdade de expressão, Gorbachev não previu que os povos das repúblicas (Ucrânia, Lituânia, etc.) usariam essa liberdade para pedir independência." },
+            { topic: "Primavera de Praga", difficulty: "Difícil", question: "A invasão da Tchecoslováquia em 1968 foi justificada pela URSS através da...", options: ["Doutrina Brezhnev (direito de intervir em países socialistas)", "Doutrina Truman (conter o comunismo)", "Perestroika (reestruturação)", "Glasnost (abertura)"], answer: 0, explanation: "A Doutrina Brezhnev afirmava que a URSS tinha o direito de intervir militarmente em qualquer país do Pacto de Varsóvia que ameaçasse o bloco." },
+            { topic: "Luta da População Negra", difficulty: "Difícil", question: "Qual a principal DIFERENÇA entre os objetivos de MLK e a visão inicial de Malcolm X?", options: ["MLK queria o fim da segregação e Malcolm X não", "MLK defendia a integração; Malcolm X defendia o nacionalismo negro e a separação", "MLK era capitalista e Malcolm X era comunista", "MLK defendia a violência e Malcolm X a paz"], answer: 1, explanation: "A grande diferença era o objetivo: MLK sonhava com a integração (negros e brancos juntos). Malcolm X (inicialmente) via os brancos como 'demônios' e defendia que os negros deveriam criar sua própria nação separada." },
+            { topic: "Fim das Ditaduras", difficulty: "Difícil", question: "Qual fator EXTERNO foi crucial para o fim das ditaduras na América Latina nos anos 80?", options: ["A redemocratização da URSS (Glasnost)", "O fim da Guerra Fria, que diminuiu o 'perigo comunista' e o apoio dos EUA", "A morte de Fidel Castro", "A ascensão da China"], answer: 1, explanation: "Com o colapso da URSS, os EUA pararam de se preocupar com o 'comunismo' na região e, portanto, pararam de apoiar regimes militares anticomunistas." },
+            { topic: "Modelos Políticos", difficulty: "Difícil", question: "O modelo do 'Welfare State' (Bem-Estar Social) foi baseado em quais ideias econômicas?", options: ["Ideias Neoliberais (Milton Friedman)", "Ideias Keynesianas (John Maynard Keynes)", "Ideias Marxistas (Karl Marx)", "Ideias Anarquistas (Bakunin)"], answer: 1, explanation: "O Keynesianismo defende que o Estado deve intervir na economia para garantir o pleno emprego e o bem-estar, sendo a base teórica do Welfare State." },
+            { topic: "Contracultura", difficulty: "Difícil", question: "Qual evento é considerado o auge do movimento hippie em 1969?", options: ["A chegada do homem à Lua", "O Festival de Woodstock", "A construção do Muro de Berlim", "A invasão de Praga"], answer: 1, explanation: "Woodstock foi um festival de música que se tornou o símbolo máximo da contracultura hippie, da paz e do amor." },
+            { topic: "Contracultura", difficulty: "Difícil", question: "A pílula anticoncepcional está diretamente ligada a qual movimento de contracultura?", options: ["Movimento Hippie", "Movimento Feminista (Segunda Onda)", "Luta pelos Direitos Civis (MLK)", "Primavera de Praga"], answer: 1, explanation: "A pílula deu às mulheres, pela primeira vez, controle sobre a gravidez, sendo uma ferramenta fundamental para a 'revolução sexual' e as pautas do feminismo." },
+            { topic: "Luta da População Negra", difficulty: "Difícil", question: "Por que Malcolm X mudou sua visão sobre 'separação racial' no fim de sua vida?", options: ["Porque ele se converteu ao cristianismo", "Porque ele fez uma peregrinação a Meca e viu muçulmanos de todas as 'raças' juntos", "Porque ele se aliou a Martin Luther King Jr.", "Porque ele foi eleito para o senado"], answer: 1, explanation: "Após sair da Nação do Islã e fazer sua peregrinação (Hajj) a Meca, ele viu muçulmanos brancos, negros e asiáticos orando juntos, e passou a acreditar na irmandade humana e na possibilidade de integração." },
+            { topic: "Reformas da URSS", difficulty: "Difícil", question: "Por que a Perestroika (reforma econômica) de Gorbachev falhou?", options: ["Porque ela foi muito rápida e radical", "Porque a população era contra e preferia o sistema antigo", "Porque foi uma reforma tímida, que não resolveu a crise, mas desorganizou a produção", "Porque os EUA boicotaram todos os produtos russos"], answer: 2, explanation: "A Perestroika ficou no 'meio do caminho': quebrou o planejamento central antigo sem criar um mercado funcional, levando à escassez e ao caos econômico." },
+            { topic: "Ditaduras na América Latina", difficulty: "Difícil", question: "Governos eleitos democraticamente, como o de João Goulart (Brasil) e Salvador Allende (Chile), foram derrubados por golpes militares por quê?", options: ["Porque eram corruptos e o povo exigiu sua saída", "Porque tentaram se aliar à URSS durante a Guerra Fria", "Porque propuseram reformas de base (como a reforma agrária) que ameaçavam a elite e foram vistas como 'comunistas' pelos EUA", "Porque queriam iniciar uma guerra contra os EUA"], answer: 2, explanation: "Ambos propuseram reformas sociais (agrária, bancária) que desagradaram a elite local e foram interpretadas pelos EUA como uma 'ameaça comunista'." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGECA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.textContent = question.question;
+                
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option;
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect;
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    state.userAnswers[state.currentQuestionIndex] = true;
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm" id="explanation-text"></p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                const explanationText = document.getElementById('explanation-text');
+                explanationText.innerHTML = explanation; 
+
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                feedbackContainer.innerHTML = '';
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); 
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            btnLearn.classList.add('active'); 
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
