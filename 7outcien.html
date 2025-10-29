@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos: Atmosfera e Calor (7º Ano)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Cores principais atualizadas */
+        .bg-dark-bg { background-color: #121212; } /* Fundo principal */
+        .bg-dark-surface { background-color: #1E1E1E; } /* Cartões e nav */
+        .text-dark-text { color: #E0E0E0; } /* Texto padrão */
+        .text-dark-light-text { color: #B0B0B0; } /* Texto secundário/p */
+
+        /* paleta de destaque: Tons de Bronze/Dourado Envelhecido */
+        .accent-primary { background-color: #D97706; color: white; } /* Laranja escuro/Bronze (Orange 700) */
+        .hover\:accent-primary-dark { background-color: #C26402; } /* Laranja mais escuro (Orange 800) */
+        .accent-secondary { color: #FDBA74; } /* Laranja claro/Pêssego (Orange 300) */
+        .text-highlight { color: #FED7AA; } /* Laranja mais claro (Orange 200) para destaques */
+        .text-success { color: #34D399; } /* Esmeralda para sucesso */
+        .bg-success-dark { background-color: #065F46; } /* Esmeralda mais escuro */
+        .text-error { color: #EF4444; } /* Vermelho para erro */
+        .bg-error-dark { background-color: #991B1B; } /* Vermelho mais escuro */
+        
+        .mode-button.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+        .nav-link.active {
+            background-color: #D97706; /* Cor principal de destaque */
+            color: white;
+        }
+
+        .prose-headings {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-strong {
+            color: #FDBA74; /* Laranja claro (Orange 300) */
+        }
+        .prose-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            overflow: auto;
+            display: block;
+        }
+        .prose-th, .prose-td {
+            border: 1px solid #424242; /* Cinza mais escuro para bordas da tabela */
+            padding: 0.5em 1em;
+            white-space: nowrap;
+        }
+        .prose-th {
+            background-color: #2F2F2F; /* Fundo mais escuro para cabeçalho da tabela */
+            font-weight: 600;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-dark-text">
+
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center py-8 px-4">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Atmosfera, Calor e Temperatura</h1>
+            <p class="text-lg text-dark-light-text">Um guia sobre os Temas 1 a 5 da Unidade 7 (Ciências - 7º Ano).</p>
+        </header>
+        
+        <nav class="flex justify-center items-center bg-dark-surface rounded-lg p-2 mb-8 gap-2 flex-wrap max-w-md mx-auto">
+            <button id="btn-learn" class="mode-button accent-primary flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Aprender</button>
+            <button id="btn-practice" class="mode-button flex-grow sm:flex-grow-0 text-center py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">Praticar</button>
+        </nav>
+
+        <div id="learn-container">
+            <div class="flex flex-col lg:flex-row gap-8 p-4">
+                <!-- Navegação Lateral --><aside class="lg:w-1/4">
+                    <nav class="sticky top-4 bg-dark-surface rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-white mb-4">Tópicos</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#tema1" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark active">1. Os Gases da Atmosfera</a></li>
+                            <li><a href="#tema2" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">2. Modificações na Atmosfera</a></li>
+                            <li><a href="#tema3" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">3. A Medida da Temperatura</a></li>
+                            <li><a href="#tema4" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">4. Temperatura e Calor</a></li>
+                            <li><a href="#tema5" class="nav-link block py-2 px-4 rounded-md font-semibold transition-all duration-300 hover:accent-primary-dark">5. A Propagação do Calor</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Conteúdo Principal --><main class="lg:w-3/4 space-y-12">
+                    
+                    <section id="tema1" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">1. Os Gases da Atmosfera</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Composição do Ar</h3>
+                            <p>A atmosfera é a camada de gases que envolve a Terra. O ar que respiramos é uma <strong class="prose-strong">mistura de gases</strong>, sendo os principais:</p>
+                            <ul>
+                                <li><strong class="text-highlight">Gás Nitrogênio (N<sub>2</sub>):</strong> Cerca de <strong class="prose-strong">78%</strong>. É o mais abundante.</li>
+                                <li><strong class="text-highlight">Gás Oxigênio (O<sub>2</sub>):</strong> Cerca de <strong class="prose-strong">21%</strong>. Essencial para a respiração da maioria dos seres vivos e para a combustão (queima).</li>
+                                <li><strong class="text-highlight">Outros Gases (1%):</strong> Inclui Gás Argônio (Ar), Gás Carbônico (CO<sub>2</sub>) e vapor de água.</li>
+                            </ul>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Características dos Componentes</h3>
+                            <ul>
+                                <li><strong>Gás Oxigênio (O<sub>2</sub>):</strong> Usado na respiração celular para liberar energia dos alimentos.</li>
+                                <li><strong>Gás Carbônico (CO<sub>2</sub>):</strong> Embora em pequena quantidade, é vital. É usado pelas plantas na <strong class="prose-strong">fotossíntese</strong> e é um dos principais gases do <strong class="text-highlight">efeito estufa</strong>.</li>
+                                <li><strong>Vapor de Água:</strong> Responsável pela umidade do ar e pela formação das nuvens e chuvas.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="tema2" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">2. Modificações na Atmosfera</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Efeito Estufa e Aquecimento Global</h3>
+                            <ul>
+                                <li><strong class="prose-strong">Efeito Estufa:</strong> É um fenômeno <strong class="text-highlight">natural e essencial</strong>. Gases como o CO<sub>2</sub> e o Metano (CH<sub>4</sub>) formam uma "cobertura" que retém parte do calor do Sol, mantendo o planeta aquecido e permitindo a vida.</li>
+                                <li><strong class="prose-strong">Aquecimento Global:</strong> É a <strong class="text-highlight">intensificação</strong> do efeito estufa. A queima de combustíveis fósseis (carvão, petróleo) e o desmatamento aumentam a quantidade de CO<sub>2</sub> na atmosfera, retendo calor <strong class="prose-strong">em excesso</strong> e elevando a temperatura média do planeta.</li>
+                            </ul>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">A Camada de Ozônio (O<sub>3</sub>)</h3>
+                            <p>O gás Ozônio (O<sub>3</sub>) forma uma camada na alta atmosfera que funciona como um <strong class="text-highlight">filtro solar natural</strong>. Ele nos protege contra a maior parte da <strong class="prose-strong">radiação ultravioleta (UV)</strong> do Sol, que é prejudicial e pode causar câncer de pele.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Chuva Ácida</h3>
+                            <p>É causada pela poluição do ar, principalmente pela queima de combustíveis fósseis que liberam gases contendo <strong class="prose-strong">enxofre (SO<sub>x</sub>)</strong> e <strong class="prose-strong">nitrogênio (NO<sub>x</sub>)</strong>. Esses gases reagem com o vapor de água na atmosfera e formam ácidos (como o ácido sulfúrico), que caem com a chuva, prejudicando plantas, rios e monumentos.</p>
+                        </article>
+                    </section>
+
+                    <section id="tema3" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">3. A Medida da Temperatura</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Sensação Térmica</h3>
+                            <p>É a <strong class="text-highlight">percepção</strong> que temos da temperatura, e ela pode nos enganar. A sensação térmica é influenciada por fatores como o <strong class="prose-strong">vento</strong> (que "rouba" calor do nosso corpo, dando sensação de mais frio) e a <strong class="prose-strong">umidade do ar</strong> (que dificulta a evaporação do suor, dando sensação de mais calor).</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Termômetros</h3>
+                            <p>É o instrumento usado para <strong class="text-highlight">medir a temperatura</strong> de forma precisa. A maioria dos termômetros comuns funciona por <strong class="prose-strong">dilatação</strong>: o líquido dentro dele (como o mercúrio ou álcool colorido) se expande quando aquecido (sobe) e se contrai quando resfriado (desce).</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Escalas de Temperatura</h3>
+                            <p>A escala mais usada no Brasil e na maior parte do mundo é a <strong class="text-highlight">Celsius (°C)</strong>.</p>
+                            <ul>
+                                <li>Nela, o ponto de fusão da água (gelo derretendo) é <strong class="prose-strong">0 °C</strong>.</li>
+                                <li>E o ponto de ebulição da água (água fervendo) é <strong class="prose-strong">100 °C</strong>.</li>
+                            </ul>
+                        </article>
+                    </section>
+                    
+                    <section id="tema4" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">4. Temperatura e Calor</h2>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Temperatura</h3>
+                            <p>Temperatura é a medida do <strong class="text-highlight">nível de agitação das partículas</strong> (átomos e moléculas) de um corpo. Quanto mais agitadas as partículas, maior a temperatura.</p>
+                            <ul>
+                                <li><strong class="prose-strong">Quente:</strong> Partículas muito agitadas.</li>
+                                <li><strong class="prose-strong">Frio:</strong> Partículas pouco agitadas.</li>
+                            </ul>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Calor</h3>
+                            <p>Calor é a <strong class="text-highlight">energia térmica em trânsito (em movimento)</strong>. O calor sempre flui <strong class="text-highlight">espontaneamente</strong> do corpo de <strong class="prose-strong">maior temperatura</strong> (mais quente) para o corpo de <strong class="prose-strong">menor temperatura</strong> (mais frio), até que ambos atinjam o equilíbrio.</p>
+                            <p>Um corpo <strong class="prose-strong">não "possui" calor</strong>; ele possui energia interna. Ele "recebe" ou "cede" calor.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Equilíbrio Térmico</h3>
+                            <p>Ocorre quando dois ou mais corpos, após trocarem calor entre si, atingem a <strong class="text-highlight">mesma temperatura</strong>. Nesse ponto, a troca de calor para.</p>
+                            <p>Ex: Quando você coloca gelo (frio) em um copo de água (quente), a água cede calor para o gelo. O gelo esquenta e derrete, e a água esfria. A troca para quando tudo atinge a mesma temperatura.</p>
+                        </article>
+                    </section>
+
+                    <section id="tema5" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg">
+                        <article class="prose prose-invert max-w-none text-dark-light-text">
+                            <h2 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4 prose-headings">5. A Propagação do Calor</h2>
+                            <p>O calor (energia) pode se propagar de três formas diferentes:</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Condução</h3>
+                            <p>É a propagação de calor que ocorre <strong class="text-highlight">de partícula para partícula</strong>, através do contato direto. Ocorre principalmente em <strong class="prose-strong">sólidos</strong>.</p>
+                            <p>Ex: Ao aquecer a ponta de uma barra de metal, o calor é conduzido até a outra ponta (onde você segura), que também esquenta. Materiais que fazem isso bem (metais) são <strong class="prose-strong">condutores térmicos</strong>. Materiais que fazem isso mal (isopor, lã, madeira) são <strong class="prose-strong">isolantes térmicos</strong>.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Convecção</h3>
+                            <p>É a propagação de calor que ocorre pela <strong class="text-highlight">movimentação do próprio material</strong> (massas quentes sobem e massas frias descem). Ocorre em <strong class="prose-strong">líquidos e gases</strong>.</p>
+                            <p>Ex 1: O ar-condicionado é instalado no alto. Ele joga o ar frio (mais denso) para baixo, que empurra o ar quente (menos denso) para cima, criando um ciclo (corrente de convecção).</p>
+                            <p>Ex 2: O aquecimento da água em uma panela. A água quente do fundo sobe, e a fria da superfície desce.</p>
+                            
+                            <h3 class="text-2xl font-semibold mt-6">Irradiação (ou Radiação)</h3>
+                            <p>É a propagação de calor que ocorre através de <strong class="text-highlight">ondas eletromagnéticas</strong> (como a luz). É a única forma que <strong class="text-highlight">não precisa de um meio material</strong> para acontecer (ocorre no vácuo).</p>
+                            <p>Ex 1: O <strong class="prose-strong">Sol</strong> aquecendo a Terra, mesmo através do vácuo do espaço.</p>
+                            <p>Ex 2: O calor que sentimos ao lado de uma fogueira ou de um forno quente.</p>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Seção Praticar --><section id="practice-section" class="hidden p-4">
+            <div id="quiz-container" class="bg-dark-surface p-6 sm:p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+                <div id="question-header" class="mb-4 text-center">
+                    <p class="accent-secondary font-semibold" id="question-topic"></p>
+                </div>
+                <p id="question-text" class="text-xl text-center mb-6 min-h-[60px]"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="feedback-container" class="mt-6 text-center"></div>
+
+                <!-- Navegação --><div class="flex justify-between items-center mt-8">
+                    <button id="prev-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark disabled:bg-gray-600 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="question-counter" class="font-semibold text-dark-text"></span>
+                    <button id="next-btn" class="accent-primary py-2 px-5 rounded-md font-semibold transition-colors hover:accent-primary-dark">Próxima</button>
+                </div>
+            </div>
+
+            <!-- Navegação de Questões --><div id="question-nav-container" class="hidden bg-dark-surface p-4 rounded-lg shadow-lg max-w-3xl mx-auto mt-4">
+                <div id="question-buttons-grid" class="flex flex-wrap justify-center gap-2">
+                    <!-- Buttons will be programmatically inserted here --></div>
+            </div>
+
+             <!-- Tela de Pontuação --><div id="score-screen" class="hidden text-center bg-dark-surface p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
+                <h3 class="text-4xl font-bold text-white mb-4">Pontuação Final</h3>
+                <p id="final-score" class="text-6xl font-bold accent-secondary mb-2"></p>
+                <p id="score-message" class="text-lg text-dark-light-text mb-8"></p>
+                <button id="restart-btn" class="bg-green-600 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-500 transition-colors">Recomeçar</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- BANCO DE DADOS DAS QUESTÕES ---
+        const questions = [
+            // NÍVEL FÁCIL (10 Questões)
+            { topic: "Gases da Atmosfera", difficulty: "Fácil", question: "Qual é o gás mais abundante na atmosfera terrestre?", options: ["Gás Oxigênio (O<sub>2</sub>)", "Gás Carbônico (CO<sub>2</sub>)", "Gás Nitrogênio (N<sub>2</sub>)", "Gás Argônio (Ar)"], answer: 2, explanation: "O Gás Nitrogênio (N<sub>2</sub>) compõe cerca de 78% da atmosfera, sendo o mais abundante." },
+            { topic: "Gases da Atmosfera", difficulty: "Fácil", question: "Qual gás, essencial para a respiração, compõe cerca de 21% da atmosfera?", options: ["Gás Oxigênio (O<sub>2</sub>)", "Gás Nitrogênio (N<sub>2</sub>)", "Gás Carbônico (CO<sub>2</sub>)", "Vapor de água"], answer: 0, explanation: "O Gás Oxigênio (O<sub>2</sub>) é essencial para a respiração da maioria dos seres vivos e forma 21% do ar." },
+            { topic: "Modificações na Atmosfera", difficulty: "Fácil", question: "O Efeito Estufa é um fenômeno:", options: ["Artificial e prejudicial", "Natural e essencial para a vida", "Causado apenas pela poluição", "Que destrói a camada de ozônio"], answer: 1, explanation: "O Efeito Estufa é um processo natural que mantém o planeta aquecido. O problema é a sua intensificação (Aquecimento Global)." },
+            { topic: "Medida da Temperatura", difficulty: "Fácil", question: "Qual é o nome do instrumento usado para medir a temperatura?", options: ["Barômetro", "Termômetro", "Anemômetro", "Higrômetro"], answer: 1, explanation: "O termômetro é o instrumento que mede a temperatura de forma precisa." },
+            { topic: "Medida da Temperatura", difficulty: "Fácil", question: "Na escala Celsius (°C), qual é a temperatura de fusão do gelo?", options: ["100 °C", "0 °C", "-10 °C", "32 °C"], answer: 1, explanation: "Na escala Celsius, 0 °C é o ponto de fusão da água (gelo derretendo)." },
+            { topic: "Medida da Temperatura", difficulty: "Fácil", question: "Na escala Celsius (°C), qual é a temperatura de ebulição da água?", options: ["0 °C", "100 °C", "10 °C", "212 °C"], answer: 1, explanation: "Na escala Celsius, 100 °C é o ponto de ebulição da água (água fervendo)." },
+            { topic: "Temperatura e Calor", difficulty: "Fácil", question: "O que é Temperatura?", options: ["Energia em trânsito", "Medida do grau de agitação das partículas", "A sensação de frio", "A quantidade de energia de um corpo"], answer: 1, explanation: "Temperatura é a medida da agitação (energia cinética) das partículas de um corpo." },
+            { topic: "Temperatura e Calor", difficulty: "Fácil", question: "O que é Calor?", options: ["Energia térmica em trânsito", "A agitação das partículas", "Algo que um corpo possui", "A ausência de frio"], answer: 0, explanation: "Calor é o nome que damos à energia térmica quando ela está se movendo (em trânsito) de um corpo para outro." },
+            { topic: "Propagação do Calor", difficulty: "Fácil", question: "Como o Sol aquece a Terra, mesmo através do vácuo do espaço?", options: ["Condução", "Convecção", "Irradiação", "Evaporação"], answer: 2, explanation: "A Irradiação (ou Radiação) é a única forma de propagação de calor que não precisa de um meio material, ocorrendo por ondas eletromagnéticas." },
+            { topic: "Propagação do Calor", difficulty: "Fácil", question: "Aquecer a ponta de uma barra de metal e sentir a outra ponta esquentar é um exemplo de:", options: ["Condução", "Convecção", "Irradiação", "Equilíbrio"], answer: 0, explanation: "A Condução é a transferência de calor de partícula para partícula, típica de sólidos em contato." },
+
+            // NÍVEL MÉDIO (10 Questões)
+            { topic: "Gases da Atmosfera", difficulty: "Médio", question: "Qual gás é usado pelas plantas na fotossíntese e também é um dos principais causadores do Efeito Estufa?", options: ["Gás Oxigênio (O<sub>2</sub>)", "Gás Nitrogênio (N<sub>2</sub>)", "Gás Ozônio (O<sub>3</sub>)", "Gás Carbônico (CO<sub>2</sub>)"], answer: 3, explanation: "O Gás Carbônico (CO<sub>2</sub>) é usado na fotossíntese e é o principal gás do efeito estufa." },
+            { topic: "Modificações na Atmosfera", difficulty: "Médio", question: "O Aquecimento Global é a intensificação do Efeito Estufa, causada principalmente por:", options: ["Aumento de Oxigênio na atmosfera", "Aumento de CO<sub>2</sub> pela queima de combustíveis fósseis", "Destruição da camada de ozônio", "Uso de termômetros"], answer: 1, explanation: "O aumento excessivo de CO<sub>2</sub> (dióxido de carbono) na atmosfera retém mais calor, causando o aquecimento global." },
+            { topic: "Modificações na Atmosfera", difficulty: "Médio", question: "Qual é a função da Camada de Ozônio (O<sub>3</sub>)?", options: ["Manter o planeta aquecido", "Produzir oxigênio para respirarmos", "Filtrar a radiação ultravioleta (UV) do Sol", "Causar a chuva ácida"], answer: 2, explanation: "A camada de ozônio (O<sub>3</sub>) funciona como um filtro, protegendo a vida na Terra da maior parte da radiação UV." },
+            { topic: "Modificações na Atmosfera", difficulty: "Médio", question: "A Chuva Ácida é formada quando gases de enxofre e nitrogênio, vindos da poluição, reagem com:", options: ["O Gás Ozônio", "O Gás Carbônico", "O Vapor de água", "O Gás Nitrogênio"], answer: 2, explanation: "Os gases poluentes reagem com o vapor de água nas nuvens, formando ácidos que caem com a chuva." },
+            { topic: "Medida da Temperatura", difficulty: "Médio", question: "Por que sentimos mais frio em um dia com vento, mesmo que o termômetro marque a mesma temperatura?", options: ["Porque o vento é mais frio que o ar", "Porque o vento aumenta a umidade", "Porque o vento 'rouba' calor do nosso corpo mais rápido", "Porque o termômetro está errado"], answer: 2, explanation: "Isso é a Sensação Térmica. O vento remove a camada de ar quente próxima à nossa pele, acelerando nossa perda de calor." },
+            { topic: "Temperatura e Calor", difficulty: "Médio", question: "Qual é o fluxo espontâneo do calor?", options: ["Do corpo mais frio para o mais quente", "Do corpo maior para o menor", "Do corpo com mais energia para o com menos energia", "Do corpo de maior temperatura para o de menor temperatura"], answer: 3, explanation: "O calor sempre flui, naturalmente, do corpo mais quente (maior temperatura) para o corpo mais frio (menor temperatura)." },
+            { topic: "Temperatura e Calor", difficulty: "Médio", question: "O que acontece quando dois corpos atingem o Equilíbrio Térmico?", options: ["Eles atingem a mesma temperatura e a troca de calor para", "Eles explodem", "O corpo mais frio rouba todo o calor do mais quente", "Eles atingem 0 °C"], answer: 0, explanation: "O equilíbrio térmico é alcançado quando os corpos chegam à mesma temperatura, cessando a transferência de calor entre eles." },
+            { topic: "Propagação do Calor", difficulty: "Médio", question: "O ar-condicionado é instalado na parte de cima do cômodo. Isso se baseia em qual processo de propagação de calor?", options: ["Condução", "Irradiação", "Convecção", "Equilíbrio"], answer: 2, explanation: "Na Convecção, o ar frio (mais denso) desce, e o ar quente (menos denso) sobe. O ar-condicionado em cima otimiza esse ciclo." },
+            { topic: "Propagação do Calor", difficulty: "Médio", question: "O aquecimento da água em uma panela, onde a água quente do fundo sobe e a fria da superfície desce, é um exemplo de:", options: ["Convecção", "Condução", "Irradiação", "Vibração"], answer: 0, explanation: "Isso é uma corrente de convecção, um movimento do próprio fluido (água) causado pela diferença de temperatura e densidade." },
+            { topic: "Propagação do Calor", difficulty: "Médio", question: "Materiais como isopor e lã são chamados de isolantes térmicos porque eles dificultam qual processo?", options: ["Convecção", "Irradiação", "Propagação da luz", "Condução"], answer: 3, explanation: "Isolantes térmicos são maus condutores de calor, ou seja, dificultam a propagação de calor por condução (vibração de partícula para partícula)." },
+
+            // NÍVEL DIFÍCIL (10 Questões)
+            { topic: "Gases da Atmosfera", difficulty: "Difícil", question: "Embora o CO<sub>2</sub> seja famoso pelo Efeito Estufa, qual gás, liberado por lixões e gado (pecuária), é ainda mais potente em reter calor?", options: ["Nitrogênio (N<sub>2</sub>)", "Oxigênio (O<sub>2</sub>)", "Metano (CH<sub>4</sub>)", "Ozônio (O<sub>3</sub>)"], answer: 2, explanation: "O Gás Metano (CH<sub>4</sub>) é cerca de 25 vezes mais potente que o CO<sub>2</sub> para reter calor, embora exista em menor quantidade." },
+            { topic: "Modificações na Atmosfera", difficulty: "Difícil", question: "Qual foi o principal composto químico, usado em sprays e geladeiras antigas, responsável pela destruição da camada de ozônio?", options: ["Dióxido de Carbono (CO<sub>2</sub>)", "Clorofluorocarbonetos (CFCs)", "Metano (CH<sub>4</sub>)", "Ácido Sulfúrico (H<sub>2</sub>SO<sub>4</sub>)"], answer: 1, explanation: "Os CFCs (Clorofluorocarbonetos) foram os grandes vilões, pois reagiam com o ozônio (O<sub>3</sub>) na atmosfera, destruindo-o. Eles foram banidos pelo Protocolo de Montreal." },
+            { topic: "Temperatura e Calor", difficulty: "Difícil", question: "Um corpo A está a 80°C e um corpo B está a 20°C. Eles são colocados em contato. O que é CORRETO afirmar?", options: ["B cede calor para A.", "A cede calor para B.", "A cede 'frio' para B.", "B cede 'frio' para A."], answer: 1, explanation: "O calor flui do corpo de maior temperatura (A) para o de menor temperatura (B). Não existe 'ceder frio', apenas 'perder calor'." },
+            { topic: "Temperatura e Calor", difficulty: "Difícil", question: "Dois copos, um com 1 litro de água a 50°C e outro com 2 litros de água a 50°C. Qual afirmação é correta?", options: ["Ambos têm a mesma temperatura e a mesma energia térmica.", "Têm temperaturas diferentes.", "Têm a mesma temperatura, mas o de 2 litros tem mais energia térmica.", "Têm a mesma temperatura, mas o de 1 litro tem mais energia térmica."], answer: 2, explanation: "Ambos têm a mesma temperatura (agitação das partículas = 50°C), mas o copo com mais água (2 litros) tem mais partículas, portanto, a soma da energia de todas elas (energia térmica) é maior." },
+            { topic: "Propagação do Calor", difficulty: "Difícil", question: "Por que as garrafas térmicas (como a de café) têm paredes duplas e espelhadas?", options: ["Apenas para estética.", "Para dificultar a condução (parede dupla/vácuo) e a irradiação (espelhada).", "Para facilitar a convecção.", "Para aquecer o líquido por condução."], answer: 1, explanation: "A parede dupla com vácuo (ou ar) dificulta a condução e a convecção. A superfície espelhada reflete a irradiação, impedindo que o calor saia (ou entre)." },
+            { topic: "Propagação do Calor", difficulty: "Difícil", question: "Por que o aquecedor deve ser instalado perto do chão, e não perto do teto como o ar-condicionado?", options: ["Porque é mais fácil de instalar.", "Baseado na Convecção: o ar quente (menos denso) sobe e empurra o frio para baixo.", "Baseado na Condução: o chão esquenta o ar.", "Baseado na Irradiação: as ondas de calor sobem."], answer: 1, explanation: "É o oposto do ar-condicionado. O aquecedor, no chão, esquenta o ar próximo a ele, que fica menos denso e sobe, empurrando o ar frio (mais denso) para baixo, criando um ciclo de convecção que aquece o cômodo." },
+            { topic: "Propagação do Calor", difficulty: "Difícil", question: "Por que roupas brancas são mais confortáveis no Sol do que roupas pretas?", options: ["Roupas brancas são mais leves.", "Roupas pretas absorvem mais irradiação (calor) do Sol.", "Roupas brancas bloqueiam o vento.", "Roupas pretas são melhores condutoras."], answer: 1, explanation: "A cor preta absorve a maior parte da irradiação (luz e calor) do Sol. A cor branca reflete a maior parte, absorvendo menos calor." },
+            { topic: "Medida da Temperatura", difficulty: "Difícil", question: "O que é 'sensação térmica alta' em um dia quente e úmido?", options: ["O vento está forte.", "A alta umidade do ar dificulta a evaporação do suor, impedindo o corpo de esfriar.", "O termômetro está marcando errado.", "A umidade alta facilita a evaporação do suor."], answer: 1, explanation: "Quando o ar já está cheio de vapor (úmido), nosso suor não evapora facilmente. Como a evaporação do suor é o que nos resfria, sentimos mais calor do que a temperatura real." },
+            { topic: "Temperatura e Calor", difficulty: "Difícil", question: "Se você colocar uma colher de metal e uma colher de pau (mesma temperatura ambiente) dentro de um copo com água fervendo, qual esquentará mais rápido?", options: ["A de pau, pois madeira é isolante.", "As duas esquentam igual.", "A de metal, pois é melhor condutor térmico.", "Nenhuma esquenta."], answer: 2, explanation: "O metal é um excelente condutor térmico, transferindo o calor por condução muito mais rápido que a madeira (que é um isolante)." },
+            { topic: "Temperatura e Calor", difficulty: "Difícil", question: "Qual é o conceito de 'Frio' na Física?", options: ["Uma energia que entra nos corpos.", "O oposto do calor.", "A ausência ou baixa quantidade de energia térmica (baixa temperatura).", "Uma substância que congela as coisas."], answer: 2, explanation: "Na Física, 'frio' não é uma 'coisa' que se 'pega'. O frio é a sensação que temos quando nosso corpo está perdendo calor para o ambiente, ou simplesmente a definição de um estado de baixa temperatura (baixa agitação das partículas)." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGECA DO MODO DE APRENDIZAGEM ---
+            const links = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('#learn-container main section');
+
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // --- LÓGICA DO MODO DE PRÁTICA ---
+            const btnLearn = document.getElementById('btn-learn');
+            const btnPractice = document.getElementById('btn-practice');
+            const learnContainer = document.getElementById('learn-container');
+            const practiceSection = document.getElementById('practice-section');
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreScreen = document.getElementById('score-screen');
+            const questionTopic = document.getElementById('question-topic');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const finalScore = document.getElementById('final-score');
+            const scoreMessage = document.getElementById('score-message');
+            const restartBtn = document.getElementById('restart-btn');
+            const questionNavContainer = document.getElementById('question-nav-container');
+
+            let state = {
+                currentMode: 'learn',
+                currentQuestionIndex: 0,
+                userAnswers: [],
+                score: 0,
+            };
+
+            function switchMode(mode) {
+                state.currentMode = mode;
+                btnLearn.classList.toggle('active', mode === 'learn');
+                btnPractice.classList.toggle('active', mode !== 'learn');
+                learnContainer.classList.toggle('hidden', mode !== 'learn');
+                practiceSection.classList.toggle('hidden', mode === 'learn');
+
+                if (mode === 'practice') {
+                    startPractice();
+                }
+            }
+
+            function startPractice() {
+                state.currentQuestionIndex = 0;
+                state.score = 0;
+                state.userAnswers = Array(questions.length).fill(null);
+                quizContainer.classList.remove('hidden');
+                scoreScreen.classList.add('hidden');
+                questionNavContainer.classList.remove('hidden');
+                renderQuestionNavigation();
+                renderQuestion(0);
+            }
+            
+            function renderQuestion(index) {
+                const question = questions[index];
+                questionTopic.textContent = `${question.topic} - (Nível: ${question.difficulty})`;
+                questionText.innerHTML = question.question; // Usar innerHTML para <sub>
+                
+                questionCounter.textContent = `${index + 1} / ${questions.length}`;
+
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.innerHTML = option; // Usar innerHTML para <sub>
+                    button.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                    button.onclick = () => checkAnswer(i, question.answer, question.explanation);
+                    optionsContainer.appendChild(button);
+                });
+
+                updateNavButtonsState();
+                updateQuestionNavButtons();
+            }
+
+            function checkAnswer(selectedIndex, correctIndex, explanation) {
+                const isCorrect = selectedIndex === correctIndex;
+                const isFirstAttempt = state.userAnswers[state.currentQuestionIndex] === null;
+                const wasPreviouslyWrong = state.userAnswers[state.currentQuestionIndex] === false;
+
+                if (isFirstAttempt) {
+                    state.userAnswers[state.currentQuestionIndex] = isCorrect;
+                    if (isCorrect) {
+                        state.score++;
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    }
+                } else if (wasPreviouslyWrong && isCorrect) {
+                    state.userAnswers[state.currentQuestionIndex] = true;
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                }
+
+                Array.from(optionsContainer.children).forEach((btn, i) => {
+                    btn.disabled = true;
+                    if (i === correctIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (i === selectedIndex) {
+                        btn.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                        btn.classList.add('bg-red-600', 'text-white');
+                    }
+                });
+
+                feedbackContainer.innerHTML = `
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-success-dark' : 'bg-error-dark'}">
+                        <h4 class="font-bold text-lg mb-2">${isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}</h4>
+                        <p class="text-sm" id="explanation-text"></p>
+                        <button id="redo-question-btn" class="mt-4 py-2 px-4 accent-primary rounded-md font-semibold hover:accent-primary-dark transition-colors">Tentar Novamente</button>
+                    </div>`;
+                
+                const explanationText = document.getElementById('explanation-text');
+                explanationText.innerHTML = explanation; // Usar innerHTML para <sub>
+
+                document.getElementById('redo-question-btn').addEventListener('click', resetCurrentQuestion);
+                updateQuestionNavButtons();
+            }
+            
+            function resetCurrentQuestion() {
+                feedbackContainer.innerHTML = '';
+                Array.from(optionsContainer.children).forEach(btn => {
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors disabled:cursor-not-allowed";
+                });
+            }
+
+            function updateNavButtonsState() {
+                prevBtn.disabled = state.currentQuestionIndex === 0;
+                nextBtn.textContent = (state.currentQuestionIndex === questions.length - 1) ? "Finalizar" : "Próxima";
+            }
+
+            function nextQuestion() {
+                if (state.currentQuestionIndex < questions.length - 1) {
+                    goToQuestion(state.currentQuestionIndex + 1);
+                } else {
+                    showFinalScore();
+                }
+            }
+
+            function prevQuestion() {
+                if (state.currentQuestionIndex > 0) {
+                   goToQuestion(state.currentQuestionIndex - 1);
+                }
+            }
+
+            function goToQuestion(index) {
+                if (index >= 0 && index < questions.length) {
+                    state.currentQuestionIndex = index;
+                    renderQuestion(index);
+                }
+            }
+
+            function renderQuestionNavigation() {
+                const grid = document.getElementById('question-buttons-grid');
+                grid.innerHTML = '';
+                for (let i = 0; i < questions.length; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i + 1;
+                    button.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    button.dataset.index = i;
+                    button.onclick = () => goToQuestion(i);
+                    grid.appendChild(button);
+                }
+            }
+            
+            function updateQuestionNavButtons() {
+                const buttons = document.querySelectorAll('#question-buttons-grid button');
+                buttons.forEach((btn, i) => {
+                    btn.className = 'w-9 h-9 flex items-center justify-center rounded-md font-semibold transition-all duration-200';
+                    const answerState = state.userAnswers[i];
+                    
+                    if (answerState === true) {
+                        btn.classList.add('bg-green-600', 'text-white');
+                    } else if (answerState === false) {
+                        btn.classList.add('bg-red-600', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    }
+
+                    if (i === state.currentQuestionIndex) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-offset-gray-800', 'ring-orange-500'); 
+                        btn.classList.remove('hover:bg-gray-600');
+                    }
+                });
+            }
+            
+            function showFinalScore() {
+                quizContainer.classList.add('hidden');
+                scoreScreen.classList.remove('hidden');
+                questionNavContainer.classList.add('hidden');
+
+                const percentage = Math.round((state.score / questions.length) * 100);
+                finalScore.textContent = `${percentage}%`;
+
+                let message = '';
+                if (percentage >= 90) message = "Excelente! Você dominou o assunto!";
+                else if (percentage >= 70) message = "Muito bom! Continue praticando para aperfeiçoar.";
+                else if (percentage >= 50) message = "Bom esforço! Reveja os tópicos que errou.";
+                else message = "Não desanime! Reveja a seção 'Aprender' e tente novamente.";
+                
+                scoreMessage.textContent = `Você acertou ${state.score} de ${questions.length} questões. ${message}`;
+            }
+
+            // --- INICIALIZAÇÃO ---
+            btnLearn.classList.add('active'); 
+            
+            btnLearn.addEventListener('click', () => switchMode('learn'));
+            btnPractice.addEventListener('click', () => switchMode('practice'));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startPractice);
+
+            switchMode('learn');
+        });
+    </script>
+</body>
+</html>
