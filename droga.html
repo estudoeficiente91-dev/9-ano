@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>A Droga da Obediência – 7º Ano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#111827; 
+            --card:#1f2937; 
+            --accent:#818cf8; 
+            --muted:#9ca3af; 
+            --text:#e5e7eb;
+            --success:#34d399;
+            --danger:#f87171; 
+            --border:rgba(255,255,255,0.1); 
+            --muted-2: rgba(230,238,248,0.9);
+        }
+        html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:var(--text);}
+        .container{max-width:980px;margin:28px auto;padding:18px}
+        .page-header{ padding:1.25rem; border-radius:12px; background: linear-gradient(180deg, rgba(129, 140, 248, 0.06), transparent); box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
+        .card{ background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.6); padding:18px }
+        .btn-primary{ background: linear-gradient(90deg,var(--accent), #6366f1); color: #ffffff; padding: .5rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 6px 18px rgba(129, 140, 248, 0.12); cursor: pointer; }
+        .btn-ghost{ background: transparent; color: var(--muted-2); padding: .45rem .9rem; border-radius: 10px; border: 1px solid var(--border); cursor:pointer; }
+        .option-btn{ display:block; width:100%; text-align:left; padding:.75rem 1rem; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid var(--border); color:var(--muted-2); cursor:pointer; transition: transform 150ms ease, background 150ms ease; }
+        .option-btn:hover:not(:disabled){ background: rgba(255,255,255,0.035); transform: translateY(-1px); }
+        .option-btn.correct{ background: var(--success) !important; color: #062e1f !important; border-color: rgba(4,120,87,0.18) !important; }
+        .option-btn.wrong{ background: var(--danger) !important; color: #fff !important; border-color: rgba(185,28,28,0.18) !important; }
+        .option-btn:disabled { cursor: not-allowed; }
+        #question-buttons{ display:flex; flex-wrap:wrap; gap:8px; }
+        #question-buttons button { 
+            position: relative;
+            background: transparent; 
+            color: var(--muted-2); 
+            border:1px solid var(--border); 
+            padding:.45rem .6rem; 
+            border-radius:8px; 
+            cursor:pointer; 
+            min-width: 42px;
+        }
+        #question-buttons button.current-question { background-color: rgba(129, 140, 248, 0.2); border-color: var(--accent); }
+        #question-buttons button.correct-status { background-color: var(--success); color: #062e1f; border-color: var(--success); }
+        #question-buttons button.wrong-status { background-color: var(--danger); color: white; border-color: var(--danger); }
+        .feedback-correct{ background: rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.22); color: #bbf7d0; padding:12px; border-radius:8px }
+        .feedback-wrong{ background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.22); color: #ffdede; padding:12px; border-radius:8px }
+        .celebrate{ animation: pop 480ms cubic-bezier(.2,.9,.3,1); box-shadow: 0 12px 36px rgba(129, 140, 248, 0.18), 0 0 28px rgba(16,185,129,0.12); }
+        @keyframes pop{ 0%{ transform: scale(1); } 50%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+        .confetti{ position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; opacity: 1; transform-origin: center; }
+        @keyframes confetti-fall { 0%{ transform: translateY(-10vh) rotate(0deg); opacity:1 } 100%{ transform: translateY(100vh) rotate(540deg); opacity:0 } }
+        
+        .theme-light{ 
+            --bg: #ffffff; 
+            --card: #f9fafb; 
+            --muted: #4b5563; 
+            --text: #111827; 
+            --accent: #4f46e5; 
+            --success: #047857; 
+            --danger: #b91c1c; 
+            --border: rgba(15,23,42,0.1); 
+            --muted-2: rgba(17, 24, 39, 0.9);
+        }
+        .topic-section { margin-bottom: 2.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+        .topic-title { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; }
+        .sub-topic-title { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p, .topic-section ul { font-size: 1rem; color: var(--muted-2); line-height: 1.7; text-align: justify; }
+        .topic-section ul { list-style-position: inside; list-style-type: disc; margin-top: 0.5rem; padding-left: 1rem;}
+        .highlight { background-color: rgba(129, 140, 248, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: 600; color: var(--accent); }
+        
+        .difficulty-badge { padding: 0.1rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .difficulty-facil { background-color: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+        .difficulty-medio { background-color: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .difficulty-dificil { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+        
+        .difficulty-dot {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .difficulty-facil-dot { background-color: #34d399; }
+        .difficulty-medio-dot { background-color: #facc15; }
+        .difficulty-dificil-dot { background-color: #ef4444; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="page-header">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">A Droga da Obediência</h1>
+                    <p class="text-sm text-slate-400">Guia de estudos: Personagens, Enredo e Temas (7º Ano).</p>
+                </div>
+                <div>
+                    <button id="theme-toggle" class="btn-ghost">Tema</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="mt-6">
+            <div class="card">
+                <nav class="mb-4">
+                    <button id="btn-learn" class="btn-primary">Aprender</button>
+                    <button id="btn-practice" class="btn-ghost ml-2">Praticar</button>
+                    <!-- Botão Flashcards removido -->
+                </nav>
+
+                <section id="learn-section">
+                    <div class="space-y-8">
+                        
+                        <div class="topic-section">
+                            <h2 class="topic-title">Os Karas: Quem São Eles?</h2>
+                            <p>"A Droga da Obediência" é o primeiro livro da série "Os Karas", escrita por Pedro Bandeira. A trama gira em torno de um grupo de cinco estudantes muito inteligentes do <span class="highlight">Colégio Elite</span>, em São Paulo, que formam um grupo secreto de detetives.</p>
+                            <h3 class="sub-topic-title">Membros do Grupo</h3>
+                            <ul>
+                                <li><strong>Miguel:</strong> O <span class="highlight">líder</span> e fundador do grupo. É corajoso, inteligente e tem o poder de unir a todos.</li>
+                                <li><strong>Crânio:</strong> O <span class="highlight">gênio</span> científico do grupo. É o cérebro por trás das invenções e da lógica, sendo um mestre no xadrez.</li>
+                                <li><strong>Magrí:</strong> A <span class="highlight">atleta</span>. É a única menina do grupo, uma ginasta olímpica premiada. Sua agilidade física é crucial para as missões.</li>
+                                <li><strong>Calú:</strong> O <span class="highlight">ator</span> do grupo. É extrovertido, popular e tem uma incrível capacidade de criar disfarces e interpretar personagens, sendo ótimo para infiltração.</li>
+                                <li><strong>Chumbinho:</strong> O membro mais novo, que não estuda no Elite. Ele se junta ao grupo após descobri-los e se torna o especialista em espionagem e o "homem-bomba" (carregando os aparelhos de Crânio).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                             <h2 class="topic-title">O Mistério e a Droga</h2>
+                             <h3 class="sub-topic-title">O Problema</h3>
+                             <p>A trama começa quando Os Karas percebem um padrão estranho: alunos de vários dos melhores colégios de São Paulo estão desaparecendo e, quando reaparecem, estão mudados. Eles se tornam alunos "perfeitos": <span class="highlight">obedientes, quietos, tiram notas máximas</span>, mas perdem completamente a personalidade, a criatividade e o <span class="highlight">livre-arbítrio</span>.</p>
+                             
+                             <h3 class="sub-topic-title">A Investigação</h3>
+                             <p>Os Karas decidem investigar e descobrem que esses alunos estão sendo sequestrados e levados para um laboratório secreto. Lá, eles são forçados a tomar uma poderosa substância química: a <span class="highlight">"Droga da Obediência"</span>.</p>
+                             <p>O vilão por trás de tudo é o misterioso <span class="highlight">Doutor Q.I.</span> (sigla para "Quer-Índice"), que acredita que a juventude está perdida e que, para criar uma sociedade perfeita, é preciso eliminar a "rebeldia" e a vontade própria, deixando apenas a inteligência e a obediência.</p>
+                        </div>
+
+                        <div class="topic-section">
+                            <h2 class="topic-title">Temas Principais do Livro</h2>
+                            <p>O livro é uma aventura de mistério, mas também discute temas muito importantes:</p>
+                            <ul>
+                                <li><strong>O Perigo do Autoritarismo:</strong> O Doutor Q.I. representa uma ditadura. Ele quer controlar a mente de todos em nome de uma suposta "ordem" ou "perfeição".</li>
+                                <li><strong>Livre-Arbítrio vs. Obediência Cega:</strong> O livro mostra que a obediência sem questionamento não é uma virtude. Os Karas, com sua "rebeldia" saudável, provam que questionar e pensar por si mesmo é o que nos torna humanos.</li>
+                                <li><strong>Amizade e União:</strong> Nenhum dos Karas conseguiria resolver o mistério sozinho. Eles vencem porque <span class="highlight">unem suas habilidades diferentes</span> (a liderança de Miguel, a inteligência de Crânio, a agilidade de Magrí, o disfarce de Calú e a coragem de Chumbinho).</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                     <div class="mb-4 flex justify-end">
+                        <button id="order-toggle-btn" class="btn-ghost text-xs">Ordem Crescente</button>
+                    </div>
+                    <div id="question-buttons" class="mb-4"></div>
+                    <div id="quiz-container">
+                    </div>
+                </section>
+                
+                <!-- Seção Flashcards Removida -->
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const btnLearn = document.getElementById('btn-learn');
+        const btnPractice = document.getElementById('btn-practice');
+        // Botão Flashcards removido
+        const learnSection = document.getElementById('learn-section');
+        const practiceSection = document.getElementById('practice-section');
+        // Seção Flashcards removida
+        
+        const quizContainer = document.getElementById('quiz-container');
+        const questionButtons = document.getElementById('question-buttons');
+        const orderToggleBtn = document.getElementById('order-toggle-btn');
+        
+        // Variáveis Flashcards removidas
+
+        if(!btnLearn || !btnPractice || !learnSection || !practiceSection || !questionButtons || !quizContainer || !orderToggleBtn){
+            console.error('Elementos DOM não encontrados.');
+            return;
+        }
+
+        (function(){
+            const t = localStorage.getItem('cmf-karas-7ano-theme') || 'dark';
+            if(t === 'light') root.classList.add('theme-light');
+            themeToggle.addEventListener('click', () => {
+                root.classList.toggle('theme-light');
+                localStorage.setItem('cmf-karas-7ano-theme', root.classList.contains('theme-light') ? 'light' : 'dark');
+            });
+        })();
+        
+        const quizData = [
+            { topic: 'Personagens', difficulty: 'Fácil', q: '1) Qual é o nome do grupo de detetives secreto do Colégio Elite?', options: ['Os Ninjas', 'Os Karas', 'A Turma da Droga', 'Os Vingadores'], answer: 'Os Karas', explanation: 'O nome "Karas" foi escolhido por Miguel, o líder, por ser uma palavra japonesa que significa "vazio", indicando que eles eram secretos.'},
+            { topic: 'Personagens', difficulty: 'Fácil', q: '2) Quem é o líder e fundador do grupo "Os Karas"?', options: ['Crânio', 'Calú', 'Miguel', 'Chumbinho'], answer: 'Miguel', explanation: 'Miguel é o presidente do grêmio estudantil e o líder que organiza as missões do grupo.'},
+            { topic: 'Personagens', difficulty: 'Fácil', q: '3) Qual personagem é o gênio científico e jogador de xadrez do grupo?', options: ['Calú', 'Crânio', 'Miguel', 'Magrí'], answer: 'Crânio', explanation: 'Crânio é o membro mais inteligente, responsável pelos planos, invenções e pela decodificação de enigmas.'},
+            { topic: 'Personagens', difficulty: 'Fácil', q: '4) Qual é a principal habilidade de Magrí, a única menina do grupo?', options: ['É especialista em computadores', 'É uma excelente atriz', 'É uma ginasta olímpica', 'É a mais forte do grupo'], answer: 'É uma ginasta olímpica', explanation: 'A agilidade de Magrí, treinada na ginástica, é essencial para que ela possa escalar e se infiltrar em locais difíceis.'},
+            { topic: 'Personagens', difficulty: 'Médio', q: '5) Qual personagem é conhecido por sua habilidade de atuar e criar disfarces?', options: ['Miguel', 'Chumbinho', 'Crânio', 'Calú'], answer: 'Calú', explanation: 'Calú é o ator do grupo, capaz de se passar por diferentes pessoas para conseguir informações.'},
+            { topic: 'Personagens', difficulty: 'Médio', q: '6) Quem é Chumbinho?', options: ['O diretor do Colégio Elite', 'O vilão principal do livro', 'O membro mais novo dos Karas, que não estuda no Elite', 'O professor de química'], answer: 'O membro mais novo dos Karas, que não estuda no Elite', explanation: 'Chumbinho é um garoto corajoso que descobre o grupo e se torna o "agente de campo" deles.'},
+            { topic: 'Enredo', difficulty: 'Fácil', q: '7) Qual é o principal mistério que "Os Karas" investigam no livro?', options: ['O roubo de um quadro famoso', 'O desaparecimento e a mudança de comportamento de estudantes', 'Um esquema de corrupção na prefeitura', 'A poluição de um rio próximo'], answer: 'O desaparecimento e a mudança de comportamento de estudantes', explanation: 'Eles percebem que alunos de vários colégios estão sumindo e voltando estranhamente obedientes.'},
+            { topic: 'Enredo', difficulty: 'Fácil', q: '8) Qual é o nome da substância que o vilão usa nos estudantes?', options: ['A Droga da Felicidade', 'A Poção da Inteligência', 'O Soro da Verdade', 'A Droga da Obediência'], answer: 'A Droga da Obediência', explanation: 'A droga eliminava o livre-arbítrio, tornando os jovens dóceis e obedientes.'},
+            { topic: 'Enredo', difficulty: 'Médio', q: '9) O que acontecia com os alunos que tomavam a "Droga da Obediência"?', options: ['Eles ficavam agressivos e rebeldes', 'Eles esqueciam seus nomes', 'Eles se tornavam obedientes e sem personalidade, como robôs', 'Eles desenvolviam superpoderes'], answer: 'Eles se tornavam obedientes e sem personalidade, como robôs', explanation: 'O objetivo do vilão era criar alunos "perfeitos" que apenas obedecessem, sem questionar.'},
+            { topic: 'Enredo', difficulty: 'Fácil', q: '10) Onde os Karas estudam?', options: ['Colégio Estadual de São Paulo', 'Colégio Elite', 'Escola Municipal Pedro Bandeira', 'Colégio Objetivo'], answer: 'Colégio Elite', explanation: 'O Colégio Elite é o cenário principal onde o grupo se reúne e estuda.'},
+            { topic: 'Enredo', difficulty: 'Difícil', q: '11) Como Chumbinho consegue se infiltrar no esconderijo do vilão?', options: ['Disfarçado de entregador de pizza', 'Fingindo ser um dos alunos sequestrados', 'Escalando as paredes com Magrí', 'Usando um mapa secreto de Crânio'], answer: 'Fingindo ser um dos alunos sequestrados', explanation: 'Chumbinho se passa por uma das vítimas para ser levado ao laboratório e descobrir a localização.'},
+            { topic: 'Enredo', difficulty: 'Médio', q: '12) Onde ficava o laboratório secreto do Doutor Q.I.?', options: ['Nos túneis do metrô', 'No porão do Colégio Elite', 'Em uma ilha deserta', 'Em um complexo subterrâneo disfarçado'], answer: 'Em um complexo subterrâneo disfarçado', explanation: 'O esconderijo era uma base secreta de alta tecnologia, difícil de encontrar.'},
+            { topic: 'Enredo', difficulty: 'Médio', q: '13) Qual personagem dos Karas é capturado e quase toma a droga?', options: ['Miguel', 'Magrí', 'Calú', 'Crânio'], answer: 'Magrí', explanation: 'Magrí é capturada durante a investigação e quase se torna uma vítima do Doutor Q.I.'},
+            { topic: 'Vilão e Temas', difficulty: 'Fácil', q: '14) Quem é o grande vilão da história?', options: ['O diretor do Colégio Elite', 'O Doutor Q.I.', 'O pai de Miguel', 'Um agente secreto internacional'], answer: 'O Doutor Q.I.', explanation: 'Doutor Q.I. (Quer-Índice) é o cientista louco que quer dominar a mente dos jovens mais inteligentes do país.'},
+            { topic: 'Vilão e Temas', difficulty: 'Médio', q: '15) Qual era o objetivo final do Doutor Q.I. ao aplicar a droga?', options: ['Vender a droga para outros países', 'Criar um exército de jovens superinteligentes e obedientes para dominar o Brasil', 'Curar os alunos de sua rebeldia', 'Ganhar um prêmio Nobel de química'], answer: 'Criar um exército de jovens superinteligentes e obedientes para dominar o Brasil', explanation: 'Ele acreditava que o livre-arbítrio e a rebeldia eram defeitos, e queria criar uma sociedade "perfeita" sob seu controle.'},
+            { topic: 'Vilão e Temas', difficulty: 'Médio', q: '16) O livro "A Droga da Obediência" faz uma crítica a qual tipo de sistema?', options: ['Sistemas democráticos e livres', 'Sistemas autoritários e ditatoriais', 'A liberdade de imprensa', 'As escolas de período integral'], answer: 'Sistemas autoritários e ditatoriais', explanation: 'A droga é uma metáfora para regimes que exigem obediência cega e não aceitam questionamentos.'},
+            { topic: 'Vilão e Temas', difficulty: 'Fácil', q: '17) Qual é a principal mensagem do livro sobre a "obediência"?', options: ['Que obedecer é sempre a melhor opção', 'Que a obediência cega é perigosa e anula o indivíduo', 'Que apenas crianças devem obedecer', 'Que a desobediência leva ao caos'], answer: 'Que a obediência cega é perigosa e anula o indivíduo', explanation: 'O livro defende o pensamento crítico, a rebeldia saudável e o livre-arbítrio como valores mais importantes.'},
+            { topic: 'Vilão e Temas', difficulty: 'Médio', q: '18) O que é o "livre-arbítrio", o principal alvo da droga do Doutor Q.I.?', options: ['A capacidade de correr rápido', 'A capacidade de ser inteligente', 'A capacidade de escolher e tomar as próprias decisões', 'A capacidade de ficar rico'], answer: 'A capacidade de escolher e tomar as próprias decisões', explanation: 'A droga eliminava exatamente a vontade própria, a criatividade e a capacidade de questionar.'},
+            { topic: 'Personagens', difficulty: 'Médio', q: '19) Qual dos Karas é descrito como o mais bonito e popular, usando isso em suas habilidades de atuação?', options: ['Miguel', 'Crânio', 'Chumbinho', 'Calú'], answer: 'Calú', explanation: 'Calú é o "galã" da turma, e usa seu charme e talento teatral para enganar os inimigos.'},
+            { topic: 'Enredo', difficulty: 'Fácil', q: '20) O que é o "K" que dá nome ao grupo "Os Karas"?', options: ['A inicial do nome do líder', 'Um código secreto para "Elite"', 'Um ideograma japonês que significa "vazio"', 'Um símbolo químico'], answer: 'Um ideograma japonês que significa "vazio"', explanation: 'Miguel escolheu o nome para simbolizar que o grupo era secreto, como um "karatê" de mãos vazias, agindo nas sombras.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '21) Qual o nome do autor de "A Droga da Obediência"?', options: ['Ziraldo', 'Mauricio de Sousa', 'Monteiro Lobato', 'Pedro Bandeira'], answer: 'Pedro Bandeira', explanation: 'Pedro Bandeira é um dos autores mais famosos da literatura infantojuvenil brasileira e criador da série "Os Karas".'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '22) A história se passa principalmente em qual cidade brasileira?', options: ['Rio de Janeiro', 'Salvador', 'Brasília', 'São Paulo'], answer: 'São Paulo', explanation: 'O Colégio Elite e a maioria das ações do livro acontecem na cidade de São Paulo.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '23) Quem era, na verdade, o Doutor Q.I.?', options: ['O próprio Miguel, em um plano complexo', 'Um cientista americano disfarçado', 'O diretor de um cursinho rival', 'Um alienígena'], answer: 'O diretor de um cursinho rival', explanation: 'O vilão era o diretor do cursinho "Q.I.", que queria dominar o país com seus alunos "perfeitos".'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '24) Qual foi o primeiro sinal que alertou Crânio de que algo estava errado com os alunos "perfeitos"?', options: ['Eles começaram a tirar notas baixas', 'Eles se recusavam a jogar xadrez ou perdiam de propósito', 'Eles começaram a falar outras línguas', 'Eles fugiram da escola'], answer: 'Eles se recusavam a jogar xadrez ou perdiam de propósito', explanation: 'Crânio percebeu que os melhores jogadores de xadrez perderam o "instinto" do jogo, a criatividade, tornando-se previsíveis.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '25) O que significa a sigla Q.I. do vilão?', options: ['Quociente de Inteligência', 'Química Internacional', 'Quer-Índice', 'Quadro de Honra'], answer: 'Quer-Índice', explanation: 'O nome do vilão era uma brincadeira com o nome do seu cursinho, que buscava os melhores "índices" de aprovação.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '26) Qual o gênero literário principal do livro?', options: ['Romance de época', 'Poesia lírica', 'Suspense e mistério juvenil', 'Ficção científica'], answer: 'Suspense e mistério juvenil', explanation: 'É uma história de aventura e investigação voltada para o público jovem.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '27) Como Os Karas conseguem vencer o Doutor Q.I. no final?', options: ['Chamando a polícia imediatamente', 'Usando suas habilidades combinadas para invadir a base e expor o plano', 'Fazendo um acordo com o vilão', 'Desistindo da investigação'], answer: 'Usando suas habilidades combinadas para invadir a base e expor o plano', explanation: 'A vitória só é possível pela união das diferentes habilidades de cada membro do grupo.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '28) O que acontece com a "Droga da Obediência" no final do livro?', options: ['É vendida para o governo', 'É destruída pelos Karas', 'O Doutor Q.I. foge com a fórmula', 'Os Karas decidem usá-la para o bem'], answer: 'É destruída pelos Karas', explanation: 'Durante a invasão final, Crânio e Chumbinho conseguem destruir o laboratório e a fórmula da droga.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '29) Qual a principal crítica que o livro faz à educação?', options: ['Critica escolas que valorizam mais a obediência e as notas do que o pensamento crítico', 'Critica a falta de aulas de educação física', 'Critica o uso de uniformes', 'Critica as férias escolares longas'], answer: 'Critica escolas que valorizam mais a obediência e as notas do que o pensamento crítico', explanation: 'O livro sugere que um aluno "perfeito" que só obedece não é um aluno ideal, pois falta-lhe o livre-arbítrio.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '30) A droga afetava apenas os alunos considerados:', options: ['Os mais bagunceiros', 'Os mais inteligentes (gênios)', 'Os mais pobres', 'Os atletas'], answer: 'Os mais inteligentes (gênios)', explanation: 'O Doutor Q.I. sequestrava apenas os alunos com maior potencial intelectual para formar sua elite.'},
+            { topic: 'Personagens', difficulty: 'Médio', q: '31) Qual personagem dos Karas é fundamental para entrar no complexo do vilão usando os dutos de ventilação?', options: ['Crânio', 'Calú', 'Magrí', 'Miguel'], answer: 'Magrí', explanation: 'Sua habilidade como ginasta permitiu que ela usasse sua agilidade e tamanho para se infiltrar por locais impossíveis para os outros.'},
+            { topic: 'Vilão e Temas', difficulty: 'Médio', q: '32) A ideia de uma sociedade controlada, onde todos são "iguais" e obedientes, é uma característica de regimes:', options: ['Democráticos', 'Liberais', 'Totalitários', 'Anarquistas'], answer: 'Totalitários', explanation: 'O plano do Dr. Q.I. espelha ideias de regimes totalitários que suprimem a individualidade e a liberdade.'},
+            { topic: 'Personagens', difficulty: 'Médio', q: '33) Qual o nome do inspetor de polícia que, inicialmente, não acredita nos Karas?', options: ['Inspetor Silva', 'Delegado Joel', 'Inspetor Rodrigues', 'Detetive Andrade'], answer: 'Detetive Andrade', explanation: 'Andrade é o policial adulto que, a princípio, duvida dos jovens detetives.'},
+            { topic: 'Enredo', difficulty: 'Médio', q: '34) Qual era o disfarce da base secreta do Doutor Q.I.?', options: ['Uma fábrica de refrigerantes', 'Um hospital abandonado', 'Um cursinho pré-vestibular', 'Uma academia de ginástica'], answer: 'Um cursinho pré-vestibular', explanation: 'O "Cursinho Q.I." era a fachada legal para as atividades criminosas do vilão.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '35) Os Karas são um grupo de:', options: ['Professores', 'Pais de alunos', 'Estudantes', 'Policiais'], answer: 'Estudantes', explanation: 'São alunos do ensino médio que se reúnem secretamente para resolver mistérios.'},
+            { topic: 'Revisão Geral', difficulty: 'Médio', q: '36) O livro critica a ideia de que a "rebeldia" juvenil é:', options: ['Sempre positiva e deve ser incentivada', 'Sempre negativa e deve ser controlada', 'Uma fase natural que deve ser ignorada', 'Positiva quando é usada para questionar e pensar'], answer: 'Positiva quando é usada para questionar e pensar', explanation: 'Os Karas são "rebeldes" no sentido de que questionam as regras e investigam, o que o livro trata como uma virtude.'},
+            { topic: 'Personagens', difficulty: 'Médio', q: '37) Como Crânio descobre a localização da base secreta?', options: ['Seguindo um mapa', 'Através de um código de xadrez', 'Analisando a composição química da droga', 'Hackeando o sistema da polícia'], answer: 'Analisando a composição química da droga', explanation: 'Crânio analisa uma amostra da droga e descobre um componente raro, traçando sua origem até o laboratório.'},
+            { topic: 'Revisão Geral', difficulty: 'Difícil', q: '38) Qual dos Karas é o primeiro a ser internado como "paciente" na clínica do Doutor Q.I.?', options: ['Magrí', 'Calú', 'Miguel', 'Chumbinho'], answer: 'Chumbinho', explanation: 'Chumbinho se infiltra fingindo ser um dos alunos sequestrados para descobrir o que acontece lá dentro.'},
+            { topic: 'Enredo', difficulty: 'Médio', q: '39) Qual é o principal dilema moral do livro?', options: ['Vale a pena ser inteligente?', 'É correto sacrificar a liberdade individual em nome da ordem e da perfeição?', 'Os fins justificam os meios?', 'A escola é importante?'], answer: 'É correto sacrificar a liberdade individual em nome da ordem e da perfeição?', explanation: 'Esse é o conflito central proposto pelo plano do Doutor Q.I.'},
+            { topic: 'Revisão Geral', difficulty: 'Fácil', q: '40) Qual a principal lição que "Os Karas" aprendem ao final da aventura?', options: ['Que adultos são inúteis', 'Que o crime não compensa', 'Que a união de suas habilidades diferentes é sua maior força', 'Que a ginástica é o esporte mais importante'], answer: 'Que a união de suas habilidades diferentes é sua maior força', explanation: 'O livro reforça a ideia de que a colaboração e a valorização das diferenças de cada um são essenciais para o sucesso.'}
+        ];
+
+        let questionOrder = quizData.map((_,i)=>i);
+        let currentIndex = 0;
+        let questionStatus = Array(quizData.length).fill(null);
+        let quizStarted = false;
+        let isRandomOrder = false; 
+        let retryQueue = []; // Fila para as questões erradas
+
+        // DOM Elements for the quiz
+        const questionInfoContainer = document.createElement('div');
+        questionInfoContainer.className = 'flex justify-between items-center mb-2';
+        const questionTopic = document.createElement('p');
+        questionTopic.className='text-sm font-semibold text-[var(--accent)]';
+        const questionDifficulty = document.createElement('span');
+        const questionText = document.createElement('p');
+        questionText.className='text-xl mt-2';
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className='mt-4 grid gap-3';
+        const feedbackContainer = document.createElement('div');
+        const nextBtn = document.createElement('button');
+        nextBtn.className='btn-primary mt-4 hidden';
+        nextBtn.textContent='Próxima';
+        
+        quizContainer.appendChild(questionInfoContainer);
+        quizContainer.appendChild(questionText);
+        quizContainer.appendChild(optionsContainer);
+        quizContainer.appendChild(feedbackContainer);
+        quizContainer.appendChild(nextBtn);
+        
+        function setupNavEvents() {
+            btnLearn.addEventListener('click', () => switchView('learn'));
+            btnPractice.addEventListener('click', () => switchView('practice'));
+            // Event listener do Flashcards removido
+        }
+
+        function switchView(view){
+            learnSection.classList.add('hidden');
+            practiceSection.classList.add('hidden');
+            // Seção Flashcards removida
+            const flashcardBtn = document.getElementById('btn-flashcards');
+            const flashcardSec = document.getElementById('flashcard-section');
+            if (flashcardBtn) flashcardBtn.remove();
+            if (flashcardSec) flashcardSec.remove();
+
+            btnLearn.classList.replace('btn-primary', 'btn-ghost');
+            btnPractice.classList.replace('btn-primary', 'btn-ghost');
+
+            if(view === 'learn'){
+                learnSection.classList.remove('hidden');
+                btnLearn.classList.replace('btn-ghost', 'btn-primary');
+            } else if (view === 'practice') {
+                practiceSection.classList.remove('hidden');
+                btnPractice.classList.replace('btn-ghost', 'btn-primary');
+                if (!quizStarted) {
+                    startQuiz();
+                    quizStarted = true;
+                }
+            }
+        }
+        
+        // --- Regular Quiz Logic ---
+
+        orderToggleBtn.addEventListener('click', () => {
+            isRandomOrder = !isRandomOrder; 
+            orderToggleBtn.textContent = isRandomOrder ? 'Ordem Aleatória' : 'Ordem Crescente';
+            startQuiz();
+        });
+
+        function renderQuestionButtons(buttonsEl, statusArr, index, orderArr){
+            buttonsEl.innerHTML='';
+            quizData.forEach((qObj,originalIndex)=>{ 
+                const b = document.createElement('button');
+                b.textContent = (originalIndex + 1);
+                b.setAttribute('data-original-index', String(originalIndex));
+                
+                const dot = document.createElement('span');
+                dot.className = `difficulty-dot difficulty-${qObj.difficulty.toLowerCase()}-dot`;
+                b.appendChild(dot);
+                
+                b.title = `Questão ${originalIndex+1}: Dificuldade ${qObj.difficulty}`;
+                
+                b.onclick = ()=>{
+                    const pos = orderArr.indexOf(originalIndex);
+                    if(pos >= 0){ 
+                        currentIndex = pos; 
+                        showQuestion(); 
+                    }
+                };
+                if(statusArr[originalIndex]==='correct') b.classList.add('correct-status');
+                if(statusArr[originalIndex]==='wrong') b.classList.add('wrong-status');
+                
+                if (quizStarted && index < quizData.length) {
+                    const currentQuestionOriginalIndex = orderArr[index];
+                    if(originalIndex === currentQuestionOriginalIndex) {
+                        b.classList.add('current-question');
+                    }
+                }
+                
+                buttonsEl.appendChild(b);
+            });
+        }
+        
+        function startQuiz(){
+            if (isRandomOrder) {
+                shuffleArray(questionOrder);
+            } else {
+                questionOrder = quizData.map((_, i) => i);
+            }
+            currentIndex = 0;
+            questionStatus.fill(null);
+            retryQueue = []; // Limpa a fila de repetição
+            showQuestion();
+        }
+
+        function showQuestion(){
+            const finalResultsDiv = document.getElementById('final-results');
+            if (finalResultsDiv) finalResultsDiv.remove();
+            quizContainer.style.display = 'block';
+
+            if (currentIndex >= questionOrder.length) {
+                // Chegou ao fim da rodada
+                if (retryQueue.length > 0) {
+                    // Se há questões para repetir
+                    questionOrder = [...retryQueue]; // A nova ordem são as questões erradas
+                    retryQueue = []; // Limpa a fila para a próxima rodada de repetições
+                    currentIndex = 0;
+                    shuffleArray(questionOrder); // Embaralha as questões erradas
+                    showQuestion(); // Mostra a primeira questão errada
+                    return;
+                } else {
+                    // Não há mais questões erradas, fim do quiz
+                    showFinalResults('practice');
+                    return;
+                }
+            }
+        
+            const qIdx = questionOrder[currentIndex];
+            const qObj = quizData[qIdx];
+            
+            questionInfoContainer.classList.remove('hidden');
+            questionTopic.textContent = qObj.topic;
+            questionDifficulty.textContent = qObj.difficulty;
+            questionDifficulty.className = `difficulty-badge difficulty-${qObj.difficulty.toLowerCase()}`;
+            
+            questionText.innerHTML = `${qIdx + 1}) ${qObj.q.replace(/^[\s\d\)\(\.\:\-–—_]+/,'').trim()}`;
+            
+            optionsContainer.innerHTML='';
+            feedbackContainer.innerHTML='';
+            nextBtn.classList.add('hidden'); 
+            
+            qObj.options.forEach(opt =>{
+                const b = document.createElement('button');
+                b.className='option-btn'; 
+                b.textContent=opt;
+                b.onclick = ()=> selectAnswer(b, opt, qObj.answer, qObj.explanation, qIdx);
+                optionsContainer.appendChild(b);
+            });
+
+            renderQuestionButtons(questionButtons, questionStatus, currentIndex, questionOrder);
+        }
+        
+        function selectAnswer(btn,opt,correct,explanation,qIdx){
+            Array.from(optionsContainer.children).forEach(b=> {
+                b.disabled=true;
+                if(b.textContent === correct) {
+                    b.classList.add('correct');
+                }
+            });
+            nextBtn.classList.remove('hidden');
+
+            if(opt===correct){
+                btn.classList.add('celebrate');
+                createConfetti();
+                questionStatus[qIdx]='correct';
+                feedbackContainer.className='feedback-correct mt-4';
+                feedbackContainer.textContent = 'Correto! ' + (explanation || '');
+            } else {
+                btn.classList.add('wrong');
+                questionStatus[qIdx]='wrong';
+                retryQueue.push(qIdx); // Adiciona a questão à fila de repetição
+                feedbackContainer.className='feedback-wrong mt-4';
+                feedbackContainer.innerHTML = `<strong>Errado.</strong> ${explanation || ''}`;
+                // Botão Refazer removido
+            }
+            renderQuestionButtons(questionButtons, questionStatus, currentIndex, questionOrder);
+        }
+
+        nextBtn.addEventListener('click', ()=>{
+            currentIndex++; 
+            showQuestion(); 
+        });
+
+        // --- Funções do Flashcard removidas ---
+        
+        // --- Funções Compartilhadas ---
+
+        function showFinalResults(mode) {
+            const statusArray = questionStatus;
+            const container = quizContainer;
+            const parentSection = practiceSection;
+
+            const correctCount = statusArray.filter(s => s === 'correct').length;
+            const total = quizData.length;
+            
+            container.style.display = 'none';
+
+            let finalResultsDiv = document.createElement('div');
+            finalResultsDiv.id = `final-results-${mode}`;
+            finalResultsDiv.className = 'text-center';
+            parentSection.appendChild(finalResultsDiv);
+
+            finalResultsDiv.innerHTML = `
+                <h2 class="text-2xl font-bold">🎉 Fim do Quiz! 🎉</h2>
+                <p class="text-lg mt-4">Você acertou ${correctCount} de ${total} questões.</p>
+                <button id="restart-btn-${mode}" class="btn-primary mt-6">Recomeçar</button>
+            `;
+            
+            document.getElementById(`restart-btn-${mode}`).onclick = () => {
+                quizStarted = false;
+                startQuiz(); 
+                quizStarted = true;
+            };
+        }
+
+        function shuffleArray(a){
+            for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+        }
+
+        function createConfetti(){
+            const colors = ['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6'];
+            for(let i=0;i<12;i++){
+                const el = document.createElement('div');
+                el.className='confetti';
+                el.style.left = (30 + Math.random()*40) + '%';
+                el.style.top = (10 + Math.random()*10) + 'vh';
+                el.style.color = colors[Math.floor(Math.random()*colors.length)];
+                el.textContent = '🎉';
+                el.style.transform = `rotate(${Math.random()*360}deg)`;
+                el.style.animation = `confetti-fall ${1.2 + Math.random()*1}s linear forwards`;
+                document.body.appendChild(el);
+                setTimeout(()=> el.remove(), 2200);
+            }
+        }
+        
+        setupNavEvents();
+        switchView('learn');
+    });
+    </script>
+</body>
+</html>
