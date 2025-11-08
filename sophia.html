@@ -23,79 +23,98 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
 
-  <div class="container mx-auto max-w-lg p-8 bg-[#18181b] rounded-2xl shadow-2xl text-center border border-gray-800">
+  <div class="container mx-auto max-w-6xl p-8 bg-[#18181b] rounded-2xl shadow-2xl text-center border border-gray-800">
     <h1 class="text-4xl font-bold text-amber-400 mb-2">📚 Estudos 7º Ano</h1>
     <p class="text-gray-400 mb-8">Escolha um conteúdo para começar a estudar:</p>
 
-    <div class="flex flex-col gap-6">
-      <!-- Matemática 🧮 -->
-      <a href="droga.html" class="menu-btn px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
-        A Droga da obdiência – Sophia
-      </a>
-      <a href="reciensop4.html" class="menu-btn px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
-        🔬 Ciências 7º ano - Revisão prova 4/10
-      </a>
-      <a href="7outcien.html" class="menu-btn px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
-        🔬 Ciências 7º ano - prova 4/10
-      </a>
-      <a href="somaproout.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        🧮 Matemática 1: prova 28/10 - 7° ano
-      </a>
-      <a href="soma2proout.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        🧮 Matemática 2: prova 28/10 - 7° ano
-      </a>
-      <a href="7ano_mat1.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        📏 Regra de Três simples e composta - Outubro
-      </a>
-      <a href="sophia_composta.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        📐 Regra de Três simples e composta - Sophia
-      </a>
-      <a href="regradetresophia.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        🔢 Regra de Três - Sophia
-      </a>
-      <a href="mat-sophia-revisao.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        🧩 Matemática - Revisão I e II
-      </a>
-      <a href="sophia-mat-racionais.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        ➗ Números Racionais – Sophia
-      </a>
-      <a href="trian-7ano.html" class="menu-btn px-8 py-5 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
-        🔺 Triângulos - Sophia
-      </a>
-
-      <!-- Português 📖 -->
-      <a href="gram_out.html" class="menu-btn px-8 py-5 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
-        📖 Gramática 14/10 - Sophia
-      </a>
-      <a href="sophia-port.html" class="menu-btn px-8 py-5 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
-        ✍️ Português - Sophia
-      </a>
-      <a href="sophia-lite.html" class="menu-btn px-8 py-5 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
-        📘 Grãos de Paisagens – Sophia
-      </a>
-
-      <!-- História 🏺 -->
-      <a href="historiaoutubro.html" class="menu-btn px-8 py-5 bg-amber-600 hover:bg-amber-500 text-white text-lg font-semibold rounded-lg">
-        🏺 História - Unidade 6: temas 3 e 4
-      </a>
-      <a href="hist-sohia.html" class="menu-btn px-8 py-5 bg-amber-600 hover:bg-amber-500 text-white text-lg font-semibold rounded-lg">
-        📜 História - Sophia
-      </a>
-
-      <!-- Geografia 🌍 -->
-      <a href="geo-sophia.html" class="menu-btn px-8 py-5 bg-green-600 hover:bg-green-500 text-white text-lg font-semibold rounded-lg">
-        🌍 Geografia - Sophia
-      </a>
-
-      <!-- Ciências 🔬 -->
-      <a href="ciencias7ano.html" class="menu-btn px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
-        🔬 Ciências 7º ano
-      </a>
-
-      <!-- Artes 🎨 -->
-      <a href="sophia-artes.html" class="menu-btn px-8 py-5 bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-lg font-semibold rounded-lg">
-        🎨 Artes - Sophia
-      </a>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Coluna 1: Matemática -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-xl font-bold text-sky-400 mb-2">🧮 Matemática</h2>
+        <a href="somaproout.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Matemática 1: prova 28/10 - 7° ano
+        </a>
+        <a href="soma2proout.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Matemática 2: prova 28/10 - 7° ano
+        </a>
+        <a href="7ano_mat1.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Regra de Três simples e composta - Outubro
+        </a>
+        <a href="sophia_composta.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Regra de Três simples e composta - Sophia
+        </a>
+        <a href="regradetresophia.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Regra de Três - Sophia
+        </a>
+        <a href="mat-sophia-revisao.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Matemática - Revisão I e II
+        </a>
+        <a href="sophia-mat-racionais.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Números Racionais – Sophia
+        </a>
+        <a href="trian-7ano.html" class="menu-btn px-4 py-4 bg-sky-600 hover:bg-sky-500 text-white text-lg font-semibold rounded-lg">
+          Triângulos - Sophia
+        </a>
+      </div>
+      
+      <!-- Coluna 2: Ciências -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-xl font-bold text-blue-400 mb-2">🔬 Ciências</h2>
+        <a href="reciensop4.html" class="menu-btn px-4 py-4 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
+          Ciências 7º ano - Revisão prova 4/10
+        </a>
+        <a href="7outcien.html" class="menu-btn px-4 py-4 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
+          Ciências 7º ano - prova 4/10
+        </a>
+        <a href="ciencias7ano.html" class="menu-btn px-4 py-4 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-lg">
+          Ciências 7º ano
+        </a>
+      </div>
+      
+      <!-- Coluna 3: Português -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-xl font-bold text-rose-400 mb-2">📖 Português</h2>
+        <a href="droga.html" class="menu-btn px-4 py-4 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
+          A Droga da obdiência – Sophia
+        </a>
+        <a href="gram_out.html" class="menu-btn px-4 py-4 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
+          Gramática 14/10 - Sophia
+        </a>
+        <a href="sophia-port.html" class="menu-btn px-4 py-4 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
+          Português - Sophia
+        </a>
+        <a href="sophia-lite.html" class="menu-btn px-4 py-4 bg-rose-600 hover:bg-rose-500 text-white text-lg font-semibold rounded-lg">
+          Grãos de Paisagens – Sophia
+        </a>
+      </div>
+      
+      <!-- Coluna 4: História -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-xl font-bold text-amber-400 mb-2">🏺 História</h2>
+        <a href="historiaoutubro.html" class="menu-btn px-4 py-4 bg-amber-600 hover:bg-amber-500 text-white text-lg font-semibold rounded-lg">
+          História - Unidade 6: temas 3 e 4
+        </a>
+        <a href="hist-sohia.html" class="menu-btn px-4 py-4 bg-amber-600 hover:bg-amber-500 text-white text-lg font-semibold rounded-lg">
+          História - Sophia
+        </a>
+      </div>
+      
+      <!-- Coluna 5: Geografia -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-xl font-bold text-green-400 mb-2">🌍 Geografia</h2>
+        <a href="geo-sophia.html" class="menu-btn px-4 py-4 bg-green-600 hover:bg-green-500 text-white text-lg font-semibold rounded-lg">
+          Geografia - Sophia
+        </a>
+      </div>
+      
+      <!-- Coluna 6: Artes -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-xl font-bold text-fuchsia-400 mb-2">🎨 Artes</h2>
+        <a href="sophia-artes.html" class="menu-btn px-4 py-4 bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-lg font-semibold rounded-lg">
+          Artes - Sophia
+        </a>
+      </div>
     </div>
 
     <footer class="mt-10 text-gray-500 text-sm">
