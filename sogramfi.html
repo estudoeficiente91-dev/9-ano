@@ -1,0 +1,378 @@
+import React, { useState } from 'react';
+import { BookOpen, CheckCircle, XCircle, Brain, Award, ArrowRight, RotateCcw, MessageCircle, ShoppingBag, Zap, DivideCircle, Users, Trello, Clock } from 'lucide-react';
+
+// --- DADOS DO CONTEÚDO (Resumo Expandido e Aprofundado) ---
+// Removidas todas as tags <em> e <strong> do conteúdo para deixar o código 'clean'.
+const studyContent = [
+  {
+    unit: 7,
+    title: "Unidade 7: Ódio nas Redes e Gêneros Jornalísticos",
+    color: "bg-red-900/40 border-red-600 text-red-300",
+    icon: <MessageCircle className="w-6 h-6" />,
+    topics: [
+      {
+        title: "Gênero Textual: Reportagem (Aprofundamento)",
+        content: "A reportagem é a 'prima' mais investigativa da notícia. Ela vai além do fato imediato. Características-chave: Abordagem aprofundada, uso de dados e estatísticas (infográficos), diversas fontes (pessoas comuns, especialistas, autoridades) e muitas vezes carrega a opinião ou o ângulo do repórter. O objetivo é informar amplamente e fomentar o debate social."
+      },
+      {
+        title: "Gênero Textual: Entrevista (Estrutura)",
+        content: "O texto de entrevista é estruturado em três partes: 1. Título: Chamativo e que resume o tema. 2. Introdução/Cabeçalho: Apresenta o entrevistado (perfil, carreira) e a relevância do tema. 3. Corpo: Perguntas claras e diretas seguidas pelas respostas (pode-se usar o discurso direto ou indireto). Ex: João: 'Qual sua opinião?' vs. João perguntou qual era sua opinião."
+      },
+      {
+        title: "Gramática: Os Porquês (Com Mais Exemplos)",
+        content: (
+          <ul className="list-disc pl-5 space-y-2">
+            <li>Por que (Sep. S/ acento): Pergunta. Ex: Eu me pergunto por que a luz apagou. (pergunta indireta)</li>
+            <li>Porque (Junto S/ acento): Resposta/Causa/Explicação. Ex: A luz apagou porque acabou a energia.</li>
+            <li>Por quê (Sep. C/ acento): Fim de frase/Isolado. Ex: Eles reclamaram. Por quê?</li>
+            <li>Porquê (Junto C/ acento): Substantivo ('O motivo'). Ex: O professor exigiu o porquê da falta.</li>
+          </ul>
+        )
+      },
+      {
+        title: "Sintaxe: Período Composto e Vírgula",
+        content: (
+          <>
+            <p>O Período Composto por Coordenação é formado por orações que poderiam existir sozinhas. A vírgula é essencial para separá-las:</p>
+            <ul className="list-disc pl-5 space-y-2 mt-2">
+              <li>Obrigatória: Antes das conjunções Adversativas (mas, porém), Alternativas (ou, ora), Conclusivas (portanto, logo) e Explicativas (pois, porque). Ex: Estudou, mas não passou.</li>
+              <li>Exceção do 'E': Não se usa vírgula antes do 'e' (conjunção aditiva), exceto se as orações tiverem sujeitos diferentes. Ex: Eu estudei e o João dormiu. (Usa-se vírgula antes do 'e').</li>
+            </ul>
+          </>
+        )
+      },
+      {
+        title: "Tema: Cyberbullying e Atitude para a Vida (Empatia)",
+        content: "O Cyberbullying é a agressão digital (mensagem, imagem, vídeo) repetitiva e intencional. A Unidade 7 enfatiza o valor da Empatia — a capacidade de se colocar no lugar do outro. A falta de empatia é a raiz do ódio nas redes. Reforça-se a necessidade de Escutar os outros com atenção e denunciar o ódio."
+      }
+    ]
+  },
+  {
+    unit: 8,
+    title: "Unidade 8: Sociedade, Consumo e Gramática Normativa",
+    color: "bg-blue-900/40 border-blue-600 text-blue-300",
+    icon: <ShoppingBag className="w-6 h-6" />,
+    topics: [
+      {
+        title: "Gênero Textual: Anúncio Publicitário (Persuasão)",
+        content: "O anúncio usa linguagem mista (verbal e não verbal) para persuadir o consumidor. Ele explora o desejo e a necessidade. Slogans (frases curtas de efeito) e o uso do modo Imperativo (Compre, Aproveite, Ligue) são marcas registradas para incitar a ação. Campanhas institucionais vendem ideias, não produtos (Ex: Economize Água)."
+      },
+      {
+        title: "Concordância Verbal (Exceções)",
+        content: (
+          <>
+            <p>A regra é: Verbo concorda com o Sujeito. Atenção especial:</p>
+            <ul className="list-disc pl-5 space-y-2 mt-2">
+              <li>Verbo Haver (Existir): Sempre singular (impessoal). Ex: Havia poucas pessoas. (Nunca 'Haviam').</li>
+              <li>Sujeito Coletivo: O verbo fica no singular. Ex: A alcateia caçou o cervo.</li>
+              <li>'A Gente': Embora signifique 'nós', o verbo fica no singular (3ª pessoa). Ex: A gente vai viajar.</li>
+              <li>Nomes Plurais com Artigo: Ex: Os Estados Unidos são grandes. (Verbo no plural).</li>
+            </ul>
+          </>
+        )
+      },
+      {
+        title: "Concordância Nominal (Invariáveis e Variáveis)",
+        content: (
+          <>
+            <p>Adjetivos concordam com substantivos em gênero e número. Palavras problemáticas:</p>
+            <ul className="list-disc pl-5 space-y-2 mt-2">
+              <li>INVARIÁVEIS (Não Mudam): Bastante (quando advérbio, Ex: Estudei bastante), Meio (advérbio, Ex: Ela estava meio brava), Menos (sempre), Alerta (quando advérbio, Ex: Os soldados estavam alerta).</li>
+              <li>VARIÁVEIS (Concordam): Anexo/Incluso, Próprio/Mesmo, Proibido. (Ver exemplos abaixo).</li>
+            </ul>
+            <p className='mt-2'>Exemplos Chave: Vão anexas as planilhas. / É proibido entrada. (Sem artigo). / A entrada é proibida. (Com artigo).</p>
+          </>
+        )
+      },
+      {
+        title: "Questões da Língua: Há vs A (Detalhado)",
+        content: (
+          <>
+            <p>O teste é simples: substitua o termo por Tempo Passado ou Tempo Futuro.</p>
+            <ul className="list-disc pl-5 space-y-2 mt-2">
+              <li>Há (Verbo Haver): Indica tempo decorrido (Passado). Troque por 'Faz'. Ex: Moro aqui há dez anos. (Faz dez anos) </li>
+              <li>A (Preposição): Indica tempo que virá (Futuro) ou distância. Ex: Daqui a cinco dias farei a prova. (Tempo Futuro). / O mercado fica a 2km. (Distância) </li>
+            </ul>
+          </>
+        )
+      },
+      {
+        title: "Tema: Consumo Consciente e Responsabilidade",
+        content: "Consumo Consciente significa usar os recursos naturais e os bens de forma responsável, pensando nas consequências ambientais, sociais e financeiras. A Unidade trata de 'Assumir riscos com responsabilidade', incentivando o aluno a planejar suas finanças (mesmo que em pequena escala) e evitar o endividamento causado pela publicidade persuasiva."
+      }
+    ]
+  }
+];
+
+// --- BANCO DE QUESTÕES (40 Questões) ---
+const questionsData = [
+  // --- UNIDADE 7: Porquês ---
+  { id: 1, question: "Complete: _____ você não foi à festa ontem?", options: ["Porque", "Porquê", "Por que", "Por quê"], correct: 2, explanation: "Início de pergunta usa 'Por que' separado e sem acento." },
+  { id: 2, question: "Complete: Eu estudei muito, _____ queria passar na prova.", options: ["por que", "porque", "por quê", "porquê"], correct: 1, explanation: "Para explicação ou causa, usa-se 'porque' junto e sem acento." },
+  { id: 3, question: "Eles estão rindo de quê? Não entendi o _____.", options: ["por que", "porque", "por quê", "porquê"], correct: 3, explanation: "Como substantivo (o motivo), usa-se 'porquê' junto com acento." },
+  { id: 4, question: "Você está bravo? _____?", options: ["Por que", "Porque", "Por quê", "Porquê"], correct: 2, explanation: "Final de frase interrogativa usa 'Por quê' separado com acento." },
+  { id: 5, question: "Não sei _____ ele ficou chateado.", options: ["por que", "porque", "por quê", "porquê"], correct: 0, explanation: "Pode ser substituído por 'por qual motivo' (implícito), usa-se 'por que' separado." },
+
+  // --- UNIDADE 7: Conjunções e Vírgula ---
+  { id: 6, question: "Qual frase apresenta uma conjunção ADVERSATIVA (ideia de oposição)?", options: ["Estudei, mas não passei.", "Estudei e passei.", "Ou estudo ou durmo.", "Estudei, portanto passei."], correct: 0, explanation: "'Mas' indica oposição/adversidade." },
+  { id: 7, question: "Na frase 'Ele estava doente, PORTANTO não foi à escola', a palavra destacada indica:", options: ["Adição", "Conclusão", "Explicação", "Oposição"], correct: 1, explanation: "'Portanto' é uma conjunção conclusiva." },
+  { id: 8, question: "A vírgula é obrigatória em qual caso?", options: ["Antes de 'e' com sujeitos iguais.", "Para isolar o vocativo.", "Entre sujeito e verbo.", "Após o verbo."], correct: 1, explanation: "A vírgula sempre isola o vocativo (chamamento). Ex: Maria, venha cá." },
+  { id: 9, question: "Em 'Estude, POIS a prova será difícil', a conjunção é:", options: ["Explicativa", "Aditiva", "Alternativa", "Adversativa"], correct: 0, explanation: "'Pois' (no início da oração) justifica o pedido anterior." },
+  { id: 10, question: "Marque a opção com conjunção ALTERNATIVA:", options: ["Gosto de ler e escrever.", "Não gosto de ler, mas escrevo bem.", "Ora chora, ora ri.", "Ele é inteligente, logo passará."], correct: 2, explanation: "'Ora... ora' indica alternância." },
+
+  // --- UNIDADE 7: Gênero Reportagem e Cyberbullying ---
+  { id: 11, question: "Qual a principal diferença entre Notícia e Reportagem?", options: ["A notícia é mais longa que a reportagem.", "A reportagem aprofunda o tema e investiga causas.", "A notícia sempre tem opinião explícita.", "Não há diferença."], correct: 1, explanation: "A reportagem é um texto mais extenso e investigativo." },
+  { id: 12, question: "O que caracteriza o Cyberbullying?", options: ["Brincadeiras saudáveis entre amigos.", "Agressão intencional e repetitiva usando meios digitais.", "Críticas construtivas em redes sociais.", "Compartilhar fotos com permissão."], correct: 1, explanation: "Cyberbullying envolve violência virtual intencional." },
+  { id: 13, question: "Na estrutura de uma entrevista, o que vem antes das perguntas e respostas?", options: ["A conclusão.", "O título e uma introdução sobre o entrevistado.", "A opinião do leitor.", "Anúncios publicitários."], correct: 1, explanation: "Geralmente há uma apresentação de quem está sendo entrevistado." },
+  { id: 14, question: "Qual atitude ajuda a combater o ódio nas redes (Unidade 7)?", options: ["Responder agressivamente.", "Ignorar e bloquear não resolve.", "Ter empatia e denunciar.", "Compartilhar a ofensa."], correct: 2, explanation: "Empatia e denúncia são ferramentas cidadãs." },
+  { id: 15, question: "Reportagens costumam usar recursos visuais como:", options: ["Apenas texto corrido.", "Gráficos, fotos e infográficos.", "Apenas desenhos animados.", "Nenhuma imagem."], correct: 1, explanation: "Infográficos ajudam a explicar dados complexos na reportagem." },
+
+  // --- UNIDADE 8: Há vs A ---
+  { id: 16, question: "Complete: Eles chegaram _____ duas horas (tempo decorrido/passado).", options: ["há", "a", "à", "ah"], correct: 0, explanation: "Tempo passado (decorrido) usa 'HÁ' (verbo haver), que pode ser trocado por 'Faz'." },
+  { id: 17, question: "Complete: Daqui _____ pouco vamos sair (tempo futuro).", options: ["há", "a", "à", "na"], correct: 1, explanation: "Tempo futuro usa 'A'." },
+  { id: 18, question: "Complete: Moramos _____ cinco quilômetros da praia (distância).", options: ["há", "a", "à", "em"], correct: 1, explanation: "Distância usa 'A'." },
+  { id: 19, question: "Complete: Não o vejo _____ anos.", options: ["a", "há", "à", "ah"], correct: 1, explanation: "Tempo passado = Há." },
+  { id: 20, question: "A frase 'Há muito tempo atrás' é considerada vício de linguagem (pleonasmo) porque:", options: ["'Há' já indica passado, 'atrás' é redundante.", "Está gramaticalmente correta.", "Deveria ser 'A muito tempo'.", "O certo é 'Tem muito tempo'."], correct: 0, explanation: "O verbo 'haver' já indica tempo decorrido, dispensando o 'atrás'." },
+
+  // --- UNIDADE 8: Concordância Verbal ---
+  { id: 21, question: "Qual a frase correta (Concordância Verbal)?", options: ["A multidão gritaram alto.", "A multidão gritou alto.", "As multidão gritou.", "O povo falaram."], correct: 1, explanation: "'A multidão' é singular, então o verbo fica no singular. O sujeito coletivo exige verbo no singular." },
+  { id: 22, question: "Assinale a frase em que o Verbo Haver está correto no sentido de existir:", options: ["Haviam muitos problemas.", "Havia muitos problemas.", "Haverão soluções.", "Hão de ser resolvidos."], correct: 1, explanation: "Verbo haver no sentido de existir é impessoal, fica sempre no singular (Havia)." },
+  { id: 23, question: "Em 'Vossa Excelência _____ cansada', qual a forma verbal correta?", options: ["está", "estás", "estais", "estão"], correct: 0, explanation: "Pronomes de tratamento (Vossa Excelência) levam o verbo para a 3ª pessoa do singular (está)." },
+  { id: 24, question: "Os Estados Unidos _____ uma grande potência mundial.", options: ["é", "são", "foi", "era"], correct: 1, explanation: "Quando o nome próprio plural tem artigo ('Os'), o verbo vai para o plural (são)." },
+  { id: 25, question: "Nós que _____ a festa!", options: ["organizei", "organizamos", "organizaram", "organizou"], correct: 1, explanation: "A oração com pronome relativo 'que' concorda com o antecedente, no caso 'Nós' (organizamos)." },
+
+  // --- UNIDADE 8: Concordância Nominal ---
+  { id: 26, question: "Ela mesma disse: 'Muito _____'.", options: ["obrigado", "obrigada", "obrigados", "obrigadas"], correct: 1, explanation: "Mulheres dizem 'obrigada'. O adjetivo concorda com quem fala." },
+  { id: 27, question: "Seguem _____ as fotos do passeio.", options: ["anexo", "anexa", "anexos", "anexas"], correct: 3, explanation: "'Anexo' é adjetivo e concorda com 'fotos' (feminino plural)." },
+  { id: 28, question: "É _____ entrada de estranhos.", options: ["proibido", "proibida", "proibidos", "proibidas"], correct: 0, explanation: "Sem artigo ('a'), a expressão fica no masculino neutro: 'É proibido entrada'." },
+  { id: 29, question: "A entrada é _____.", options: ["proibido", "proibida", "proibidos", "proibidas"], correct: 1, explanation: "Com artigo ('A'), há concordância: 'A entrada é proibida'." },
+  { id: 30, question: "A palavra que é SEMPRE invariável (não tem plural nem feminino) é:", options: ["Próprio", "Meio (advérbio)", "Obrigado", "Anexo"], correct: 1, explanation: "Meio, no sentido de 'um pouco' (advérbio), é invariável. Ex: Estou meio cansada." },
+
+  // --- UNIDADE 8: Gênero Publicitário e Sociedade ---
+  { id: 31, question: "Qual o principal objetivo de um Anúncio Publicitário?", options: ["Contar uma história longa.", "Informar sobre política.", "Persuadir/Convencer o público.", "Fazer rir apenas."], correct: 2, explanation: "A função é convencer alguém a adquirir um produto ou ideia." },
+  { id: 32, question: "O que é 'Slogan'?", options: ["O endereço da loja.", "Uma frase curta e marcante da marca.", "O preço do produto.", "A imagem de fundo."], correct: 1, explanation: "Slogan é a frase de efeito (ex: 'Amo muito tudo isso')." },
+  { id: 33, question: "Qual modo verbal é muito usado em propagandas?", options: ["Imperativo (Compre! Veja!)", "Pretérito (Comprou, Viu)", "Futuro (Comprará)", "Infinitivo (Comprar)"], correct: 0, explanation: "O imperativo incita o leitor à ação." },
+  { id: 34, question: "O Consumo Consciente envolve, principalmente:", options: ["Comprar compulsivamente.", "Comprar apenas o mais caro.", "Avaliar o impacto ambiental e social de uma compra.", "Ignorar a origem dos produtos."], correct: 2, explanation: "Envolve refletir sobre a necessidade e o impacto da compra." },
+  { id: 35, question: "A atitude 'Assumir riscos com responsabilidade' (Unidade 8) está ligada a:", options: ["Jogar um jogo perigoso.", "Tomar decisões financeiras e de consumo planejadas.", "Dirigir em alta velocidade.", "Fazer algo sem pensar nas consequências."], correct: 1, explanation: "O contexto da unidade é consumo e decisões financeiras responsáveis." },
+
+  // --- MISTO / REVISÃO FINAL ---
+  { id: 36, question: "Em 'Meu pai comprou sapatos e meias NOVOS.', o adjetivo concorda com:", options: ["Apenas sapatos.", "Apenas meias.", "O substantivo mais próximo.", "Ambos, indo para o masculino plural."], correct: 3, explanation: "Quando o adjetivo vem depois de substantivos de gêneros diferentes, ele vai para o plural, priorizando o masculino." },
+  { id: 37, question: "A Reportagem geralmente utiliza qual tipo de discurso para incluir a fala de especialistas?", options: ["Discurso poético.", "Discurso direto e indireto.", "Discurso narrativo.", "Monólogo."], correct: 1, explanation: "Usa o Discurso Direto (fala exata) e Indireto (paráfrase) para citar fontes." },
+  { id: 38, question: "A conjunção 'NEM' tem o mesmo valor de:", options: ["Oposição (mas).", "Explicação (pois).", "Adição (e não).", "Alternância (ou)."], correct: 2, explanation: "'Nem' é uma conjunção aditiva com valor negativo (e não). Ex: Não veio nem ligou." },
+  { id: 39, question: "Qual a função da Introdução em uma Reportagem?", options: ["Apresentar os dados estatísticos.", "Concluir a opinião do repórter.", "Apresentar o fato principal (Lead) e a tese do texto.", "Apenas listar as fontes."], correct: 2, explanation: "A introdução (ou Lead) apresenta o resumo do fato e o foco da reportagem." },
+  { id: 40, question: "Para indicar tempo que virá, usamos:", options: ["Há.", "Ah.", "A.", "À."], correct: 2, explanation: "Tempo futuro usa 'A'. Ex: Daqui a uma semana." }
+];
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('study'); // 'study' or 'quiz'
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
+  const [quizFinished, setQuizFinished] = useState(false);
+
+  const handleOptionClick = (index) => {
+    if (selectedOption !== null) return; // Prevent changing answer
+
+    setSelectedOption(index);
+    const correct = index === questionsData[currentQuestionIndex].correct;
+    setIsCorrect(correct);
+
+    if (correct) {
+      setScore(score + 1);
+    }
+    setShowResult(true);
+  };
+
+  const nextQuestion = () => {
+    if (currentQuestionIndex + 1 < questionsData.length) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedOption(null);
+      setShowResult(false);
+      setIsCorrect(null);
+    } else {
+      setQuizFinished(true);
+    }
+  };
+
+  const restartQuiz = () => {
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setShowResult(false);
+    setSelectedOption(null);
+    setIsCorrect(null);
+    setQuizFinished(false);
+  };
+
+  return (
+    // ULTRA DARK MODE: bg-gray-950 e text-gray-100
+    <div className="min-h-screen bg-gray-950 font-sans text-gray-100">
+      {/* HEADER */}
+      <header className="bg-indigo-950 text-white p-6 shadow-2xl shadow-black/70">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center gap-3 mb-4 md:mb-0">
+            <Brain className="w-8 h-8 text-indigo-300" />
+            <div>
+              <h1 className="text-2xl font-bold">Estudos 7º Ano</h1>
+              <p className="text-indigo-300 text-sm">Português - Unidades 7 e 8 (Ultra Dark)</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setActiveTab('study')}
+              className={`px-4 py-2 rounded-full font-medium transition-colors flex items-center gap-2 ${
+                activeTab === 'study' ? 'bg-white text-indigo-900 shadow-md' : 'bg-indigo-700 hover:bg-indigo-600 text-white'
+              }`}
+            >
+              <BookOpen className="w-4 h-4" /> Explicação Completa
+            </button>
+            <button
+              onClick={() => setActiveTab('quiz')}
+              className={`px-4 py-2 rounded-full font-medium transition-colors flex items-center gap-2 ${
+                activeTab === 'quiz' ? 'bg-white text-indigo-900 shadow-md' : 'bg-indigo-700 hover:bg-indigo-600 text-white'
+              }`}
+            >
+              <CheckCircle className="w-4 h-4" /> Simulado (40)
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-4xl mx-auto p-4 md:p-8">
+        {/* SEÇÃO DE ESTUDO */}
+        {activeTab === 'study' && (
+          <div className="space-y-8 animate-fadeIn">
+            <div className="bg-gray-900 p-6 rounded-xl shadow-inner shadow-black/50 border-l-4 border-indigo-500">
+              <h2 className="text-xl font-bold mb-2 text-indigo-400">Sala de Estudos Aprofundada</h2>
+              <p className="text-gray-300">
+                Foco total na gramática (Concordância, Porquês, Vírgula) e nos Gêneros Textuais (Reportagem, Anúncio) para a sua prova.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {studyContent.map((unit) => (
+                <div key={unit.unit} className={`rounded-2xl overflow-hidden shadow-xl bg-gray-900 flex flex-col h-full border ${unit.color.includes('red') ? 'border-red-800' : 'border-blue-800'}`}>
+                  <div className={`p-4 ${unit.color} flex items-center gap-3 font-bold`}>
+                    {unit.icon}
+                    <h3 className="text-lg">{unit.title}</h3>
+                  </div>
+                  <div className="p-5 space-y-6 flex-grow">
+                    {unit.topics.map((topic, idx) => (
+                      <div key={idx} className="border-b border-gray-800 last:border-0 pb-4 last:pb-0">
+                        <h4 className="font-bold text-indigo-400 mb-2 text-md flex items-center gap-2">
+                          <Trello className="w-4 h-4 text-yellow-500" />
+                          {topic.title}
+                        </h4>
+                        <div className="text-gray-300 text-sm leading-relaxed">
+                          {topic.content}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* SEÇÃO DE QUIZ */}
+        {activeTab === 'quiz' && (
+          <div className="max-w-2xl mx-auto animate-fadeIn">
+            {!quizFinished ? (
+              <div className="bg-gray-900 rounded-2xl shadow-xl overflow-hidden border border-gray-800">
+                {/* Barra de Progresso */}
+                <div className="bg-gray-800 h-2 w-full">
+                  <div
+                    className="bg-indigo-500 h-full transition-all duration-300"
+                    style={{ width: `${((currentQuestionIndex + 1) / questionsData.length) * 100}%` }}
+                  ></div>
+                </div>
+
+                <div className="p-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                      Questão {currentQuestionIndex + 1} de {questionsData.length}
+                    </span>
+                    <span className="text-xs font-bold bg-indigo-900 text-indigo-300 px-2 py-1 rounded">
+                      Pontos: {score}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-100 mb-8">
+                    {questionsData[currentQuestionIndex].question}
+                  </h3>
+
+                  <div className="space-y-3">
+                    {questionsData[currentQuestionIndex].options.map((option, index) => (
+                      <button
+                        key={index}
+                        disabled={selectedOption !== null}
+                        onClick={() => handleOptionClick(index)}
+                        className={`w-full text-left p-4 rounded-xl border-2 transition-all flex justify-between items-center group ${
+                          selectedOption === null
+                            ? 'border-gray-700 bg-gray-800 hover:border-indigo-500 hover:bg-gray-700/50 text-gray-100'
+                            : selectedOption === index
+                            ? isCorrect
+                              ? 'border-green-600 bg-green-900/40 text-green-300' 
+                              : 'border-red-600 bg-red-900/40 text-red-300' 
+                            : index === questionsData[currentQuestionIndex].correct
+                            ? 'border-green-600 bg-green-900/40 text-green-300' 
+                            : 'border-gray-700 text-gray-500' 
+                        }`}
+                      >
+                        <span className="font-medium">{option}</span>
+                        {selectedOption === index && (
+                          isCorrect ? <CheckCircle className="w-6 h-6 text-green-400" /> : <XCircle className="w-6 h-6 text-red-400" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+
+                  {showResult && (
+                    <div className="mt-6 p-4 bg-blue-900/40 rounded-xl border border-blue-800 animate-fadeIn">
+                      <p className="font-bold text-blue-300 mb-1">Explicação:</p>
+                      <p className="text-blue-400 text-sm">{questionsData[currentQuestionIndex].explanation}</p>
+                      <button
+                        onClick={nextQuestion}
+                        className="mt-4 w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold shadow transition-transform hover:scale-[1.02] flex justify-center items-center gap-2"
+                      >
+                        Próxima Questão <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              // TELA FINAL
+              <div className="bg-gray-900 rounded-2xl shadow-xl p-8 text-center animate-fadeIn border border-gray-800">
+                <div className="w-20 h-20 bg-yellow-900/40 rounded-full flex items-center justify-center mx-auto mb-6 border border-yellow-700">
+                  <Award className="w-10 h-10 text-yellow-400" />
+                </div>
+                <h2 className="text-3xl font-bold text-gray-100 mb-2">Simulado Concluído!</h2>
+                <p className="text-gray-400 mb-8">Você testou seus conhecimentos sobre as Unidades 7 e 8.</p>
+
+                <div className="bg-gray-800 p-6 rounded-xl mb-8">
+                  <div className="text-5xl font-bold text-indigo-400 mb-2">{score}</div>
+                  <div className="text-gray-500 font-medium uppercase text-sm tracking-wide">Acertos de {questionsData.length}</div>
+                </div>
+
+                <div className="text-left text-sm text-gray-300 mb-8 space-y-2 bg-blue-900/40 p-4 rounded-lg border border-blue-800">
+                  <p><strong>Desempenho:</strong></p>
+                  <p>{score >= 32 ? "🌟 Excelente! Você está preparadíssimo(a)!" : score >= 24 ? "👍 Muito bom! Revise apenas os erros." : "📚 Vale a pena reler o resumo da Sala de Estudos."}</p>
+                </div>
+
+                <button
+                  onClick={restartQuiz}
+                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold shadow transition-transform hover:scale-[1.02] flex justify-center items-center gap-2"
+                >
+                  <RotateCcw className="w-4 h-4" /> Refazer Simulado
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
