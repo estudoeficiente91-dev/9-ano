@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterizando Potenciação e Radiciação</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* Customizações para o Dark Mode */
+        .math-card {
+            transition: transform 0.2s ease;
+        }
+        .math-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Ajustes para MathJax no modo escuro */
+        mjx-container {
+            color: inherit !important;
+        }
+
+        /* Animação suave para o feedback */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .feedback-anim {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans leading-relaxed selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navegação Fixa -->
+    <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800 z-50 shadow-2xl">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-indigo-600 p-1.5 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+                </div>
+                <span class="font-bold text-lg tracking-tight text-white">Math<span class="text-indigo-400">Master</span></span>
+            </div>
+            
+            <div class="flex gap-1 md:gap-2 bg-slate-800/50 p-1 rounded-full border border-slate-700">
+                <button onclick="switchTab('aprender')" id="tab-aprender" class="px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-indigo-600 text-white shadow-lg">
+                    Aprender
+                </button>
+                <button onclick="switchTab('praticar')" id="tab-praticar" class="px-4 py-1.5 rounded-full text-sm font-medium text-slate-400 hover:text-white transition-all">
+                    Praticar
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-24 max-w-5xl min-h-screen">
+
+        <!-- SESSÃO APRENDER -->
+        <div id="section-aprender" class="space-y-12 animate-fade-in">
+            
+            <!-- Cabeçalho Aprender -->
+            <div class="text-center space-y-4 mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Propriedades Completas
+                </h1>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                    Guia definitivo com todas as regras de Potenciação e Radiciação.
+                </p>
+            </div>
+
+            <!-- Bloco Potenciação -->
+            <section class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <div class="bg-slate-800/50 px-6 py-4 border-b border-slate-700 flex items-center gap-3">
+                    <span class="text-indigo-400 bg-indigo-400/10 p-2 rounded-lg">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </span>
+                    <h2 class="text-xl font-bold text-white">1. Potenciação (9 Propriedades)</h2>
+                </div>
+
+                <div class="p-6 md:p-8 space-y-6">
+                    <!-- Grid de Propriedades -->
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        
+                        <!-- P1 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">1. Produto (Mesma Base)</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ a^m \cdot a^n = a^{m+n} $$</div>
+                            <p class="text-xs text-slate-500">Soma os expoentes.</p>
+                        </div>
+
+                        <!-- P2 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">2. Divisão (Mesma Base)</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ \frac{a^m}{a^n} = a^{m-n} $$</div>
+                            <p class="text-xs text-slate-500">Subtrai os expoentes.</p>
+                        </div>
+
+                        <!-- P3 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">3. Potência de Potência</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ (a^m)^n = a^{m \cdot n} $$</div>
+                            <p class="text-xs text-slate-500">Multiplica os expoentes.</p>
+                        </div>
+
+                        <!-- P4 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">4. Potência de Produto</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ (a \cdot b)^m = a^m \cdot b^m $$</div>
+                            <p class="text-xs text-slate-500">Distribui o expoente.</p>
+                        </div>
+
+                        <!-- P5 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">5. Potência de Divisão</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ (\frac{a}{b})^m = \frac{a^m}{b^m} $$</div>
+                            <p class="text-xs text-slate-500">Distribui para cima e baixo.</p>
+                        </div>
+
+                        <!-- P6 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">6. Expoente Zero</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ a^0 = 1 \quad (a \neq 0) $$</div>
+                            <p class="text-xs text-slate-500">Sempre igual a 1.</p>
+                        </div>
+
+                         <!-- P7 -->
+                         <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">7. Expoente Um</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ a^1 = a $$</div>
+                            <p class="text-xs text-slate-500">O próprio número.</p>
+                        </div>
+
+                        <!-- P8 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-indigo-300 text-xs uppercase tracking-wider">8. Expoente Negativo</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ a^{-n} = \frac{1}{a^n} $$</div>
+                            <p class="text-xs text-slate-500">Inverte a base.</p>
+                        </div>
+
+                        <!-- P9 -->
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50 border-l-4 border-l-emerald-500">
+                            <div class="flex justify-between items-start mb-2">
+                                <strong class="text-emerald-400 text-xs uppercase tracking-wider">9. Potência Fracionária</strong>
+                            </div>
+                            <div class="text-lg text-white mb-1">$$ a^{\frac{m}{n}} = \sqrt[n]{a^m} $$</div>
+                            <p class="text-xs text-slate-500">Vira Raiz.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bloco Radiciação -->
+            <section class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <div class="bg-slate-800/50 px-6 py-4 border-b border-slate-700 flex items-center gap-3">
+                    <span class="text-emerald-400 bg-emerald-400/10 p-2 rounded-lg">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h3l3-9 6 15 3-6h3"/></svg>
+                    </span>
+                    <h2 class="text-xl font-bold text-white">2. Radiciação & Racionalização</h2>
+                </div>
+
+                <div class="p-6 md:p-8 space-y-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <strong class="block text-emerald-400 mb-1 text-xs uppercase">1. Raiz de Produto</strong>
+                            $$ \sqrt[n]{a \cdot b} = \sqrt[n]{a} \cdot \sqrt[n]{b} $$
+                        </div>
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <strong class="block text-emerald-400 mb-1 text-xs uppercase">2. Raiz de Quociente</strong>
+                            $$ \sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}} $$
+                        </div>
+                        <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <strong class="block text-emerald-400 mb-1 text-xs uppercase">3. Raiz de Raiz</strong>
+                            $$ \sqrt[n]{\sqrt[m]{a}} = \sqrt[n \cdot m]{a} $$
+                            <p class="text-xs text-slate-500 mt-1">Multiplica índices.</p>
+                        </div>
+                         <div class="math-card bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                            <strong class="block text-emerald-400 mb-1 text-xs uppercase">4. Simplificação</strong>
+                            $$ \sqrt[n]{a^n} = a $$
+                            <p class="text-xs text-slate-500 mt-1">Índice igual expoente, cancela.</p>
+                        </div>
+                    </div>
+
+                    <!-- Bônus Racionalização -->
+                    <div class="bg-emerald-900/20 border border-emerald-500/30 rounded-xl p-5 mt-4">
+                        <h3 class="text-emerald-400 font-bold mb-3 flex items-center gap-2">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Bônus: Racionalização
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-2">Quando a raiz está embaixo (denominador), multiplicamos em cima e embaixo por ela mesma para eliminar:</p>
+                        <div class="text-center text-lg text-white bg-slate-900/50 p-2 rounded-lg inline-block px-6">
+                            $$ \frac{1}{\sqrt{a}} \cdot \frac{\sqrt{a}}{\sqrt{a}} = \frac{\sqrt{a}}{a} $$
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="text-center pt-8">
+                <button onclick="switchTab('praticar')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-indigo-900/50 transition-all transform hover:scale-105 flex items-center gap-2 mx-auto">
+                    <span>Começar Simulado Completo (15 Questões)</span>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SESSÃO PRATICAR (SIMULADO) -->
+        <div id="section-praticar" class="hidden space-y-8">
+            
+            <div class="text-center space-y-4 mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-white">
+                    Simulado Completo
+                </h1>
+                <p class="text-slate-400">
+                    Questões simples cobrindo todas as propriedades estudadas.
+                </p>
+            </div>
+
+            <!-- Barra de Controle e Progresso -->
+            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 shadow-lg sticky top-20 z-40">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-3">
+                     <div class="flex items-center gap-2">
+                        <span class="text-indigo-400 font-bold text-sm uppercase tracking-wider">Progresso:</span>
+                        <span id="progress-text" class="text-slate-300 text-sm font-mono">0 / 15</span>
+                     </div>
+                     <button onclick="resetQuiz()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-all text-sm font-medium shadow-sm hover:shadow-md group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-rotate-180 transition-transform duration-500"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12"/></svg> 
+                        Reiniciar
+                    </button>
+                </div>
+                <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                    <div id="progress-bar" class="bg-indigo-500 h-full rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="quiz-grid" class="space-y-8 max-w-3xl mx-auto">
+                <!-- Questões do Simulado serão inseridas aqui -->
+            </div>
+
+            <div class="text-center py-8 text-slate-500 text-sm">
+                Parabéns por completar o simulado!
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Estado da Aplicação
+        let completedCount = 0;
+        const totalQuestions = 15; // Aumentado para 15 questões
+
+        // Banco de Questões COMPLETO (Todas as Propriedades)
+        const questions = [
+            // --- POTENCIAÇÃO ---
+            {
+                id: 1,
+                prop: "Propriedade 1: Produto",
+                text: "Simplifique: $$ 2^3 \\cdot 2^4 $$",
+                options: ["$$ 2^7 $$", "$$ 2^{12} $$", "$$ 4^7 $$", "$$ 4^{12} $$"],
+                correct: 0,
+                explanation: "Conserva a base e soma os expoentes: $$ 3 + 4 = 7 $$"
+            },
+            {
+                id: 2,
+                prop: "Propriedade 2: Divisão",
+                text: "Simplifique: $$ 5^6 : 5^2 $$",
+                options: ["$$ 5^3 $$", "$$ 1^4 $$", "$$ 5^4 $$", "$$ 5^8 $$"],
+                correct: 2,
+                explanation: "Conserva a base e subtrai os expoentes: $$ 6 - 2 = 4 $$"
+            },
+            {
+                id: 3,
+                prop: "Propriedade 3: Pot. de Potência",
+                text: "Calcule: $$ (3^2)^3 $$",
+                options: ["$$ 3^5 $$", "$$ 3^6 $$", "$$ 9^3 $$", "$$ 6^3 $$"],
+                correct: 1,
+                explanation: "Multiplica os expoentes: $$ 2 \\cdot 3 = 6 $$"
+            },
+            {
+                id: 4,
+                prop: "Propriedade 4: Pot. de Produto",
+                text: "Aplique a propriedade: $$ (2 \\cdot x)^3 $$",
+                options: ["$$ 2x^3 $$", "$$ 2^3 \\cdot x $$", "$$ 6x $$", "$$ 2^3 \\cdot x^3 $$"],
+                correct: 3,
+                explanation: "O expoente vai para ambos os termos do produto."
+            },
+            {
+                id: 5,
+                prop: "Propriedade 5: Pot. de Divisão",
+                text: "Aplique a propriedade: $$ (\\frac{2}{5})^2 $$",
+                options: ["$$ \\frac{4}{5} $$", "$$ \\frac{2}{25} $$", "$$ \\frac{2^2}{5^2} $$", "$$ \\frac{4}{10} $$"],
+                correct: 2,
+                explanation: "O expoente vai para o numerador e o denominador."
+            },
+            {
+                id: 6,
+                prop: "Propriedade 6: Exp. Zero",
+                text: "Quanto vale: $$ 1250^0 $$",
+                options: ["0", "1", "1250", "Indefinido"],
+                correct: 1,
+                explanation: "Qualquer número (não nulo) elevado a zero é 1."
+            },
+            {
+                id: 7,
+                prop: "Propriedade 7: Exp. Um",
+                text: "Quanto vale: $$ 7^1 $$",
+                options: ["1", "0", "7", "49"],
+                correct: 2,
+                explanation: "Qualquer número elevado a 1 é ele mesmo."
+            },
+            {
+                id: 8,
+                prop: "Propriedade 8: Exp. Negativo",
+                text: "Reescreva: $$ 3^{-2} $$",
+                options: ["$$ -9 $$", "$$ \\frac{1}{3^2} $$", "$$ -6 $$", "$$ 3^2 $$"],
+                correct: 1,
+                explanation: "Inverte a base para trocar o sinal do expoente."
+            },
+            {
+                id: 9,
+                prop: "Propriedade 9: Pot. Fracionária",
+                text: "Transforme em raiz: $$ 5^{\\frac{2}{3}} $$",
+                options: ["$$ \\sqrt{5^3} $$", "$$ \\sqrt[3]{5^2} $$", "$$ \\sqrt[2]{5^3} $$", "$$ \\frac{2}{\\sqrt{5}} $$"],
+                correct: 1,
+                explanation: "O denominador (3) vira o índice da raiz."
+            },
+            
+            // --- RADICIAÇÃO ---
+            {
+                id: 10,
+                prop: "Rad 1: Raiz de Produto",
+                text: "Separe: $$ \\sqrt{4 \\cdot 10} $$",
+                options: ["$$ \\sqrt{4} + \\sqrt{10} $$", "$$ 4 \\sqrt{10} $$", "$$ \\sqrt{4} \\cdot \\sqrt{10} $$", "$$ 40 $$"],
+                correct: 2,
+                explanation: "A raiz do produto é o produto das raízes."
+            },
+            {
+                id: 11,
+                prop: "Rad 2: Raiz de Divisão",
+                text: "Calcule: $$ \\sqrt{\\frac{100}{4}} $$",
+                options: ["25", "10", "5", "50"],
+                correct: 2,
+                explanation: "Pode dividir antes: $$ 100/4 = 25 $$, e $$ \\sqrt{25} = 5 $$."
+            },
+            {
+                id: 12,
+                prop: "Rad 3: Raiz de Raiz",
+                text: "Junte as raízes: $$ \\sqrt[3]{\\sqrt[2]{x}} $$",
+                options: ["$$ \\sqrt[5]{x} $$", "$$ \\sqrt{x} $$", "$$ \\sqrt[6]{x} $$", "$$ \\sqrt[9]{x} $$"],
+                correct: 2,
+                explanation: "Multiplica os índices: $$ 3 \\cdot 2 = 6 $$."
+            },
+            {
+                id: 13,
+                prop: "Rad 4: Simplificação Simples",
+                text: "Simplifique: $$ \\sqrt[5]{2^5} $$",
+                options: ["$$ 2 $$", "$$ 5 $$", "$$ 25 $$", "$$ \\sqrt{2} $$"],
+                correct: 0,
+                explanation: "Índice igual ao expoente, eles se cancelam."
+            },
+            {
+                id: 14,
+                prop: "Rad 4b: Simplificação de Índice",
+                text: "Simplifique o índice e expoente: $$ \\sqrt[4]{3^2} $$",
+                options: ["$$ \\sqrt{3} $$", "$$ 3 $$", "$$ \\sqrt[2]{3^4} $$", "$$ 3^2 $$"],
+                correct: 0,
+                explanation: "Divide índice e expoente por 2: $$ \\sqrt[2]{3^1} = \\sqrt{3} $$."
+            },
+            
+            // --- BÔNUS ---
+            {
+                id: 15,
+                prop: "Bônus: Racionalização",
+                text: "Racionalize: $$ \\frac{1}{\\sqrt{2}} $$",
+                options: ["$$ \\frac{1}{2} $$", "$$ \\sqrt{2} $$", "$$ \\frac{\\sqrt{2}}{2} $$", "$$ 2 $$"],
+                correct: 2,
+                explanation: "Multiplica em cima e embaixo por $$ \\sqrt{2} $$: $$ \\frac{1 \\cdot \\sqrt{2}}{\\sqrt{2} \\cdot \\sqrt{2}} = \\frac{\\sqrt{2}}{2} $$."
+            }
+        ];
+
+        // Sistema de Abas
+        function switchTab(tab) {
+            const aprenderSec = document.getElementById('section-aprender');
+            const praticarSec = document.getElementById('section-praticar');
+            const btnAprender = document.getElementById('tab-aprender');
+            const btnPraticar = document.getElementById('tab-praticar');
+
+            if (tab === 'aprender') {
+                aprenderSec.classList.remove('hidden');
+                praticarSec.classList.add('hidden');
+                
+                btnAprender.classList.add('bg-indigo-600', 'text-white', 'shadow-lg');
+                btnAprender.classList.remove('text-slate-400');
+                
+                btnPraticar.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg');
+                btnPraticar.classList.add('text-slate-400');
+                
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            } else {
+                aprenderSec.classList.add('hidden');
+                praticarSec.classList.remove('hidden');
+                
+                btnPraticar.classList.add('bg-indigo-600', 'text-white', 'shadow-lg');
+                btnPraticar.classList.remove('text-slate-400');
+                
+                btnAprender.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg');
+                btnAprender.classList.add('text-slate-400');
+                
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        }
+
+        // Renderização do Quiz (Estilo Simulado)
+        function renderQuiz() {
+            const container = document.getElementById('quiz-grid');
+            let html = '';
+
+            questions.forEach((q, index) => {
+                html += `
+                    <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden relative group hover:border-slate-700 transition-colors">
+                        <div class="bg-slate-800/50 px-6 py-3 border-b border-slate-800 flex justify-between items-center">
+                             <span class="text-indigo-400 font-bold font-mono text-lg">QUESTÃO ${index + 1 < 10 ? '0'+(index+1) : index+1}</span>
+                             <span class="text-xs font-bold text-slate-500 uppercase tracking-wider bg-slate-900 px-2 py-1 rounded border border-slate-800">${q.prop}</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-lg text-slate-200 mb-6 leading-relaxed font-medium pl-1 border-l-4 border-indigo-600/30">${q.text}</div>
+                            
+                            <div class="space-y-3">
+                                ${q.options.map((opt, i) => `
+                                    <button 
+                                        onclick="checkAnswer(${index}, ${i})" 
+                                        id="btn-${index}-${i}" 
+                                        class="w-full text-left p-4 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800 hover:border-indigo-500/50 transition-all flex items-start gap-4 group/opt"
+                                    >
+                                        <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-slate-700 bg-slate-800 text-slate-400 font-bold text-sm group-hover/opt:border-indigo-500 group-hover/opt:text-indigo-400 transition-colors shadow-sm">
+                                            ${String.fromCharCode(65 + i)}
+                                        </span>
+                                        <span class="text-slate-300 pt-1">${opt}</span>
+                                    </button>
+                                `).join('')}
+                            </div>
+
+                            <div id="feedback-${index}" class="hidden mt-6 p-4 rounded-lg border feedback-anim relative z-10"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        // Verificação de Resposta
+        window.checkAnswer = function(qIndex, optIndex) {
+            const q = questions.find(question => question.id === (qIndex + 1)) || questions[qIndex];
+            const feedbackEl = document.getElementById(`feedback-${qIndex}`);
+            const buttons = document.querySelectorAll(`[id^="btn-${qIndex}-"]`);
+            
+            // Bloqueia botões
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('cursor-default');
+                btn.classList.remove('hover:bg-slate-800', 'hover:border-indigo-500/50');
+            });
+
+            const selectedBtn = document.getElementById(`btn-${qIndex}-${optIndex}`);
+            const correctBtn = document.getElementById(`btn-${qIndex}-${q.correct}`);
+
+            // Styling para a resposta selecionada
+            if (optIndex === q.correct) {
+                selectedBtn.classList.replace('bg-slate-900/50', 'bg-emerald-900/20');
+                selectedBtn.classList.replace('border-slate-800', 'border-emerald-500');
+                selectedBtn.querySelector('span').classList.replace('border-slate-700', 'border-emerald-500');
+                selectedBtn.querySelector('span').classList.replace('text-slate-400', 'text-emerald-400');
+                selectedBtn.querySelector('span').classList.replace('bg-slate-800', 'bg-emerald-900');
+
+                feedbackEl.className = "mt-6 p-4 rounded-lg text-sm border feedback-anim bg-emerald-950/30 border-emerald-500/30 text-emerald-200 block";
+                feedbackEl.innerHTML = `<div class="flex items-center gap-2 font-bold mb-2 text-emerald-400"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Resposta Correta!</div>${q.explanation}`;
+                
+                if (!selectedBtn.dataset.answered) {
+                    updateProgress();
+                    selectedBtn.dataset.answered = "true";
+                }
+            } else {
+                selectedBtn.classList.replace('bg-slate-900/50', 'bg-red-900/20');
+                selectedBtn.classList.replace('border-slate-800', 'border-red-500');
+                selectedBtn.querySelector('span').classList.replace('border-slate-700', 'border-red-500');
+                selectedBtn.querySelector('span').classList.replace('text-slate-400', 'text-red-400');
+                
+                // Mostra a correta também
+                correctBtn.classList.replace('bg-slate-900/50', 'bg-emerald-900/20');
+                correctBtn.classList.replace('border-slate-800', 'border-emerald-500');
+                correctBtn.querySelector('span').classList.replace('border-slate-700', 'border-emerald-500');
+                correctBtn.querySelector('span').classList.replace('text-slate-400', 'text-emerald-400');
+
+                feedbackEl.className = "mt-6 p-4 rounded-lg text-sm border feedback-anim bg-red-950/30 border-red-500/30 text-red-200 block";
+                feedbackEl.innerHTML = `<div class="flex items-center gap-2 font-bold mb-2 text-red-400"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Resposta Incorreta</div>A alternativa correta era a opção <strong>${String.fromCharCode(65 + q.correct)}</strong>.<br><br>${q.explanation}`;
+            }
+            
+            if (window.MathJax) MathJax.typesetPromise([feedbackEl]);
+        };
+
+        function updateProgress() {
+            completedCount++;
+            const percentage = (completedCount / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-text').innerText = `${completedCount} / ${totalQuestions}`;
+        }
+
+        // Função de Refazer Simulado
+        function resetQuiz() {
+            // Zera contadores
+            completedCount = 0;
+            
+            // Zera barra visual
+            document.getElementById('progress-bar').style.width = `0%`;
+            document.getElementById('progress-text').innerText = `0 / ${totalQuestions}`;
+
+            // Re-renderiza todas as questões (limpando estados)
+            renderQuiz();
+
+            // Scroll suave para o topo do simulado
+            document.getElementById('section-praticar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Inicializa
+        renderQuiz();
+
+    </script>
+</body>
+</html>
